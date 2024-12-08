@@ -17,7 +17,27 @@ version = mod_version
 group = mod_group_id
 
 repositories {
-    mavenLocal()
+    maven {
+        url "https://www.cursemaven.com"
+    }
+    maven {
+        // JEI
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // CraftTweaker
+        name = "BlameJared"
+        url = "https://maven.blamejared.com"
+    }
+    maven {
+        url "https://maven.ryanliptak.com/"
+    }
+    maven {
+        // GeckoLib
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
 }
 
 base {
@@ -112,27 +132,23 @@ configurations {
 }
 
 dependencies {
-    // Example optional mod dependency with JEI
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
-    // compileOnly "mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}"
-    // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
-    // localRuntime "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
 
-    // Example mod dependency using a mod jar from ./libs with a flat dir repository
-    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
-    // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
+    // Farmers Delight
+    implementation "curse.maven:farmers-delight-398521:5962800"
 
-    // Example mod dependency using a file as dependency
-    // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
+    // JEI
+    compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
+    localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 
-    // Example project dependency using a sister or child project:
-    // implementation project(":myproject")
+    // Appleskin
+    compileOnly "squeek.appleskin:appleskin-neoforge:${appleskin_version}:api"
+    runtimeOnly "squeek.appleskin:appleskin-neoforge:${appleskin_version}"
 
-    // For more info:
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    // CraftTweaker
+    def ctDep = "com.blamejared.crafttweaker:CraftTweaker-neoforge-${crafttweaker_minecraft}:${crafttweaker_version}"
+    compileOnly ctDep
+    runtimeOnly ctDep
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
