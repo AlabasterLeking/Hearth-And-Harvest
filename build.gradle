@@ -134,7 +134,7 @@ configurations {
 dependencies {
 
     // Farmers Delight
-    implementation "curse.maven:farmers-delight-398521:5962800"
+    implementation "curse.maven:farmers-delight-398521:${farmersdelight_version}"
 
     // JEI
     compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
