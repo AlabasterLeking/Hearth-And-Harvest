@@ -1,3 +1,31 @@
 {
-  "itemGroup.hearthandharvest": "Hearth and Harvest"
+  "itemGroup.hearthandharvest": "Hearth and Harvest",
+
+  "item.hearthandharvest.raspberry": "Raspberry",
+  "item.hearthandharvest.blueberries": "Blueberries",
+  "item.hearthandharvest.grapes": "Grapes",
+  "item.hearthandharvest.peanut": "Peanut",
+  "item.hearthandharvest.cotton": "Cotton",
+
+  "item.hearthandharvest.mead": "Mead",
+  "item.hearthandharvest.wine": "Wine",
+  "item.hearthandharvest.goat_milk_bottle": "Goat Milk",
+  "item.hearthandharvest.raspberry_juice": "Raspberry Juice",
+  "item.hearthandharvest.blueberry_juice": "Blueberry Juice",
+  "item.hearthandharvest.grape_juice": "Grape Juice",
+
+  "item.hearthandharvest.caramel": "Caramel",
+  "item.hearthandharvest.chocolate_bar": "Chocolate Bar",
+  "item.hearthandharvest.cotton_candy": "Cotton Candy",
+  "item.hearthandharvest.blueberry_muffin": "Blueberry Muffin",
+  "item.hearthandharvest.peanut_butter_cookie": "Peanut Butter Cookie",
+
+  "item.hearthandharvest.cheese_wheel": "Cheese Wheel",
+  "item.hearthandharvest.cheese_slice": "Cheese Slice",
+  "item.hearthandharvest.goat_cheese_wheel": "Goat Cheese Wheel",
+  "item.hearthandharvest.goat_cheese_slice": "Goat Cheese Slice",
+  "item.hearthandharvest.raw_sausage": "Raw Sausage",
+  "item.hearthandharvest.cooked_sausage": "Cooked Sausage",
+  "item.hearthandharvest.batter": "Batter",
+  "item.hearthandharvest.salt": "Salt"
 }
