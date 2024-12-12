@@ -35,6 +35,7 @@ public class DataGenerators {
         //generator.addProvider(event.includeServer(), new Advancements(output, lookupProvider, helper));
         //generator.addProvider(event.includeServer(), new LootTableProvider(output, Collections.emptySet(), List.of(new LootTableProvider.SubProviderEntry(CDBlockLoot::new, LootContextParamSets.BLOCK)), lookupProvider));
         BlockStates blockStates = new BlockStates(output, helper);
+        generator.addProvider(event.includeClient(), blockStates);
         generator.addProvider(event.includeClient(), new ItemModels(output, blockStates.models().existingFileHelper));
     }
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "hearthandharvest:block/crate_bottom",
+    "side": "hearthandharvest:block/raspberry_crate_side",
+    "top": "hearthandharvest:block/raspberry_crate_top"
+  }
+}

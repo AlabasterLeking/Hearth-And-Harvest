@@ -1,9 +1,12 @@
 package alabaster.hearthandharvest.data;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.registry.ModItems;
+import com.google.common.collect.Sets;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -25,6 +28,41 @@ public class ItemModels extends ItemModelProvider
     protected void registerModels() {
         Set<Item> items = BuiltInRegistries.ITEM.stream().filter(i -> HearthAndHarvest.MODID.equals(BuiltInRegistries.ITEM.getKey(i).getNamespace()))
                 .collect(Collectors.toSet());
+
+        // Slab Crates
+        blockBasedModel(ModItems.EGG_CRATE.get(), "_bottom");
+        items.remove(ModItems.EGG_CRATE.get());
+
+        blockBasedModel(ModItems.MILK_CRATE.get(), "_bottom");
+        items.remove(ModItems.MILK_CRATE.get());
+
+        blockBasedModel(ModItems.GOAT_MILK_CRATE.get(), "_bottom");
+        items.remove(ModItems.GOAT_MILK_CRATE.get());
+
+        blockBasedModel(ModItems.MEAD_CRATE.get(), "_bottom");
+        items.remove(ModItems.MEAD_CRATE.get());
+
+        blockBasedModel(ModItems.WINE_CRATE.get(), "_bottom");
+        items.remove(ModItems.WINE_CRATE.get());
+
+        blockBasedModel(ModItems.WATER_CRATE.get(), "_bottom");
+        items.remove(ModItems.WATER_CRATE.get());
+
+        blockBasedModel(ModItems.HONEY_CRATE.get(), "_bottom");
+        items.remove(ModItems.HONEY_CRATE.get());
+
+        // Blocks whose items look alike
+        takeAll(items, i -> i instanceof BlockItem).forEach(item -> blockBasedModel(item, ""));
+
+        // Blocks with special item sprites
+        Set<Item> spriteBlockItems = Sets.newHashSet(
+                ModItems.RASPBERRY_PIE.get(),
+                ModItems.BLUEBERRY_PIE.get(),
+                ModItems.GRAPE_PIE.get(),
+                ModItems.CHEESE_WHEEL.get(),
+                ModItems.GOAT_CHEESE_WHEEL.get()
+        );
+        takeAll(items, spriteBlockItems.toArray(new Item[0])).forEach(item -> withExistingParent(itemName(item), GENERATED).texture("layer0", resourceItem(itemName(item))));
 
         // Generated items
         items.forEach(item -> itemGeneratedModel(item, resourceItem(itemName(item))));

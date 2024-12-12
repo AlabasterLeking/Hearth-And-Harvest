@@ -1,0 +1,10 @@
+{
+  "parent": "farmersdelight:block/pie_slice1",
+  "textures": {
+    "particle": "hearthandharvest:block/cheese_top",
+    "bottom": "hearthandharvest:block/cheese_bottom",
+    "inner": "hearthandharvest:block/cheese_inner",
+    "side": "hearthandharvest:block/cheese_side",
+    "top": "hearthandharvest:block/cheese_top"
+  }
+}

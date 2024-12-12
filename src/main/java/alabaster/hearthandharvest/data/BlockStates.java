@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.data;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.registry.ModBlocks;
 import com.google.common.collect.Sets;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,6 +20,8 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import vectorwing.farmersdelight.common.block.PieBlock;
+
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +55,17 @@ public class BlockStates extends BlockStateProvider
 
     @Override
     protected void registerStatesAndModels() {
+        this.crateBlock(ModBlocks.RASPBERRY_CRATE.get(), "raspberry");
+        this.crateBlock(ModBlocks.BLUEBERRY_CRATE.get(), "blueberry");
+        this.crateBlock(ModBlocks.GRAPE_CRATE.get(), "grape");
+        this.crateBlock(ModBlocks.PEANUT_CRATE.get(), "peanut");
+
+        this.pieBlock(ModBlocks.RASPBERRY_PIE.get());
+        this.pieBlock(ModBlocks.BLUEBERRY_PIE.get());
+        this.pieBlock(ModBlocks.GRAPE_PIE.get());
+        this.pieBlock(ModBlocks.CHEESE_WHEEL.get());
+        this.pieBlock(ModBlocks.GOAT_CHEESE_WHEEL.get());
+
     }
 
     public ConfiguredModel[] cubeRandomRotation(Block block, String suffix) {
@@ -114,6 +128,24 @@ public class BlockStates extends BlockStateProvider
         } else {
             this.simpleBlock(block, models().cross(blockName(block), resourceBlock(blockName(block))).renderType("cutout"));
         }
+    }
+
+    public void crateBlock(Block block, String cropName) {
+        this.simpleBlock(block,
+                models().cubeBottomTop(blockName(block), resourceBlock(cropName + "_crate_side"), resourceBlock("crate_bottom"), resourceBlock(cropName + "_crate_top")));
+    }
+
+    public void pieBlock(Block block) {
+        getVariantBuilder(block)
+                .forAllStates(state -> {
+                            int bites = state.getValue(PieBlock.BITES);
+                            String suffix = bites > 0 ? "_slice" + bites : "";
+                            return ConfiguredModel.builder()
+                                    .modelFile(existingModel(blockName(block) + suffix))
+                                    .rotationY(((int) state.getValue(PieBlock.FACING).toYRot() + DEFAULT_ANGLE_OFFSET) % 360)
+                                    .build();
+                        }
+                );
     }
 
 }

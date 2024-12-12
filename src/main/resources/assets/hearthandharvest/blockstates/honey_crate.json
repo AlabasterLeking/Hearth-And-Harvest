@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "hearthandharvest:block/honey_crate_bottom" },
+    "type=top": { "model": "hearthandharvest:block/honey_crate_top" },
+    "type=double": { "model": "hearthandharvest:block/honey_crate" }
+  }
+}
