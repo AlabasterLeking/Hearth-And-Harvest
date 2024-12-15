@@ -63,8 +63,23 @@ public class BlockStates extends BlockStateProvider
         this.pieBlock(ModBlocks.RASPBERRY_PIE.get());
         this.pieBlock(ModBlocks.BLUEBERRY_PIE.get());
         this.pieBlock(ModBlocks.GRAPE_PIE.get());
+        this.pieBlock(ModBlocks.CHICKEN_POT_PIE.get());
         this.pieBlock(ModBlocks.CHEESE_WHEEL.get());
         this.pieBlock(ModBlocks.GOAT_CHEESE_WHEEL.get());
+
+        this.axisBlock((RotatedPillarBlock) ModBlocks.COTTON_BALE.get());
+        this.axisBlock((RotatedPillarBlock) ModBlocks.SPOOL.get());
+
+        String saltBag = blockName(ModBlocks.SALT_BAG.get());
+        this.simpleBlock(ModBlocks.SALT_BAG.get(), models().withExistingParent(saltBag, "cube")
+                .texture("particle", resourceBlock(saltBag + "_top"))
+                .texture("down", resourceBlock(saltBag + "_bottom"))
+                .texture("up", resourceBlock(saltBag + "_top"))
+                .texture("north", resourceBlock(saltBag + "_side_tied"))
+                .texture("south", resourceBlock(saltBag + "_side_tied"))
+                .texture("east", resourceBlock(saltBag + "_side"))
+                .texture("west", resourceBlock(saltBag + "_side"))
+        );
 
     }
 

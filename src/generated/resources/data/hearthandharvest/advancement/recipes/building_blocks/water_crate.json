@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:water_crate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_water_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:potion"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_water_bottle"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:water_crate"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "cooked_sausage": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raw_sausage"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:cooked_sausage"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "cooked_sausage"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:cooked_sausage"
+    ]
+  }
+}

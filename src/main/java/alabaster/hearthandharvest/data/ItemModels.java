@@ -29,6 +29,8 @@ public class ItemModels extends ItemModelProvider
         Set<Item> items = BuiltInRegistries.ITEM.stream().filter(i -> HearthAndHarvest.MODID.equals(BuiltInRegistries.ITEM.getKey(i).getNamespace()))
                 .collect(Collectors.toSet());
 
+        // Workstations
+
         // Slab Crates
         blockBasedModel(ModItems.EGG_CRATE.get(), "_bottom");
         items.remove(ModItems.EGG_CRATE.get());
@@ -51,6 +53,18 @@ public class ItemModels extends ItemModelProvider
         blockBasedModel(ModItems.HONEY_CRATE.get(), "_bottom");
         items.remove(ModItems.HONEY_CRATE.get());
 
+        blockBasedModel(ModItems.BROWN_MUSHROOM_CRATE.get(), "_bottom");
+        items.remove(ModItems.BROWN_MUSHROOM_CRATE.get());
+
+        blockBasedModel(ModItems.RED_MUSHROOM_CRATE.get(), "_bottom");
+        items.remove(ModItems.RED_MUSHROOM_CRATE.get());
+
+        blockBasedModel(ModItems.CRIMSON_FUNGUS_CRATE.get(), "_bottom");
+        items.remove(ModItems.CRIMSON_FUNGUS_CRATE.get());
+
+        blockBasedModel(ModItems.WARPED_FUNGUS_CRATE.get(), "_bottom");
+        items.remove(ModItems.WARPED_FUNGUS_CRATE.get());
+
         // Blocks whose items look alike
         takeAll(items, i -> i instanceof BlockItem).forEach(item -> blockBasedModel(item, ""));
 
@@ -59,6 +73,7 @@ public class ItemModels extends ItemModelProvider
                 ModItems.RASPBERRY_PIE.get(),
                 ModItems.BLUEBERRY_PIE.get(),
                 ModItems.GRAPE_PIE.get(),
+                ModItems.CHICKEN_POT_PIE.get(),
                 ModItems.CHEESE_WHEEL.get(),
                 ModItems.GOAT_CHEESE_WHEEL.get()
         );

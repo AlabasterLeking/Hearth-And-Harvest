@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hearthandharvest:block/spool_end",
+    "side": "hearthandharvest:block/spool_side"
+  }
+}

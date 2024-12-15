@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": { "model": "hearthandharvest:block/brown_mushroom_crate_bottom" },
+    "type=top": { "model": "hearthandharvest:block/brown_mushroom_crate_top" },
+    "type=double": { "model": "hearthandharvest:block/brown_mushroom_crate" }
+  }
+}

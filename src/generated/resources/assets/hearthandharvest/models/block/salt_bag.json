@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "hearthandharvest:block/salt_bag_bottom",
+    "east": "hearthandharvest:block/salt_bag_side",
+    "north": "hearthandharvest:block/salt_bag_side_tied",
+    "particle": "hearthandharvest:block/salt_bag_top",
+    "south": "hearthandharvest:block/salt_bag_side_tied",
+    "up": "hearthandharvest:block/salt_bag_top",
+    "west": "hearthandharvest:block/salt_bag_side"
+  }
+}

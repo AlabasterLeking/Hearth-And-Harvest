@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "type=empty": { "model": "hearthandharvest:block/tree_tapper" },
+    "type=one": { "model": "hearthandharvest:block/tree_tapper_sap_1" },
+    "type=two": { "model": "hearthandharvest:block/tree_tapper_sap_2" },
+    "type=three": { "model": "hearthandharvest:block/tree_tapper_sap_3" },
+    "type=four": { "model": "hearthandharvest:block/tree_tapper_sap_4" }
+  }
+}

@@ -26,6 +26,10 @@ public class ModItems {
         return (new Item.Properties());
     }
 
+    // Workstations
+    public static final Supplier<Item> TREE_TAPPER = registerWithTab("tree_tapper",
+            () -> new BlockItem(ModBlocks.TREE_TAPPER.get(), basicItem()));
+
     // Crops
     public static final Supplier<Item> RASPBERRY = registerWithTab("raspberry",
             () -> new Item(basicItem()));
@@ -51,6 +55,12 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.GRAPE_CRATE.get(), basicItem()));
     public static final Supplier<Item> PEANUT_CRATE = registerWithTab("peanut_crate",
             () -> new BlockItem(ModBlocks.PEANUT_CRATE.get(), basicItem()));
+    public static final Supplier<Item> SALT_BAG = registerWithTab("salt_bag",
+            () -> new BlockItem(ModBlocks.SALT_BAG.get(), basicItem()));
+    public static final Supplier<Item> COTTON_BALE = registerWithTab("cotton_bale",
+            () -> new BlockItem(ModBlocks.COTTON_BALE.get(), basicItem()));
+    public static final Supplier<Item> SPOOL = registerWithTab("spool",
+            () -> new BlockItem(ModBlocks.SPOOL.get(), basicItem()));
     public static final Supplier<Item> EGG_CRATE = registerWithTab("egg_crate",
             () -> new BlockItem(ModBlocks.EGG_CRATE.get(), basicItem()));
     public static final Supplier<Item> MILK_CRATE = registerWithTab("milk_crate",
@@ -65,6 +75,14 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.WATER_CRATE.get(), basicItem()));
     public static final Supplier<Item> HONEY_CRATE = registerWithTab("honey_crate",
             () -> new BlockItem(ModBlocks.HONEY_CRATE.get(), basicItem()));
+    public static final Supplier<Item> BROWN_MUSHROOM_CRATE = registerWithTab("brown_mushroom_crate",
+            () -> new BlockItem(ModBlocks.BROWN_MUSHROOM_CRATE.get(), basicItem()));
+    public static final Supplier<Item> RED_MUSHROOM_CRATE = registerWithTab("red_mushroom_crate",
+            () -> new BlockItem(ModBlocks.RED_MUSHROOM_CRATE.get(), basicItem()));
+    public static final Supplier<Item> CRIMSON_FUNGUS_CRATE = registerWithTab("crimson_fungus_crate",
+            () -> new BlockItem(ModBlocks.CRIMSON_FUNGUS_CRATE.get(), basicItem()));
+    public static final Supplier<Item> WARPED_FUNGUS_CRATE = registerWithTab("warped_fungus_crate",
+            () -> new BlockItem(ModBlocks.WARPED_FUNGUS_CRATE.get(), basicItem()));
 
     // Tools
     public static final Supplier<Item> WOODEN_BUCKET = registerWithTab("wooden_bucket",
@@ -143,6 +161,11 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.GRAPE_PIE.get(), basicItem()));
     public static final Supplier<Item> GRAPE_PIE_SLICE = registerWithTab("grape_pie_slice",
             () -> new Item(basicItem()));
+    public static final Supplier<Item> CHICKEN_POT_PIE = registerWithTab("chicken_pot_pie",
+            () -> new BlockItem(ModBlocks.CHICKEN_POT_PIE.get(), basicItem()));
+    public static final Supplier<Item> CHICKEN_POT_PIE_SLICE = registerWithTab("chicken_pot_pie_slice",
+            () -> new Item(basicItem()));
+
 
     // Ingredients
     public static final Supplier<Item> PEANUT_BUTTER = registerWithTab("peanut_butter",

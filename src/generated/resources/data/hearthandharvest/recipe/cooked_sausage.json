@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "ingredient": {
+    "item": "hearthandharvest:raw_sausage"
+  },
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:cooked_sausage"
+  }
+}

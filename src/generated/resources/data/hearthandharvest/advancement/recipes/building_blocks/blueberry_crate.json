@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_blueberry": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:blueberries"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:blueberry_crate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_blueberry"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:blueberry_crate"
+    ]
+  }
+}
