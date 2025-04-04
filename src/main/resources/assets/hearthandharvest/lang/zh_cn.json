@@ -2,7 +2,14 @@
   "itemGroup.hearthandharvest": "暖灶丰年",
 
   "block.hearthandharvest.tree_tapper": "树液收集器",  
-  "block.hearthandharvest.cask": "小木桶",  
+  
+  "block.hearthandharvest.cask": "小木桶", 
+  "hearthandharvest.container.cask.dim": "周围光线昏暗，速度为 2 倍",
+  "hearthandharvest.container.cask.medium": "周围光线适中，速度为 1 倍",
+  "hearthandharvest.container.cask.bright": "周围光线明亮，速度为 0.5 倍",
+  "hearthandharvest.container.cask.default": "未检测到周围光照等级",
+  "hearthandharvest.container.recipe_book.ageable": "仅显示可发酵",
+  
   "block.hearthandharvest.jar": "罐子",  
   "block.hearthandharvest.jug": "陶壶",
 
@@ -14,18 +21,23 @@
 
   "item.hearthandharvest.raspberry": "覆盆子",  
   "item.hearthandharvest.blueberries": "蓝莓",  
-  "item.hearthandharvest.grapes": "葡萄",  
+  "item.hearthandharvest.grapes": "葡萄", 
+  "item.hearthandharvest.cherry": "樱桃",  
   "item.hearthandharvest.peanut": "花生",  
   "item.hearthandharvest.cotton_seeds": "棉花种子",  
   "item.hearthandharvest.cotton": "棉花",
 
+  "block.hearthandharvest.blueberry_crate": "箱装蓝莓",
+  "block.hearthandharvest.cherry_crate": "箱装樱桃",
   "block.hearthandharvest.raspberry_crate": "箱装覆盆子",  
-  "block.hearthandharvest.blueberry_crate": "箱装蓝莓",  
-  "block.hearthandharvest.grape_crate": "箱装葡萄",  
+  "block.hearthandharvest.red_grape_crate": "箱装葡萄",  
   "block.hearthandharvest.peanut_crate": "箱装花生",  
   "block.hearthandharvest.apple_crate": "箱装苹果",  
   "block.hearthandharvest.golden_apple_crate": "箱装金苹果",  
   "block.hearthandharvest.golden_carrot_crate": "箱装金胡萝卜",
+  "block.hearthandharvest.poisonous_potato_crate": "箱装毒马铃薯",
+  "block.hearthandharvest.glow_berry_crate": "箱装发光浆果",
+  "block.hearthandharvest.sweet_berry_crate": "箱装甜浆果",
 
   "block.hearthandharvest.salt_bag": "袋装盐",  
   "block.hearthandharvest.sugar_bag": "袋装糖",  
@@ -34,13 +46,17 @@
 
   "block.hearthandharvest.cotton_bale": "棉花捆",  
   "block.hearthandharvest.spool": "线捆",
+  "block.hearthandharvest.rope_coil": "绳子捆",
 
   "block.hearthandharvest.egg_crate": "箱装鸡蛋",
   "block.hearthandharvest.turtle_egg_crate": "箱装海龟蛋",
   "block.hearthandharvest.milk_crate": "箱装奶瓶",
   "block.hearthandharvest.goat_milk_crate": "箱装山羊奶瓶",
+  "block.hearthandharvest.blueberry_wine_crate": "箱装蓝莓酒",
+  "block.hearthandharvest.cherry_wine_crate": "箱装樱桃酒",
+  "block.hearthandharvest.raspberry_wine_crate": "箱装覆盆子酒",
+  "block.hearthandharvest.red_grape_wine_crate": "箱装红葡萄酒",
   "block.hearthandharvest.mead_crate": "箱装蜂蜜酒", 
-  "block.hearthandharvest.wine_crate": "箱装葡萄酒",
   "block.hearthandharvest.water_crate": "箱装水瓶",
   "block.hearthandharvest.honey_crate": "箱装蜂蜜瓶",
   "block.hearthandharvest.brown_mushroom_crate": "箱装棕色蘑菇",
@@ -50,10 +66,17 @@
 
   "item.hearthandharvest.wooden_bucket": "木桶",
   "item.hearthandharvest.jar": "罐子",
+  "item.hearthandharvest.watering_can": "洒水壶",
+  "item.hearthandharvest.universal_feed": "动物饲料",
 
   "item.hearthandharvest.mead": "蜂蜜酒",
-  "item.hearthandharvest.wine": "葡萄酒",
+  "item.hearthandharvest.red_grape_wine": "红葡萄酒",
+  "item.hearthandharvest.blueberry_wine": "蓝莓酒",
+  "item.hearthandharvest.raspberry_wine": "覆盆子酒",
+  "item.hearthandharvest.cherry_wine": "樱桃酒",
   "item.hearthandharvest.goat_milk_bottle": "山羊奶瓶",
+  "farmersdelight.tooltip.goat_milk_bottle": "清除1个效果",
+  "item.hearthandharvest.cherry_juice": "樱桃汁",
   "item.hearthandharvest.raspberry_juice": "覆盆子汁",
   "item.hearthandharvest.blueberry_juice": "蓝莓汁", 
   "item.hearthandharvest.grape_juice": "葡萄汁",
@@ -78,6 +101,11 @@
   "item.hearthandharvest.cotton_candy": "棉花糖",
   "item.hearthandharvest.blueberry_muffin": "蓝莓马芬",
   "item.hearthandharvest.peanut_butter_cookie": "花生酱曲奇",
+  "item.hearthandharvest.trail_mix": "什锦果仁",
+  
+  "item.hearthandharvest.marshmallow_stick": "绵花糖",
+  "item.hearthandharvest.roasted_marshmallow_stick": "烤绵花糖",
+  "item.hearthandharvest.charred_marshmallow_stick": "烧焦绵花糖",
 
   "block.hearthandharvest.raspberry_pie": "覆盆子派",
   "item.hearthandharvest.raspberry_pie_slice": "覆盆子派切片",
@@ -94,10 +122,14 @@
   "item.hearthandharvest.syrup_bottle": "糖浆瓶",
 
   "item.hearthandharvest.peanut_butter": "花生酱",
-  "block.hearthandharvest.cheese_wheel": "奶酪轮",
-  "item.hearthandharvest.cheese_slice": "奶酪切片",
+  
+  "block.hearthandharvest.unripe_cheddar_cheese_wheel": "生奶酪轮",
+  "block.hearthandharvest.cheddar_cheese_wheel": "奶酪轮",
+  "item.hearthandharvest.cheddar_cheese_slice": "奶酪切片",
+  "block.hearthandharvest.unripe_goat_cheese_wheel": "生山羊奶酪轮",
   "block.hearthandharvest.goat_cheese_wheel": "山羊奶酪轮",
   "item.hearthandharvest.goat_cheese_slice": "山羊奶酪切片",
+  
   "item.hearthandharvest.raw_sausage": "生香肠",
   "item.hearthandharvest.cooked_sausage": "熟香肠",
   "item.hearthandharvest.skewered_sausage": "香肠串",
@@ -111,5 +143,41 @@
   "item.hearthandharvest.macaroni_and_cheese": "奶酪通心粉",
   "item.hearthandharvest.mashed_potatoes": "土豆泥",
   "item.hearthandharvest.peanut_butter_and_jelly_sandwich": "花生酱果酱三明治",
-  "item.hearthandharvest.waffle": "华夫饼"
+  "item.hearthandharvest.waffle": "华夫饼",
+
+  "effect.hearthandharvest.pungent": "刺鼻",
+  "effect.hearthandharvest.pungent.0.desc": "怪物会因为你难闻的气味而避开你",
+
+  "item.minecraft.potion.effect.pungent_potion": "刺鼻药水",
+  "item.minecraft.splash_potion.effect.pungent_potion": "喷溅型刺鼻药水",
+  "item.minecraft.lingering_potion.effect.pungent_potion": "滞留型刺鼻药水",
+  "item.minecraft.tipped_arrow.effect.pungent_potion": "刺鼻之箭",
+
+  "item.minecraft.potion.effect.long_pungent_potion": "刺鼻药水",
+  "item.minecraft.splash_potion.effect.long_pungent_potion": "喷溅型刺鼻药水",
+  "item.minecraft.lingering_potion.effect.long_pungent_potion": "滞留型刺鼻药水",
+  "item.minecraft.tipped_arrow.effect.long_pungent_potion": "刺鼻之箭",
+
+  "item.minecraft.potion.effect.strong_pungent_potion": "刺鼻药水",
+  "item.minecraft.splash_potion.effect.strong_pungent_potion": "喷溅型刺鼻药水",
+  "item.minecraft.lingering_potion.effect.strong_pungent_potion": "滞留型刺鼻药水",
+  "item.minecraft.tipped_arrow.effect.strong_pungent_potion": "刺鼻之箭",
+
+  "effect.hearthandharvest.tempting": "吸引",
+  "effect.hearthandharvest.tempting.0.desc": "让玩家吸引附近的动物",
+
+  "item.minecraft.potion.effect.tempting_potion": "吸引药水",
+  "item.minecraft.splash_potion.effect.tempting_potion": "喷溅型吸引药水",
+  "item.minecraft.lingering_potion.effect.tempting_potion": "滞留型吸引药水",
+  "item.minecraft.tipped_arrow.effect.tempting_potion": "吸引之箭",
+
+  "item.minecraft.potion.effect.long_tempting_potion": "吸引药水",
+  "item.minecraft.splash_potion.effect.long_tempting_potion": "喷溅型吸引药水",
+  "item.minecraft.lingering_potion.effect.long_tempting_potion": "滞留型吸引药水",
+  "item.minecraft.tipped_arrow.effect.long_tempting_potion": "吸引之箭",
+
+  "item.minecraft.potion.effect.strong_tempting_potion": "吸引药水",
+  "item.minecraft.splash_potion.effect.strong_tempting_potion": "喷溅型吸引药水",
+  "item.minecraft.lingering_potion.effect.strong_tempting_potion": "滞留型吸引药水",
+  "item.minecraft.tipped_arrow.effect.strong_tempting_potion": "吸引之箭"
 }
