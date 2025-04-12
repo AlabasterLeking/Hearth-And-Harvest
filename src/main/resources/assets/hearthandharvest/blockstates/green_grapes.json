@@ -13,7 +13,7 @@
       "model": "hearthandharvest:block/green_grapes_stage3"
     },
     "age=0,ropelogged=true": {
-      "model": "hearthandharvest:block/grapes_vine_stage0"
+      "model": "hearthandharvest:block/green_grapes_vine_stage0"
     },
     "age=1,ropelogged=true": {
       "model": "hearthandharvest:block/green_grapes_vine_stage1"
