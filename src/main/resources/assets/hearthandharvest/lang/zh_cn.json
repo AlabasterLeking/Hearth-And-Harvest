@@ -212,5 +212,9 @@
   "hearthandharvest.jei.info.watering_can": "喷壶可通过副手手持骨粉点击补充，或点击水源方块补充水。使用时，可对3x3区域施加骨粉效果，亦可用于熄灭火焰或燃烧的方块。",
   "hearthandharvest.jei.info.tree_tapper": "树汁收集器可放置在云杉或深色橡树上，随时间积累树汁。满时可用桶收集。",
   "hearthandharvest.jei.info.sap_bucket": "可将树汁桶倒入炼药锅，置于火上使之缓慢熬煮成糖浆。可用玻璃瓶收集。",
-  "hearthandharvest.jei.info.wild_grapes": "提子作为野生植物常见于温带地区，如平原和森林。"
+  "hearthandharvest.jei.info.wild_grapes": "提子作为野生植物常见于温带地区，如平原和森林。",
+
+  "fluid_type.hearthandharvest.cooking_oil": "烹调油",
+  "fluid_type.hearthandharvest.sap": "树汁",
+  "fluid_type.hearthandharvest.syrup": "树汁糖浆"
 }
