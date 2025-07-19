@@ -1,8 +1,8 @@
 {
   "type": "hearthandharvest:aging",
-  "conditions": [
+  "neoforge:conditions": [
     {
-      "type": "neoforgeforge:mod_loaded",
+      "type": "neoforge:mod_loaded",
       "modid": "brewinandchewin"
     }
   ],

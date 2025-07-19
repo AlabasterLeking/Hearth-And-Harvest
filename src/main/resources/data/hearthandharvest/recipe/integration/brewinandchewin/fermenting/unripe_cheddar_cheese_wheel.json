@@ -1,5 +1,11 @@
 {
   "type": "brewinandchewin:fermenting",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "brewinandchewin"
+    }
+  ],
   "category": "meals",
   "experience": 1.0,
   "ingredients": [
