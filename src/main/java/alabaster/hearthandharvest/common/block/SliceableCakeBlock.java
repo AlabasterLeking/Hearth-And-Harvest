@@ -64,7 +64,7 @@ public class SliceableCakeBlock extends Block {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack heldStack = player.getItemInHand(hand);
-        if (heldStack.is(ModTags.KNIVES)) {
+        if (heldStack.is(ModTags.Items.KNIVES)) {
             return cutSlice(level, pos, state, player);
         }
         return InteractionResult.PASS;

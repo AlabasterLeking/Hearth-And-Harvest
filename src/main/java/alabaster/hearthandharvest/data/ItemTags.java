@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
-import vectorwing.farmersdelight.common.tag.ForgeTags;
+import vectorwing.farmersdelight.common.tag.CommonTags;
 import vectorwing.farmersdelight.common.tag.ModTags;
 
 import javax.annotation.Nullable;
@@ -36,17 +36,17 @@ public class ItemTags extends ItemTagsProvider {
                 .add(HHModItems.GOLDEN_CLEAVER.get())
                 .add(HHModItems.NETHERITE_CLEAVER.get());
 
-        tag(ModTags.KNIVES)
+        tag(ModTags.Items.KNIVES)
                 .addTag(HHModTags.CLEAVERS);
 
         tag(HHModTags.JAMS).add(HHModItems.GRAPE_JAM.get(), HHModItems.RASPBERRY_JAM.get(), HHModItems.BLUEBERRY_JAM.get(), HHModItems.APPLE_JAM.get(), HHModItems.GLOW_BERRY_JAM.get(), HHModItems.SWEET_BERRY_JAM.get(), HHModItems.MELON_JAM.get());
-        tag(ForgeTags.MILK_BOTTLE).add(HHModItems.GOAT_MILK_BOTTLE.get());
+        tag(CommonTags.Items.MILK_BOTTLE).add(HHModItems.GOAT_MILK_BOTTLE.get());
         tag(HHModTags.CHEESE_SLICES).add(HHModItems.CHEDDAR_CHEESE_SLICE.get(), HHModItems.GOAT_CHEESE_SLICE.get());
-        tag(ForgeTags.BERRIES).add(HHModItems.BLUEBERRIES.get()).add(HHModItems.CHERRY.get()).add(HHModItems.RASPBERRY.get()).add(HHModItems.RED_GRAPES.get()).add(HHModItems.GREEN_GRAPES.get());
+        tag(CommonTags.Items.BERRIES).add(HHModItems.BLUEBERRIES.get()).add(HHModItems.CHERRY.get()).add(HHModItems.RASPBERRY.get()).add(HHModItems.RED_GRAPES.get()).add(HHModItems.GREEN_GRAPES.get());
         tag(Tags.Items.SEEDS).add(HHModItems.COTTON_SEEDS.get()).add(HHModItems.SUNFLOWER_SEEDS.get());
         tag(HHModTags.WINE_BOTTLES).add(HHModItems.BLUEBERRY_WINE.get(), HHModItems.CHERRY_WINE.get(), HHModItems.GREEN_GRAPE_WINE.get(), HHModItems.MEAD.get(), HHModItems.RASPBERRY_WINE.get(), HHModItems.RED_GRAPE_WINE.get(), HHModItems.SWEET_BERRY_WINE.get());
 
-        tag(ModTags.WOODEN_CABINETS)
+        tag(ModTags.Items.CABINETS_WOODEN)
                 .add(HHModItems.OAK_HALF_CABINET.get())
                 .add(HHModItems.SPRUCE_HALF_CABINET.get())
                 .add(HHModItems.BIRCH_HALF_CABINET.get())

@@ -56,7 +56,7 @@ public class GreenGrapeVineBlock extends CropBlock
         } else if (isMature) {
             int quantity = 1 + level.random.nextInt(2);
             popResource(level, pos, new ItemStack(HHModItems.GREEN_GRAPES.get(), quantity));
-            level.playSound(null, pos, ModSounds.ITEM_TOMATO_PICK_FROM_BUSH.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
+            level.playSound(null, pos, ModSounds.BLOCK_TOMATOES_PICK_TOMATOES.get(), SoundSource.BLOCKS, 1.0F, 0.8F + level.random.nextFloat() * 0.4F);
             level.setBlock(pos, state.setValue(getAgeProperty(), 0), 2);
             return InteractionResult.SUCCESS;
         } else {
@@ -88,7 +88,7 @@ public class GreenGrapeVineBlock extends CropBlock
         if (random.nextFloat() < 0.3F) {
             BlockPos posAbove = pos.above();
             BlockState stateAbove = level.getBlockState(posAbove);
-            boolean canClimb = Configuration.ENABLE_TOMATO_VINE_CLIMBING_TAGGED_ROPES.get() ? stateAbove.is(ModTags.ROPES) : stateAbove.is(ModBlocks.ROPE.get());
+            boolean canClimb = Configuration.ENABLE_TOMATO_VINE_CLIMBING_TAGGED_ROPES.get() ? stateAbove.is(ModTags.Blocks.ROPES) : stateAbove.is(ModBlocks.ROPE.get());
             if (canClimb) {
                 int vineHeight;
                 for (vineHeight = 1; level.getBlockState(pos.below(vineHeight)).is(this); ++vineHeight) {

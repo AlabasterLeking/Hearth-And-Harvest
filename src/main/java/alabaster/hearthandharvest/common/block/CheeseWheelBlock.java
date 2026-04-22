@@ -64,7 +64,7 @@ public class CheeseWheelBlock extends Block {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         int servings = state.getValue(SERVINGS);
         ItemStack heldStack = player.getItemInHand(handIn);
-        if (heldStack.is(ModTags.KNIVES)) {
+        if (heldStack.is(ModTags.Items.KNIVES)) {
             level.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F);
             popResource(level, pos, new ItemStack(cheeseWedgeType.get(), 1));
             if (servings > 0) {

@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import vectorwing.farmersdelight.common.registry.ModItems;
-import vectorwing.farmersdelight.common.tag.ForgeTags;
+import vectorwing.farmersdelight.common.tag.CommonTags;
 import vectorwing.farmersdelight.common.tag.ModTags;
 
 import java.util.function.Consumer;
@@ -81,7 +81,7 @@ public class CraftingRecipes
                 .pattern("BCB")
                 .pattern("BBB")
                 .define('i', Tags.Items.INGOTS_IRON)
-                .define('C', ModTags.WOODEN_CABINETS)
+                .define('C', ModTags.Items.CABINETS_WOODEN)
                 .define('B', Items.BRICK)
                 .unlockedBy("has_brick", InventoryChangeTrigger.TriggerInstance.hasItems(Items.BRICK))
                 .save(consumer);
@@ -762,7 +762,7 @@ public class CraftingRecipes
                 .define('T', Items.POTATO)
                 .define('V', Items.CARROT)
                 .define('S', HHModItems.SALT.get())
-                .define('M', ForgeTags.MILK_BOTTLE)
+                .define('M', CommonTags.Items.MILK_BOTTLE)
                 .define('C', vectorwing.farmersdelight.common.registry.ModItems.COOKED_CHICKEN_CUTS.get())
                 .define('O', vectorwing.farmersdelight.common.registry.ModItems.ONION.get())
                 .define('P', vectorwing.farmersdelight.common.registry.ModItems.PIE_CRUST.get())
@@ -784,7 +784,7 @@ public class CraftingRecipes
                 .define('S', Items.SUGAR)
                 .define('W', Items.SUGAR)
                 .define('E', Items.EGG)
-                .define('M', ForgeTags.MILK_BOTTLE)
+                .define('M', CommonTags.Items.MILK_BOTTLE)
                 .unlockedBy("has_carrot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CARROT))
                 .save(consumer);
 
@@ -792,7 +792,7 @@ public class CraftingRecipes
                 .requires(HHModItems.PEANUT.get())
                 .requires(HHModItems.RAISINS.get())
                 .requires(Items.COCOA_BEANS)
-                .requires(ForgeTags.SEEDS)
+                .requires(CommonTags.Items.SEEDS)
                 .unlockedBy("has_raisins", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.RAISINS.get()))
                 .save(consumer, new ResourceLocation(HearthAndHarvest.MODID, "trail_mix"));
 
@@ -822,7 +822,7 @@ public class CraftingRecipes
                 .save(consumer, new ResourceLocation(HearthAndHarvest.MODID, "peanut_butter_and_jelly_sandwich"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.BATTER.get(), 1)
-                .requires(ForgeTags.MILK_BOTTLE)
+                .requires(CommonTags.Items.MILK_BOTTLE)
                 .requires(Items.WHEAT)
                 .requires(Items.WHEAT)
                 .requires(Items.BOWL)

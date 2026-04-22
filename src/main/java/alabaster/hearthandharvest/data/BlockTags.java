@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import vectorwing.farmersdelight.common.tag.ForgeTags;
 import vectorwing.farmersdelight.common.tag.ModTags;
 
 import javax.annotation.Nullable;
@@ -44,7 +43,7 @@ public class BlockTags extends BlockTagsProvider {
     }
 
     protected void registerFDTags() {
-        tag(ModTags.WILD_CROPS).add(
+        tag(ModTags.Blocks.WILD_CROPS).add(
                 HHModBlocks.WILD_RED_GRAPES.get(),
                 HHModBlocks.WILD_GREEN_GRAPES.get(),
                 HHModBlocks.WILD_COTTON.get(),
