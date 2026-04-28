@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_onion": {
+    "has_pasta": {
       "conditions": {
         "items": [
           {
             "items": [
-              "farmersdelight:onion"
+              "farmersdelight:raw_pasta"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/onion_soup"
+        "recipe": "hearthandharvest:cooking/macaroni_and_cheese"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_onion",
+      "has_pasta",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/onion_soup"
+      "hearthandharvest:cooking/macaroni_and_cheese"
     ]
   },
   "sends_telemetry_event": true

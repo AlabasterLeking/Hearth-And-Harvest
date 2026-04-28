@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_green_grapes": {
+    "has_onion": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:green_grapes"
+              "farmersdelight:onion"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/green_grape_juice"
+        "recipe": "hearthandharvest:cooking/onion_soup"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_green_grapes",
+      "has_onion",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/green_grape_juice"
+      "hearthandharvest:cooking/onion_soup"
     ]
   },
   "sends_telemetry_event": true

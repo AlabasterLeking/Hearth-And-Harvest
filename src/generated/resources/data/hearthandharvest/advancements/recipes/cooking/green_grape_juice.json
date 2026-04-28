@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cherries": {
+    "has_green_grapes": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:cherry"
+              "hearthandharvest:green_grapes"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/cherry_juice"
+        "recipe": "hearthandharvest:cooking/green_grape_juice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_cherries",
+      "has_green_grapes",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/cherry_juice"
+      "hearthandharvest:cooking/green_grape_juice"
     ]
   },
   "sends_telemetry_event": true

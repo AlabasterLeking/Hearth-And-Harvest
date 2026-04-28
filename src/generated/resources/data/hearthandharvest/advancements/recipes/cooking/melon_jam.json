@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_blueberries": {
+    "has_melon_slice": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:blueberries"
+              "minecraft:melon_slice"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/blueberry_juice"
+        "recipe": "hearthandharvest:cooking/melon_jam"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_blueberries",
+      "has_melon_slice",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/blueberry_juice"
+      "hearthandharvest:cooking/melon_jam"
     ]
   },
   "sends_telemetry_event": true

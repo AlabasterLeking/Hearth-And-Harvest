@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_raspberry": {
+    "has_sugar": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:raspberry"
+              "minecraft:sugar"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/raspberry_juice"
+        "recipe": "hearthandharvest:cooking/caramel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_raspberry",
+      "has_sugar",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/raspberry_juice"
+      "hearthandharvest:cooking/caramel"
     ]
   },
   "sends_telemetry_event": true

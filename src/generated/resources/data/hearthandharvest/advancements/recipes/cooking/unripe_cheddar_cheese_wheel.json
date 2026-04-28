@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_peanut": {
+    "has_milk_bottle": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:peanut"
+              "farmersdelight:milk_bottle"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/peanut_butter"
+        "recipe": "hearthandharvest:cooking/unripe_cheddar_cheese_wheel"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_peanut",
+      "has_milk_bottle",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/peanut_butter"
+      "hearthandharvest:cooking/unripe_cheddar_cheese_wheel"
     ]
   },
   "sends_telemetry_event": true

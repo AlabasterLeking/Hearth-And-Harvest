@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_glow_berries": {
+    "has_batter": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:glow_berries"
+              "hearthandharvest:batter"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/glow_berry_jam"
+        "recipe": "hearthandharvest:cooking/waffle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_glow_berries",
+      "has_batter",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/glow_berry_jam"
+      "hearthandharvest:cooking/waffle"
     ]
   },
   "sends_telemetry_event": true

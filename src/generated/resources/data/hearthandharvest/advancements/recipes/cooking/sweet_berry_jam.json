@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_potato": {
+    "has_sweet_berries": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:potato"
+              "minecraft:sweet_berries"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/mashed_potatoes"
+        "recipe": "hearthandharvest:cooking/sweet_berry_jam"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_potato",
+      "has_sweet_berries",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/mashed_potatoes"
+      "hearthandharvest:cooking/sweet_berry_jam"
     ]
   },
   "sends_telemetry_event": true

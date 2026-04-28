@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_milk_bottle": {
+    "has_apple": {
       "conditions": {
         "items": [
           {
             "items": [
-              "farmersdelight:milk_bottle"
+              "minecraft:apple"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/unripe_cheddar_cheese_wheel"
+        "recipe": "hearthandharvest:cooking/apple_jam"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_milk_bottle",
+      "has_apple",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/unripe_cheddar_cheese_wheel"
+      "hearthandharvest:cooking/apple_jam"
     ]
   },
   "sends_telemetry_event": true

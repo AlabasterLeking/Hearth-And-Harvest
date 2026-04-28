@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_red_grapes": {
+    "has_caramel": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:red_grapes"
+              "hearthandharvest:caramel"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/red_grape_juice"
+        "recipe": "hearthandharvest:cooking/caramel_apple"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_red_grapes",
+      "has_caramel",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/red_grape_juice"
+      "hearthandharvest:cooking/caramel_apple"
     ]
   },
   "sends_telemetry_event": true

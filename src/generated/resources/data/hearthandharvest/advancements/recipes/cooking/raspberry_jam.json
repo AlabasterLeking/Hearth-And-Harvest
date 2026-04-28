@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_sweet_berries": {
+    "has_raspberry": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:sweet_berries"
+              "hearthandharvest:raspberry"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/sweet_berry_jam"
+        "recipe": "hearthandharvest:cooking/raspberry_jam"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_sweet_berries",
+      "has_raspberry",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/sweet_berry_jam"
+      "hearthandharvest:cooking/raspberry_jam"
     ]
   },
   "sends_telemetry_event": true

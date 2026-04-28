@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_caramel": {
+    "has_peanut": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:caramel"
+              "hearthandharvest:peanut"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/caramel_apple"
+        "recipe": "hearthandharvest:cooking/peanut_butter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_caramel",
+      "has_peanut",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/caramel_apple"
+      "hearthandharvest:cooking/peanut_butter"
     ]
   },
   "sends_telemetry_event": true

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cooked_sausage": {
+    "has_potato": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:cooked_sausage"
+              "minecraft:potato"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/biscuits_and_gravy"
+        "recipe": "hearthandharvest:cooking/mashed_potatoes"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_cooked_sausage",
+      "has_potato",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/biscuits_and_gravy"
+      "hearthandharvest:cooking/mashed_potatoes"
     ]
   },
   "sends_telemetry_event": true

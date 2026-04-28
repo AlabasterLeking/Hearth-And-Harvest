@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_goat_milk_bottle": {
+    "has_blueberries": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:goat_milk_bottle"
+              "hearthandharvest:blueberries"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/unripe_goat_cheese_wheel"
+        "recipe": "hearthandharvest:cooking/blueberry_jam"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_goat_milk_bottle",
+      "has_blueberries",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/unripe_goat_cheese_wheel"
+      "hearthandharvest:cooking/blueberry_jam"
     ]
   },
   "sends_telemetry_event": true

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_red_grapes": {
+    "has_blueberries": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:red_grapes"
+              "hearthandharvest:blueberries"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/grape_jam"
+        "recipe": "hearthandharvest:cooking/blueberry_juice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_red_grapes",
+      "has_blueberries",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/grape_jam"
+      "hearthandharvest:cooking/blueberry_juice"
     ]
   },
   "sends_telemetry_event": true

@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_melon_slice": {
+    "has_cooked_sausage": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:melon_slice"
+              "hearthandharvest:cooked_sausage"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/melon_jam"
+        "recipe": "hearthandharvest:cooking/biscuits_and_gravy"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_melon_slice",
+      "has_cooked_sausage",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/melon_jam"
+      "hearthandharvest:cooking/biscuits_and_gravy"
     ]
   },
   "sends_telemetry_event": true

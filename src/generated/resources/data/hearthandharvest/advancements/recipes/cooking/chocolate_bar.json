@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_batter": {
+    "has_cocoa_beans": {
       "conditions": {
         "items": [
           {
             "items": [
-              "hearthandharvest:batter"
+              "minecraft:cocoa_beans"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "farmersdelight:cooking/waffle"
+        "recipe": "hearthandharvest:cooking/chocolate_bar"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_batter",
+      "has_cocoa_beans",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "farmersdelight:cooking/waffle"
+      "hearthandharvest:cooking/chocolate_bar"
     ]
   },
   "sends_telemetry_event": true
