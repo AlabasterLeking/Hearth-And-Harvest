@@ -54,6 +54,16 @@ public class CookingRecipes
                 .unlockedByItems("has_blueberries", HHModItems.BLUEBERRIES.get())
                 .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
                 .save(consumer);
+        CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.CHERRY_JAM.get(), 1, SLOW_COOKING, MEDIUM_EXP, HHModItems.JAR.get())
+                .addIngredient(HHModItems.CHERRY.get())
+                .addIngredient(HHModItems.CHERRY.get())
+                .addIngredient(HHModItems.CHERRY.get())
+                .addIngredient(Items.SUGAR)
+                .addIngredient(Items.SUGAR)
+                .addIngredient(Items.SUGAR)
+                .unlockedByItems("has_cherries", HHModItems.CHERRY.get())
+                .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
+                .save(consumer);
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.GRAPE_JAM.get(), 1, SLOW_COOKING, MEDIUM_EXP, HHModItems.JAR.get())
                 .addIngredient(HHModItems.RED_GRAPES.get())
                 .addIngredient(HHModItems.RED_GRAPES.get())

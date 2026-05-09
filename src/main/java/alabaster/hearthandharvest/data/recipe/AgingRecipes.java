@@ -78,6 +78,7 @@ public class AgingRecipes {
                 .addIngredient(Items.SWEET_BERRIES)
                 .addIngredient(Items.SWEET_BERRIES)
                 .addIngredient(Items.SUGAR)
+                .addIngredient(Items.GLASS_BOTTLE)
                 .unlockedByAnyIngredient(Items.SWEET_BERRIES)
                 .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
                 .build(consumer);

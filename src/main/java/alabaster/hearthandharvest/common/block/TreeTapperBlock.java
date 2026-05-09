@@ -182,10 +182,13 @@ public class TreeTapperBlock extends Block {
                         if (!player.getAbilities().instabuild) {
                                 player.getItemInHand(hand).shrink(1);
                         }
+
                         player.swing(hand);
                         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                         ItemStack sapBucket = new ItemStack(HHModItems.SAP_BUCKET.get());
-                        player.addItem(sapBucket);
+                        if (!player.addItem(sapBucket)) {
+                            player.drop(sapBucket, false);
+                        }
 
                         level.setBlock(pos, state.setValue(SAP, 0), 2);
 

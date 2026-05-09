@@ -293,33 +293,33 @@ public class HHModItems {
     public static final RegistryObject<Item> JAR = registerWithTab("jar",
             () -> new BlockItem(HHModBlocks.JAR.get(), basicItem()));
     public static final RegistryObject<Item> BLUEBERRY_JAM = registerWithTab("blueberry_jam",
-            () -> new BlockItem(HHModBlocks.BLUEBERRY_JAM.get(), jarItem(HHFoodValues.BLUEBERRY_JAM)));
+            () -> new BlockItem(HHModBlocks.BLUEBERRY_JAM.get(), jarItem(HHFoodValues.BLUEBERRY_JAM).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> CHERRY_JAM = registerWithTab("cherry_jam",
-            () -> new BlockItem(HHModBlocks.CHERRY_JAM.get(), jarItem(HHFoodValues.CHERRY_JAM)));
+            () -> new BlockItem(HHModBlocks.CHERRY_JAM.get(), jarItem(HHFoodValues.CHERRY_JAM).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> RASPBERRY_JAM = registerWithTab("raspberry_jam",
-            () -> new BlockItem(HHModBlocks.RASPBERRY_JAM.get(), jarItem(HHFoodValues.RASPBERRY_JAM)));
+            () -> new BlockItem(HHModBlocks.RASPBERRY_JAM.get(), jarItem(HHFoodValues.RASPBERRY_JAM).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> GRAPE_JAM = registerWithTab("grape_jam",
-            () -> new BlockItem(HHModBlocks.GRAPE_JAM.get(), jarItem(HHFoodValues.GRAPE_JAM)));
+            () -> new BlockItem(HHModBlocks.GRAPE_JAM.get(), jarItem(HHFoodValues.GRAPE_JAM).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> APPLE_JAM = registerWithTab("apple_jam",
-            () -> new BlockItem(HHModBlocks.APPLE_JAM.get(), jarItem(HHFoodValues.APPLE_JAM)));
+            () -> new BlockItem(HHModBlocks.APPLE_JAM.get(), jarItem(HHFoodValues.APPLE_JAM).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> SWEET_BERRY_JAM = registerWithTab("sweet_berry_jam",
-            () -> new BlockItem(HHModBlocks.SWEET_BERRY_JAM.get(), jarItem(HHFoodValues.SWEET_BERRY_JAM)));
+            () -> new BlockItem(HHModBlocks.SWEET_BERRY_JAM.get(), jarItem(HHFoodValues.SWEET_BERRY_JAM).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> GLOW_BERRY_JAM = registerWithTab("glow_berry_jam",
-            () -> new BlockItem(HHModBlocks.GLOW_BERRY_JAM.get(), jarItem(HHFoodValues.GLOW_BERRY_JAM)));
+            () -> new BlockItem(HHModBlocks.GLOW_BERRY_JAM.get(), jarItem(HHFoodValues.GLOW_BERRY_JAM).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> MELON_JAM = registerWithTab("melon_jam",
-            () -> new BlockItem(HHModBlocks.MELON_JAM.get(), jarItem(HHFoodValues.MELON_JAM)));
+            () -> new BlockItem(HHModBlocks.MELON_JAM.get(), jarItem(HHFoodValues.MELON_JAM).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> PEANUT_BUTTER = registerWithTab("peanut_butter",
-            () -> new BlockItem(HHModBlocks.PEANUT_BUTTER.get(), jarItem(HHFoodValues.PEANUT_BUTTER)));
+            () -> new BlockItem(HHModBlocks.PEANUT_BUTTER.get(), jarItem(HHFoodValues.PEANUT_BUTTER).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> PICKLED_BEETROOTS = registerWithTab("pickled_beetroots",
-            () -> new BlockItem(HHModBlocks.PICKLED_BEETROOTS.get(), jarItem(HHFoodValues.PICKLED_BEETROOTS)));
+            () -> new BlockItem(HHModBlocks.PICKLED_BEETROOTS.get(), jarItem(HHFoodValues.PICKLED_BEETROOTS).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> PICKLED_CABBAGE = registerWithTab("pickled_cabbage",
-            () -> new BlockItem(HHModBlocks.PICKLED_CABBAGE.get(), jarItem(HHFoodValues.PICKLED_CABBAGE)));
+            () -> new BlockItem(HHModBlocks.PICKLED_CABBAGE.get(), jarItem(HHFoodValues.PICKLED_CABBAGE).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> PICKLED_CARROTS = registerWithTab("pickled_carrots",
-            () -> new BlockItem(HHModBlocks.PICKLED_CARROTS.get(), jarItem(HHFoodValues.PICKLED_CARROTS)));
+            () -> new BlockItem(HHModBlocks.PICKLED_CARROTS.get(), jarItem(HHFoodValues.PICKLED_CARROTS).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> PICKLED_ONIONS = registerWithTab("pickled_onions",
-            () -> new BlockItem(HHModBlocks.PICKLED_ONIONS.get(), jarItem(HHFoodValues.PICKLED_ONIONS)));
+            () -> new BlockItem(HHModBlocks.PICKLED_ONIONS.get(), jarItem(HHFoodValues.PICKLED_ONIONS).craftRemainder(HHModItems.JAR.get())));
     public static final RegistryObject<Item> PICKLED_POTATOES = registerWithTab("pickled_potatoes",
-            () -> new BlockItem(HHModBlocks.PICKLED_POTATOES.get(), jarItem(HHFoodValues.PICKLED_POTATOES)));
+            () -> new BlockItem(HHModBlocks.PICKLED_POTATOES.get(), jarItem(HHFoodValues.PICKLED_POTATOES).craftRemainder(HHModItems.JAR.get())));
 
     // Sweets
     public static final RegistryObject<Item> CARAMEL = registerWithTab("caramel",
@@ -353,7 +353,7 @@ public class HHModItems {
     public static final Supplier<Item> SAP_BUCKET = registerWithTab("sap_bucket",
             () -> new BucketItem(HHModFluids.SAP.get(), basicItem().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final RegistryObject<Item> SYRUP_BOTTLE = registerWithTab("syrup_bottle",
-            () -> new Item(basicItem()));
+            () -> new Item(basicItem().craftRemainder(Items.GLASS_BOTTLE)));
 
     // Pies
     public static final RegistryObject<Item> BLUEBERRY_PIE = registerWithTab("blueberry_pie",

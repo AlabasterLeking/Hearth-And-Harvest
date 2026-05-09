@@ -1,0 +1,10 @@
+{
+  "type": "hearthandharvest:bottle_crate",
+  "input": {
+    "item": "hearthandharvest:syrup_bottle"
+  },
+  "result": {
+    "item": "hearthandharvest:syrup_crate",
+    "count": 1
+  }
+}
