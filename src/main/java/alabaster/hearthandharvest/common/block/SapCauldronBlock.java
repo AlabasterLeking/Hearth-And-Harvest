@@ -16,20 +16,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fml.common.Mod;
 import vectorwing.farmersdelight.common.registry.ModParticleTypes;
+import vectorwing.farmersdelight.common.tag.CommonTags;
+import vectorwing.farmersdelight.common.tag.ModTags;
 
 public class SapCauldronBlock extends AbstractCauldronBlock {
     public static final IntegerProperty SAP_LEVEL = IntegerProperty.create("sap_level", 0, 3);
@@ -104,14 +105,7 @@ public class SapCauldronBlock extends AbstractCauldronBlock {
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int currentLevel = state.getValue(SAP_LEVEL);
-        BlockState belowState = level.getBlockState(pos.below());
-
-        boolean isLit = false;
-        if (belowState.hasProperty(BlockStateProperties.LIT)) {
-            isLit = belowState.getValue(BlockStateProperties.LIT);
-        } else if (belowState.is(Blocks.FIRE)) {
-            isLit = true;
-        }
+        boolean isLit = level.getBlockState(pos.below()).is(ModTags.Blocks.HEAT_SOURCES);
 
         if (currentLevel > 1 && isLit) {
             int newLevel = currentLevel - 1;
@@ -130,13 +124,7 @@ public class SapCauldronBlock extends AbstractCauldronBlock {
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         int currentLevel = state.getValue(SAP_LEVEL);
         if (currentLevel > 0) {
-            BlockState belowState = level.getBlockState(pos.below());
-            boolean isLit = false;
-            if (belowState.hasProperty(BlockStateProperties.LIT)) {
-                isLit = belowState.getValue(BlockStateProperties.LIT);
-            } else if (belowState.getBlock() == Blocks.FIRE) {
-                isLit = true;
-            }
+            boolean isLit = level.getBlockState(pos.below()).is(ModTags.HEAT_SOURCES);
             if (isLit) {
                 if (random.nextFloat() < 0.2F) {
                     double x = pos.getX() + 0.5D + (random.nextDouble() * 0.6D - 0.3D);
