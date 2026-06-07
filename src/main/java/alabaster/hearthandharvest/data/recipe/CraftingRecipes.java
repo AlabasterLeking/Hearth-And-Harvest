@@ -766,6 +766,13 @@ public class CraftingRecipes
                 .unlockedBy("has_polished_manure", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.POLISHED_MANURE.get()))
                 .group("walls")
                 .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.MULCH.get(), 1)
+                .pattern("##")
+                .pattern("##")
+                .define('#', ModItems.TREE_BARK.get())
+                .unlockedBy("has_tree_bark", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TREE_BARK.get()))
+                .save(output);
     }
 
     private static void recipesTools(RecipeOutput output) {

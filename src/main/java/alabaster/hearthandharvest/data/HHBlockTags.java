@@ -364,7 +364,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.MANURE_BRICK_STAIRS.get(),
                 HHModBlocks.POLISHED_MANURE_STAIRS.get(),
                 HHModBlocks.MANURE_BRICK_SLAB.get(),
-                HHModBlocks.POLISHED_MANURE.get(),
+                HHModBlocks.POLISHED_MANURE_SLAB.get(),
                 HHModBlocks.MANURE_BRICK_WALL.get(),
                 HHModBlocks.POLISHED_MANURE_WALL.get()
         );

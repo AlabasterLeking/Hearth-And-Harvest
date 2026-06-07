@@ -105,6 +105,14 @@ public class HHBlockLoot extends BlockLootSubProvider {
         dropSelf(HHModBlocks.POLISHED_SALT_WALL.get());
         dropSelf(HHModBlocks.SALT_DRIP.get());
         dropSelf(HHModBlocks.SALT_LAMP.get());
+        dropSelf(HHModBlocks.MANURE_BLOCK.get());
+        dropSelf(HHModBlocks.MANURE_BRICKS_BLOCK.get());
+        dropSelf(HHModBlocks.POLISHED_MANURE.get());
+        dropSelf(HHModBlocks.MANURE_BRICK_STAIRS.get());
+        dropSelf(HHModBlocks.POLISHED_MANURE_STAIRS.get());
+        dropSelf(HHModBlocks.MANURE_BRICK_WALL.get());
+        dropSelf(HHModBlocks.POLISHED_MANURE_WALL.get());
+        dropSelf(HHModBlocks.MULCH.get());
     }
 
     @Override
