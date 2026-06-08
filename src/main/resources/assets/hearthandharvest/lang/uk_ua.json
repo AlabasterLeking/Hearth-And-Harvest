@@ -30,6 +30,8 @@
   "tooltip.hearthandharvest.jug.full": "Бідон повний!",
   "tooltip.hearthandharvest.jug.wrong_fluid": "Рідина не підходить!",
 
+  "block.hearthandharvest.trough": "Корито",
+
   "block.hearthandharvest.counter": "Стільниця",
   "block.hearthandharvest.drawer": "Шухляда",
   "block.hearthandharvest.basin": "Раковина",
@@ -151,6 +153,7 @@
   "block.hearthandharvest.cocoa_bean_bag": "Мішок какао-бобів",
   "block.hearthandharvest.gunpowder_bag": "Мішок пороху",
   "block.hearthandharvest.corn_kernel_bag": "Мішок кукурудзяних зерен",
+  "block.hearthandharvest.flour_bag": "Мішок борошна",
   "block.hearthandharvest.cotton_bale": "Копиця бавовни",
   "block.hearthandharvest.spool": "Котушка",
   "block.hearthandharvest.rope_coil": "Моток мотузки",
