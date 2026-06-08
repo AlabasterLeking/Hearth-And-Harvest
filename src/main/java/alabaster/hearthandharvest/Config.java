@@ -26,6 +26,7 @@ public class Config {
     public static ModConfigSpec.IntValue SALT_ANIMAL_RADIUS;
     public static ModConfigSpec.IntValue SALT_LICK_INTERVAL;
     public static ModConfigSpec.DoubleValue SALT_PLAYER_LICK_CHANCE;
+    public static ModConfigSpec.IntValue TROUGH_ANIMAL_CAP;
 
     public Config() {
     }
@@ -95,6 +96,10 @@ public class Config {
         SALT_PLAYER_LICK_CHANCE = COMMON_BUILDER
                 .comment("Chance (0.0–1.0) that a player's right-click lick degrades the salt block.")
                 .defineInRange("saltPlayerLickChance", 0.05D, 0.0D, 1.0D);
+
+        TROUGH_ANIMAL_CAP = COMMON_BUILDER
+                .comment("Max animals in a 10-block radius before the food trough stops triggering breeding.")
+                .defineInRange("troughBreedingCap", 16, 1, 256);
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }

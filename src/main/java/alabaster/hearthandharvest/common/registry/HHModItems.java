@@ -101,6 +101,8 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.STOMPING_BASIN.get(), basicItem()));
     public static final Supplier<Item> JUG = registerWithTab("jug",
             () -> new JugBlockItem(HHModBlocks.JUG.get(), basicItem()));
+    public static final Supplier<Item> TROUGH = registerWithTab("trough",
+            () -> new BlockItem(HHModBlocks.TROUGH.get(), basicItem()));
 
     public static final Supplier<Item> COUNTER = registerWithBlockTab("counter",
             () -> new BlockItem(HHModBlocks.COUNTER.get(), basicItem()));
@@ -295,6 +297,8 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.GUNPOWDER_BAG.get(), basicItem()));
     public static final Supplier<Item> CORN_KERNEL_BAG = registerWithBlockTab("corn_kernel_bag",
             () -> new BlockItem(HHModBlocks.CORN_KERNEL_BAG.get(), basicItem()));
+    public static final Supplier<Item> FLOUR_BAG = registerWithBlockTab("flour_bag",
+            () -> new BlockItem(HHModBlocks.FLOUR_BAG.get(), basicItem()));
     public static final Supplier<Item> MANURE_BAG = registerWithBlockTab("manure_bag",
             () -> new BlockItem(HHModBlocks.MANURE_BAG.get(), basicItem()));
     

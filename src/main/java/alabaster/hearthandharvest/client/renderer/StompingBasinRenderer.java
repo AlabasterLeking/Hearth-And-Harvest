@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.client.renderer;
 
+import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.MultiblockPart;
 import alabaster.hearthandharvest.common.block.entity.StompingBasinBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -29,33 +30,32 @@ import org.joml.Matrix4f;
 
 public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinBlockEntity> {
 
-    private static final float INNER_MIN  = 2f  / 16f;
-    private static final float INNER_MAX  = 14f / 16f;
-
-    private static final float SCATTER_MIN  = 5f  / 16f;
-    private static final float SCATTER_MAX  = 11f / 16f;
+    private static final float INNER_MIN = 2f / 16f;
+    private static final float INNER_MAX = 14f / 16f;
+    private static final float SCATTER_MIN = 7f / 16f;
+    private static final float SCATTER_MAX = 9f / 16f;
     private static final float SCATTER_SIZE = SCATTER_MAX - SCATTER_MIN;
 
-    private static final float BIG_INNER_MIN   = 2f  / 16f;
-    private static final float BIG_INNER_MAX   = 30f / 16f;
+    private static final float BIG_INNER_MIN = 2f / 16f;
+    private static final float BIG_INNER_MAX = 30f / 16f;
 
-    private static final float BIG_SCATTER_MIN  = 5f  / 16f;
-    private static final float BIG_SCATTER_MAX  = 27f / 16f;
+    private static final float BIG_SCATTER_MIN = 5f / 16f;
+    private static final float BIG_SCATTER_MAX = 27f / 16f;
     private static final float BIG_SCATTER_SIZE = BIG_SCATTER_MAX - BIG_SCATTER_MIN;
 
-    private static final float FLOOR_Y     = 1f / 16f + 0.002f;
+    private static final float FLOOR_Y = 1f / 16f + 0.002f;
     private static final float FLUID_MIN_Y = 1f / 16f + 0.01f;
     private static final float FLUID_MAX_Y = 11f / 16f;
     private static final float ITEM_Y_STEP = 0.001f;
 
     private static final ModelResourceLocation MODEL_NW = ModelResourceLocation.standalone(
-            ResourceLocation.fromNamespaceAndPath("hearthandharvest", "block/big_stomping_basin_nw"));
+            ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/big_stomping_basin_nw"));
     private static final ModelResourceLocation MODEL_NE = ModelResourceLocation.standalone(
-            ResourceLocation.fromNamespaceAndPath("hearthandharvest", "block/big_stomping_basin_ne"));
+            ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/big_stomping_basin_ne"));
     private static final ModelResourceLocation MODEL_SW = ModelResourceLocation.standalone(
-            ResourceLocation.fromNamespaceAndPath("hearthandharvest", "block/big_stomping_basin_sw"));
+            ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/big_stomping_basin_sw"));
     private static final ModelResourceLocation MODEL_SE = ModelResourceLocation.standalone(
-            ResourceLocation.fromNamespaceAndPath("hearthandharvest", "block/big_stomping_basin_se"));
+            ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/big_stomping_basin_se"));
 
     public StompingBasinRenderer(BlockEntityRendererProvider.Context ctx) { }
 
@@ -117,7 +117,7 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
     }
 
     private void renderScatteredItems(StompingBasinBlockEntity source, PoseStack ps, MultiBufferSource buf, int packedLight, int packedOverlay, boolean combined) {
-        float scatterMin  = combined ? BIG_SCATTER_MIN  : SCATTER_MIN;
+        float scatterMin  = combined ? BIG_SCATTER_MIN : SCATTER_MIN;
         float scatterSize = combined ? BIG_SCATTER_SIZE : SCATTER_SIZE;
         long seed = source.getBlockPos().asLong();
         int renderIndex = 0;
@@ -129,11 +129,11 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
             if (stack.isEmpty()) continue;
 
             for (int i = 0; i < stack.getCount(); i++, renderIndex++) {
-                float[] pos    = itemPosition(seed, renderIndex);
-                float offsetX  = scatterMin + pos[0] * scatterSize;
-                float offsetZ  = scatterMin + pos[1] * scatterSize;
+                float[] pos = itemPosition(seed, renderIndex);
+                float offsetX = scatterMin + pos[0] * scatterSize;
+                float offsetZ = scatterMin + pos[1] * scatterSize;
                 float rotation = pos[2] * 360f;
-                float itemY    = FLOOR_Y + renderIndex * ITEM_Y_STEP;
+                float itemY = FLOOR_Y + renderIndex * ITEM_Y_STEP;
 
                 ps.pushPose();
                 ps.translate(offsetX, itemY, offsetZ);
@@ -160,8 +160,7 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
         FluidStack fluid = source.getFluidTank().getFluid();
         if (fluid.isEmpty()) return;
 
-        float fill = (float) source.getFluidTank().getFluidAmount()
-                / (float) source.getFluidTank().getCapacity();
+        float fill = (float) source.getFluidTank().getFluidAmount() / (float) source.getFluidTank().getCapacity();
         if (fill <= 0f) return;
 
         float surfaceY = FLUID_MIN_Y + fill * (FLUID_MAX_Y - FLUID_MIN_Y);
@@ -177,7 +176,7 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
         int color = ext.getTintColor(fluid);
         float r = ((color >> 16) & 0xFF) / 255f;
         float g = ((color >>  8) & 0xFF) / 255f;
-        float b = ( color        & 0xFF) / 255f;
+        float b = ( color & 0xFF) / 255f;
         float a = ((color >> 24) & 0xFF) / 255f;
         if (a == 0f) a = 0.75f;
 
@@ -189,10 +188,10 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
 
         if (combined) {
             float mid = 1f;
-            emitFluidQuad(vc, m, BIG_INNER_MIN, mid,           BIG_INNER_MIN, mid,          surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight); // NW
-            emitFluidQuad(vc, m, mid,           BIG_INNER_MAX, BIG_INNER_MIN, mid,           surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight); // NE
-            emitFluidQuad(vc, m, BIG_INNER_MIN, mid,           mid,           BIG_INNER_MAX, surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight); // SW
-            emitFluidQuad(vc, m, mid,           BIG_INNER_MAX, mid,           BIG_INNER_MAX, surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight); // SE
+            emitFluidQuad(vc, m, BIG_INNER_MIN, mid, BIG_INNER_MIN, mid, surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight); // NW
+            emitFluidQuad(vc, m, mid, BIG_INNER_MAX, BIG_INNER_MIN, mid, surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight); // NE
+            emitFluidQuad(vc, m, BIG_INNER_MIN, mid, mid, BIG_INNER_MAX, surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight); // SW
+            emitFluidQuad(vc, m, mid, BIG_INNER_MAX, mid, BIG_INNER_MAX, surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight); // SE
         } else {
             emitFluidQuad(vc, m, INNER_MIN, INNER_MAX, INNER_MIN, INNER_MAX,
                     surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight);

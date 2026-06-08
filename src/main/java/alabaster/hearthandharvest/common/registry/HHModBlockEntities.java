@@ -58,6 +58,9 @@ public class HHModBlockEntities {
     public static final Supplier<BlockEntityType<StompingBasinBlockEntity>> STOMPING_BASIN = BLOCK_ENTITY_TYPES.register("stomping_basin_tile",
             () -> BlockEntityType.Builder.of(StompingBasinBlockEntity::new, HHModBlocks.STOMPING_BASIN.get()).build(null));
 
+    public static final Supplier<BlockEntityType<TroughBlockEntity>> TROUGH = BLOCK_ENTITY_TYPES.register("trough_tile",
+            () -> BlockEntityType.Builder.of(TroughBlockEntity::new, HHModBlocks.TROUGH.get()).build(null));
+
     @SubscribeEvent
     public static void addCabinetsBlockEntities(BlockEntityTypeAddBlocksEvent event) {
         List<Block> cabinets = new ArrayList<>(List.of(

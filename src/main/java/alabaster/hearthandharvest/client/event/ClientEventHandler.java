@@ -89,7 +89,10 @@ public class ClientEventHandler {
                 HHModBlockEntities.JAR.get(),
                 JarRenderer::new
         );
-
+        event.registerBlockEntityRenderer(
+                HHModBlockEntities.TROUGH.get(),
+                TroughRenderer::new
+        );
     }
 
     @SubscribeEvent

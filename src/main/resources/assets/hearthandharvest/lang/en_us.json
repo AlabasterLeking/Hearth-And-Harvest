@@ -30,6 +30,8 @@
   "tooltip.hearthandharvest.jug.full": "Jug is full!",
   "tooltip.hearthandharvest.jug.wrong_fluid": "Fluid does not match!",
 
+  "block.hearthandharvest.trough": "Trough",
+
   "block.hearthandharvest.counter": "Counter",
   "block.hearthandharvest.drawer": "Drawer",
   "block.hearthandharvest.basin": "Sink",
@@ -152,6 +154,7 @@
   "block.hearthandharvest.cocoa_bean_bag": "Bag of Cocoa Beans",
   "block.hearthandharvest.gunpowder_bag": "Bag of Gunpowder",
   "block.hearthandharvest.corn_kernel_bag": "Bag of Corn Kernels",
+  "block.hearthandharvest.flour_bag": "Bag of Flour",
   "block.hearthandharvest.cotton_bale": "Cotton Bale",
   "block.hearthandharvest.spool": "Spool",
   "block.hearthandharvest.rope_coil": "Rope Coil",
@@ -277,7 +280,7 @@
   "item.hearthandharvest.wet_manure_brick": "Wet Manure Brick",
   "item.hearthandharvest.manure_brick": "Manure Brick",
   "block.hearthandharvest.manure_block": "Manure Block",
-  "block.hearthandharvest.manure_bag": "Manure Bag",
+  "block.hearthandharvest.manure_bag": "Bag of Manure",
   "block.hearthandharvest.mulch": "Mulch",
   "block.hearthandharvest.manure_bricks": "Manure Bricks",
   "block.hearthandharvest.polished_manure": "Polished Manure",

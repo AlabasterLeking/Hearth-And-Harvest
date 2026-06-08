@@ -181,6 +181,8 @@ public class HHBlockTags extends BlockTagsProvider {
                 .add(HHModBlocks.COCOA_BEAN_BAG.get());
         tag(HHCommonTags.STORAGE_BLOCKS_GUNPOWDER)
                 .add(HHModBlocks.GUNPOWDER_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_FLOUR)
+                .add(HHModBlocks.FLOUR_BAG.get());
         tag(HHCommonTags.STORAGE_BLOCKS_MANURE)
                 .add(HHModBlocks.MANURE_BAG.get());
         tag(HHCommonTags.STORAGE_BLOCKS_STRING)
@@ -237,6 +239,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.SALT_BAG.get(),
                 HHModBlocks.SUGAR_BAG.get(),
                 HHModBlocks.COCOA_BEAN_BAG.get(),
+                HHModBlocks.FLOUR_BAG.get(),
                 HHModBlocks.MANURE_BAG.get(),
                 HHModBlocks.COTTON_BALE.get(),
                 HHModBlocks.SPOOL.get(),
@@ -382,6 +385,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.SUGAR_BAG.get(),
                 HHModBlocks.COCOA_BEAN_BAG.get(),
                 HHModBlocks.CORN_KERNEL_BAG.get(),
+                HHModBlocks.FLOUR_BAG.get(),
                 HHModBlocks.GUNPOWDER_BAG.get(),
                 HHModBlocks.MANURE_BAG.get()
         );

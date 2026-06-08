@@ -586,6 +586,13 @@ public class CraftingRecipes
                 .define('#', Items.GUNPOWDER)
                 .unlockedBy("has_gunpowder", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GUNPOWDER))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.FLOUR_BAG.get(), 1)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', HHModItems.FLOUR.get())
+                .unlockedBy("has_flour", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.FLOUR.get()))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.MANURE_BAG.get(), 1)
                 .pattern("###")
                 .pattern("###")
@@ -891,6 +898,10 @@ public class CraftingRecipes
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.CORN_KERNELS.get(), 9)
                 .requires(HHModItems.CORN_KERNEL_BAG.get())
                 .unlockedBy("has_corn_kernel_bag", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CORN_KERNEL_BAG.get()))
+                .save(output);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.FLOUR.get(), 9)
+                .requires(HHModItems.FLOUR_BAG.get())
+                .unlockedBy("has_flour_bag", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.FLOUR_BAG.get()))
                 .save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HHModItems.CORN_HUSK.get(), 9)
                 .requires(HHModItems.CORN_HUSK_BUNDLE.get())

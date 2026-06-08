@@ -28,6 +28,9 @@ public class HHModBlocks {
             () -> new CaskBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD).randomTicks()));
     public static final Supplier<Block> JUG = BLOCKS.register("jug",
             () -> new JugBlock(Block.Properties.ofFullCopy(Blocks.IRON_BARS).strength(2.0F, 3.0F).sound(SoundType.METAL)));
+    public static final Supplier<Block> TROUGH = BLOCKS.register("trough",
+            () -> new TroughBlock(Block.Properties.ofFullCopy(Blocks.CAULDRON)));
+
 
     public static final Supplier<Block> SAP_CAULDRON = BLOCKS.register("sap_cauldron",
             () -> new SapCauldronBlock(Block.Properties.ofFullCopy(Blocks.CAULDRON).strength(2.0F, 3.0F).sound(SoundType.METAL).randomTicks()));
@@ -226,6 +229,10 @@ public class HHModBlocks {
             () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
     public static final Supplier<Block> CORN_KERNEL_BAG = BLOCKS.register("corn_kernel_bag",
             () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
+    public static final Supplier<Block> FLOUR_BAG = BLOCKS.register("flour_bag",
+            () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
+    public static final Supplier<Block> MANURE_BAG = BLOCKS.register("manure_bag",
+            () -> new ManureBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
     
     // Misc Storage Blocks
     public static final Supplier<Block> COTTON_BALE = BLOCKS.register("cotton_bale",
@@ -354,8 +361,6 @@ public class HHModBlocks {
     // Manure
     public static final Supplier<Block> MANURE_BLOCK = BLOCKS.register("manure_block",
             () -> new ManureBlock(Block.Properties.ofFullCopy(Blocks.MUD).strength(1.0F, 2.0F).sound(SoundType.MUD).randomTicks()));
-    public static final Supplier<Block> MANURE_BAG = BLOCKS.register("manure_bag",
-            () -> new ManureBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
 
     public static final Supplier<Block> MANURE_BRICKS_BLOCK = BLOCKS.register("manure_bricks",
             () -> new Block(Block.Properties.ofFullCopy(Blocks.MUD_BRICKS).strength(2.5F, 3.0F).sound(SoundType.MUD_BRICKS).randomTicks()));
