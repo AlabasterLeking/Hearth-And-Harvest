@@ -289,7 +289,7 @@
   "block.hearthandharvest.manure_brick_wall": "Стіна з гнойових цеглин",
   "block.hearthandharvest.polished_manure_wall": "Стіна з полірованого гною",
 
-  "hearthandharvest.subtitles.entity.fart": "Тварина пердить",
+  "hearthandharvest.subtitles.entity.fart": "Пукає",
 
   "item.hearthandharvest.cooking_oil": "Олія",
 
@@ -427,5 +427,8 @@
   "fluid_type.hearthandharvest.glow_berry_juice": "Сік сяйних ягід",
 
   "item.hearthandharvest.blueberry_pips": "Насіння чорниці",
-  "item.hearthandharvest.raspberry_pips": "Насіння малини"
+  "item.hearthandharvest.raspberry_pips": "Насіння малини",
+
+  "key.hearthandharvest.poop": "Послід",
+  "key.categories.hearthandharvest": "Hearth and Harvest"
 }
