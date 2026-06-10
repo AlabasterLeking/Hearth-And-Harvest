@@ -27,8 +27,8 @@ public class TroughRenderer implements BlockEntityRenderer<TroughBlockEntity> {
     private static final float SCATTER_MAX = 9f / 16f;
     private static final float SCATTER_SIZE = SCATTER_MAX - SCATTER_MIN;
 
-    private static final float FLOOR_Y = 2f / 16f + 0.002f;
-    private static final float FLUID_MIN_Y = 2f / 16f + 0.01f;
+    private static final float FLOOR_Y = 3f / 16f + 0.002f;
+    private static final float FLUID_MIN_Y = 3f / 16f + 0.002f;
     private static final float FLUID_MAX_Y = 7.4f / 16f;
     private static final float MAX_PILE_HEIGHT = 6f / 16f;
 

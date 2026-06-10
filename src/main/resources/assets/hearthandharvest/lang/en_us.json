@@ -291,7 +291,7 @@
   "block.hearthandharvest.manure_brick_wall": "Manure Brick Wall",
   "block.hearthandharvest.polished_manure_wall": "Polished Manure Wall",
 
-  "hearthandharvest.subtitles.entity.fart": "Animal farting",
+  "hearthandharvest.subtitles.entity.fart": "Farting",
 
   "item.hearthandharvest.cooking_oil": "Cooking Oil",
 
@@ -430,5 +430,8 @@
   "fluid_type.hearthandharvest.glow_berry_juice": "Glow Berry Juice",
 
   "item.hearthandharvest.blueberry_pips": "Blueberry Pips",
-  "item.hearthandharvest.raspberry_pips": "Raspberry Pips"
+  "item.hearthandharvest.raspberry_pips": "Raspberry Pips",
+
+  "key.hearthandharvest.poop": "Poop",
+  "key.categories.hearthandharvest": "Hearth and Harvest"
 }

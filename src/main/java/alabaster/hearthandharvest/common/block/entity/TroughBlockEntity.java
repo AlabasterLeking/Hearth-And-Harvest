@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.block.entity;
 
 import alabaster.hearthandharvest.Config;
+import alabaster.hearthandharvest.common.entity.ManureDropHelper;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -84,9 +85,7 @@ public class TroughBlockEntity extends BlockEntity {
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, TroughBlockEntity be) {
         // Rain fills the water trough if exposed to sky (1 bucket in ~4 min of rain)
-        if (level.getGameTime() % 20 == 0
-                && be.itemHandler.getStackInSlot(0).isEmpty()
-                && level.isRainingAt(pos)) {
+        if (level.getGameTime() % 20 == 0 && be.itemHandler.getStackInSlot(0).isEmpty() && level.isRainingAt(pos.above())) {
             be.fluidTank.fill(new FluidStack(Fluids.WATER, RAIN_FILL_PER_SECOND), IFluidHandler.FluidAction.EXECUTE);
         }
 
@@ -120,6 +119,7 @@ public class TroughBlockEntity extends BlockEntity {
                     food = be.itemHandler.getStackInSlot(0);
                     if (nearbyCount >= cap || food.isEmpty()) break;
                     animal.setInLove((ServerPlayer) null);
+                    ManureDropHelper.schedulePoop(animal);
                     be.itemHandler.extractItem(0, 1, false);
                     level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.BLOCKS,
                             0.5f, 0.8f + level.random.nextFloat() * 0.4f);

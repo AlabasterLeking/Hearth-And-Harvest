@@ -1,19 +1,27 @@
 package alabaster.hearthandharvest.client.event;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.client.gui.CaskGUI;
 import alabaster.hearthandharvest.client.particle.DrippingSapParticle;
 import alabaster.hearthandharvest.client.particle.FliesParticle;
+import alabaster.hearthandharvest.client.recipebook.RecipeCategories;
 import alabaster.hearthandharvest.client.renderer.*;
+import alabaster.hearthandharvest.common.entity.crow.CrowModel;
+import alabaster.hearthandharvest.common.entity.crow.CrowRenderer;
 import alabaster.hearthandharvest.common.block.trellis.TrellisBlock;
 import alabaster.hearthandharvest.common.block.trellis.TrellisPlant;
 import alabaster.hearthandharvest.common.entity.crow.CrowOnShoulderLayer;
 import alabaster.hearthandharvest.common.item.component.SeedPouchContents;
+import alabaster.hearthandharvest.common.network.PlayerPoopPacket;
 import alabaster.hearthandharvest.common.registry.*;
 import alabaster.hearthandharvest.common.utilities.BasinBlockColor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -24,11 +32,13 @@ import net.minecraft.world.level.FoliageColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 @SuppressWarnings("unused")
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -165,6 +175,7 @@ public class ClientEventHandler {
         }, type);
     }
 
+    @SubscribeEvent
     public static void registerItemDecorations(RegisterItemDecorationsEvent event) {
         event.register(HHModItems.SEED_POUCH.get(), (guiGraphics, font, stack, xOffset, yOffset) -> {
             SeedPouchContents contents = stack.get(HHModDataComponents.SEED_POUCH_CONTENTS.get());
@@ -178,5 +189,62 @@ public class ClientEventHandler {
             pose.popPose();
             return true;
         });
+    }
+
+    private static int cooldownTicks = 0;
+
+    public static void startCooldown() {
+        cooldownTicks = 300;
+    }
+
+    @SubscribeEvent
+    public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+        event.register(HHKeyBindings.POOP);
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent.Post event) {
+        while (HHKeyBindings.POOP.consumeClick()) {
+            PacketDistributor.sendToServer(new PlayerPoopPacket());
+        }
+        if (cooldownTicks <= 0) return;
+        cooldownTicks--;
+        if (cooldownTicks % 4 != 0) return;
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+        ClientLevel level = mc.level;
+        if (player == null || level == null) return;
+        for (int i = 0; i < 2; i++) {
+            double ox = (level.random.nextDouble() - 0.5) * 1.5;
+            double oy = level.random.nextDouble() * player.getBbHeight();
+            double oz = (level.random.nextDouble() - 0.5) * 1.5;
+            level.addParticle(HHModParticleTypes.FLIES.get(),
+                    player.getX() + ox,
+                    player.getY() + oy,
+                    player.getZ() + oz,
+                    0, 0, 0);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() ->
+                EntityRenderers.register(HHModEntities.CROW.get(), CrowRenderer::new)
+        );
+    }
+
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(CrowModel.LAYER_LOCATION, CrowModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void registerScreens(RegisterMenuScreensEvent event) {
+        event.register(HHModMenuTypes.CASK_MENU.get(), CaskGUI::new);
+    }
+
+    @SubscribeEvent
+    public static void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
+        RecipeCategories.init(event);
     }
 }

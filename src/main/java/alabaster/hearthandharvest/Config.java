@@ -27,6 +27,9 @@ public class Config {
     public static ModConfigSpec.IntValue SALT_LICK_INTERVAL;
     public static ModConfigSpec.DoubleValue SALT_PLAYER_LICK_CHANCE;
     public static ModConfigSpec.IntValue TROUGH_ANIMAL_CAP;
+    public static ModConfigSpec.BooleanValue MANURE_FED_POOP_ENABLED;
+    public static ModConfigSpec.BooleanValue MANURE_RANDOM_POOP_ENABLED;
+    public static ModConfigSpec.IntValue MANURE_RANDOM_POOP_CHANCE;
 
     public Config() {
     }
@@ -100,6 +103,18 @@ public class Config {
         TROUGH_ANIMAL_CAP = COMMON_BUILDER
                 .comment("Max animals in a 10-block radius before the food trough stops triggering breeding.")
                 .defineInRange("troughBreedingCap", 16, 1, 256);
+
+        MANURE_FED_POOP_ENABLED = COMMON_BUILDER
+                .comment("Drop manure after being fed")
+                .define("manure.fedPoopEnabled", true);
+
+        MANURE_RANDOM_POOP_ENABLED = COMMON_BUILDER
+                .comment("Drop manure randomly over time")
+                .define("manure.randomPoopEnabled", true);
+
+        MANURE_RANDOM_POOP_CHANCE  = COMMON_BUILDER
+                .comment("1-in-N chance per second for random drop")
+                .defineInRange("manure.randomPoopChance", 300, 1, 10000);
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }

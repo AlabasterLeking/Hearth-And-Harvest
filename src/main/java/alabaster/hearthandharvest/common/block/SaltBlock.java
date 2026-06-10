@@ -146,6 +146,7 @@ public class SaltBlock extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (state.getValue(WAXED)) return InteractionResult.PASS;
+        if (!player.getOffhandItem().isEmpty()) return InteractionResult.PASS;
         if (!level.isClientSide()) {
             level.playSound(null, pos, HHModSounds.LICK.get(), SoundSource.BLOCKS,
                     0.8f, 1.2f + level.random.nextFloat() * 0.3f);

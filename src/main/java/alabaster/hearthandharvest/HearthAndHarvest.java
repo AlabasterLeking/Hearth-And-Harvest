@@ -1,46 +1,34 @@
 package alabaster.hearthandharvest;
 
-import alabaster.hearthandharvest.client.gui.CaskGUI;
-import alabaster.hearthandharvest.client.recipebook.RecipeCategories;
 import alabaster.hearthandharvest.common.block.SaltBlock;
 import alabaster.hearthandharvest.common.block.StompingBasinBlock;
 import alabaster.hearthandharvest.common.entity.crow.CrowEntity;
-import alabaster.hearthandharvest.common.entity.crow.CrowModel;
-import alabaster.hearthandharvest.common.entity.crow.CrowRenderer;
 import alabaster.hearthandharvest.common.entity.crow.CrowSpawnRules;
 import alabaster.hearthandharvest.common.entity.goal.PungentEffectGoal;
 import alabaster.hearthandharvest.common.entity.goal.SeekNestGoal;
 import alabaster.hearthandharvest.common.entity.goal.TemptingEffectGoal;
+import alabaster.hearthandharvest.common.event.PigLitters;
 import alabaster.hearthandharvest.common.event.RabbitLitters;
 import alabaster.hearthandharvest.common.item.CrateBlockItem;
 import alabaster.hearthandharvest.common.item.SeedPouchItem;
-import alabaster.hearthandharvest.common.item.component.SeedPouchContents;
 import alabaster.hearthandharvest.common.registry.*;
-import alabaster.hearthandharvest.common.event.PigLitters;
 import alabaster.hearthandharvest.common.worldgen.VillageCrops;
 import alabaster.hearthandharvest.integration.ThirstWasTakenCompat;
 import alabaster.hearthandharvest.integration.everycompat.EveryCompatPlugin;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -55,18 +43,12 @@ public class HearthAndHarvest {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public HearthAndHarvest(IEventBus modEventBus, ModContainer modContainer) {
-
         NeoForge.EVENT_BUS.register(this);
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::flowerSetup);
         modEventBus.addListener(this::registerAttributes);
         modEventBus.addListener(HearthAndHarvest::registerSpawnPlacements);
-
-        if (FMLEnvironment.dist.isClient()) {
-            modEventBus.addListener(this::registerScreens);
-            modEventBus.addListener(this::registerRecipeBookCategories);
-        }
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
         HHModBlocks.BLOCKS.register(modEventBus);
@@ -87,6 +69,7 @@ public class HearthAndHarvest {
         HHModStructures.STRUCTURES.register(modEventBus);
         HHModFeatures.FEATURES.register(modEventBus);
         HHModSounds.SOUNDS.register(modEventBus);
+        HHModAttachments.ATTACHMENT_TYPES.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(new PigLitters());
         NeoForge.EVENT_BUS.register(new RabbitLitters());
@@ -140,14 +123,6 @@ public class HearthAndHarvest {
                 RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
-    public void registerScreens(RegisterMenuScreensEvent event) {
-        event.register(HHModMenuTypes.CASK_MENU.get(), CaskGUI::new);
-    }
-
-    public void registerRecipeBookCategories(RegisterRecipeBookCategoriesEvent event) {
-        RecipeCategories.init(event);
-    }
-
     @SubscribeEvent
     public void onEntityJoin(EntityJoinLevelEvent event) {
         if (event.getEntity() instanceof Mob mob) {
@@ -163,39 +138,5 @@ public class HearthAndHarvest {
     public void onServerStarting(ServerStartingEvent event) {
         LOGGER.info("Hearth and Harvest is starting");
         StompingBasinBlock.clearAirborneTracking();
-    }
-
-    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            event.enqueueWork(() ->
-                    EntityRenderers.register(HHModEntities.CROW.get(), CrowRenderer::new)
-            );
-        }
-
-        @SubscribeEvent
-        public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-            event.registerLayerDefinition(CrowModel.LAYER_LOCATION, CrowModel::createBodyLayer);
-        }
-
-        @SubscribeEvent
-        public static void registerItemDecorations(RegisterItemDecorationsEvent event) {
-            event.register(HHModItems.SEED_POUCH.get(), (guiGraphics, font, stack, xOffset, yOffset) -> {
-                SeedPouchContents contents = stack.get(HHModDataComponents.SEED_POUCH_CONTENTS.get());
-                if (contents == null || contents.count() == 0) return false;
-
-                ItemStack seedStack = new ItemStack(contents.seedType());
-                if (seedStack.isEmpty()) return false;
-
-                com.mojang.blaze3d.vertex.PoseStack pose = guiGraphics.pose();
-                pose.pushPose();
-                pose.translate(xOffset + 8, yOffset + 8, 0);
-                pose.scale(0.5f, 0.5f, 1.0f);
-                guiGraphics.renderItem(seedStack, 0, 0);
-                pose.popPose();
-                return true;
-            });
-        }
     }
 }

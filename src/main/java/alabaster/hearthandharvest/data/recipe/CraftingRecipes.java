@@ -780,6 +780,29 @@ public class CraftingRecipes
                 .define('#', ModItems.TREE_BARK.get())
                 .unlockedBy("has_tree_bark", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TREE_BARK.get()))
                 .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, ModItems.ORGANIC_COMPOST.get(), 1)
+                .requires(Items.DIRT)
+                .requires(ModItems.STRAW.get())
+                .requires(ModItems.STRAW.get())
+                .requires(HHModItems.MANURE.get())
+                .requires(HHModItems.MANURE.get())
+                .requires(HHModItems.MANURE.get())
+                .requires(HHModItems.MANURE.get())
+                .requires(Items.BONE_MEAL)
+                .requires(Items.BONE_MEAL)
+                .unlockedBy("has_manure", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.MANURE.get()))
+                .unlockedBy("has_straw", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.STRAW.get()))
+                .group("fd_organic_compost")
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "organic_compost_from_manure"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.TROUGH.get(), 1)
+                .pattern("n n")
+                .pattern("iii")
+                .define('i', Items.IRON_INGOT)
+                .define('n', Items.IRON_NUGGET)
+                .unlockedBy("has_iron_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+                .save(output);
     }
 
     private static void recipesTools(RecipeOutput output) {

@@ -258,6 +258,10 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.WILD_COTTON.get(),
                 HHModBlocks.WILD_PEANUTS.get()
         );
+
+        tag(ModTags.Blocks.COMPOST_ACTIVATORS).add(
+                HHModBlocks.MULCH.get()
+        );
     }
 
     protected void registerCompatTags() {

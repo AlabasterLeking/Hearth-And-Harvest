@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.data;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.registry.HHModEntities;
 import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -25,6 +26,11 @@ public class HHEntityTags extends EntityTypeTagsProvider
                 EntityType.PIG,
                 EntityType.SHEEP,
                 EntityType.RABBIT
+        );
+
+        this.tag(HHModTags.DOES_NOT_POOP).add(
+                EntityType.CHICKEN,
+                HHModEntities.CROW.get()
         );
     }
 }

@@ -28,7 +28,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidActionResult;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -115,6 +117,26 @@ public class TroughBlock extends BaseEntityBlock {
             else if (!player.addItem(emptied)) player.drop(emptied, false);
             level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1f, 1f);
             return ItemInteractionResult.CONSUME;
+        }
+
+        // Fallback: containers like buckets cannot partially drain, so tryEmptyContainer fails
+        // when the tank already has some fluid. Drain the full container and cap the fill.
+        IFluidHandlerItem containerHandler = inHand.getCapability(Capabilities.FluidHandler.ITEM);
+        if (containerHandler != null) {
+            FluidStack avail = containerHandler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
+            if (!avail.isEmpty() && trough.getFluidTank().isFluidValid(avail)) {
+                int canFit = trough.getFluidTank().fill(avail, IFluidHandler.FluidAction.SIMULATE);
+                if (canFit > 0 && canFit < avail.getAmount()) {
+                    containerHandler.drain(avail.getAmount(), IFluidHandler.FluidAction.EXECUTE);
+                    trough.getFluidTank().fill(new FluidStack(avail.getFluid(), canFit), IFluidHandler.FluidAction.EXECUTE);
+                    ItemStack result = containerHandler.getContainer();
+                    inHand.shrink(1);
+                    if (inHand.isEmpty()) player.setItemInHand(hand, result);
+                    else if (!player.addItem(result)) player.drop(result, false);
+                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1f, 1f);
+                    return ItemInteractionResult.CONSUME;
+                }
+            }
         }
 
         FluidActionResult fillResult = FluidUtil.tryFillContainer(inHand, trough.getFluidTank(), Integer.MAX_VALUE, player, true);
