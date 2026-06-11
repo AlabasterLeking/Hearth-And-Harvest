@@ -150,11 +150,12 @@ dependencies {
     // Thirst Was Taken
     compileOnly "curse.maven:thirst-was-taken-679270:${twt_version}"
 
+    // Create
+    compileOnly "curse.maven:create-328085:${create_version}"
+
     // Every Compat
     compileOnly "curse.maven:selene-499980:${moonlight_version}"
-    //runtimeOnly "curse.maven:selene-499980:${moonlight_version}"
     compileOnly "curse.maven:every-compat-628539:${ec_version}"
-    //runtimeOnly "curse.maven:every-compat-628539:${ec_version}"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

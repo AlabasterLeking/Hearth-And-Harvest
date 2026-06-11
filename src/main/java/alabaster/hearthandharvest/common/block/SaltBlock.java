@@ -149,7 +149,7 @@ public class SaltBlock extends Block {
         if (!player.getOffhandItem().isEmpty()) return InteractionResult.PASS;
         if (!level.isClientSide()) {
             level.playSound(null, pos, HHModSounds.LICK.get(), SoundSource.BLOCKS,
-                    0.8f, 1.2f + level.random.nextFloat() * 0.3f);
+                    0.8f, 0.8f + level.random.nextFloat() * 0.7f);
             if (level.random.nextFloat() < Config.SALT_PLAYER_LICK_CHANCE.get().floatValue()) {
                 degradeBlock(level, pos, state);
             }

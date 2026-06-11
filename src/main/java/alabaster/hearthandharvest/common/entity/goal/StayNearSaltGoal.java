@@ -2,7 +2,9 @@ package alabaster.hearthandharvest.common.entity.goal;
 
 import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.common.block.SaltBlock;
+import alabaster.hearthandharvest.common.registry.HHModSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.block.state.BlockState;
@@ -77,6 +79,8 @@ public class StayNearSaltGoal extends Goal {
         if (licking && saltPos != null && mob.blockPosition().distSqr(saltPos) <= 4.0) {
             BlockState state = mob.level().getBlockState(saltPos);
             if (state.getBlock() instanceof SaltBlock && !state.getValue(SaltBlock.WAXED)) {
+                mob.level().playSound(null, saltPos, HHModSounds.LICK.get(), SoundSource.NEUTRAL,
+                        0.8f, 0.6f + mob.getRandom().nextFloat() * 0.6f);
                 SaltBlock.degradeBlock(mob.level(), saltPos, state);
             }
             nextLickTime = now + Config.SALT_LICK_INTERVAL.get();

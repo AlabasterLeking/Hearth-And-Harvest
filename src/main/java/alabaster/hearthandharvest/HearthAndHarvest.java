@@ -13,6 +13,7 @@ import alabaster.hearthandharvest.common.item.CrateBlockItem;
 import alabaster.hearthandharvest.common.item.SeedPouchItem;
 import alabaster.hearthandharvest.common.registry.*;
 import alabaster.hearthandharvest.common.worldgen.VillageCrops;
+import alabaster.hearthandharvest.integration.CreateCompat;
 import alabaster.hearthandharvest.integration.ThirstWasTakenCompat;
 import alabaster.hearthandharvest.integration.everycompat.EveryCompatPlugin;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -85,6 +86,10 @@ public class HearthAndHarvest {
             } catch (Exception e) {
                 LOGGER.debug("Every Compat registration skipped: {}", e.getMessage());
             }
+        }
+
+        if (ModList.get().isLoaded("create")) {
+            NeoForge.EVENT_BUS.register(CreateCompat.class);
         }
     }
 

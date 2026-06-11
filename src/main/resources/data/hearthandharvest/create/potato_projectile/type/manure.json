@@ -1,0 +1,39 @@
+{
+  "items": "hearthandharvest:manure",
+  "damage": 4,
+  "knockback": 1.5,
+  "reload_ticks": 15,
+  "sound_pitch": 1.3,
+  "render_mode": {
+    "type": "create:tumble"
+  },
+  "on_entity_hit": {
+    "type": "create:food_effects",
+    "food_property": {
+      "can_always_eat": true,
+      "nutrition": 0,
+      "saturation": 0,
+      "effects": [
+        {
+          "effect": {
+            "id": "hearthandharvest:pungent",
+            "duration": 100,
+            "amplifier": 0,
+            "neoforge:cures": ["milk"],
+            "show_icon": true
+          }
+        },
+        {
+          "effect": {
+            "id": "minecraft:poison",
+            "duration": 100,
+            "amplifier": 0,
+            "neoforge:cures": ["milk"],
+            "show_icon": true
+          }
+        }
+      ]
+    },
+    "recoverable": false
+  }
+}

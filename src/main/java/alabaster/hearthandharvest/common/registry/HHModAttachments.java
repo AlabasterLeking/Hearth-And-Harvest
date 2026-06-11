@@ -23,4 +23,10 @@ public class HHModAttachments {
             ATTACHMENT_TYPES.register("player_last_poop_time", () ->
                     AttachmentType.builder(() -> -300L).serialize(Codec.LONG).build()
             );
+
+    // Ticks remaining for fly particles to follow an entity hit by a manure projectile.
+    public static final Supplier<AttachmentType<Integer>> MANURE_FLY_TICKS =
+            ATTACHMENT_TYPES.register("manure_fly_ticks", () ->
+                    AttachmentType.builder(() -> 0).serialize(Codec.INT).build()
+            );
 }

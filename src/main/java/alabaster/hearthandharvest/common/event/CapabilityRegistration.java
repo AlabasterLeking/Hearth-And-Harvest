@@ -45,6 +45,7 @@ public class CapabilityRegistration {
                 (be, side) -> be.getMultiblockRole() == MultiblockPart.MEMBER ? null : be.getFluidTank()
         );
 
+        // Trough block entity
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 HHModBlockEntities.TROUGH.get(),

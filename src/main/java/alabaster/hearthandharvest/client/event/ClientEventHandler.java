@@ -22,6 +22,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -228,9 +229,10 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() ->
-                EntityRenderers.register(HHModEntities.CROW.get(), CrowRenderer::new)
-        );
+        event.enqueueWork(() -> {
+            EntityRenderers.register(HHModEntities.CROW.get(), CrowRenderer::new);
+            EntityRenderers.register(HHModEntities.MANURE_PROJECTILE.get(), ThrownItemRenderer::new);
+        });
     }
 
     @SubscribeEvent
