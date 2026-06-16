@@ -167,6 +167,8 @@ public class HHBlockTags extends BlockTagsProvider {
                 .add(HHModBlocks.GOLDEN_APPLE_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_GOLDEN_CARROT)
                 .add(HHModBlocks.GOLDEN_CARROT_CRATE.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_GLISTERING_MELON)
+                .add(HHModBlocks.GLISTERING_MELON_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_POISONOUS_POTATO)
                 .add(HHModBlocks.POISONOUS_POTATO_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_ROTTEN_TOMATO)
@@ -229,6 +231,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.APPLE_CRATE.get(),
                 HHModBlocks.GOLDEN_APPLE_CRATE.get(),
                 HHModBlocks.GOLDEN_CARROT_CRATE.get(),
+                HHModBlocks.GLISTERING_MELON_CRATE.get(),
                 HHModBlocks.POISONOUS_POTATO_CRATE.get(),
                 HHModBlocks.ROTTEN_TOMATO_CRATE.get(),
                 HHModBlocks.GLOW_BERRY_CRATE.get(),
@@ -335,6 +338,7 @@ public class HHBlockTags extends BlockTagsProvider {
                         HHModBlocks.APPLE_CRATE.get(),
                         HHModBlocks.GOLDEN_APPLE_CRATE.get(),
                         HHModBlocks.GOLDEN_CARROT_CRATE.get(),
+                        HHModBlocks.GLISTERING_MELON_CRATE.get(),
                         HHModBlocks.POISONOUS_POTATO_CRATE.get(),
                         HHModBlocks.ROTTEN_TOMATO_CRATE.get(),
                         HHModBlocks.GLOW_BERRY_CRATE.get(),
@@ -381,7 +385,8 @@ public class HHBlockTags extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_HOE).add(
                 HHModBlocks.NEST.get(),
                 HHModBlocks.CORN_HUSK_BUNDLE.get(),
-                HHModBlocks.COTTON_BALE.get()
+                HHModBlocks.COTTON_BALE.get(),
+                HHModBlocks.SUGAR_CANE_BUNDLE.get()
         );
 
         tag(ModTags.Blocks.MINEABLE_WITH_KNIFE).add(

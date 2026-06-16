@@ -251,6 +251,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.APPLE_CRATE.get())
                 .add(HHModItems.GOLDEN_APPLE_CRATE.get())
                 .add(HHModItems.GOLDEN_CARROT_CRATE.get())
+                .add(HHModItems.GLISTERING_MELON_CRATE.get())
                 .add(HHModItems.POISONOUS_POTATO_CRATE.get())
                 .add(HHModItems.GLOW_BERRY_CRATE.get())
                 .add(HHModItems.SWEET_BERRY_CRATE.get())
@@ -279,6 +280,8 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.GOLDEN_APPLE_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_ITEM_GOLDEN_CARROT)
                 .add(HHModItems.GOLDEN_CARROT_CRATE.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_GLISTERING_MELON)
+                .add(HHModItems.GLISTERING_MELON_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_ITEM_POISONOUS_POTATO)
                 .add(HHModItems.POISONOUS_POTATO_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_ITEM_ROTTEN_TOMATO)

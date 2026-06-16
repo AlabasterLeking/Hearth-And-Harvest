@@ -495,6 +495,13 @@ public class CraftingRecipes
                 .define('#', Items.GOLDEN_CARROT)
                 .unlockedBy("has_golden_carrot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLDEN_CARROT))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.GLISTERING_MELON_CRATE.get(), 1)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', Items.GLISTERING_MELON_SLICE)
+                .unlockedBy("has_glistering_melon_slice", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GLISTERING_MELON_SLICE))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.POISONOUS_POTATO_CRATE.get(), 1)
                 .pattern("###")
                 .pattern("###")
@@ -897,6 +904,10 @@ public class CraftingRecipes
                 .requires(HHModItems.GOLDEN_CARROT_CRATE.get())
                 .unlockedBy("has_golden_carrot_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.GOLDEN_CARROT_CRATE.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "golden_carrot_from_crate"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.GLISTERING_MELON_SLICE, 9)
+                .requires(HHModItems.GLISTERING_MELON_CRATE.get())
+                .unlockedBy("has_glistering_melon_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.GLISTERING_MELON_CRATE.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "glistering_melon_from_crate"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.POISONOUS_POTATO, 9)
                 .requires(HHModItems.POISONOUS_POTATO_CRATE.get())
                 .unlockedBy("has_poisonous_potato_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.POISONOUS_POTATO_CRATE.get()))

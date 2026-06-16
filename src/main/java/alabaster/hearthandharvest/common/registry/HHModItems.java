@@ -280,6 +280,8 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.GOLDEN_APPLE_CRATE.get(), basicItem()));
     public static final Supplier<Item> GOLDEN_CARROT_CRATE = registerWithBlockTab("golden_carrot_crate",
             () -> new BlockItem(HHModBlocks.GOLDEN_CARROT_CRATE.get(), basicItem()));
+    public static final Supplier<Item> GLISTERING_MELON_CRATE = registerWithBlockTab("glistering_melon_crate",
+            () -> new BlockItem(HHModBlocks.GLISTERING_MELON_CRATE.get(), basicItem()));
     public static final Supplier<Item> POISONOUS_POTATO_CRATE = registerWithBlockTab("poisonous_potato_crate",
             () -> new BlockItem(HHModBlocks.POISONOUS_POTATO_CRATE.get(), basicItem()));
     public static final Supplier<Item> ROTTEN_TOMATO_CRATE = registerWithBlockTab("rotten_tomato_crate",

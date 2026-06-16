@@ -83,6 +83,7 @@ public class BlockStates extends BlockStateProvider {
         this.crateBlock(HHModBlocks.APPLE_CRATE.get(), "apple");
         this.crateBlock(HHModBlocks.GOLDEN_APPLE_CRATE.get(), "golden_apple");
         this.crateBlock(HHModBlocks.GOLDEN_CARROT_CRATE.get(), "golden_carrot");
+        this.crateBlock(HHModBlocks.GLISTERING_MELON_CRATE.get(), "glistering_melon");
         this.crateBlock(HHModBlocks.POISONOUS_POTATO_CRATE.get(), "poisonous_potato");
         this.crateBlock(HHModBlocks.ROTTEN_TOMATO_CRATE.get(), "rotten_tomato");
         this.crateBlock(HHModBlocks.GLOW_BERRY_CRATE.get(), "glow_berry");

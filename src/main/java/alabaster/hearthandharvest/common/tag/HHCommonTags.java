@@ -27,6 +27,9 @@ public class HHCommonTags {
 
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GOLDEN_CARROT = commonItemTag("storage_blocks/golden_carrot");
     public static final TagKey<Block> STORAGE_BLOCKS_GOLDEN_CARROT = commonBlockTag("storage_blocks/golden_carrot");
+    
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GLISTERING_MELON = commonItemTag("storage_blocks/glistering_melon");
+    public static final TagKey<Block> STORAGE_BLOCKS_GLISTERING_MELON = commonBlockTag("storage_blocks/glistering_melon");
 
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_POISONOUS_POTATO = commonItemTag("storage_blocks/poisonous_potato");
     public static final TagKey<Block> STORAGE_BLOCKS_POISONOUS_POTATO = commonBlockTag("storage_blocks/poisonous_potato");
