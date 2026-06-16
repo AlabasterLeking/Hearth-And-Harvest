@@ -614,6 +614,13 @@ public class CraftingRecipes
                 .define('#', Items.STICK)
                 .unlockedBy("has_stick", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STICK))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SUGAR_CANE_BUNDLE.get(), 1)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', Items.SUGAR_CANE)
+                .unlockedBy("has_sugar_cane", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SUGAR_CANE))
+                .save(output);
 
         // Half Crates
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.BROWN_MUSHROOM_CRATE.get(), 1)
@@ -956,8 +963,12 @@ public class CraftingRecipes
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "charcoal_from_block"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STICK, 9)
                 .requires(HHModItems.STICK_BRUSH.get())
-                .unlockedBy("has_stick_bundle", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.STICK_BRUSH.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "stick_from_bundle"));
+                .unlockedBy("has_stick_brush", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.STICK_BRUSH.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "stick_from_brush"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.SUGAR_CANE, 9)
+                .requires(HHModItems.SUGAR_CANE_BUNDLE.get())
+                .unlockedBy("has_sugar_cane_bundle", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SUGAR_CANE_BUNDLE.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "sugar_cane_from_bundle"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.BROWN_MUSHROOM, 9)
                 .requires(HHModItems.BROWN_MUSHROOM_CRATE.get())
                 .unlockedBy("has_brown_mushroom_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.BROWN_MUSHROOM_CRATE.get()))

@@ -78,6 +78,9 @@ public class HHModItems {
     public static final Supplier<Item> GOLDEN_CLEAVER = registerWithTab("golden_cleaver",
             () -> new CleaverItem(Tiers.GOLD, cleaverItem(Tiers.GOLD)));
 
+    public static final Supplier<Item> PITCHFORK = registerWithTab("pitchfork", () ->
+            new PitchforkItem(new Item.Properties().durability(250)));
+
     public static final Supplier<Item> WATERING_CAN = registerWithTab("watering_can",
             () -> new WateringCanItem(basicItem()));
     public static final Supplier<Item> UNIVERSAL_FEED = registerWithTab("universal_feed",
@@ -305,6 +308,8 @@ public class HHModItems {
     // Misc
     public static final Supplier<Item> COTTON_BALE = registerWithBlockTab("cotton_bale",
             () -> new BlockItem(HHModBlocks.COTTON_BALE.get(), basicItem()));
+    public static final Supplier<Item> SUGAR_CANE_BUNDLE = registerWithBlockTab("sugar_cane_bundle",
+            () -> new BlockItem(HHModBlocks.SUGAR_CANE_BUNDLE.get(), basicItem()));
     public static final Supplier<Item> SPOOL = registerWithBlockTab("spool",
             () -> new BlockItem(HHModBlocks.SPOOL.get(), basicItem()));
     public static final Supplier<Item> ROPE_COIL = registerWithBlockTab("rope_coil",

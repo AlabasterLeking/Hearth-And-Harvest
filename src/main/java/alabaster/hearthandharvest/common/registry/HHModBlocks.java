@@ -237,6 +237,8 @@ public class HHModBlocks {
     // Misc Storage Blocks
     public static final Supplier<Block> COTTON_BALE = BLOCKS.register("cotton_bale",
             () -> new HayBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
+    public static final Supplier<Block> SUGAR_CANE_BUNDLE = BLOCKS.register("sugar_cane_bundle",
+            () -> new HayBlock(Block.Properties.ofFullCopy(Blocks.SUGAR_CANE)));
     public static final Supplier<Block> SPOOL = BLOCKS.register("spool",
             () -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL).strength(2.0F, 3.0F).sound(SoundType.WOOL)));
     public static final Supplier<Block> ROPE_COIL = BLOCKS.register("rope_coil",
@@ -249,7 +251,6 @@ public class HHModBlocks {
             () -> new HayBlock(Block.Properties.ofFullCopy(Blocks.MANGROVE_ROOTS)));
     public static final Supplier<Block> MULCH = BLOCKS.register("mulch",
             () -> new MulchBlock(Block.Properties.ofFullCopy(Blocks.MANGROVE_ROOTS).strength(1.0F, 1.5F).sound(SoundType.WET_GRASS).randomTicks()));
-
 
     // Half-Slab Crates
     public static final Supplier<Block> BROWN_MUSHROOM_CRATE = BLOCKS.register("brown_mushroom_crate",

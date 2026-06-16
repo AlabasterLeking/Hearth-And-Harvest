@@ -215,6 +215,8 @@ public class HHBlockTags extends BlockTagsProvider {
                 .add(HHModBlocks.CHARCOAL_BLOCK.get());
         tag(HHCommonTags.STORAGE_BLOCKS_STICK)
                 .add(HHModBlocks.STICK_BRUSH.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_SUGAR_CANE)
+                .add(HHModBlocks.SUGAR_CANE_BUNDLE.get());
 
         tag(Tags.Blocks.STORAGE_BLOCKS).add(
                 HHModBlocks.RASPBERRY_CRATE.get(),

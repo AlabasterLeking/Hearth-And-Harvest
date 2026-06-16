@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_stick_bundle": {
+    "has_stick_brush": {
       "conditions": {
         "items": [
           {
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:stick_from_bundle"
+        "recipe": "hearthandharvest:stick_from_brush"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_stick_bundle"
+      "has_stick_brush"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:stick_from_bundle"
+      "hearthandharvest:stick_from_brush"
     ]
   }
 }
