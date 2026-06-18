@@ -19,7 +19,7 @@ public class ThrownPitchfork extends AbstractArrow {
 
     public ThrownPitchfork(Level level, LivingEntity shooter, ItemStack stack) {
         super(HHModEntities.THROWN_PITCHFORK.get(), shooter, level, stack, null);
-        this.setBaseDamage(8.0);
+        this.setBaseDamage(2.0);
         this.pickup = Pickup.ALLOWED;
     }
 
@@ -36,7 +36,7 @@ public class ThrownPitchfork extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         if (result.getEntity() instanceof LivingEntity target) {
-            target.addEffect(new MobEffectInstance(HHModEffects.PINNED, 6000, 0));
+            target.addEffect(new MobEffectInstance(HHModEffects.PINNED, 100, 0));
         }
     }
 }
