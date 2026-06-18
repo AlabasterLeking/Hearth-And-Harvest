@@ -78,8 +78,10 @@ public class HHModItems {
     public static final Supplier<Item> GOLDEN_CLEAVER = registerWithTab("golden_cleaver",
             () -> new CleaverItem(Tiers.GOLD, cleaverItem(Tiers.GOLD)));
 
-    public static final Supplier<Item> PITCHFORK = registerWithTab("pitchfork", () ->
-            new PitchforkItem(new Item.Properties().durability(250)));
+    public static final Supplier<Item> PITCHFORK = registerWithTab("pitchfork",
+            () -> new PitchforkItem(new Item.Properties()
+                    .durability(250)
+                    .attributes(PitchforkItem.createAttributes())));
 
     public static final Supplier<Item> WATERING_CAN = registerWithTab("watering_can",
             () -> new WateringCanItem(basicItem()));

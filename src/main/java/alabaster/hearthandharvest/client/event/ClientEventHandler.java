@@ -11,6 +11,7 @@ import alabaster.hearthandharvest.common.entity.crow.CrowRenderer;
 import alabaster.hearthandharvest.common.block.trellis.TrellisBlock;
 import alabaster.hearthandharvest.common.block.trellis.TrellisPlant;
 import alabaster.hearthandharvest.common.entity.crow.CrowOnShoulderLayer;
+import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchforkModel;
 import alabaster.hearthandharvest.common.item.component.SeedPouchContents;
 import alabaster.hearthandharvest.common.network.PlayerPoopPacket;
 import alabaster.hearthandharvest.common.registry.*;
@@ -21,6 +22,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -80,6 +82,10 @@ public class ClientEventHandler {
         event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/big_stomping_basin_ne")));
         event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/big_stomping_basin_sw")));
         event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/big_stomping_basin_se")));
+
+        // Pitchfork
+        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "item/pitchfork_throwing")));
+        event.register(ModelResourceLocation.standalone(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "item/2d_pitchfork")));
     }
 
     @SubscribeEvent
@@ -138,6 +144,16 @@ public class ClientEventHandler {
                     }
                 },
                 HHModItems.CRATE.get()
+        );
+
+        event.registerItem(
+                new IClientItemExtensions() {
+                    @Override
+                    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                        return PitchforkItemRenderer.getInstance();
+                    }
+                },
+                HHModItems.PITCHFORK.get()
         );
 
         registerFluidTextures(event, "cooking_oil", HHModFluids.COOKING_OIL.type().get());
@@ -232,12 +248,15 @@ public class ClientEventHandler {
         event.enqueueWork(() -> {
             EntityRenderers.register(HHModEntities.CROW.get(), CrowRenderer::new);
             EntityRenderers.register(HHModEntities.MANURE_PROJECTILE.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(HHModEntities.THROWN_PITCHFORK.get(), ThrownPitchforkRenderer::new);
+
         });
     }
 
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(CrowModel.LAYER_LOCATION, CrowModel::createBodyLayer);
+        event.registerLayerDefinition(ThrownPitchforkModel.LAYER_LOCATION, ThrownPitchforkModel::createBodyLayer);
     }
 
     @SubscribeEvent

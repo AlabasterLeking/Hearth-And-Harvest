@@ -1,0 +1,18 @@
+{
+    "loader": "neoforge:separate_transforms",
+    "gui_light": "front",
+    "base": {
+        "parent": "hearthandharvest:item/pitchfork_in_hand"
+    },
+    "perspectives": {
+        "gui": {
+            "parent": "hearthandharvest:item/2d_pitchfork"
+        },
+        "ground": {
+            "parent": "hearthandharvest:item/2d_pitchfork"
+        },
+        "fixed": {
+            "parent": "hearthandharvest:item/2d_pitchfork"
+        }
+    }
+}
