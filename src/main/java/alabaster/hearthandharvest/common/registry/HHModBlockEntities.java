@@ -61,6 +61,9 @@ public class HHModBlockEntities {
     public static final Supplier<BlockEntityType<TroughBlockEntity>> TROUGH = BLOCK_ENTITY_TYPES.register("trough_tile",
             () -> BlockEntityType.Builder.of(TroughBlockEntity::new, HHModBlocks.TROUGH.get()).build(null));
 
+    public static final Supplier<BlockEntityType<TreeTapperBlockEntity>> TREE_TAPPER = BLOCK_ENTITY_TYPES.register("tree_tapper_tile", () ->
+                    BlockEntityType.Builder.of(TreeTapperBlockEntity::new, HHModBlocks.TREE_TAPPER.get()).build(null));
+
     @SubscribeEvent
     public static void addCabinetsBlockEntities(BlockEntityTypeAddBlocksEvent event) {
         List<Block> cabinets = new ArrayList<>(List.of(

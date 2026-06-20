@@ -110,6 +110,10 @@ public class ClientEventHandler {
                 HHModBlockEntities.TROUGH.get(),
                 TroughRenderer::new
         );
+        event.registerBlockEntityRenderer(
+                HHModBlockEntities.TREE_TAPPER.get(),
+                TreeTapperRenderer::new
+        );
     }
 
     @SubscribeEvent

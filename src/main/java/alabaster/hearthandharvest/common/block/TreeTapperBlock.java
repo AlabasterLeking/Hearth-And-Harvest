@@ -1,75 +1,78 @@
 package alabaster.hearthandharvest.common.block;
 
-import alabaster.hearthandharvest.common.registry.HHModItems;
+import alabaster.hearthandharvest.common.block.entity.TreeTapperBlockEntity;
+import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import alabaster.hearthandharvest.common.registry.HHModParticleTypes;
 import alabaster.hearthandharvest.common.tag.HHModTags;
-import alabaster.hearthandharvest.Config;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.fluids.FluidUtil;
 
 import javax.annotation.Nullable;
 
-public class TreeTapperBlock extends Block {
+public class TreeTapperBlock extends BaseEntityBlock {
+
+        public static final MapCodec<TreeTapperBlock> CODEC = simpleCodec(TreeTapperBlock::new);
+
+        @Override
+        protected MapCodec<? extends BaseEntityBlock> codec() { return CODEC; }
 
         public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-        public static final IntegerProperty SAP = IntegerProperty.create("sap", 0, 4);
         public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
         public TreeTapperBlock(Properties properties) {
                 super(properties);
-                this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SAP, 0).setValue(WATERLOGGED, false));
+                this.registerDefaultState(this.stateDefinition.any()
+                        .setValue(FACING, Direction.NORTH)
+                        .setValue(WATERLOGGED, false));
         }
 
         @Override
-        public RenderShape getRenderShape(BlockState pState) {
+        public RenderShape getRenderShape(BlockState state) {
                 return RenderShape.MODEL;
         }
 
         @Override
+        public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+                return new TreeTapperBlockEntity(pos, state);
+        }
+
+        @Override
         public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-                Direction direction = state.getValue(FACING);
-                if (direction == Direction.NORTH) {
-                        return Block.box(3.0D, 0.0D, 0.0D, 13.0D, 16.0D, 10.0D);
-                }
-                if (direction == Direction.EAST) {
-                        return Block.box(6.0D, 0.0D, 3.0D, 16.0D, 16.0D, 13.0D);
-                }
-                if (direction == Direction.SOUTH) {
-                        return Block.box(3.0D, 0.0D, 6.0D, 13.0D, 16.0D, 16.0D);
-                }
-                if (direction == Direction.WEST) {
-                        return Block.box(0.0D, 0.0D, 3.0D, 10.0D, 16.0D, 13.0D);
-                }
-                return null;
+                return switch (state.getValue(FACING)) {
+                        case EAST  -> Block.box(6, 0, 3, 16, 16, 13);
+                        case SOUTH -> Block.box(3, 0, 6, 13, 16, 16);
+                        case WEST  -> Block.box(0, 0, 3, 10, 16, 13);
+                        default    -> Block.box(3, 0, 0, 13, 16, 10);
+                };
         }
 
         @Override
@@ -82,28 +85,24 @@ public class TreeTapperBlock extends Block {
                 return state.rotate(mirror.getRotation(state.getValue(FACING)));
         }
 
-        private boolean canAttachTo(BlockGetter level, BlockPos pos, Direction facing) {
-                return level.getBlockState(pos).isFaceSturdy(level, pos, facing);
-        }
-
         @Override
         public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-                Direction direction = state.getValue(FACING);
-                return this.canAttachTo(level, pos.relative(direction), direction);
+                Direction dir = state.getValue(FACING);
+                return level.getBlockState(pos.relative(dir)).isFaceSturdy(level, pos.relative(dir), dir);
         }
 
         @Nullable
+        @Override
         public BlockState getStateForPlacement(BlockPlaceContext context) {
-                BlockState blockState = this.defaultBlockState();
+                BlockState state = this.defaultBlockState();
                 LevelReader levelReader = context.getLevel();
                 BlockPos blockPos = context.getClickedPos();
-                FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+                FluidState fluidState = context.getLevel().getFluidState(blockPos);
                 for (Direction direction : context.getNearestLookingDirections()) {
                         if (direction.getAxis().isHorizontal()) {
-                                blockState = blockState.setValue(FACING, direction);
-                                if (blockState.canSurvive(levelReader, blockPos)) {
-                                        return blockState.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
-                                }
+                                state = state.setValue(FACING, direction);
+                                if (state.canSurvive(levelReader, blockPos))
+                                        return state.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
                         }
                 }
                 return null;
@@ -111,103 +110,53 @@ public class TreeTapperBlock extends Block {
 
         @Override
         public boolean hasAnalogOutputSignal(BlockState state) {
-            return true;
-        }
-
-        @Override
-        public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
-            return state.getValue(SAP);
-        }
-
-        @Override
-        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-                builder.add(FACING, SAP, WATERLOGGED);
-                super.createBlockStateDefinition(builder);
-        }
-
-        public int getMaxSap() {
-                return 4;
-        }
-
-        @Override
-        public boolean isRandomlyTicking(BlockState state) {
                 return true;
         }
 
         @Override
-        @SuppressWarnings("deprecation")
-        public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-                if (level.isClientSide) return;
-                Direction direction = state.getValue(FACING);
-                float chance = 0.0F;
+        public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+                if (level.getBlockEntity(pos) instanceof TreeTapperBlockEntity tapper)
+                        return (int) ((float) tapper.tank.getFluidAmount() / TreeTapperBlockEntity.CAPACITY * 15);
+                return 0;
+        }
 
-                // Check only the four directly adjacent blocks (north, south, east, west)
-                if (direction.getAxis().isHorizontal()) {
-                        BlockState neighborState = level.getBlockState(pos.relative(direction));
-                        if (neighborState.is(HHModTags.TAPPABLE)) {
-                            chance += Config.TREE_TAPPER_BASE_CHANCE.get().floatValue();
-                        }
-                }
+        @Override
+        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+                builder.add(FACING, WATERLOGGED);
+        }
 
-            if (random.nextFloat() <= chance) {
-                        if (state.getValue(SAP) != this.getMaxSap()) {
-                                level.setBlock(pos, state.setValue(SAP, state.getValue(SAP) + 1), 3);
-                                level.updateNeighbourForOutputSignal(pos, this);
-                        }
-                }
+        @Override
+        public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+                if (level.isClientSide()) return null;
+                return createTickerHelper(type, HHModBlockEntities.TREE_TAPPER.get(), TreeTapperBlockEntity::serverTick);
+        }
+
+        @Override
+        public ItemInteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+                if (level.isClientSide()) return ItemInteractionResult.sidedSuccess(true);
+                if (!(level.getBlockEntity(pos) instanceof TreeTapperBlockEntity))
+                        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                if (!FluidUtil.interactWithFluidHandler(player, hand, level, pos, hit.getDirection()))
+                        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+                return ItemInteractionResult.sidedSuccess(false);
         }
 
         @Override
         public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
-                if (!level.isClientSide) return;
-
-                if (state.getValue(SAP) < 4) {
-                        Direction direction = state.getValue(FACING);
-                        BlockPos tappablePos = pos.relative(direction);
-                        BlockState tappableState = level.getBlockState(tappablePos);
-
-                        // Only drip when on a tappable block
-                        if (tappableState.is(HHModTags.TAPPABLE) && random.nextFloat() < 0.1F) {
-                                double x = pos.getX() + 0.5D;
-                                double y = pos.getY() + 0.75D;
-                                double z = pos.getZ() + 0.5D;
-
-                                // Offset a bit based on facing
-                                double offset = 0.1D;
-                                switch (direction) {
-                                        case NORTH -> z -= offset;
-                                        case SOUTH -> z += offset;
-                                        case WEST  -> x -= offset;
-                                        case EAST  -> x += offset;
-                                }
-                                level.addParticle(HHModParticleTypes.DRIPPING_SAP.get(), x, y, z, 0.0D, 0.0D, 0.0D);
-                        }
+                if (!(level.getBlockEntity(pos) instanceof TreeTapperBlockEntity tapper)) return;
+                if (tapper.isFull()) return;
+                Direction dir = state.getValue(FACING);
+                if (!level.getBlockState(pos.relative(dir)).is(HHModTags.TAPPABLE)) return;
+                if (random.nextFloat() >= 0.1f) return;
+                double x = pos.getX() + 0.5, y = pos.getY() + 0.75, z = pos.getZ() + 0.5;
+                double offset = 0.1;
+                switch (dir) {
+                        case NORTH -> z -= offset;
+                        case SOUTH -> z += offset;
+                        case WEST  -> x -= offset;
+                        case EAST  -> x += offset;
                 }
+                level.addParticle(HHModParticleTypes.DRIPPING_SAP.get(), x, y, z, 0, 0, 0);
         }
 
-        public ItemInteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-                int sapLevel = state.getValue(SAP);
-                if (sapLevel == 4 && player.getItemInHand(hand).getItem() == Items.BUCKET) {
-                        player.swing(hand);
-                        heldStack.shrink(1);
-                        ItemStack sapbucket = new ItemStack(HHModItems.SAP_BUCKET.get());
-                        if (!player.getInventory().add(sapbucket)) {
-                                player.drop(sapbucket, false);
-                        }
-                        level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        level.setBlock(pos, state.setValue(SAP, 0), 2);
-                        level.updateNeighbourForOutputSignal(pos, this);
-                }
-                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        @Override
-        public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
-                super.onPlace(state, world, pos, oldState, isMoving);
-
-                // Ensure that ticking begins immediately
-                if (!world.isClientSide) {
-                        world.scheduleTick(pos, this, 100);
-                }
-        }
 }

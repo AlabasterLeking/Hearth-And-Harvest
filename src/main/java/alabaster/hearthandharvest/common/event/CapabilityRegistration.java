@@ -52,6 +52,12 @@ public class CapabilityRegistration {
                 (be, side) -> be.getFluidTank()
         );
 
+        // Tree tapper block entity
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                HHModBlockEntities.TREE_TAPPER.get(),
+                (be, side) -> be.tank);
+
         // Jug block entity
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,

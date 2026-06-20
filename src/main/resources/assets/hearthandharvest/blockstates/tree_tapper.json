@@ -1,79 +1,12 @@
 {
   "variants": {
-    "sap=0,facing=east": {
-      "model": "hearthandharvest:block/tree_tapper",
-      "y": 270
-    },
-    "sap=0,facing=north": {
-      "model": "hearthandharvest:block/tree_tapper",
-      "y": 180
-    },
-    "sap=0,facing=south": {
-      "model": "hearthandharvest:block/tree_tapper"
-    },
-    "sap=0,facing=west": {
-      "model": "hearthandharvest:block/tree_tapper",
-      "y": 90
-    },
-    "sap=1,facing=east": {
-      "model": "hearthandharvest:block/tree_tapper_sap_1",
-      "y": 270
-    },
-    "sap=1,facing=north": {
-      "model": "hearthandharvest:block/tree_tapper_sap_1",
-      "y": 180
-    },
-    "sap=1,facing=south": {
-      "model": "hearthandharvest:block/tree_tapper_sap_1"
-    },
-    "sap=1,facing=west": {
-      "model": "hearthandharvest:block/tree_tapper_sap_1",
-      "y": 90
-    },
-    "sap=2,facing=east": {
-      "model": "hearthandharvest:block/tree_tapper_sap_2",
-      "y": 270
-    },
-    "sap=2,facing=north": {
-      "model": "hearthandharvest:block/tree_tapper_sap_2",
-      "y": 180
-    },
-    "sap=2,facing=south": {
-      "model": "hearthandharvest:block/tree_tapper_sap_2"
-    },
-    "sap=2,facing=west": {
-      "model": "hearthandharvest:block/tree_tapper_sap_2",
-      "y": 90
-    },
-    "sap=3,facing=east": {
-      "model": "hearthandharvest:block/tree_tapper_sap_3",
-      "y": 270
-    },
-    "sap=3,facing=north": {
-      "model": "hearthandharvest:block/tree_tapper_sap_3",
-      "y": 180
-    },
-    "sap=3,facing=south": {
-      "model": "hearthandharvest:block/tree_tapper_sap_3"
-    },
-    "sap=3,facing=west": {
-      "model": "hearthandharvest:block/tree_tapper_sap_3",
-      "y": 90
-    },
-    "sap=4,facing=east": {
-      "model": "hearthandharvest:block/tree_tapper_sap_4",
-      "y": 270
-    },
-    "sap=4,facing=north": {
-      "model": "hearthandharvest:block/tree_tapper_sap_4",
-      "y": 180
-    },
-    "sap=4,facing=south": {
-      "model": "hearthandharvest:block/tree_tapper_sap_4"
-    },
-    "sap=4,facing=west": {
-      "model": "hearthandharvest:block/tree_tapper_sap_4",
-      "y": 90
-    }
+    "facing=west,waterlogged=false":  { "model": "hearthandharvest:block/tree_tapper", "y": 90 },
+    "facing=west,waterlogged=true":   { "model": "hearthandharvest:block/tree_tapper", "y": 90 },
+    "facing=south,waterlogged=false": { "model": "hearthandharvest:block/tree_tapper" },
+    "facing=south,waterlogged=true":  { "model": "hearthandharvest:block/tree_tapper" },
+    "facing=north,waterlogged=false": { "model": "hearthandharvest:block/tree_tapper", "y": 180 },
+    "facing=north,waterlogged=true":  { "model": "hearthandharvest:block/tree_tapper", "y": 180 },
+    "facing=east,waterlogged=false":  { "model": "hearthandharvest:block/tree_tapper", "y": 270 },
+    "facing=east,waterlogged=true":   { "model": "hearthandharvest:block/tree_tapper", "y": 270 }
   }
 }
