@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.item;
 
 import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchfork;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -17,9 +18,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import vectorwing.farmersdelight.data.ModEnchantments;
 
 public class PitchforkItem extends Item {
 
@@ -97,5 +101,11 @@ public class PitchforkItem extends Item {
             return 6.0f;
         }
         return super.getDestroySpeed(stack, state);
+    }
+
+    @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        if (enchantment.is(Enchantments.LOYALTY)) return true;
+        return super.supportsEnchantment(stack, enchantment);
     }
 }

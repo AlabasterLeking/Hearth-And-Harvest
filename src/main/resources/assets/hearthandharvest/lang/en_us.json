@@ -230,7 +230,6 @@
   "item.hearthandharvest.peanut_butter_cookie": "Peanut Butter Cookie",
   "item.hearthandharvest.trail_mix": "Trail Mix",
   "item.hearthandharvest.roasted_peanuts": "Roasted Peanuts",
-
   "item.hearthandharvest.marshmallow_stick": "Marshmallow",
   "item.hearthandharvest.roasted_marshmallow_stick": "Roasted Marshmallow",
   "item.hearthandharvest.charred_marshmallow_stick": "Charred Marshmallow",
@@ -238,6 +237,9 @@
   "item.hearthandharvest.cider_donut": "Cider Donut",
   "item.hearthandharvest.baked_apple": "Baked Apple",
   "item.hearthandharvest.candy_corn": "Candy Corn",
+
+  "item.hearthandharvest.sugar_cubes": "Sugar Cubes",
+  "item.hearthandharvest.sugar_cubes.tooltip": "Temporarily boosts a horse's speed and jump height by 25%.",
 
   "block.hearthandharvest.raspberry_pie": "Raspberry Pie",
   "item.hearthandharvest.raspberry_pie_slice": "Raspberry Pie Slice",
@@ -437,5 +439,8 @@
   "item.hearthandharvest.raspberry_pips": "Raspberry Pips",
 
   "key.hearthandharvest.poop": "Poop",
-  "key.categories.hearthandharvest": "Hearth and Harvest"
+  "key.categories.hearthandharvest": "Hearth and Harvest",
+
+  "enchantment.hearthandharvest.tilling": "Tilling",
+  "enchantment.hearthandharvest.harvesting": "Harvesting"
 }

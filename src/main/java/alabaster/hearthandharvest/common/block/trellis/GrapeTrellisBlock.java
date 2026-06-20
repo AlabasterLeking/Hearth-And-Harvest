@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block.trellis;
 
+import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,7 +27,7 @@ import net.neoforged.neoforge.common.Tags;
 
 import java.util.function.Supplier;
 
-public class GrapeTrellisBlock extends TrellisBlock {
+public class GrapeTrellisBlock extends TrellisBlock implements IHarvestable {
 
     public static final EnumProperty<TrellisPlant> PLANT = EnumProperty.create("plant", TrellisPlant.class,
             TrellisPlant.NONE, TrellisPlant.RED_GRAPE, TrellisPlant.GREEN_GRAPE);
@@ -150,19 +151,28 @@ public class GrapeTrellisBlock extends TrellisBlock {
             return applyPlant(stack, state, level, pos, player, plant);
         }
 
-        if (currentPlant.isGrape() && state.getValue(AGE) == 4) {
+        if (isHarvestReady(state)) {
             if (!level.isClientSide()) {
-                Item drop = currentPlant == TrellisPlant.RED_GRAPE
-                        ? HHModItems.RED_GRAPES.get() : HHModItems.GREEN_GRAPES.get();
-                popResource(level, pos, new ItemStack(drop, 1 + level.random.nextInt(2)));
-                level.setBlock(pos, state.setValue(AGE, 0), Block.UPDATE_ALL);
-                level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES,
-                        SoundSource.BLOCKS, 1f, 0.8f + level.random.nextFloat() * 0.4f);
+                harvestBlock(state, level, pos, player, ItemStack.EMPTY);
             }
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
 
         return super.useItemOn(stack, state, level, pos, player, hand, hit);
+    }
+
+    @Override
+    public boolean isHarvestReady(BlockState state) {
+        return state.getValue(PLANT).isGrape() && state.getValue(AGE) == 4;
+    }
+
+    @Override
+    public void harvestBlock(BlockState state, Level level, BlockPos pos, Player player, ItemStack tool) {
+        TrellisPlant plant = state.getValue(PLANT);
+        Item drop = plant == TrellisPlant.RED_GRAPE ? HHModItems.RED_GRAPES.get() : HHModItems.GREEN_GRAPES.get();
+        popResource(level, pos, new ItemStack(drop, 1 + level.random.nextInt(2)));
+        level.setBlock(pos, state.setValue(AGE, 0), Block.UPDATE_ALL);
+        level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1f, 0.8f + level.random.nextFloat() * 0.4f);
     }
 
     @Override

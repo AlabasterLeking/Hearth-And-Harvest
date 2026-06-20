@@ -233,6 +233,11 @@ public class HHFoodValues {
             .nutrition(5).saturationModifier(0.5f)
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, 200, 0), 1.0F)
             .alwaysEdible().fast().build();
+    public static final FoodProperties SUGAR_CUBES = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.1f)
+            .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 100, 0), 1.0F)
+            .alwaysEdible().fast().build();
 
     // Baked Goods
     public static final FoodProperties RASPBERRY_PIE_SLICE = new FoodProperties.Builder()

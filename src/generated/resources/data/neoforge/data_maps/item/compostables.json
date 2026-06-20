@@ -96,6 +96,12 @@
     "hearthandharvest:red_mum": {
       "chance": 0.65
     },
+    "hearthandharvest:stick_brush": {
+      "chance": 0.5
+    },
+    "hearthandharvest:sugar_cane_bundle": {
+      "chance": 0.5
+    },
     "hearthandharvest:sunflower_seeds": {
       "chance": 0.3
     },

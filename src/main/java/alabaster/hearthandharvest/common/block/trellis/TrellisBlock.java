@@ -53,14 +53,30 @@ public class TrellisBlock extends Block implements BonemealableBlock {
     public static final EnumProperty<TrellisPlant> PLANT = EnumProperty.create("plant", TrellisPlant.class,
             TrellisPlant.NONE, TrellisPlant.VINE, TrellisPlant.ROSE);
 
-    private static final VoxelShape MIDDLE_EW_SHAPE = Block.box( 0, 0,  7, 16, 16,  9);
-    private static final VoxelShape MIDDLE_NS_SHAPE = Block.box( 7, 0,  0, 9, 16, 16);
+    private static final VoxelShape MIDDLE_EW_SHAPE = Block.box(0, 0, 7, 16, 16, 9);
+    private static final VoxelShape MIDDLE_NS_SHAPE = Block.box(7, 0, 0, 9, 16, 16);
     private static final VoxelShape FLAT_SHAPE = Block.box( 0, 0, 0, 16, 2, 16);
-    private static final VoxelShape TOP_SHAPE = Block.box( 0,14,  0, 16, 16, 16);
-    private static final VoxelShape SIDE_N_SHAPE = Block.box( 0, 0, 14, 16, 16, 16);
-    private static final VoxelShape SIDE_S_SHAPE = Block.box( 0, 0,  0, 16, 16,  2);
-    private static final VoxelShape SIDE_E_SHAPE = Block.box( 0, 0,  0, 2, 16, 16);
-    private static final VoxelShape SIDE_W_SHAPE = Block.box(14, 0,  0, 16, 16, 16);
+    private static final VoxelShape TOP_SHAPE = Block.box( 0,14, 0, 16, 16, 16);
+    private static final VoxelShape SIDE_N_SHAPE = Block.box(0, 0, 14, 16, 16, 16);
+    private static final VoxelShape SIDE_S_SHAPE = Block.box(0, 0, 0, 16, 16,  2);
+    private static final VoxelShape SIDE_E_SHAPE = Block.box(0, 0, 0, 2, 16, 16);
+    private static final VoxelShape SIDE_W_SHAPE = Block.box(14, 0, 0, 16, 16, 16);
+
+    private static final VoxelShape[] SHAPE_CACHE;
+    static { SHAPE_CACHE = new VoxelShape[256];
+        for (int i = 0; i < 256; i++) {
+            VoxelShape s = null;
+            if ((i & 1) != 0) s = s == null ? MIDDLE_EW_SHAPE : Shapes.or(s, MIDDLE_EW_SHAPE);
+            if ((i & 2) != 0) s = s == null ? MIDDLE_NS_SHAPE : Shapes.or(s, MIDDLE_NS_SHAPE);
+            if ((i & 4) != 0) s = s == null ? SIDE_N_SHAPE : Shapes.or(s, SIDE_N_SHAPE);
+            if ((i & 8) != 0) s = s == null ? SIDE_S_SHAPE : Shapes.or(s, SIDE_S_SHAPE);
+            if ((i & 16) != 0) s = s == null ? SIDE_E_SHAPE : Shapes.or(s, SIDE_E_SHAPE);
+            if ((i & 32) != 0) s = s == null ? SIDE_W_SHAPE : Shapes.or(s, SIDE_W_SHAPE);
+            if ((i & 64) != 0) s = s == null ? FLAT_SHAPE : Shapes.or(s, FLAT_SHAPE);
+            if ((i & 128) != 0) s = s == null ? TOP_SHAPE : Shapes.or(s, TOP_SHAPE);
+            SHAPE_CACHE[i] = s == null ? Shapes.block() : s;
+        }
+    }
 
     @Nullable
     private final Supplier<Block> grapeVariant;
@@ -107,19 +123,15 @@ public class TrellisBlock extends Block implements BonemealableBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        List<VoxelShape> parts = new ArrayList<>();
-        if (state.getValue(MIDDLE_EW)) parts.add(MIDDLE_EW_SHAPE);
-        if (state.getValue(MIDDLE_NS)) parts.add(MIDDLE_NS_SHAPE);
-        if (state.getValue(SIDE_NORTH)) parts.add(SIDE_N_SHAPE);
-        if (state.getValue(SIDE_SOUTH)) parts.add(SIDE_S_SHAPE);
-        if (state.getValue(SIDE_EAST)) parts.add(SIDE_E_SHAPE);
-        if (state.getValue(SIDE_WEST)) parts.add(SIDE_W_SHAPE);
-        if (state.getValue(HAS_FLAT)) parts.add(FLAT_SHAPE);
-        if (state.getValue(HAS_TOP)) parts.add(TOP_SHAPE);
-        if (parts.isEmpty()) return Shapes.block();
-        VoxelShape result = parts.get(0);
-        for (int i = 1; i < parts.size(); i++) result = Shapes.or(result, parts.get(i));
-        return result;
+        int idx = (state.getValue(MIDDLE_EW) ? 1 : 0)
+                | (state.getValue(MIDDLE_NS) ? 2 : 0)
+                | (state.getValue(SIDE_NORTH) ? 4 : 0)
+                | (state.getValue(SIDE_SOUTH) ? 8 : 0)
+                | (state.getValue(SIDE_EAST) ? 16 : 0)
+                | (state.getValue(SIDE_WEST) ? 32 : 0)
+                | (state.getValue(HAS_FLAT) ? 64 : 0)
+                | (state.getValue(HAS_TOP) ? 128 : 0);
+        return SHAPE_CACHE[idx];
     }
 
     @Override

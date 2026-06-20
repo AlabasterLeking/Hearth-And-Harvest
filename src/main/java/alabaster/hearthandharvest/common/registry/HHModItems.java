@@ -486,7 +486,6 @@ public class HHModItems {
             () -> new ConsumableItem(foodItem(HHFoodValues.TRAIL_MIX)));
     public static final Supplier<Item> ROASTED_PEANUTS = registerWithTab("roasted_peanuts",
             () -> new ConsumableItem(foodItem(HHFoodValues.ROASTED_PEANUTS)));
-
     public static final Supplier<Item> MARSHMALLOW_STICK = registerWithTab("marshmallow_stick",
             () -> new RoastableItem(
                     foodItem(HHFoodValues.MARSHMALLOW_STICK).stacksTo(1).craftRemainder(Items.STICK),
@@ -494,14 +493,12 @@ public class HHModItems {
                     5,
                     Component.literal("Hold near a campfire to cook").withStyle(ChatFormatting.GRAY))
     );
-
     public static final Supplier<Item> ROASTED_MARSHMALLOW_STICK = registerWithTab("roasted_marshmallow_stick",
             () -> new RoastableItem(foodItem(HHFoodValues.ROASTED_MARSHMALLOW_STICK).stacksTo(1).craftRemainder(Items.STICK),
                     HHModItems.CHARRED_MARSHMALLOW_STICK,
                     10,
                     Component.literal("Perfectly roasted!").withStyle(ChatFormatting.GOLD))
     );
-
     public static final Supplier<Item> CHARRED_MARSHMALLOW_STICK = registerWithTab("charred_marshmallow_stick",
             () -> new RoastableItem(
                     foodItem(HHFoodValues.CHARRED_MARSHMALLOW_STICK).stacksTo(1).craftRemainder(Items.STICK),
@@ -509,9 +506,10 @@ public class HHModItems {
                     5,
                     Component.literal("Oh, it's burnt...").withStyle(ChatFormatting.DARK_GRAY))
     );
-
     public static final Supplier<Item> SMORE = registerWithTab("smore",
             () -> new ConsumableItem(foodItem(HHFoodValues.SMORE)));
+    public static final Supplier<Item> SUGAR_CUBES = registerWithTab("sugar_cubes",
+            () -> new SugarCubesItem(foodItem(HHFoodValues.SUGAR_CUBES)));
 
     // Sap and Syrup
     public static final Supplier<Item> SAP_BUCKET = registerWithTab("sap_bucket",

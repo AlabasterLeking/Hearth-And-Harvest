@@ -2,9 +2,11 @@ package alabaster.hearthandharvest.common.tag;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 
 public class HHCommonTags {
@@ -111,7 +113,6 @@ public class HHCommonTags {
     public static final TagKey<Item> FLOURS = commonItemTag("flours");
     public static final TagKey<Item> FLOURS_WHEAT = commonItemTag("flours/wheat");
     public static final TagKey<Item> FLOURS_CORN = commonItemTag("flours/corn");
-
 
     private static TagKey<Block> commonBlockTag(String path) {
         return BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", path));

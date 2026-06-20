@@ -19,4 +19,5 @@ public class HHModEffects {
     public static final Holder<MobEffect> PRICKLY = EFFECTS.register("prickly", PricklyEffect::new);
     public static final Holder<MobEffect> CLARITY = EFFECTS.register("clarity", ClarityEffect::new);
     public static final Holder<MobEffect> PINNED = EFFECTS.register("pinned", PinnedEffect::new);
+    public static final Holder<MobEffect> HORSE_BOOST = EFFECTS.register("horse_boost", HorseBoostEffect::new);
 }

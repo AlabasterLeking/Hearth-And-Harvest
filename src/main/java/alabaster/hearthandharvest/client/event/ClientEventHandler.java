@@ -249,7 +249,7 @@ public class ClientEventHandler {
             EntityRenderers.register(HHModEntities.CROW.get(), CrowRenderer::new);
             EntityRenderers.register(HHModEntities.MANURE_PROJECTILE.get(), ThrownItemRenderer::new);
             EntityRenderers.register(HHModEntities.THROWN_PITCHFORK.get(), ThrownPitchforkRenderer::new);
-
+            EntityRenderers.register(HHModEntities.THROWN_CLEAVER.get(), ThrownCleaverRenderer::new);
         });
     }
 

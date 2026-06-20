@@ -861,6 +861,15 @@ public class CraftingRecipes
                 .define('s', Tags.Items.SEEDS)
                 .unlockedBy("has_canvas", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.CANVAS.get()))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, HHModItems.PITCHFORK.get(), 1)
+                .pattern("nnn")
+                .pattern("isi")
+                .pattern(" s ")
+                .define('n', Items.IRON_NUGGET)
+                .define('i', Items.IRON_INGOT)
+                .define('s', Items.STICK)
+                .unlockedBy("has_iron_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+                .save(output);
     }
 
     private static void recipesMaterials(RecipeOutput output) {
@@ -1341,6 +1350,12 @@ public class CraftingRecipes
                 .requires(ModItems.TOMATO.get())
                 .requires(ModItems.CABBAGE_LEAF.get())
                 .unlockedBy("has_tortilla", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.TORTILLA.get()))
+                .save(output);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.SUGAR_CUBES.get(), 1)
+                .requires(Items.SUGAR)
+                .requires(Items.SUGAR)
+                .unlockedBy("has_sugar", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SUGAR))
                 .save(output);
     }
 }

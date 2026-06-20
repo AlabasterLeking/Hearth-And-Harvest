@@ -1,14 +1,13 @@
-package alabaster.hearthandharvest.common.entity.pitchfork;
+package alabaster.hearthandharvest.common.entity.cleaver;
 
-import alabaster.hearthandharvest.common.entity.cleaver.ThrownCleaver;
-import alabaster.hearthandharvest.common.registry.HHModEffects;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,21 +20,21 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-public class ThrownPitchfork extends AbstractArrow {
+public class ThrownCleaver extends AbstractArrow {
 
     private static final EntityDataAccessor<ItemStack> DATA_ITEM =
-            SynchedEntityData.defineId(ThrownPitchfork.class, EntityDataSerializers.ITEM_STACK);
+            SynchedEntityData.defineId(ThrownCleaver.class, EntityDataSerializers.ITEM_STACK);
 
     private boolean dealtDamage;
 
-    public ThrownPitchfork(EntityType<? extends ThrownPitchfork> type, Level level) {
+    public ThrownCleaver(EntityType<? extends ThrownCleaver> type, Level level) {
         super(type, level);
     }
 
-    public ThrownPitchfork(Level level, LivingEntity shooter, ItemStack stack) {
-        super(HHModEntities.THROWN_PITCHFORK.get(), shooter, level, stack, null);
+    public ThrownCleaver(Level level, LivingEntity shooter, ItemStack stack) {
+        super(HHModEntities.THROWN_CLEAVER.get(), shooter, level, stack, null);
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
-        this.setBaseDamage(3.0);
+        this.setBaseDamage(2.0);
         this.pickup = Pickup.ALLOWED;
     }
 
@@ -45,10 +44,18 @@ public class ThrownPitchfork extends AbstractArrow {
         builder.define(DATA_ITEM, ItemStack.EMPTY);
     }
 
+    public ItemStack getCleaverStack() {
+        return this.entityData.get(DATA_ITEM);
+    }
+
+    public boolean isStuck() {
+        return inGround;
+    }
+
     @Override
     public void tick() {
         Entity owner = this.getOwner();
-        int loyalty = loyaltyLevel(this.getPickupItem());
+        int loyalty = loyaltyLevel();
         if (loyalty > 0 && this.dealtDamage && owner instanceof Player player && player.isAlive()) {
             if (!this.level().isClientSide) {
                 this.inGround = false;
@@ -81,8 +88,6 @@ public class ThrownPitchfork extends AbstractArrow {
         }
         super.onHitEntity(result);
         this.dealtDamage = true;
-        if (result.getEntity() instanceof LivingEntity target)
-            target.addEffect(new MobEffectInstance(HHModEffects.PINNED, 6000, 0));
     }
 
     private void returnTo(Player player) {
@@ -92,7 +97,8 @@ public class ThrownPitchfork extends AbstractArrow {
         this.discard();
     }
 
-    private int loyaltyLevel(ItemStack stack) {
+    private int loyaltyLevel() {
+        ItemStack stack = getCleaverStack();
         if (stack.isEmpty()) return 0;
         return level().registryAccess().registryOrThrow(Registries.ENCHANTMENT)
                 .getHolder(Enchantments.LOYALTY)
@@ -101,37 +107,29 @@ public class ThrownPitchfork extends AbstractArrow {
     }
 
     @Override
-    public byte getPierceLevel() {
-        return 2;
-    }
-
-    public ItemStack getPitchforkStack() {
-        return this.entityData.get(DATA_ITEM);
-    }
-
-    @Override
     protected ItemStack getDefaultPickupItem() {
-        ItemStack stack = getPitchforkStack();
+        ItemStack stack = getCleaverStack();
         return stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(1);
     }
 
-    public boolean isStuck() {
-        return inGround;
+    @Override
+    protected SoundEvent getDefaultHitGroundSoundEvent() {
+        return SoundEvents.ITEM_BREAK;
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        ItemStack stack = getPitchforkStack();
-        if (!stack.isEmpty()) tag.put("PitchforkItem", stack.save(registryAccess()));
+        ItemStack stack = getCleaverStack();
+        if (!stack.isEmpty()) tag.put("CleaverItem", stack.save(registryAccess()));
         tag.putBoolean("DealtDamage", this.dealtDamage);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("PitchforkItem"))
-            entityData.set(DATA_ITEM, ItemStack.parseOptional(registryAccess(), tag.getCompound("PitchforkItem")));
+        if (tag.contains("CleaverItem"))
+            entityData.set(DATA_ITEM, ItemStack.parseOptional(registryAccess(), tag.getCompound("CleaverItem")));
         this.dealtDamage = tag.getBoolean("DealtDamage");
     }
 }

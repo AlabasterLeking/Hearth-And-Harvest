@@ -1,0 +1,20 @@
+{
+  "description": {
+    "translate": "enchantment.hearthandharvest.harvesting"
+  },
+  "supported_items": "#minecraft:hoes",
+  "primary_items": "#minecraft:hoes",
+  "weight": 5,
+  "max_level": 3,
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 20
+  },
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 25
+  },
+  "anvil_cost": 4,
+  "slots": ["mainhand"],
+  "effects": {}
+}

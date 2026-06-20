@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block;
 
+import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +34,7 @@ import net.neoforged.neoforge.common.util.TriState;
 import org.jetbrains.annotations.NotNull;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 
-public class CornStalkBlock extends Block implements BonemealableBlock {
+public class CornStalkBlock extends Block implements BonemealableBlock, IHarvestable {
     public static final EnumProperty<CornSection> SECTION = EnumProperty.create("section", CornSection.class);
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 5);
     public static final BooleanProperty TRIM_NORTH = BooleanProperty.create("trim_north");
@@ -339,18 +340,28 @@ public class CornStalkBlock extends Block implements BonemealableBlock {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        if (age < 4) {
+        if (!isHarvestReady(state)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
         if (level.isClientSide) return ItemInteractionResult.sidedSuccess(true);
 
+        harvestBlock(state, level, pos, player, ItemStack.EMPTY);
+        return ItemInteractionResult.sidedSuccess(false);
+    }
+
+    @Override
+    public boolean isHarvestReady(BlockState state) {
+        return state.getValue(AGE) >= 4;
+    }
+
+    @Override
+    public void harvestBlock(BlockState state, Level level, BlockPos pos, Player player, ItemStack tool) {
+        int age = state.getValue(AGE);
         int count = (age == 5) ? 2 : 1;
         level.setBlock(pos, state.setValue(AGE, 3), 3);
         popResource(level, pos, new ItemStack(HHModItems.CORN.get(), count));
         level.playSound(null, pos, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
-
-        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

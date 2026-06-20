@@ -32,6 +32,8 @@ public class DataMaps extends DataMapProvider
                 // 50% chance
                 .add(HHModItems.CORN_HUSK_BUNDLE.get().asItem().builtInRegistryHolder(), new Compostable(0.5F), false)
                 .add(HHModItems.COTTON_BALE.get().asItem().builtInRegistryHolder(), new Compostable(0.5F), false)
+                .add(HHModItems.STICK_BRUSH.get().asItem().builtInRegistryHolder(), new Compostable(0.5F), false)
+                .add(HHModItems.SUGAR_CANE_BUNDLE.get().asItem().builtInRegistryHolder(), new Compostable(0.5F), false)
 
                 // 65% chance
                 .add(HHModItems.YELLOW_MUM.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)

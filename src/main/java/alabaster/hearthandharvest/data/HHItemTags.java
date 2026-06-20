@@ -41,6 +41,12 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.DIAMOND_CLEAVER.get())
                 .add(HHModItems.GOLDEN_CLEAVER.get())
                 .add(HHModItems.NETHERITE_CLEAVER.get());
+
+        tag(Tags.Items.TOOLS)
+                .addTag(HHModTags.CLEAVERS)
+                .add(HHModItems.PITCHFORK.get())
+                .add(HHModItems.WATERING_CAN.get())
+                .add(HHModItems.SEED_POUCH.get());
         
         tag(ItemTags.STAIRS)
                 .add(HHModItems.SALT_STAIRS.get())
