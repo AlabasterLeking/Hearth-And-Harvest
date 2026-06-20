@@ -237,6 +237,9 @@
   "item.hearthandharvest.baked_apple": "Печене яблуко",
   "item.hearthandharvest.candy_corn": "Кукурудзяна цукерка",
 
+  "item.hearthandharvest.sugar_cubes": "Цукрові кубики",
+  "item.hearthandharvest.sugar_cubes.tooltip": "Тимчасово збільшує швидкість та висоту стрибка коня на 25%.",
+
   "block.hearthandharvest.raspberry_pie": "Малиновий пиріг",
   "item.hearthandharvest.raspberry_pie_slice": "Шматочок малинового пирога",
   "block.hearthandharvest.blueberry_pie": "Чорничний пиріг",
@@ -434,5 +437,8 @@
   "item.hearthandharvest.raspberry_pips": "Насіння малини",
 
   "key.hearthandharvest.poop": "Послід",
-  "key.categories.hearthandharvest": "Hearth and Harvest"
+  "key.categories.hearthandharvest": "Hearth and Harvest",
+
+  "enchantment.hearthandharvest.tilling": "Оранка",
+  "enchantment.hearthandharvest.harvesting": "Жнива"
 }
