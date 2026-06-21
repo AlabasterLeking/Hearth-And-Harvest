@@ -158,6 +158,17 @@ public class JugBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!(blockEntity instanceof JugBlockEntity jugBlockEntity)) return ItemInteractionResult.SUCCESS;
 
+        if (player.isShiftKeyDown() && stack.isEmpty() && hand == InteractionHand.MAIN_HAND) {
+            ItemStack jugItem = saveTileToItem(jugBlockEntity);
+            level.removeBlock(pos, false);
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2f,
+                    ((level.random.nextFloat() - level.random.nextFloat()) * 0.7f + 1f) * 2f);
+            if (!player.addItem(jugItem)) {
+                level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, jugItem));
+            }
+            return ItemInteractionResult.SUCCESS;
+        }
+
         FluidStack tankFluid = jugBlockEntity.getFluidTank().getFluid();
 
         // Fill a glass bottle from the jug
