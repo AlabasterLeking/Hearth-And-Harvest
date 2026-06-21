@@ -42,7 +42,7 @@ public class Config {
         ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
 
         TREE_TAPPER_BASE_CHANCE = COMMON_BUILDER
-                .comment("Base chance (0.0 - 1.0) per random tick for a Tree Tapper to increase sap when on a tappable block.\n"
+                .comment("Chance (0.0 - 1.0) per check interval (~2 seconds) for a Tree Tapper to collect sap when on a tappable block.\n"
                         + "Higher values make sap fill faster.")
                 .defineInRange("treeTapperBaseChance", 0.5D, 0.0D, 1.0D);
 

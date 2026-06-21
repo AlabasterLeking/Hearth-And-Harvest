@@ -1,0 +1,112 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"0": "hearthandharvest:block/straw_hat_brim",
+		"1": "hearthandharvest:block/straw_hat_cap",
+		"particle": "hearthandharvest:block/straw_hat_brim"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 4],
+			"to": [12, 3, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 4]},
+			"faces": {
+				"north": {"uv": [8, 9, 16, 12], "texture": "#1"},
+				"east": {"uv": [0, 9, 8, 12], "texture": "#1"},
+				"south": {"uv": [8, 13, 16, 16], "texture": "#1"},
+				"west": {"uv": [0, 13, 8, 16], "texture": "#1"},
+				"up": {"uv": [8, 0, 16, 8], "texture": "#1"},
+				"down": {"uv": [4, 4, 12, 12], "texture": "#0"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [4, 0, 16],
+			"faces": {
+				"north": {"uv": [0, 2, 4, 2], "texture": "#missing"},
+				"east": {"uv": [0, 2, 16, 2], "texture": "#missing"},
+				"south": {"uv": [0, 2, 4, 2], "texture": "#missing"},
+				"west": {"uv": [0, 2, 16, 2], "texture": "#missing"},
+				"up": {"uv": [12, 0, 16, 16], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [12, 0, 16, 16], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"from": [12, 0, 0],
+			"to": [16, 0, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 0, 0]},
+			"faces": {
+				"north": {"uv": [0, 2, 4, 2], "texture": "#missing"},
+				"east": {"uv": [0, 2, 16, 2], "texture": "#missing"},
+				"south": {"uv": [0, 2, 4, 2], "texture": "#missing"},
+				"west": {"uv": [0, 2, 16, 2], "texture": "#missing"},
+				"up": {"uv": [0, 0, 4, 16], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [0, 0, 4, 16], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"from": [4, 0, 0],
+			"to": [12, 0, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 0]},
+			"faces": {
+				"north": {"uv": [0, 2, 8, 2], "texture": "#missing"},
+				"east": {"uv": [0, 2, 4, 2], "texture": "#missing"},
+				"south": {"uv": [0, 2, 8, 2], "texture": "#missing"},
+				"west": {"uv": [0, 2, 4, 2], "texture": "#missing"},
+				"up": {"uv": [4, 12, 12, 16], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [4, 0, 12, 4], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"from": [4, 0, 12],
+			"to": [12, 0, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 0, 12]},
+			"faces": {
+				"north": {"uv": [0, 2, 8, 2], "texture": "#missing"},
+				"east": {"uv": [0, 2, 4, 2], "texture": "#missing"},
+				"south": {"uv": [0, 2, 8, 2], "texture": "#missing"},
+				"west": {"uv": [0, 2, 4, 2], "texture": "#missing"},
+				"up": {"uv": [4, 0, 12, 4], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [4, 12, 12, 16], "rotation": 180, "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -135, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"head": {
+			"translation": [0, 17.5, 0],
+			"scale": [1.7, 1.7, 1.7]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

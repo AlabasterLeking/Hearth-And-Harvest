@@ -34,6 +34,7 @@ public class ItemModels extends ItemModelProvider
         items.remove(HHModItems.SCARECROW.get());
         items.remove(HHModItems.SALT_DRIP.get());
         items.remove(HHModItems.PITCHFORK.get());
+        items.remove(HHModItems.FARMERS_HAT.get());
 
         // Workstations / Functional
         blockBasedModel(HHModItems.TREE_TAPPER.get(),"");

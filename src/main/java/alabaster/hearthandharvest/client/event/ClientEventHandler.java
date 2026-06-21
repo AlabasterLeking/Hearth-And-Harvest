@@ -15,14 +15,12 @@ import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchforkModel;
 import alabaster.hearthandharvest.common.item.component.SeedPouchContents;
 import alabaster.hearthandharvest.common.network.PlayerPoopPacket;
 import alabaster.hearthandharvest.common.registry.*;
-import alabaster.hearthandharvest.common.utilities.BasinBlockColor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -46,11 +44,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 @SuppressWarnings("unused")
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEventHandler {
-    @SubscribeEvent
-    public static void onRegisterColorHandlers(RegisterColorHandlersEvent.Block event) {
-        event.register(new BasinBlockColor(), HHModBlocks.BASIN.get());
-    }
-
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register((state, level, pos, tintIndex) -> {
@@ -113,6 +106,10 @@ public class ClientEventHandler {
         event.registerBlockEntityRenderer(
                 HHModBlockEntities.TREE_TAPPER.get(),
                 TreeTapperRenderer::new
+        );
+        event.registerBlockEntityRenderer(
+                HHModBlockEntities.BASIN.get(),
+                BasinRenderer::new
         );
     }
 

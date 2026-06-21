@@ -64,8 +64,6 @@ public class JugBlockItem extends BlockItem {
                     jug.setChanged();
                     jug.syncToClient();
                 }
-                stack.remove(DataComponents.CUSTOM_DATA);
-                stack.remove(DataComponents.BLOCK_ENTITY_DATA);
             }
         }
 

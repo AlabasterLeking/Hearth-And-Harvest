@@ -90,6 +90,9 @@ public class HHModItems {
     public static final Supplier<Item> SEED_POUCH = registerWithTab("seed_pouch",
             () -> new SeedPouchItem(basicItem().stacksTo(1)));
 
+    public static final Supplier<Item> FARMERS_HAT = registerWithTab("farmers_hat",
+            () -> new FarmersHatItem(basicItem().stacksTo(1)));
+
     // Spawn Eggs
     public static final Supplier<Item> CROW_SPAWN_EGG = registerWithTab("crow_spawn_egg",
             () -> new DeferredSpawnEggItem(HHModEntities.CROW, 0x1c2030,0x0d111c,

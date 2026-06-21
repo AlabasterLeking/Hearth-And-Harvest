@@ -62,8 +62,10 @@ public class TreeTapperRenderer implements BlockEntityRenderer<TreeTapperBlockEn
         Matrix4f pose = poseStack.last().pose();
         VertexConsumer consumer = buffer.getBuffer(RenderType.translucent());
 
-        float u0 = sprite.getU0(), u1 = sprite.getU1();
-        float v0 = sprite.getV0(), v1 = sprite.getV1();
+        float du = sprite.getU1() - sprite.getU0();
+        float dv = sprite.getV1() - sprite.getV0();
+        float u0 = sprite.getU0(), u1 = sprite.getU0() + du * (MAX_X - MIN_X);
+        float v0 = sprite.getV0(), v1 = sprite.getV0() + dv * (MAX_Z - MIN_Z);
 
         // Top face of fluid surface (NW → SW → SE → NE, matching vanilla fluid winding).
         consumer.addVertex(pose, MIN_X, fluidY, MIN_Z).setColor(r, g, b, a).setUv(u0, v0).setLight(packedLight).setNormal(0, 1, 0);

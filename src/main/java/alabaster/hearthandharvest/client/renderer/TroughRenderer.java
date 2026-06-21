@@ -118,14 +118,16 @@ public class TroughRenderer implements BlockEntityRenderer<TroughBlockEntity> {
         VertexConsumer vc = buf.getBuffer(RenderType.entityTranslucentCull(InventoryMenu.BLOCK_ATLAS));
         Matrix4f m = ps.last().pose();
         int ov = OverlayTexture.NO_OVERLAY;
-        float u0 = sprite.getU0(), u1 = sprite.getU1();
-        float v0 = sprite.getV0(), v1 = sprite.getV1();
 
         emitFluidQuad(vc, m, INNER_MIN, INNER_MAX, INNER_MIN, INNER_MAX,
-                surfaceY, r, g, b, a, u0, u1, v0, v1, ov, packedLight);
+                surfaceY, r, g, b, a, sprite, ov, packedLight);
     }
 
-    private static void emitFluidQuad(VertexConsumer vc, Matrix4f m, float x0, float x1, float z0, float z1, float y, float r, float g, float b, float a, float u0, float u1, float v0, float v1, int overlay, int light) {
+    private static void emitFluidQuad(VertexConsumer vc, Matrix4f m, float x0, float x1, float z0, float z1, float y, float r, float g, float b, float a, TextureAtlasSprite sprite, int overlay, int light) {
+        float du = sprite.getU1() - sprite.getU0();
+        float dv = sprite.getV1() - sprite.getV0();
+        float u0 = sprite.getU0(), u1 = sprite.getU0() + du * (x1 - x0);
+        float v0 = sprite.getV0(), v1 = sprite.getV0() + dv * (z1 - z0);
         vc.addVertex(m, x0, y, z0).setColor(r,g,b,a).setUv(u0,v0).setOverlay(overlay).setLight(light).setNormal(0,1,0);
         vc.addVertex(m, x0, y, z1).setColor(r,g,b,a).setUv(u0,v1).setOverlay(overlay).setLight(light).setNormal(0,1,0);
         vc.addVertex(m, x1, y, z1).setColor(r,g,b,a).setUv(u1,v1).setOverlay(overlay).setLight(light).setNormal(0,1,0);
