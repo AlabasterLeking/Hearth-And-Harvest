@@ -36,6 +36,8 @@
   "block.hearthandharvest.drawer": "Шухляда",
   "block.hearthandharvest.basin": "Раковина",
 
+  "block.hearthandharvest.sprinkler": "Зрошувач",
+
   "block.hearthandharvest.nest": "Гніздо",
   "block.hearthandharvest.hay_rug": "Сінний килимок",
   "block.hearthandharvest.straw_rug": "Солом'яний килимок",
@@ -44,6 +46,8 @@
   "block.hearthandharvest.scarecrow": "Опудало",
 
   "item.hearthandharvest.farmers_hat": "Фермерський капелюх",
+
+  "item.hearthandharvest.horseshoe": "Підкова",
 
   "item.hearthandharvest.trellis": "Шпалера",
   "block.hearthandharvest.trellis": "Шпалера",
