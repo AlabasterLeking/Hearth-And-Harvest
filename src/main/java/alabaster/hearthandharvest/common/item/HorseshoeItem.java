@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.item;
 
 import alabaster.hearthandharvest.common.entity.horseshoe.ThrownHorseshoe;
+import alabaster.hearthandharvest.common.event.HorseshoeEventHandler;
 import alabaster.hearthandharvest.common.registry.HHModAttachments;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -9,6 +10,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -24,8 +27,6 @@ public class HorseshoeItem extends Item {
         super(properties);
     }
 
-    // Right-click tamed horse to equip.
-    // Sneak + right-click an already-shod horse to remove and return the horseshoe.
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
         if (!(target instanceof AbstractHorse horse)) return InteractionResult.PASS;
@@ -35,6 +36,9 @@ public class HorseshoeItem extends Item {
         if (shod && player.isCrouching()) {
             ItemStack shoe = horse.getData(HHModAttachments.HORSESHOE_ITEM).copy();
             horse.setData(HHModAttachments.HORSESHOE_ITEM, ItemStack.EMPTY);
+            AttributeInstance speedAttr = horse.getAttribute(Attributes.MOVEMENT_SPEED);
+            if (speedAttr != null && speedAttr.hasModifier(HorseshoeEventHandler.SPEED_MODIFIER_ID))
+                speedAttr.removeModifier(HorseshoeEventHandler.SPEED_MODIFIER_ID);
             if (!player.getInventory().add(shoe)) player.drop(shoe, false);
             horse.level().playSound(null, horse, SoundEvents.ARMOR_EQUIP_IRON.value(), SoundSource.PLAYERS, 1.0f, 0.8f);
             return InteractionResult.SUCCESS;
