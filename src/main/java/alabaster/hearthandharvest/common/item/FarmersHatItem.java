@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 public class FarmersHatItem extends Item implements Equipable {
 
     public FarmersHatItem(Properties properties) {
-        super(properties.durability(64));
+        super(properties.durability(128));
     }
 
     @Override

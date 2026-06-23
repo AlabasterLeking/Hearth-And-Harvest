@@ -30,7 +30,8 @@ public class HHModBlocks {
             () -> new JugBlock(Block.Properties.ofFullCopy(Blocks.IRON_BARS).strength(2.0F, 3.0F).sound(SoundType.METAL)));
     public static final Supplier<Block> TROUGH = BLOCKS.register("trough",
             () -> new TroughBlock(Block.Properties.ofFullCopy(Blocks.CAULDRON)));
-
+    public static final Supplier<Block> SPRINKLER = BLOCKS.register("sprinkler",
+            () -> new SprinklerBlock(Block.Properties.ofFullCopy(Blocks.BARREL)));
 
     public static final Supplier<Block> SAP_CAULDRON = BLOCKS.register("sap_cauldron",
             () -> new SapCauldronBlock(Block.Properties.ofFullCopy(Blocks.CAULDRON).strength(2.0F, 3.0F).sound(SoundType.METAL).randomTicks()));

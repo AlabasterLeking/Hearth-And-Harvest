@@ -111,6 +111,10 @@ public class ClientEventHandler {
                 HHModBlockEntities.BASIN.get(),
                 BasinRenderer::new
         );
+        event.registerBlockEntityRenderer(
+                HHModBlockEntities.SPRINKLER.get(),
+                SprinklerRenderer::new
+        );
     }
 
     @SubscribeEvent
@@ -251,6 +255,7 @@ public class ClientEventHandler {
             EntityRenderers.register(HHModEntities.MANURE_PROJECTILE.get(), ThrownItemRenderer::new);
             EntityRenderers.register(HHModEntities.THROWN_PITCHFORK.get(), ThrownPitchforkRenderer::new);
             EntityRenderers.register(HHModEntities.THROWN_CLEAVER.get(), ThrownCleaverRenderer::new);
+            EntityRenderers.register(HHModEntities.THROWN_HORSESHOE.get(), ThrownHorseshoeRenderer::new);
         });
     }
 

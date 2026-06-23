@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.registry;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -29,4 +30,11 @@ public class HHModAttachments {
             ATTACHMENT_TYPES.register("manure_fly_ticks", () ->
                     AttachmentType.builder(() -> 0).serialize(Codec.INT).build()
             );
+
+    // Stores the actual ItemStack so enchantments are preserved on removal.
+    // Empty stack = no horseshoe equipped.
+    public static final Supplier<AttachmentType<ItemStack>> HORSESHOE_ITEM =
+            ATTACHMENT_TYPES.register("horseshoe_item",
+                    () -> AttachmentType.builder(() -> ItemStack.EMPTY)
+                            .serialize(ItemStack.OPTIONAL_CODEC).build());
 }

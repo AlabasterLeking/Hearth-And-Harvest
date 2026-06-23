@@ -66,6 +66,12 @@ public class CapabilityRegistration {
                 (be, side) -> be.tank
         );
 
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                HHModBlockEntities.SPRINKLER.get(),
+                (be, side) -> be.tank
+        );
+
         // Jug block entity
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,

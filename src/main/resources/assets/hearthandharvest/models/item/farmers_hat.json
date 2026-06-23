@@ -2,17 +2,17 @@
   "parent": "minecraft:item/handheld",
   "loader": "neoforge:separate_transforms",
   "base": {
-    "parent": "hearthandharvest:item/3d_farmers_hat"
+    "parent": "hearthandharvest:item/2d_farmers_hat"
   },
   "perspectives": {
     "gui": {
-      "parent": "hearthandharvest:item/3d_farmers_hat"
+      "parent": "hearthandharvest:item/2d_farmers_hat"
     },
     "ground": {
-      "parent": "hearthandharvest:item/3d_farmers_hat"
+      "parent": "hearthandharvest:item/2d_farmers_hat"
     },
     "fixed": {
-      "parent": "hearthandharvest:item/3d_farmers_hat"
+      "parent": "hearthandharvest:item/2d_farmers_hat"
     },
     "head": {
       "parent": "hearthandharvest:item/3d_farmers_hat"

@@ -14,23 +14,28 @@ import java.util.EnumSet;
 
 public class StayNearSaltGoal extends Goal {
 
-    private static final int SCAN_INTERVAL = 5;
+    private static final int CHECK_INTERVAL  = 20;
+    private static final int SEARCH_INTERVAL = 100;
 
     private final PathfinderMob mob;
     private @Nullable BlockPos saltPos;
-    private int scanCooldown = SCAN_INTERVAL;
+    private int checkCooldown;
+    private int searchCooldown;
+    private int continueCheckCooldown;
     private long nextLickTime = -1;
     private boolean licking;
 
     public StayNearSaltGoal(PathfinderMob mob) {
         this.mob = mob;
         setFlags(EnumSet.of(Flag.MOVE));
+        this.checkCooldown = mob.getRandom().nextInt(CHECK_INTERVAL);
+        this.searchCooldown = mob.getRandom().nextInt(SEARCH_INTERVAL);
     }
 
     @Override
     public boolean canUse() {
-        if (--scanCooldown > 0) return false;
-        scanCooldown = SCAN_INTERVAL;
+        if (--checkCooldown > 0) return false;
+        checkCooldown = CHECK_INTERVAL;
 
         long now = mob.level().getGameTime();
         if (nextLickTime < 0) {
@@ -40,9 +45,18 @@ public class StayNearSaltGoal extends Goal {
 
         if (saltPos != null) {
             BlockState s = mob.level().getBlockState(saltPos);
-            if (!(s.getBlock() instanceof SaltBlock) || s.getValue(SaltBlock.WAXED)) saltPos = null;
+            if (!(s.getBlock() instanceof SaltBlock) || s.getValue(SaltBlock.WAXED)) {
+                saltPos = null;
+                searchCooldown = 0;
+            }
         }
-        if (saltPos == null) saltPos = findNearbySaltBlock();
+
+        if (saltPos == null) {
+            if (--searchCooldown > 0) return false;
+            searchCooldown = SEARCH_INTERVAL;
+            saltPos = findNearbySaltBlock();
+        }
+
         if (saltPos == null) return false;
 
         if (now >= nextLickTime) {
@@ -58,18 +72,25 @@ public class StayNearSaltGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         if (saltPos == null) return false;
+
+        int stayRange = Config.SALT_ANIMAL_RADIUS.get();
+        double threshold = licking ? 4.0 : (double) (stayRange * stayRange);
+
+        if (--continueCheckCooldown > 0)
+            return mob.blockPosition().distSqr(saltPos) > threshold;
+
+        continueCheckCooldown = 10;
         BlockState s = mob.level().getBlockState(saltPos);
         if (!(s.getBlock() instanceof SaltBlock) || s.getValue(SaltBlock.WAXED)) {
             saltPos = null;
             return false;
         }
-        int stayRange = Config.SALT_ANIMAL_RADIUS.get();
-        double threshold = licking ? 4.0 : (double) (stayRange * stayRange);
         return mob.blockPosition().distSqr(saltPos) > threshold;
     }
 
     @Override
     public void start() {
+        continueCheckCooldown = 0;
         mob.getNavigation().moveTo(saltPos.getX() + 0.5, saltPos.getY(), saltPos.getZ() + 0.5, 1.0);
     }
 

@@ -111,6 +111,8 @@ public class HHModItems {
             () -> new JugBlockItem(HHModBlocks.JUG.get(), basicItem()));
     public static final Supplier<Item> TROUGH = registerWithTab("trough",
             () -> new BlockItem(HHModBlocks.TROUGH.get(), basicItem()));
+    public static final Supplier<Item> SPRINKLER = registerWithTab("sprinkler",
+            () -> new BlockItem(HHModBlocks.SPRINKLER.get(), basicItem()));
 
     public static final Supplier<Item> COUNTER = registerWithBlockTab("counter",
             () -> new BlockItem(HHModBlocks.COUNTER.get(), basicItem()));
@@ -136,6 +138,9 @@ public class HHModItems {
             () -> new TrellisBlockItem(HHModBlocks.TRELLIS.get(), TrellisMaterial.BAMBOO, basicItem()));
     public static final Supplier<Item> STRIPPED_BAMBOO_TRELLIS = registerWithBlockTab("stripped_bamboo_trellis",
             () -> new TrellisBlockItem(HHModBlocks.TRELLIS.get(), TrellisMaterial.STRIPPED_BAMBOO, basicItem()));
+
+    public static final Supplier<Item> HORSESHOE = registerWithTab("horseshoe",
+            () -> new HorseshoeItem (basicItem()));
 
     // Half-Cabinets
     public static final Supplier<Item> OAK_HALF_CABINET = registerWithBlockTab("oak_half_cabinet",

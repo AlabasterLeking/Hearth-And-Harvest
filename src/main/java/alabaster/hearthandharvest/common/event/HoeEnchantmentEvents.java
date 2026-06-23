@@ -1,6 +1,9 @@
 package alabaster.hearthandharvest.common.events;
 
 import alabaster.hearthandharvest.common.block.IHarvestable;
+import alabaster.hearthandharvest.common.event.FarmersHatEvents;
+import alabaster.hearthandharvest.common.registry.HHModItems;
+import net.minecraft.server.level.ServerLevel;
 import alabaster.hearthandharvest.common.registry.HHModEnchantments;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,6 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.HoeItem;
@@ -34,11 +38,11 @@ import java.util.Set;
 public class HoeEnchantmentEvents {
 
     private static final Map<Block, BlockState> TILL_MAP = Map.of(
-            Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(),
-            Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(),
-            Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState(),
-            Blocks.ROOTED_DIRT, Blocks.DIRT.defaultBlockState(),
-            Blocks.DIRT_PATH, Blocks.DIRT.defaultBlockState()
+        Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(),
+        Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(),
+        Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState(),
+        Blocks.ROOTED_DIRT, Blocks.DIRT.defaultBlockState(),
+        Blocks.DIRT_PATH, Blocks.DIRT.defaultBlockState()
     );
 
     @SubscribeEvent
@@ -69,8 +73,6 @@ public class HoeEnchantmentEvents {
         if (harvestingLevel > 0 && isFullyGrownCrop(centerState)) {
             int r = harvestingLevel;
 
-            // BFS flood-fill through orthogonally connected harvestable blocks
-            // bounded by a cube of radius r in all three axes.
             Set<BlockPos> visited = new HashSet<>();
             Deque<BlockPos> queue = new ArrayDeque<>();
 
@@ -95,6 +97,7 @@ public class HoeEnchantmentEvents {
             }
 
             hoe.hurtAndBreak(1, player, LivingEntity.getSlotForHand(event.getHand()));
+            FarmersHatEvents.damageHat(player);
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.SUCCESS);
         }
@@ -117,6 +120,8 @@ public class HoeEnchantmentEvents {
             level.setBlock(pos, state.getBlock().defaultBlockState(), Block.UPDATE_ALL);
         }
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player));
+        if (player.getItemBySlot(EquipmentSlot.HEAD).is(HHModItems.FARMERS_HAT.get()))
+            FarmersHatEvents.dropXp((ServerLevel) level, pos);
     }
 
     private static boolean isFullyGrownCrop(BlockState state) {

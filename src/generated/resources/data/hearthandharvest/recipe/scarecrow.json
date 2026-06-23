@@ -5,18 +5,15 @@
     "H": {
       "item": "minecraft:hay_block"
     },
-    "c": {
-      "item": "farmersdelight:canvas"
+    "f": {
+      "item": "hearthandharvest:farmers_hat"
     },
     "s": {
       "item": "minecraft:stick"
-    },
-    "w": {
-      "item": "minecraft:wheat"
     }
   },
   "pattern": [
-    "cwc",
+    " f ",
     "sHs",
     " s "
   ],

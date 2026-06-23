@@ -5,7 +5,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,9 +20,8 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import vectorwing.farmersdelight.data.ModEnchantments;
+import alabaster.hearthandharvest.common.tag.HHModTags;
 
 public class PitchforkItem extends Item {
 
@@ -35,13 +33,13 @@ public class PitchforkItem extends Item {
 
     public static ItemAttributeModifiers createAttributes() {
         return ItemAttributeModifiers.builder()
-            .add(Attributes.ATTACK_DAMAGE,
-                new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 4.0, AttributeModifier.Operation.ADD_VALUE),
-                EquipmentSlotGroup.MAINHAND)
-            .add(Attributes.ATTACK_SPEED,
-                new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.6, AttributeModifier.Operation.ADD_VALUE),
-                EquipmentSlotGroup.MAINHAND)
-            .build();
+                .add(Attributes.ATTACK_DAMAGE,
+                        new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 4.0, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND)
+                .add(Attributes.ATTACK_SPEED,
+                        new AttributeModifier(BASE_ATTACK_SPEED_ID, -2.6, AttributeModifier.Operation.ADD_VALUE),
+                        EquipmentSlotGroup.MAINHAND)
+                .build();
     }
 
     @Override
@@ -94,12 +92,7 @@ public class PitchforkItem extends Item {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        if (state.is(BlockTags.MINEABLE_WITH_HOE)
-                || state.is(Blocks.HAY_BLOCK)
-                || state.is(BlockTags.CROPS)
-                || state.is(BlockTags.LEAVES)) {
-            return 6.0f;
-        }
+        if (state.is(HHModTags.MINEABLE_WITH_PITCHFORK)) return Float.MAX_VALUE;
         return super.getDestroySpeed(stack, state);
     }
 

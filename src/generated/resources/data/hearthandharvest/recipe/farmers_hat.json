@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "b": {
+      "item": "minecraft:hay_block"
+    },
+    "w": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "pattern": [
+    "wbw"
+  ],
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:farmers_hat"
+  }
+}

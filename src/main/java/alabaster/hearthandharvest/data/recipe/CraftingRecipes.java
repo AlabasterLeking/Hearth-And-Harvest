@@ -60,6 +60,14 @@ public class CraftingRecipes
                 .define('P', ItemTags.PLANKS)
                 .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HHModItems.SPRINKLER.get(), 1)
+                .pattern("CCC")
+                .pattern(" C ")
+                .pattern("SSS")
+                .define('C', Items.COPPER_INGOT)
+                .define('S', ItemTags.WOODEN_SLABS)
+                .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HHModItems.TRELLIS.get(), 4)
                 .pattern(" S ")
                 .pattern("SSS")
@@ -129,17 +137,14 @@ public class CraftingRecipes
                 .unlockedBy("has_stick", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STICK))
                 .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HHModBlocks.SCARECROW.get())
-                .pattern("cwc")
+                .pattern(" f ")
                 .pattern("sHs")
                 .pattern(" s ")
-                .define('c', ModItems.CANVAS.get())
+                .define('f', HHModItems.FARMERS_HAT.get())
                 .define('s', Items.STICK)
                 .define('H', Items.HAY_BLOCK)
-                .define('w', Items.WHEAT)
-                .unlockedBy("has_canvas", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.CANVAS.get()))
                 .unlockedBy("has_stick", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STICK))
                 .unlockedBy("has_hay_block", InventoryChangeTrigger.TriggerInstance.hasItems(Items.HAY_BLOCK))
-                .unlockedBy("has_wheat", InventoryChangeTrigger.TriggerInstance.hasItems(Items.WHEAT))
                 .save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, HHModItems.HAY_RUG.get(), 4)
                 .requires(Items.HAY_BLOCK)
@@ -869,6 +874,19 @@ public class CraftingRecipes
                 .define('i', Items.IRON_INGOT)
                 .define('s', Items.STICK)
                 .unlockedBy("has_iron_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, HHModItems.FARMERS_HAT.get(), 1)
+                .pattern("wbw")
+                .define('w', Items.WHEAT)
+                .define('b', Items.HAY_BLOCK)
+                .unlockedBy("has_wheat", InventoryChangeTrigger.TriggerInstance.hasItems(Items.WHEAT))
+                .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, HHModItems.HORSESHOE.get(), 2)
+                .pattern("n n")
+                .pattern("n n")
+                .pattern("nnn")
+                .define('n', Items.IRON_NUGGET)
+                .unlockedBy("has_iron_nugget", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_NUGGET))
                 .save(output);
     }
 

@@ -10,10 +10,14 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -34,8 +38,19 @@ public class ThrownCleaver extends AbstractArrow {
     public ThrownCleaver(Level level, LivingEntity shooter, ItemStack stack) {
         super(HHModEntities.THROWN_CLEAVER.get(), shooter, level, stack, null);
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
-        this.setBaseDamage(2.0);
+        this.setBaseDamage(meleeDamage(stack) / 2.0);
         this.pickup = Pickup.ALLOWED;
+    }
+
+    private static double meleeDamage(ItemStack stack) {
+        double damage = 2.0;
+        for (ItemAttributeModifiers.Entry entry : stack.getAttributeModifiers().modifiers()) {
+            if (entry.attribute().is(Attributes.ATTACK_DAMAGE)
+                    && entry.slot().test(EquipmentSlot.MAINHAND)
+                    && entry.modifier().operation() == AttributeModifier.Operation.ADD_VALUE)
+                damage += entry.modifier().amount();
+        }
+        return damage;
     }
 
     @Override

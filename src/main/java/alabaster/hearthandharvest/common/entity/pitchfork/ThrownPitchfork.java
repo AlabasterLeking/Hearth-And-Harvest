@@ -1,6 +1,5 @@
 package alabaster.hearthandharvest.common.entity.pitchfork;
 
-import alabaster.hearthandharvest.common.entity.cleaver.ThrownCleaver;
 import alabaster.hearthandharvest.common.registry.HHModEffects;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
 import net.minecraft.core.registries.Registries;
@@ -11,10 +10,14 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -35,8 +38,19 @@ public class ThrownPitchfork extends AbstractArrow {
     public ThrownPitchfork(Level level, LivingEntity shooter, ItemStack stack) {
         super(HHModEntities.THROWN_PITCHFORK.get(), shooter, level, stack, null);
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
-        this.setBaseDamage(3.0);
+        this.setBaseDamage(meleeDamage(stack) / 2.5);
         this.pickup = Pickup.ALLOWED;
+    }
+
+    private static double meleeDamage(ItemStack stack) {
+        double damage = 2.0;
+        for (ItemAttributeModifiers.Entry entry : stack.getAttributeModifiers().modifiers()) {
+            if (entry.attribute().is(Attributes.ATTACK_DAMAGE)
+                    && entry.slot().test(EquipmentSlot.MAINHAND)
+                    && entry.modifier().operation() == AttributeModifier.Operation.ADD_VALUE)
+                damage += entry.modifier().amount();
+        }
+        return damage;
     }
 
     @Override

@@ -3,6 +3,7 @@ package alabaster.hearthandharvest.common.registry;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.entity.ManureProjectile;
 import alabaster.hearthandharvest.common.entity.cleaver.ThrownCleaver;
+import alabaster.hearthandharvest.common.entity.horseshoe.ThrownHorseshoe;
 import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchfork;
 import alabaster.hearthandharvest.common.entity.crow.CrowEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -46,5 +47,14 @@ public class HHModEntities {
                             .clientTrackingRange(4)
                             .updateInterval(1)
                             .build("thrown_cleaver")
+            );
+
+    public static final Supplier<EntityType<ThrownHorseshoe>> THROWN_HORSESHOE =
+            ENTITY_TYPES.register("thrown_horseshoe", () ->
+                    EntityType.Builder.<ThrownHorseshoe>of(ThrownHorseshoe::new, MobCategory.MISC)
+                            .sized(0.25f, 0.25f)
+                            .clientTrackingRange(4)
+                            .updateInterval(1)
+                            .build("thrown_horseshoe")
             );
 }

@@ -36,6 +36,8 @@
   "block.hearthandharvest.drawer": "Drawer",
   "block.hearthandharvest.basin": "Sink",
 
+  "block.hearthandharvest.sprinkler": "Sprinkler",
+
   "block.hearthandharvest.nest": "Nest",
   "block.hearthandharvest.hay_rug": "Hay Rug",
   "block.hearthandharvest.straw_rug": "Straw Rug",
@@ -44,6 +46,8 @@
   "block.hearthandharvest.scarecrow": "Scarecrow",
 
   "item.hearthandharvest.farmers_hat": "Farmer's Hat",
+
+  "item.hearthandharvest.horseshoe": "Horseshoe",
 
   "item.hearthandharvest.trellis": "Trellis",
   "block.hearthandharvest.trellis": "Trellis",

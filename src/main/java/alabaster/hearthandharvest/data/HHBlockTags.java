@@ -10,6 +10,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -65,6 +66,10 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.WELL_LICKED_SALT_BLOCK.get(),
                 HHModBlocks.HEAVILY_LICKED_SALT_BLOCK.get()
         );
+
+        tag(HHModTags.RIGHT_CLICK_HARVESTABLE)
+                .add(ModBlocks.TOMATO_CROP.get())
+                .add(ModBlocks.TOMATO_CROP_ON_ROPE.get());
     }
 
     protected void registerMinecraftTags() {
@@ -156,6 +161,10 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.POLISHED_SALT_WALL.get(),
                 HHModBlocks.MANURE_BRICK_WALL.get(),
                 HHModBlocks.POLISHED_MANURE_WALL.get()
+        );
+
+        tag(BlockTags.BAMBOO_PLANTABLE_ON).add(
+                HHModBlocks.MULCH.get()
         );
 
     }
@@ -305,6 +314,7 @@ public class HHBlockTags extends BlockTagsProvider {
                         HHModBlocks.CASK.get(),
                         HHModBlocks.STOMPING_BASIN.get(),
                         HHModBlocks.CRATE.get(),
+                        HHModBlocks.SPRINKLER.get(),
                         HHModBlocks.TRELLIS.get(),
                         HHModBlocks.GRAPE_TRELLIS.get(),
                         HHModBlocks.OAK_HALF_CABINET.get(),
@@ -359,6 +369,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.COUNTER.get(),
                 HHModBlocks.DRAWER.get(),
                 HHModBlocks.BASIN.get(),
+                HHModBlocks.TROUGH.get(),
                 HHModBlocks.CHARCOAL_BLOCK.get(),
                 HHModBlocks.SALT_BLOCK.get(),
                 HHModBlocks.LIGHTLY_LICKED_SALT_BLOCK.get(),
@@ -404,6 +415,20 @@ public class HHBlockTags extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
                 HHModBlocks.MULCH.get(),
                 HHModBlocks.MANURE_BLOCK.get()
+        );
+
+        tag(HHModTags.MINEABLE_WITH_PITCHFORK)
+                .addTag(BlockTags.CROPS)
+                .addTag(BlockTags.LEAVES)
+                .add(Blocks.HAY_BLOCK,
+                ModBlocks.STRAW_BALE.get(),
+                HHModBlocks.HAY_RUG.get(),
+                HHModBlocks.STRAW_RUG.get(),
+                HHModBlocks.MULCH.get(),
+                HHModBlocks.MANURE_BLOCK.get(),
+                HHModBlocks.STICK_BRUSH.get(),
+                HHModBlocks.COTTON_BALE.get(),
+                HHModBlocks.SUGAR_CANE_BUNDLE.get()
         );
     }
 }

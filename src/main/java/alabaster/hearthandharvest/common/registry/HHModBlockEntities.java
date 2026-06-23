@@ -67,6 +67,9 @@ public class HHModBlockEntities {
     public static final Supplier<BlockEntityType<BasinBlockEntity>> BASIN = BLOCK_ENTITY_TYPES.register("basin_tile", () ->
                     BlockEntityType.Builder.of(BasinBlockEntity::new, HHModBlocks.BASIN.get()).build(null));
 
+    public static final Supplier<BlockEntityType<SprinklerBlockEntity>> SPRINKLER = BLOCK_ENTITY_TYPES.register("sprinkler_tile", () ->
+            BlockEntityType.Builder.of(SprinklerBlockEntity::new, HHModBlocks.SPRINKLER.get()).build(null));
+
     @SubscribeEvent
     public static void addCabinetsBlockEntities(BlockEntityTypeAddBlocksEvent event) {
         List<Block> cabinets = new ArrayList<>(List.of(

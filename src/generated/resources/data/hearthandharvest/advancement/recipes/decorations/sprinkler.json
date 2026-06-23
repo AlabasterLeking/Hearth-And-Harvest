@@ -1,21 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_hay_block": {
+    "has_copper": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:hay_block"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "has_stick": {
-      "conditions": {
-        "items": [
-          {
-            "items": "minecraft:stick"
+            "items": "minecraft:copper_ingot"
           }
         ]
       },
@@ -23,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:scarecrow"
+        "recipe": "hearthandharvest:sprinkler"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -31,13 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_stick",
-      "has_hay_block"
+      "has_copper"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:scarecrow"
+      "hearthandharvest:sprinkler"
     ]
   }
 }
