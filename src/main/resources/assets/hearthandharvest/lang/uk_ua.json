@@ -48,6 +48,8 @@
   "item.hearthandharvest.farmers_hat": "Фермерський капелюх",
 
   "item.hearthandharvest.horseshoe": "Підкова",
+  "hearthandharvest.subtitles.horseshoe.throw": "Підкову кинуто",
+  "hearthandharvest.subtitles.horseshoe.hit": "Підкова задзвеніла",
 
   "item.hearthandharvest.trellis": "Шпалера",
   "block.hearthandharvest.trellis": "Шпалера",
@@ -102,8 +104,12 @@
   "item.hearthandharvest.golden_cleaver": "Золотий тесак",
   "item.hearthandharvest.diamond_cleaver": "Діамантовий тесак",
   "item.hearthandharvest.netherite_cleaver": "Незеритовий тесак",
+  "hearthandharvest.subtitles.cleaver.throw": "Тесак кинуто",
+  "hearthandharvest.subtitles.cleaver.hit": "Тесак влучив",
 
   "item.hearthandharvest.pitchfork": "Вила",
+  "hearthandharvest.subtitles.pitchfork.throw": "Вила кинуто",
+  "hearthandharvest.subtitles.pitchfork.hit": "Вила влучили",
 
   "item.hearthandharvest.raspberry": "Малина",
   "item.hearthandharvest.blueberries": "Чорниця",
