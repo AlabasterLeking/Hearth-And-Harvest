@@ -102,7 +102,7 @@ public class ThrownPitchfork extends AbstractArrow {
         super.onHitEntity(result);
         this.dealtDamage = true;
         if (result.getEntity() instanceof LivingEntity target)
-            target.addEffect(new MobEffectInstance(HHModEffects.PINNED, 6000, 0));
+            target.addEffect(new MobEffectInstance(HHModEffects.PINNED, 200, 0));
     }
 
     private void returnTo(Player player) {
