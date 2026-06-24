@@ -110,7 +110,7 @@ public class Config {
 
         MANURE_RANDOM_POOP_ENABLED = COMMON_BUILDER
                 .comment("Drop manure randomly over time")
-                .define("manure.randomPoopEnabled", true);
+                .define("manure.randomPoopEnabled", false);
 
         MANURE_RANDOM_POOP_CHANCE  = COMMON_BUILDER
                 .comment("1-in-N chance per second for random drop")

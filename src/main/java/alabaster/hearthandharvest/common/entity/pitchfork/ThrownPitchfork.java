@@ -2,11 +2,14 @@ package alabaster.hearthandharvest.common.entity.pitchfork;
 
 import alabaster.hearthandharvest.common.registry.HHModEffects;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
+import alabaster.hearthandharvest.common.registry.HHModSounds;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,13 +19,16 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import javax.annotation.Nullable;
 
 public class ThrownPitchfork extends AbstractArrow {
 
@@ -66,7 +72,7 @@ public class ThrownPitchfork extends AbstractArrow {
         if (loyalty > 0 && this.dealtDamage && owner instanceof Player player && player.isAlive()) {
             if (!this.level().isClientSide) {
                 this.inGround = false;
-                this.setNoGravity(true);
+                this.setNoPhysics(true);
                 Vec3 toPlayer = player.getEyePosition().subtract(this.position());
                 if (toPlayer.lengthSqr() < 4.0) {
                     returnTo(player);
@@ -114,6 +120,25 @@ public class ThrownPitchfork extends AbstractArrow {
                 .orElse(0);
     }
 
+    @Nullable
+    @Override
+    protected EntityHitResult findHitEntity(Vec3 startVec, Vec3 endVec) {
+        return this.dealtDamage ? null : super.findHitEntity(startVec, endVec);
+    }
+
+    @Override
+    protected void tickDespawn() {
+        if (this.pickup != Pickup.ALLOWED || loyaltyLevel(getPickupItem()) <= 0)
+            super.tickDespawn();
+    }
+
+    @Nullable
+    @Override
+    protected ProjectileDeflection hitTargetOrDeflectSelf(HitResult hitResult) {
+        onHit(hitResult);
+        return null;
+    }
+
     @Override
     public byte getPierceLevel() {
         return 2;
@@ -131,6 +156,17 @@ public class ThrownPitchfork extends AbstractArrow {
 
     public boolean isStuck() {
         return inGround;
+    }
+
+    @Override
+    protected boolean tryPickup(Player player) {
+        if (player.getAbilities().instabuild) return true;
+        return super.tryPickup(player);
+    }
+
+    @Override
+    protected SoundEvent getDefaultHitGroundSoundEvent() {
+        return HHModSounds.PITCHFORK_HIT.get();
     }
 
     @Override

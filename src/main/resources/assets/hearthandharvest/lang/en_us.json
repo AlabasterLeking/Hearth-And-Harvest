@@ -48,6 +48,8 @@
   "item.hearthandharvest.farmers_hat": "Farmer's Hat",
 
   "item.hearthandharvest.horseshoe": "Horseshoe",
+  "hearthandharvest.subtitles.horseshoe.throw": "Horseshoe thrown",
+  "hearthandharvest.subtitles.horseshoe.hit": "Horseshoe clangs",
 
   "item.hearthandharvest.trellis": "Trellis",
   "block.hearthandharvest.trellis": "Trellis",
@@ -103,8 +105,12 @@
   "item.hearthandharvest.golden_cleaver": "Golden Cleaver",
   "item.hearthandharvest.diamond_cleaver": "Diamond Cleaver",
   "item.hearthandharvest.netherite_cleaver": "Netherite Cleaver",
+  "hearthandharvest.subtitles.cleaver.throw": "Cleaver thrown",
+  "hearthandharvest.subtitles.cleaver.hit": "Cleaver hits",
 
   "item.hearthandharvest.pitchfork": "Pitchfork",
+  "hearthandharvest.subtitles.pitchfork.throw": "Pitchfork thrown",
+  "hearthandharvest.subtitles.pitchfork.hit": "Pitchfork hits",
 
   "item.hearthandharvest.raspberry": "Raspberry",
   "item.hearthandharvest.blueberries": "Blueberries",

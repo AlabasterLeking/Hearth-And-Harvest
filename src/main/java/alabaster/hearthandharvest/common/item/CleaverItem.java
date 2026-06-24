@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.item;
 
 import alabaster.hearthandharvest.common.entity.cleaver.ThrownCleaver;
+import alabaster.hearthandharvest.common.registry.HHModSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -88,7 +89,7 @@ public class CleaverItem extends KnifeItem {
         ThrownCleaver thrown = new ThrownCleaver(level, player, stack);
         thrown.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 2.0f, 1.0f);
         level.addFreshEntity(thrown);
-        level.playSound(null, thrown, SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.0f, 1.2f);
+        level.playSound(null, thrown, HHModSounds.CLEAVER_THROW.get(), SoundSource.PLAYERS, 1.0f, 1.2f);
         if (!player.getAbilities().instabuild) player.getInventory().removeItem(stack);
         player.awardStat(Stats.ITEM_USED.get(this));
     }

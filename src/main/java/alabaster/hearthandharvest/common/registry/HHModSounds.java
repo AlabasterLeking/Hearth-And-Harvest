@@ -46,6 +46,24 @@ public class HHModSounds {
     public static final Supplier<SoundEvent> LICK = SOUNDS.register("entities.lick",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "entities.lick")));
 
+    // Pitchfork
+    public static final Supplier<SoundEvent> PITCHFORK_THROW = SOUNDS.register("items.pitchfork.throw",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.pitchfork.throw")));
+    public static final Supplier<SoundEvent> PITCHFORK_HIT = SOUNDS.register("items.pitchfork.hit",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.pitchfork.hit")));
+
+    // Cleaver
+    public static final Supplier<SoundEvent> CLEAVER_THROW = SOUNDS.register("items.cleaver.throw",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.cleaver.throw")));
+    public static final Supplier<SoundEvent> CLEAVER_HIT = SOUNDS.register("items.cleaver.hit",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.cleaver.hit")));
+
+    // Horseshoe
+    public static final Supplier<SoundEvent> HORSESHOE_THROW = SOUNDS.register("items.horseshoe.throw",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.horseshoe.throw")));
+    public static final Supplier<SoundEvent> HORSESHOE_HIT = SOUNDS.register("items.horseshoe.hit",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.horseshoe.hit")));
+
     // Misc
     public static final Supplier<SoundEvent> SALT_LAMP_SWITCH = SOUNDS.register("blocks.salt_lamp.switch",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.salt_lamp.switch")));

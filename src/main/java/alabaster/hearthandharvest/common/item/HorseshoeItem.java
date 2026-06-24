@@ -3,6 +3,8 @@ package alabaster.hearthandharvest.common.item;
 import alabaster.hearthandharvest.common.entity.horseshoe.ThrownHorseshoe;
 import alabaster.hearthandharvest.common.event.HorseshoeEventHandler;
 import alabaster.hearthandharvest.common.registry.HHModAttachments;
+import alabaster.hearthandharvest.common.registry.HHModSounds;
+import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -72,13 +74,16 @@ public class HorseshoeItem extends Item {
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
         if (!(entity instanceof Player player)) return;
-        if (getUseDuration(stack, entity) - timeLeft < MIN_THROW_TICKS) return;
+        int chargedTicks = getUseDuration(stack, entity) - timeLeft;
+        if (chargedTicks < MIN_THROW_TICKS) return;
         if (level.isClientSide) return;
+        float power = Mth.clamp(chargedTicks / 20.0f, 0.25f, 1.0f) * 2.0f;
         ThrownHorseshoe thrown = new ThrownHorseshoe(level, player, stack);
-        thrown.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 2.0f, 1.0f);
+        thrown.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, power, 1.0f);
         level.addFreshEntity(thrown);
-        level.playSound(null, thrown, SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
-        if (!player.getAbilities().instabuild) player.getInventory().removeItem(stack);
+        float pitch = 0.9f + power * 0.15f;
+        level.playSound(null, thrown, HHModSounds.HORSESHOE_THROW.get(), SoundSource.PLAYERS, 1.0f, pitch);
+        if (!player.getAbilities().instabuild) stack.shrink(1);
         player.awardStat(Stats.ITEM_USED.get(this));
     }
 }

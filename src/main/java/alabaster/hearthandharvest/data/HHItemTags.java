@@ -35,6 +35,24 @@ public class HHItemTags extends ItemTagsProvider {
     }
 
     private void registerModTags() {
+
+        tag(ItemTags.DURABILITY_ENCHANTABLE)
+                .add(HHModItems.FARMERS_HAT.get())
+                .add(HHModItems.PITCHFORK.get());
+        tag(ItemTags.EQUIPPABLE_ENCHANTABLE)
+                .add(HHModItems.FARMERS_HAT.get());
+        tag(ItemTags.WEAPON_ENCHANTABLE)
+                .add(HHModItems.PITCHFORK.get());
+        tag(ItemTags.SHARP_WEAPON_ENCHANTABLE)
+                .add(HHModItems.PITCHFORK.get());
+        tag(ItemTags.FIRE_ASPECT_ENCHANTABLE)
+                .add(HHModItems.PITCHFORK.get());
+        tag(ItemTags.SWORD_ENCHANTABLE)
+                .add(HHModItems.PITCHFORK.get());
+
+        tag(ModTags.Items.KNIFE_ENCHANTABLE)
+                .remove(HHModTags.CLEAVERS);
+
         tag(HHModTags.CLEAVERS)
                 .add(HHModItems.FLINT_CLEAVER.get())
                 .add(HHModItems.IRON_CLEAVER.get())

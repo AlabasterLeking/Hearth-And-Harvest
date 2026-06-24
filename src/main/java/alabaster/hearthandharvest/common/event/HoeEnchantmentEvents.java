@@ -38,11 +38,11 @@ import java.util.Set;
 public class HoeEnchantmentEvents {
 
     private static final Map<Block, BlockState> TILL_MAP = Map.of(
-        Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(),
-        Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(),
-        Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState(),
-        Blocks.ROOTED_DIRT, Blocks.DIRT.defaultBlockState(),
-        Blocks.DIRT_PATH, Blocks.DIRT.defaultBlockState()
+            Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(),
+            Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(),
+            Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState(),
+            Blocks.ROOTED_DIRT, Blocks.DIRT.defaultBlockState(),
+            Blocks.DIRT_PATH, Blocks.DIRT.defaultBlockState()
     );
 
     @SubscribeEvent
@@ -58,6 +58,7 @@ public class HoeEnchantmentEvents {
 
         int tillingLevel = getLevel(hoe, HHModEnchantments.TILLING, level);
         if (tillingLevel > 0
+                && player.isShiftKeyDown()
                 && TILL_MAP.containsKey(centerState.getBlock())
                 && level.getBlockState(center.above()).isAir()) {
             int r = tillingLevel;
@@ -70,7 +71,7 @@ public class HoeEnchantmentEvents {
         }
 
         int harvestingLevel = getLevel(hoe, HHModEnchantments.HARVESTING, level);
-        if (harvestingLevel > 0 && isFullyGrownCrop(centerState)) {
+        if (harvestingLevel > 0 && player.isShiftKeyDown() && isFullyGrownCrop(centerState)) {
             int r = harvestingLevel;
 
             Set<BlockPos> visited = new HashSet<>();

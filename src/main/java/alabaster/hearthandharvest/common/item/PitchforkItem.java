@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.item;
 
 import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchfork;
+import alabaster.hearthandharvest.common.registry.HHModSounds;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -83,7 +84,7 @@ public class PitchforkItem extends Item {
         ThrownPitchfork thrown = new ThrownPitchfork(level, player, stack);
         thrown.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 2.5f, 1.0f);
         level.addFreshEntity(thrown);
-        level.playSound(null, thrown, SoundEvents.TRIDENT_THROW.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
+        level.playSound(null, thrown, HHModSounds.PITCHFORK_THROW.get(), SoundSource.PLAYERS, 1.0f, .75f);
         if (!player.getAbilities().instabuild) {
             player.getInventory().removeItem(stack);
         }

@@ -96,5 +96,65 @@
     "sounds": [
       "hearthandharvest:entities/lick/lick"
     ]
+  },
+
+  "items.pitchfork.throw": {
+    "subtitle": "hearthandharvest.subtitles.pitchfork.throw",
+    "sounds": [
+      {
+        "name": "item.trident.throw",
+        "type": "event"
+      }
+    ]
+  },
+
+  "items.pitchfork.hit": {
+    "subtitle": "hearthandharvest.subtitles.pitchfork.hit",
+    "sounds": [
+      {
+        "name": "item.trident.hit_ground",
+        "type": "event"
+      }
+    ]
+  },
+
+  "items.cleaver.throw": {
+    "subtitle": "hearthandharvest.subtitles.cleaver.throw",
+    "sounds": [
+      {
+        "name": "item.trident.throw",
+        "type": "event"
+      }
+    ]
+  },
+
+  "items.cleaver.hit": {
+    "subtitle": "hearthandharvest.subtitles.cleaver.hit",
+    "sounds": [
+      {
+        "name": "entity.item.break",
+        "type": "event"
+      }
+    ]
+  },
+
+  "items.horseshoe.throw": {
+    "subtitle": "hearthandharvest.subtitles.horseshoe.throw",
+    "sounds": [
+      {
+        "name": "item.trident.throw",
+        "type": "event"
+      }
+    ]
+  },
+
+  "items.horseshoe.hit": {
+    "subtitle": "hearthandharvest.subtitles.horseshoe.hit",
+    "sounds": [
+      {
+        "name": "block.anvil.land",
+        "type": "event"
+      }
+    ]
   }
 }
