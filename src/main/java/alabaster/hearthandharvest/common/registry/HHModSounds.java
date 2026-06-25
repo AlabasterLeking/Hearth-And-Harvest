@@ -38,7 +38,11 @@ public class HHModSounds {
     public static final Supplier<SoundEvent> STOMPING_BASIN_STOMP = SOUNDS.register("blocks.stomping_basin.stomp",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.stomping_basin.stomp")));
 
-    // Fart
+    // Manure
+    public static final Supplier<SoundEvent> MANURE_THROW = SOUNDS.register("items.manure.throw",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.manure.throw")));
+    public static final Supplier<SoundEvent> MANURE_HIT = SOUNDS.register("items.manure.hit",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.manure.hit")));
     public static final Supplier<SoundEvent> FART = SOUNDS.register("entities.fart",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "entities.fart")));
 

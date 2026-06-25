@@ -1,10 +1,8 @@
 package alabaster.hearthandharvest.common.item;
 
-import alabaster.hearthandharvest.common.entity.ManureProjectile;
+import alabaster.hearthandharvest.common.entity.manure.ManureProjectile;
 import alabaster.hearthandharvest.common.registry.HHModParticleTypes;
 import alabaster.hearthandharvest.common.registry.HHModSounds;
-import net.minecraft.client.resources.sounds.Sound;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -16,7 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.SoundType;
 import org.jetbrains.annotations.Nullable;
 
 public class ManureItem extends Item {
@@ -52,7 +49,7 @@ public class ManureItem extends Item {
             projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 1.5f, 1.0f);
             level.addFreshEntity(projectile);
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    SoundEvents.EGG_THROW, SoundSource.PLAYERS,
+                    HHModSounds.MANURE_THROW.get(), SoundSource.PLAYERS,
                     0.5f, 1.0f + level.random.nextFloat() * 0.4f);
         }
         if (!player.getAbilities().instabuild) stack.shrink(1);

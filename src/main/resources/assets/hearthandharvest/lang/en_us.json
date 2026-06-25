@@ -309,6 +309,8 @@
   "block.hearthandharvest.manure_brick_wall": "Manure Brick Wall",
   "block.hearthandharvest.polished_manure_wall": "Polished Manure Wall",
 
+  "hearthandharvest.subtitles.manure.throw": "Manure thrown",
+  "hearthandharvest.subtitles.manure.hit": "Manure splat",
   "hearthandharvest.subtitles.entity.fart": "Farting",
 
   "item.hearthandharvest.cooking_oil": "Cooking Oil",
@@ -408,6 +410,9 @@
 
   "effect.hearthandharvest.prickly": "Prickly",
   "effect.hearthandharvest.prickly.0.desc": "Inflicts damage to entities that collide with the affected entity",
+
+  "effect.hearthandharvest.pinned": "Pinned",
+  "effect.hearthandharvest.pinned.0.desc": "Keeps you stuck in place",
 
   "hearthandharvest.jei.aging": "Aging",
   "hearthandharvest.jei.stomping": "Stomping",

@@ -78,6 +78,7 @@ public class HHBlockLoot extends BlockLootSubProvider {
         dropSelf(HHModBlocks.COCOA_BEAN_BAG.get());
         dropSelf(HHModBlocks.GUNPOWDER_BAG.get());
         dropSelf(HHModBlocks.CORN_KERNEL_BAG.get());
+        dropSelf(HHModBlocks.MANURE_BAG.get());
         dropSelf(HHModBlocks.FLOUR_BAG.get());
         dropSelf(HHModBlocks.CORN_HUSK_BUNDLE.get());
         dropSelf(HHModBlocks.SUGAR_CANE_BUNDLE.get());

@@ -241,7 +241,7 @@ public class HHModBlocks {
     public static final Supplier<Block> COTTON_BALE = BLOCKS.register("cotton_bale",
             () -> new HayBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
     public static final Supplier<Block> SUGAR_CANE_BUNDLE = BLOCKS.register("sugar_cane_bundle",
-            () -> new HayBlock(Block.Properties.ofFullCopy(Blocks.SUGAR_CANE)));
+            () -> new HayBlock(Block.Properties.ofFullCopy(Blocks.MANGROVE_ROOTS)));
     public static final Supplier<Block> SPOOL = BLOCKS.register("spool",
             () -> new RotatedPillarBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL).strength(2.0F, 3.0F).sound(SoundType.WOOL)));
     public static final Supplier<Block> ROPE_COIL = BLOCKS.register("rope_coil",

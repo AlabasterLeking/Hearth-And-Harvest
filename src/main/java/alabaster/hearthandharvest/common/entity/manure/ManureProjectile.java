@@ -1,4 +1,4 @@
-package alabaster.hearthandharvest.common.entity;
+package alabaster.hearthandharvest.common.entity.manure;
 
 import alabaster.hearthandharvest.common.registry.*;
 import net.minecraft.server.level.ServerLevel;
@@ -52,7 +52,7 @@ public class ManureProjectile extends ThrowableItemProjectile {
 
     private void splat() {
         level().playSound(null, getX(), getY(), getZ(),
-                SoundEvents.SLIME_SQUISH, SoundSource.NEUTRAL,
+                HHModSounds.MANURE_HIT.get(), SoundSource.NEUTRAL,
                 1.0f, 0.6f + level().random.nextFloat() * 0.4f);
         if (level() instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(HHModParticleTypes.FLIES.get(),

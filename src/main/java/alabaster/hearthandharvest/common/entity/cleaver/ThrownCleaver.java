@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,7 +21,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -41,7 +44,7 @@ public class ThrownCleaver extends AbstractArrow {
     }
 
     public ThrownCleaver(Level level, LivingEntity shooter, ItemStack stack) {
-        super(HHModEntities.THROWN_CLEAVER.get(), shooter, level, stack, null);
+        super(HHModEntities.THROWN_CLEAVER.get(), shooter, level, stack.copyWithCount(1), stack.copy());
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
         this.setBaseDamage(meleeDamage(stack) / 2.0);
         this.pickup = Pickup.ALLOWED;
@@ -108,17 +111,37 @@ public class ThrownCleaver extends AbstractArrow {
         }
         Entity entity = result.getEntity();
         Entity owner = this.getOwner();
-        DamageSource source = this.damageSources().thrown(this, owner != null ? owner : this);
-        entity.hurt(source, (float)(this.getDeltaMovement().length() * this.getBaseDamage()));
-        this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01, -0.1, -0.01));
+        DamageSource source;
+        if (owner instanceof Player player) source = this.damageSources().playerAttack(player);
+        else if (owner instanceof LivingEntity living) source = this.damageSources().mobAttack(living);
+        else source = this.damageSources().thrown(this, owner != null ? owner : this);
+        float damage = (float)(this.getDeltaMovement().length() * this.getBaseDamage());
+        if (this.level() instanceof ServerLevel serverLevel)
+            damage = EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, source, damage);
         this.dealtDamage = true;
+        if (entity.hurt(source, damage)) {
+            if (entity instanceof LivingEntity livingEntity) {
+                this.doKnockback(livingEntity, source);
+                this.doPostHurtEffects(livingEntity);
+            }
+            if (this.level() instanceof ServerLevel serverLevel)
+                EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, source, this.getWeaponItem());
+        }
+        this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01, -0.1, -0.01));
     }
 
     private void returnTo(Player player) {
-        ItemStack stack = getDefaultPickupItem();
-        if (!stack.isEmpty() && !player.getInventory().add(stack))
-            player.drop(stack, false);
+        if (!player.getAbilities().instabuild) {
+            ItemStack stack = getDefaultPickupItem();
+            if (!stack.isEmpty() && !player.getInventory().add(stack))
+                player.drop(stack, false);
+        }
         this.discard();
+    }
+
+    @Override
+    public ItemStack getWeaponItem() {
+        return getCleaverStack();
     }
 
     private int loyaltyLevel() {

@@ -84,6 +84,26 @@
     ]
   },
 
+  "items.manure.throw": {
+    "subtitle": "hearthandharvest.subtitles.manure.throw",
+    "sounds": [
+      {
+        "name": "entity.egg.throw",
+        "type": "event"
+      }
+    ]
+  },
+
+  "items.manure.hit": {
+    "subtitle": "hearthandharvest.subtitles.manure.hit",
+    "sounds": [
+      {
+        "name": "entity.slime.squish",
+        "type": "event"
+      }
+    ]
+  },
+
   "entities.fart": {
     "subtitle": "hearthandharvest.subtitles.entity.fart",
     "sounds": [

@@ -38,7 +38,7 @@ public class ThrownHorseshoe extends AbstractArrow {
     }
 
     public ThrownHorseshoe(Level level, LivingEntity shooter, ItemStack stack) {
-        super(HHModEntities.THROWN_HORSESHOE.get(), shooter, level, stack, null);
+        super(HHModEntities.THROWN_HORSESHOE.get(), shooter, level, stack.copyWithCount(1), null);
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
         this.setBaseDamage(3.5);
         this.pickup = Pickup.ALLOWED;

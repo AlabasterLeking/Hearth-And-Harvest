@@ -1,7 +1,7 @@
 package alabaster.hearthandharvest.common.registry;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
-import alabaster.hearthandharvest.common.entity.ManureProjectile;
+import alabaster.hearthandharvest.common.entity.manure.ManureProjectile;
 import alabaster.hearthandharvest.common.entity.cleaver.ThrownCleaver;
 import alabaster.hearthandharvest.common.entity.horseshoe.ThrownHorseshoe;
 import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchfork;

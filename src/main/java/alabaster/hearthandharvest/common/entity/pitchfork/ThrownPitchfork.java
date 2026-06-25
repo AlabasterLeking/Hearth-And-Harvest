@@ -8,9 +8,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -42,7 +45,7 @@ public class ThrownPitchfork extends AbstractArrow {
     }
 
     public ThrownPitchfork(Level level, LivingEntity shooter, ItemStack stack) {
-        super(HHModEntities.THROWN_PITCHFORK.get(), shooter, level, stack, null);
+        super(HHModEntities.THROWN_PITCHFORK.get(), shooter, level, stack.copyWithCount(1), stack.copy());
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
         this.setBaseDamage(meleeDamage(stack) / 2.5);
         this.pickup = Pickup.ALLOWED;
@@ -99,17 +102,40 @@ public class ThrownPitchfork extends AbstractArrow {
                 returnTo(player);
             return;
         }
-        super.onHitEntity(result);
+        Entity entity = result.getEntity();
+        Entity owner = this.getOwner();
+        DamageSource source;
+        if (owner instanceof Player player) source = this.damageSources().playerAttack(player);
+        else if (owner instanceof LivingEntity living) source = this.damageSources().mobAttack(living);
+        else source = this.damageSources().thrown(this, owner != null ? owner : this);
+        float damage = (float)(this.getDeltaMovement().length() * this.getBaseDamage());
+        if (this.level() instanceof ServerLevel serverLevel)
+            damage = EnchantmentHelper.modifyDamage(serverLevel, this.getWeaponItem(), entity, source, damage);
         this.dealtDamage = true;
-        if (result.getEntity() instanceof LivingEntity target)
-            target.addEffect(new MobEffectInstance(HHModEffects.PINNED, 200, 0));
+        if (entity.hurt(source, damage)) {
+            if (entity instanceof LivingEntity livingEntity) {
+                this.doKnockback(livingEntity, source);
+                this.doPostHurtEffects(livingEntity);
+            }
+            if (this.level() instanceof ServerLevel serverLevel)
+                EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, source, this.getWeaponItem());
+            if (entity instanceof LivingEntity target)
+                target.addEffect(new MobEffectInstance(HHModEffects.PINNED, 200, 0));
+        }
     }
 
     private void returnTo(Player player) {
-        ItemStack stack = getDefaultPickupItem();
-        if (!stack.isEmpty() && !player.getInventory().add(stack))
-            player.drop(stack, false);
+        if (!player.getAbilities().instabuild) {
+            ItemStack stack = getDefaultPickupItem();
+            if (!stack.isEmpty() && !player.getInventory().add(stack))
+                player.drop(stack, false);
+        }
         this.discard();
+    }
+
+    @Override
+    public ItemStack getWeaponItem() {
+        return getPitchforkStack();
     }
 
     private int loyaltyLevel(ItemStack stack) {
