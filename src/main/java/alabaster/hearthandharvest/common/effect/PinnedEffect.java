@@ -17,6 +17,12 @@ public class PinnedEffect extends MobEffect {
                 -1.0,
                 AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
         );
+        addAttributeModifier(
+                Attributes.JUMP_STRENGTH,
+                ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "pinned_no_jump"),
+                -1.0,
+                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+        );
     }
 
     @Override

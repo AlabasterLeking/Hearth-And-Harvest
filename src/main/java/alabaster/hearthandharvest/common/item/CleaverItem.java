@@ -35,7 +35,7 @@ public class CleaverItem extends KnifeItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("Butchering").withStyle(ChatFormatting.GRAY));
+        tooltipComponents.add(Component.translatable("tooltip.hearthandharvest.cleaver.butchering").withStyle(ChatFormatting.GRAY));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 

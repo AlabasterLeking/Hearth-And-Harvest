@@ -63,6 +63,10 @@ public class JEIPlugin implements IModPlugin
         registration.addIngredientInfo(new ItemStack(HHModItems.SAP_BUCKET.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.sap_bucket"));
         registration.addIngredientInfo(new ItemStack(HHModItems.NEST.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.nest"));
         registration.addIngredientInfo(new ItemStack(HHModItems.SCARECROW.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.scarecrow"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.TROUGH.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.trough"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.SPRINKLER.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.sprinkler"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.SALT_BLOCK.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.salt_block"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.JUG.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.jug"));
         registration.addIngredientInfo(new ItemStack(Items.FEATHER), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.pluck_chickens"));
         registration.addIngredientInfo(List.of(new ItemStack(HHModItems.WILD_RED_GRAPES.get()), new ItemStack(HHModItems.RED_GRAPES.get()), new ItemStack(HHModItems.WILD_GREEN_GRAPES.get()), new ItemStack(HHModItems.GREEN_GRAPES.get())), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.wild_grapes"));
     }

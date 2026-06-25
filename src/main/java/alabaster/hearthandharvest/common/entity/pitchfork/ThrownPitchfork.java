@@ -10,10 +10,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -97,7 +96,7 @@ public class ThrownPitchfork extends AbstractArrow {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        if (this.dealtDamage) {
+        if (this.isNoPhysics()) {
             if (result.getEntity().equals(this.getOwner()) && this.getOwner() instanceof Player player)
                 returnTo(player);
             return;
@@ -149,7 +148,7 @@ public class ThrownPitchfork extends AbstractArrow {
     @Nullable
     @Override
     protected EntityHitResult findHitEntity(Vec3 startVec, Vec3 endVec) {
-        return this.dealtDamage ? null : super.findHitEntity(startVec, endVec);
+        return this.isNoPhysics() ? null : super.findHitEntity(startVec, endVec);
     }
 
     @Override

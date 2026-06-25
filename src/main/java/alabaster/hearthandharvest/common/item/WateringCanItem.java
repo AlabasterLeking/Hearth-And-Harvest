@@ -237,8 +237,8 @@ public class WateringCanItem extends Item {
         int waterLevel = getWaterCharge(stack);
         int boneMealLevel = getBoneMealCharge(stack);
 
-        tooltipComponents.add(Component.literal("Water Level: " + waterLevel + " / " + MAX_WATER).withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
-        tooltipComponents.add(Component.literal("Bone Meal Level: " + boneMealLevel + " / " + MAX_BONEMEAL).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tooltipComponents.add(Component.translatable("tooltip.hearthandharvest.watering_can.water" + ": " + waterLevel + " / " + MAX_WATER).withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
+        tooltipComponents.add(Component.translatable("tooltip.hearthandharvest.watering_can.bone_meal" + ": " + boneMealLevel + " / " + MAX_BONEMEAL).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }

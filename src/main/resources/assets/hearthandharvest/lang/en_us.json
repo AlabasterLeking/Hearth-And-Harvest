@@ -46,6 +46,7 @@
   "block.hearthandharvest.scarecrow": "Scarecrow",
 
   "item.hearthandharvest.farmers_hat": "Farmer's Hat",
+  "tooltip.hearthandharvest.farmers_hat": "Grants XP when harvesting crops while equipped",
 
   "item.hearthandharvest.horseshoe": "Horseshoe",
   "hearthandharvest.subtitles.horseshoe.throw": "Horseshoe thrown",
@@ -107,6 +108,7 @@
   "item.hearthandharvest.netherite_cleaver": "Netherite Cleaver",
   "hearthandharvest.subtitles.cleaver.throw": "Cleaver thrown",
   "hearthandharvest.subtitles.cleaver.hit": "Cleaver hits",
+  "tooltip.hearthandharvest.cleaver.butchering": "Butchering",
 
   "item.hearthandharvest.pitchfork": "Pitchfork",
   "hearthandharvest.subtitles.pitchfork.throw": "Pitchfork thrown",
@@ -184,12 +186,19 @@
   "block.hearthandharvest.warped_fungus_crate": "Warped Fungus Crate",
 
   "item.hearthandharvest.wooden_bucket": "Wooden Bucket",
+
   "item.hearthandharvest.watering_can": "Watering Can",
+  "tooltip.hearthandharvest.watering_can.water": "Water Level",
+  "tooltip.hearthandharvest.watering_can.bone_meal": "Bone Meal Level",
+
   "item.hearthandharvest.universal_feed": "Animal Feed",
+  "tooltip.hearthandharvest.universal_feed": "Can be used to breed any animal",
 
   "item.hearthandharvest.seed_pouch": "Seed Pouch",
   "tooltip.hearthandharvest.seed_pouch.empty": "Empty",
   "tooltip.hearthandharvest.seed_pouch.contents": "%1$s: %2$s",
+  "tooltip.hearthandharvest.seed_pouch.area": "Area",
+  "tooltip.hearthandharvest.seed_pouch.planting_area": "Planting area",
 
   "item.hearthandharvest.mead": "Mead",
   "item.hearthandharvest.root_beer": "Root Beer",
@@ -242,9 +251,15 @@
   "item.hearthandharvest.peanut_butter_cookie": "Peanut Butter Cookie",
   "item.hearthandharvest.trail_mix": "Trail Mix",
   "item.hearthandharvest.roasted_peanuts": "Roasted Peanuts",
+
   "item.hearthandharvest.marshmallow_stick": "Marshmallow",
   "item.hearthandharvest.roasted_marshmallow_stick": "Roasted Marshmallow",
+  "tooltip.hearthandharvest.roasted_marshmallow_stick": "Perfectly roasted!",
   "item.hearthandharvest.charred_marshmallow_stick": "Charred Marshmallow",
+  "tooltip.hearthandharvest.charred_marshmallow_stick": "Oh, it's burnt...",
+
+  "tooltip.hearthandharvest.roastable": "Hold near a campfire to cook",
+
   "item.hearthandharvest.smore": "Smore",
   "item.hearthandharvest.cider_donut": "Cider Donut",
   "item.hearthandharvest.baked_apple": "Baked Apple",
@@ -334,6 +349,7 @@
   "item.hearthandharvest.popcorn": "Popcorn",
   "item.hearthandharvest.uncooked_corn_on_the_cob": "Uncooked Corn on the Cob",
   "item.hearthandharvest.cooked_corn_on_the_cob": "Cooked Corn on the Cob",
+  "tooltip.hearthandharvest.cooked_corn_on_the_cob": "Hot and buttery!",
   "item.hearthandharvest.corn_bread": "Corn Bread",
   "item.hearthandharvest.corn_stew": "Corn Stew",
   "item.hearthandharvest.tamale": "Tamale",
@@ -426,6 +442,10 @@
   "hearthandharvest.jei.info.pluck_chickens": "Shift-click on chickens bare handed to get some feathers, but beware that you may damage them! Use shears to avoid hurting them",
   "hearthandharvest.jei.info.nest": "Nests act as points for some bird like mobs to drop off items. Wild Crows will carry shiny items to them, and Chickens will attempt to lay eggs in them",
   "hearthandharvest.jei.info.scarecrow": "Scarecrows work to help keep crows away from crops, just like Carved Pumpkins and Jack-o-Lanterns",
+  "hearthandharvest.jei.info.trough": "Can be filled with either food or water. Filling it with animal food will cause them to automatically breed. Water will cause babies to grow up faster",
+  "hearthandharvest.jei.info.sprinkler": "Can be filled with water and bonemeal to keep crops hydrated and randomly bonemeal them in a large area. Will also put out fires in its area",
+  "hearthandharvest.jei.info.salt_block": "Will keep animals near, who will lick it. Will degrade over time, but can get repaired by adding more salt to it",
+  "hearthandharvest.jei.info.jug": "Can be used like a bucket to pickup and move fluids. Holds 8 buckets at a time. Can be placed, extracted from, and picked up with a shift-click",
 
   "fluid_type.hearthandharvest.cooking_oil": "Cooking Oil",
   "fluid_type.hearthandharvest.sap": "Sap",

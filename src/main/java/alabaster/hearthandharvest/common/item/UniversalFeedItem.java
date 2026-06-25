@@ -34,7 +34,7 @@ public class UniversalFeedItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.literal("Can be used to breed any animal").withStyle(ChatFormatting.ITALIC, ChatFormatting.YELLOW));
+        tooltipComponents.add(Component.translatable("tooltip.hearthandharvest.universal_feed").withStyle(ChatFormatting.ITALIC, ChatFormatting.YELLOW));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }
