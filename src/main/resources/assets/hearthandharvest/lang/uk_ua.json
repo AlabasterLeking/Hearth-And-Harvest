@@ -46,6 +46,7 @@
   "block.hearthandharvest.scarecrow": "Опудало",
 
   "item.hearthandharvest.farmers_hat": "Фермерський капелюх",
+  "tooltip.hearthandharvest.farmers_hat": "Дає досвід під час збору врожаю при носінні",
 
   "item.hearthandharvest.horseshoe": "Підкова",
   "hearthandharvest.subtitles.horseshoe.throw": "Підкову кинуто",
@@ -106,6 +107,7 @@
   "item.hearthandharvest.netherite_cleaver": "Незеритовий тесак",
   "hearthandharvest.subtitles.cleaver.throw": "Тесак кинуто",
   "hearthandharvest.subtitles.cleaver.hit": "Тесак влучив",
+  "tooltip.hearthandharvest.cleaver.butchering": "Оброблення туші",
 
   "item.hearthandharvest.pitchfork": "Вила",
   "hearthandharvest.subtitles.pitchfork.throw": "Вила кинуто",
@@ -184,11 +186,18 @@
 
   "item.hearthandharvest.wooden_bucket": "Дерев'яне відро",
   "item.hearthandharvest.watering_can": "Лійка",
+  "tooltip.hearthandharvest.watering_can.water": "Рівень води",
+  "tooltip.hearthandharvest.watering_can.bone_meal": "Вміст кісткового борошна",
+
   "item.hearthandharvest.universal_feed": "Корм для тварин",
+  "tooltip.hearthandharvest.universal_feed": "Використовується для розведення будь-яких тварин",
 
   "item.hearthandharvest.seed_pouch": "Мішечок для насіння",
   "tooltip.hearthandharvest.seed_pouch.empty": "Порожній",
   "tooltip.hearthandharvest.seed_pouch.contents": "%1$s: %2$s",
+  "tooltip.hearthandharvest.seed_pouch.area": "Площа",
+  "tooltip.hearthandharvest.seed_pouch.planting_area": "Площа посівів",
+
   "item.hearthandharvest.mead": "Медовуха",
   "item.hearthandharvest.root_beer": "Кореневе пиво",
   "item.hearthandharvest.hard_cider": "Міцний сидр",
@@ -243,7 +252,12 @@
 
   "item.hearthandharvest.marshmallow_stick": "Маршмелоу",
   "item.hearthandharvest.roasted_marshmallow_stick": "Смажене маршмелоу",
+  "tooltip.hearthandharvest.roasted_marshmallow_stick": "Ідеально обсмажене!",
   "item.hearthandharvest.charred_marshmallow_stick": "Підгоріле маршмелоу",
+  "tooltip.hearthandharvest.charred_marshmallow_stick": "Ой, підгоріло...",
+
+  "tooltip.hearthandharvest.roastable": "Тримайте біля багаття, щоб приготувати",
+
   "item.hearthandharvest.smore": "Смор",
   "item.hearthandharvest.cider_donut": "Пончик з сидром",
   "item.hearthandharvest.baked_apple": "Печене яблуко",
@@ -308,6 +322,8 @@
   "block.hearthandharvest.manure_brick_wall": "Стіна з гнойових цеглин",
   "block.hearthandharvest.polished_manure_wall": "Стіна з полірованого гною",
 
+  "hearthandharvest.subtitles.manure.throw": "Гній кинуто",
+  "hearthandharvest.subtitles.manure.hit": "Чвакання гною",
   "hearthandharvest.subtitles.entity.fart": "Пукає",
 
   "item.hearthandharvest.cooking_oil": "Олія",
@@ -331,6 +347,7 @@
   "item.hearthandharvest.popcorn": "Попкорн",
   "item.hearthandharvest.uncooked_corn_on_the_cob": "Сира кукурудза на паличці",
   "item.hearthandharvest.cooked_corn_on_the_cob": "Смажена кукурудза на паличці",
+  "tooltip.hearthandharvest.cooked_corn_on_the_cob": "Гаряча й масляниста!",
   "item.hearthandharvest.corn_bread": "Кукурудзяний хліб",
   "item.hearthandharvest.corn_stew": "Кукурудзяна юшка",
   "item.hearthandharvest.tamale": "Тамале",
@@ -408,6 +425,9 @@
   "effect.hearthandharvest.prickly": "Колючість",
   "effect.hearthandharvest.prickly.0.desc": "Завдає шкоди тим, хто торкається носія ефекту",
 
+  "effect.hearthandharvest.pinned": "Приколотий",
+  "effect.hearthandharvest.pinned.0.desc": "Не дає зрушити з місця",
+
   "hearthandharvest.jei.aging": "Витримка",
   "hearthandharvest.jei.stomping": "Чавління",
   "hearthandharvest.jei.stomping.tooltip": "Стрибайте в чавильні для обробки!",
@@ -417,9 +437,14 @@
   "hearthandharvest.jei.info.tree_tapper": "Соківниці можна розміщувати на смерекових та темно-дубових деревах для збирання деревного соку. Зберіть його відром, коли соківниця наповниться.",
   "hearthandharvest.jei.info.sap_bucket": "Відра з деревним соком можна вилити в казан і повільно кип'ятити над вогнем до утворення сиропу. Сироп можна зібрати пляшками.",
   "hearthandharvest.jei.info.wild_grapes": "Виноград можна часто знайти дикорослим у помірних краях, таких як рівнини та ліси.",
-  "hearthandharvest.jei.info.pluck_chickens": "Натисніть з Shift на курей голими руками, щоб отримати пір'я, але будьте обережні — ви можете поранити їх! Використовуйте ножиці, щоб не завдавати шкоди",
+  "hearthandharvest.jei.info.pluck_chickens": "Натисніть Shift+ЛКМ на курей голими руками, щоб отримати пір'я, але будьте обережні — ви можете поранити їх! Використовуйте ножиці, щоб не завдавати шкоди",
   "hearthandharvest.jei.info.nest": "Гнізда слугують місцями, куди пташиноподібні моби приносять предмети. Дикі ворони приносять блискучі предмети, а кури намагаються відкладати яйця в них",
   "hearthandharvest.jei.info.scarecrow": "Опудала допомагають відлякувати ворон від посівів, так само як вирізані гарбузи та ліхтарі Джека",
+  "hearthandharvest.jei.info.trough": "Можна наповнити їжею або водою. Їжа для тварин змусить автоматично розмножуватися. Вода прискорює ріст дитинчат",
+  "hearthandharvest.jei.info.sprinkler": "Можна наповнити водою та кістковим борошном, щоб зволожувати посіви та випадково удобрювати їх на великій площі. Також гасить пожежі в зоні дії",
+  "hearthandharvest.jei.info.salt_block": "Приваблює тварин, які його лижуть. Поступово розчиняється, але можна поповнити, додавши більше солі",
+  "hearthandharvest.jei.info.jug": "Можна використовувати як відро для збору та переміщення рідин. Вміщує 8 відер. Можна розмістити, наповнити, спорожнити та підняти за допомогою Shift+ЛКМ",
+
   "fluid_type.hearthandharvest.cooking_oil": "Олія",
   "fluid_type.hearthandharvest.sap": "Деревний сік",
   "fluid_type.hearthandharvest.syrup": "Сироп",
