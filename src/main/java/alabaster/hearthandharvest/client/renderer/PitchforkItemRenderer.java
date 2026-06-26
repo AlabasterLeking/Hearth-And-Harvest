@@ -3,6 +3,7 @@ package alabaster.hearthandharvest.client.renderer;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchforkModel;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -38,8 +39,16 @@ public class PitchforkItemRenderer extends BlockEntityWithoutLevelRenderer {
 
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext ctx, PoseStack poseStack, MultiBufferSource buffer, int light, int overlay) {
+        Minecraft mc = Minecraft.getInstance();
+        boolean isThrowing = mc.player != null && mc.player.isUsingItem() && mc.player.getUseItem() == stack;
+        boolean isThirdPerson = ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
+
         poseStack.pushPose();
-        poseStack.scale(1.0f, -1.0f, -1.0f);
+        if (isThrowing && isThirdPerson) {
+            poseStack.translate(0.0, -1.3, 0.0);
+        } else {
+            poseStack.scale(1.0f, -1.0f, -1.0f);
+        }
         model.renderToBuffer(poseStack,
                 buffer.getBuffer(RenderType.entityCutout(TEXTURE)),
                 light, OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
