@@ -37,6 +37,9 @@
   "block.hearthandharvest.basin": "Раковина",
 
   "block.hearthandharvest.sprinkler": "Зрошувач",
+  "tooltip.hearthandharvest.sprinkler.status": "Вода: %s / %s мВ | Добриво: %s",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_none": "Нічого",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx кісткового борошна",
 
   "block.hearthandharvest.nest": "Гніздо",
   "block.hearthandharvest.hay_rug": "Сінний килимок",
@@ -48,7 +51,24 @@
   "item.hearthandharvest.farmers_hat": "Фермерський капелюх",
   "tooltip.hearthandharvest.farmers_hat": "Дає досвід під час збору врожаю при носінні",
 
-  "item.hearthandharvest.horseshoe": "Підкова",
+  "item.hearthandharvest.wooden_bucket": "Дерев'яне відро",
+
+  "item.hearthandharvest.watering_can": "Лійка",
+  "tooltip.hearthandharvest.watering_can.water": "Рівень води",
+  "tooltip.hearthandharvest.watering_can.bone_meal": "Вміст кісткового борошна",
+
+  "item.hearthandharvest.fertilizer_bag": "Мішечок з добривом",
+
+  "item.hearthandharvest.universal_feed": "Корм для тварин",
+  "tooltip.hearthandharvest.universal_feed": "Використовується для розведення будь-яких тварин",
+
+  "item.hearthandharvest.seed_pouch": "Мішечок для насіння",
+  "tooltip.hearthandharvest.seed_pouch.empty": "Порожній",
+  "tooltip.hearthandharvest.seed_pouch.contents": "%1$s: %2$s",
+  "tooltip.hearthandharvest.seed_pouch.area": "Площа",
+  "tooltip.hearthandharvest.seed_pouch.planting_area": "Площа посівів",
+
+"item.hearthandharvest.horseshoe": "Підкова",
   "hearthandharvest.subtitles.horseshoe.throw": "Підкову кинуто",
   "hearthandharvest.subtitles.horseshoe.hit": "Підкова задзвеніла",
 
@@ -74,6 +94,7 @@
   "block.hearthandharvest.crimson_half_cabinet": "Багряна напівшафка",
   "block.hearthandharvest.warped_half_cabinet": "Химерна напівшафка",
   "block.hearthandharvest.palm_half_cabinet": "Пальмова напівшафка",
+
   "block.hearthandharvest.crate": "Порожній ящик",
   "block.hearthandharvest.crate.named": "Ящик %s",
   "block.hearthandharvest.crate.mixed": "Змішаний ящик",
@@ -183,20 +204,6 @@
   "block.hearthandharvest.red_mushroom_crate": "Ящик червоних грибів",
   "block.hearthandharvest.crimson_fungus_crate": "Ящик багряних грибів",
   "block.hearthandharvest.warped_fungus_crate": "Ящик химерних грибів",
-
-  "item.hearthandharvest.wooden_bucket": "Дерев'яне відро",
-  "item.hearthandharvest.watering_can": "Лійка",
-  "tooltip.hearthandharvest.watering_can.water": "Рівень води",
-  "tooltip.hearthandharvest.watering_can.bone_meal": "Вміст кісткового борошна",
-
-  "item.hearthandharvest.universal_feed": "Корм для тварин",
-  "tooltip.hearthandharvest.universal_feed": "Використовується для розведення будь-яких тварин",
-
-  "item.hearthandharvest.seed_pouch": "Мішечок для насіння",
-  "tooltip.hearthandharvest.seed_pouch.empty": "Порожній",
-  "tooltip.hearthandharvest.seed_pouch.contents": "%1$s: %2$s",
-  "tooltip.hearthandharvest.seed_pouch.area": "Площа",
-  "tooltip.hearthandharvest.seed_pouch.planting_area": "Площа посівів",
 
   "item.hearthandharvest.mead": "Медовуха",
   "item.hearthandharvest.root_beer": "Кореневе пиво",
@@ -443,7 +450,7 @@
   "hearthandharvest.jei.info.trough": "Можна наповнити їжею або водою. Їжа для тварин змусить автоматично розмножуватися. Вода прискорює ріст дитинчат",
   "hearthandharvest.jei.info.sprinkler": "Можна наповнити водою та кістковим борошном, щоб зволожувати посіви та випадково удобрювати їх на великій площі. Також гасить пожежі в зоні дії",
   "hearthandharvest.jei.info.salt_block": "Приваблює тварин, які його лижуть. Поступово розчиняється, але можна поповнити, додавши більше солі",
-  "hearthandharvest.jei.info.jug": "Можна використовувати як відро для збору та переміщення рідин. Вміщує 8 відер. Можна розмістити, наповнити, спорожнити та підняти за допомогою Shift+ЛКМ",
+  "hearthandharvest.jei.info.jug": "Можна використовувати як відро для збору та переміщення рідин. Вміщує 8 відер. Можна розміщувати, наповнювати, доливати в інші контейнери та піднімати за допомогою Shift+ЛКМ",
 
   "fluid_type.hearthandharvest.cooking_oil": "Олія",
   "fluid_type.hearthandharvest.sap": "Деревний сік",
