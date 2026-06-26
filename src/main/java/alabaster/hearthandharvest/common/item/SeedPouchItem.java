@@ -159,7 +159,11 @@ public class SeedPouchItem extends Item {
         if (contents != null && contents.count() > 0) {
             components.add(Component.translatable("tooltip.hearthandharvest.seed_pouch.contents",
                     Component.translatable(contents.seedType().getDescriptionId()), contents.count()).withStyle(ChatFormatting.GREEN));
-            components.add(Component.translatable("tooltip.hearthandharvest.seed_pouch.area" + ": " + SeedPouchContents.AREA_NAMES[contents.plantRadius()]).withStyle(ChatFormatting.GRAY));
+            components.add(
+                    Component.translatable("tooltip.hearthandharvest.seed_pouch.area")
+                            .append(Component.literal(": " + SeedPouchContents.AREA_NAMES[contents.plantRadius()]))
+                            .withStyle(ChatFormatting.GRAY)
+            );
         } else {
             components.add(Component.translatable("tooltip.hearthandharvest.seed_pouch.empty").withStyle(ChatFormatting.GRAY));
         }
@@ -231,7 +235,8 @@ public class SeedPouchItem extends Item {
         int next = (contents.plantRadius() + 1) % SeedPouchContents.RADII.length;
         stack.set(HHModDataComponents.SEED_POUCH_CONTENTS.get(), contents.withRadius(next));
         player.displayClientMessage(
-                Component.translatable("tooltip.hearthandharvest.seed_pouch.planting_area" + ": ")
+                Component.translatable("tooltip.hearthandharvest.seed_pouch.planting_area")
+                        .append(Component.literal(": "))
                         .append(Component.literal(SeedPouchContents.AREA_NAMES[next]).withStyle(ChatFormatting.YELLOW)),
                 true
         );
