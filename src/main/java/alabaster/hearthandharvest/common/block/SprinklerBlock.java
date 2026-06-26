@@ -5,6 +5,7 @@ import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -102,7 +103,17 @@ public class SprinklerBlock extends BaseEntityBlock {
         if (stack.is(Items.BONE_MEAL) && be.addFertilizer(stack, player.getAbilities().instabuild) > 0)
             return ItemInteractionResult.sidedSuccess(false);
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        ItemStack fertilizer = be.getFertilizer();
+        Component fertComponent = fertilizer.isEmpty()
+                ? Component.translatable("tooltip.hearthandharvest.sprinkler.fertilizer_none")
+                : Component.translatable("tooltip.hearthandharvest.sprinkler.fertilizer_count", fertilizer.getCount());
+
+        player.displayClientMessage(
+                Component.translatable("tooltip.hearthandharvest.sprinkler.status",
+                        be.tank.getFluidAmount(), SprinklerBlockEntity.CAPACITY, fertComponent),
+                true
+        );
+        return ItemInteractionResult.sidedSuccess(false);
     }
 
     @Nullable

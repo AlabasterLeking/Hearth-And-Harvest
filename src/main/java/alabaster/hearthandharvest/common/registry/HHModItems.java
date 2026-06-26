@@ -85,6 +85,8 @@ public class HHModItems {
 
     public static final Supplier<Item> WATERING_CAN = registerWithTab("watering_can",
             () -> new WateringCanItem(basicItem()));
+    public static final Supplier<Item> FERTILIZER_BAG = registerWithTab("fertilizer_bag",
+            () -> new FertilizerBagItem(basicItem().stacksTo(1).durability(8)));
     public static final Supplier<Item> UNIVERSAL_FEED = registerWithTab("universal_feed",
             () -> new UniversalFeedItem(basicItem()));
     public static final Supplier<Item> SEED_POUCH = registerWithTab("seed_pouch",
@@ -371,7 +373,7 @@ public class HHModItems {
     public static final Supplier<Item> MANURE_BRICK = registerWithTab("manure_brick",
             () -> new Item(basicItem()));
     public static final Supplier<Item> MANURE_BLOCK = registerWithBlockTab("manure_block",
-            () -> new BlockItem(HHModBlocks.MANURE_BLOCK.get(), basicItem()));
+            () -> new FuelBlockItem(HHModBlocks.MANURE_BLOCK.get(), basicItem(), 1000));
     public static final Supplier<Item> MANURE_BRICK_BLOCK = registerWithBlockTab("manure_bricks",
             () -> new BlockItem(HHModBlocks.MANURE_BRICKS_BLOCK.get(), basicItem()));
     public static final Supplier<Item> POLISHED_MANURE = registerWithBlockTab("polished_manure",

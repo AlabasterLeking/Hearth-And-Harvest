@@ -138,11 +138,32 @@ public class JugBlockItem extends BlockItem {
                 Capabilities.FluidHandler.BLOCK, pos, context.getClickedFace());
 
         if (fluidHandler != null) {
-            // Work on a single jug, not the whole stack
             ItemStack singleJug = stack.copyWithCount(1);
             FluidTank jugTank = readTank(singleJug, level);
-            int space = JUG_CAPACITY - jugTank.getFluidAmount();
 
+            // Pour FROM jug INTO container if jug has fluid
+            if (!jugTank.getFluid().isEmpty()) {
+                FluidStack jugFluid = jugTank.getFluid().copy();
+                int simFill = fluidHandler.fill(jugFluid, IFluidHandler.FluidAction.SIMULATE);
+                if (simFill > 0) {
+                    if (!level.isClientSide) {
+                        fluidHandler.fill(new FluidStack(jugFluid.getFluid(), simFill), IFluidHandler.FluidAction.EXECUTE);
+                        jugTank.drain(simFill, IFluidHandler.FluidAction.EXECUTE);
+                        writeTank(singleJug, jugTank, level);
+                        stack.shrink(1);
+                        if (stack.isEmpty()) {
+                            player.setItemInHand(context.getHand(), singleJug);
+                        } else {
+                            if (!player.addItem(singleJug)) player.drop(singleJug, false);
+                        }
+                        level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    }
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
+            }
+
+            // Drain FROM container INTO jug
+            int space = JUG_CAPACITY - jugTank.getFluidAmount();
             if (space <= 0) {
                 if (level.isClientSide) {
                     player.displayClientMessage(
@@ -153,31 +174,23 @@ public class JugBlockItem extends BlockItem {
             }
 
             if (fluidHandler.getTanks() == 0) return InteractionResult.PASS;
-
             FluidStack inSource = fluidHandler.getFluidInTank(0);
             if (inSource.isEmpty()) return InteractionResult.PASS;
 
-            FluidStack drainRequest = new FluidStack(inSource.getFluid(), space);
-            FluidStack simDrain = fluidHandler.drain(drainRequest, IFluidHandler.FluidAction.SIMULATE);
-
+            FluidStack simDrain = fluidHandler.drain(new FluidStack(inSource.getFluid(), space), IFluidHandler.FluidAction.SIMULATE);
             if (!simDrain.isEmpty()) {
                 int simFill = jugTank.fill(simDrain, IFluidHandler.FluidAction.SIMULATE);
-
                 if (simFill > 0) {
                     if (!level.isClientSide) {
-                        FluidStack toDrain = new FluidStack(inSource.getFluid(), simFill);
-                        FluidStack actualDrain = fluidHandler.drain(toDrain, IFluidHandler.FluidAction.EXECUTE);
+                        FluidStack actualDrain = fluidHandler.drain(new FluidStack(inSource.getFluid(), simFill), IFluidHandler.FluidAction.EXECUTE);
                         jugTank.fill(actualDrain, IFluidHandler.FluidAction.EXECUTE);
                         writeTank(singleJug, jugTank, level);
                         stack.shrink(1);
                         if (stack.isEmpty()) {
                             player.setItemInHand(context.getHand(), singleJug);
                         } else {
-                            if (!player.addItem(singleJug)) {
-                                player.drop(singleJug, false);
-                            }
+                            if (!player.addItem(singleJug)) player.drop(singleJug, false);
                         }
-
                         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
                     }
                     return InteractionResult.sidedSuccess(level.isClientSide);

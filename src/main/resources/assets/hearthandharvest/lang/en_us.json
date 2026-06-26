@@ -37,6 +37,9 @@
   "block.hearthandharvest.basin": "Sink",
 
   "block.hearthandharvest.sprinkler": "Sprinkler",
+  "tooltip.hearthandharvest.sprinkler.status": "Water: %s / %s mB | Fertilizer: %s",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_none": "None",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx Bone Meal",
 
   "block.hearthandharvest.nest": "Nest",
   "block.hearthandharvest.hay_rug": "Hay Rug",
@@ -47,6 +50,23 @@
 
   "item.hearthandharvest.farmers_hat": "Farmer's Hat",
   "tooltip.hearthandharvest.farmers_hat": "Grants XP when harvesting crops while equipped",
+
+  "item.hearthandharvest.wooden_bucket": "Wooden Bucket",
+
+  "item.hearthandharvest.watering_can": "Watering Can",
+  "tooltip.hearthandharvest.watering_can.water": "Water Level",
+  "tooltip.hearthandharvest.watering_can.bone_meal": "Bone Meal Level",
+
+  "item.hearthandharvest.fertilizer_bag": "Fertilizer Bag",
+
+  "item.hearthandharvest.universal_feed": "Animal Feed",
+  "tooltip.hearthandharvest.universal_feed": "Can be used to breed any animal",
+
+  "item.hearthandharvest.seed_pouch": "Seed Pouch",
+  "tooltip.hearthandharvest.seed_pouch.empty": "Empty",
+  "tooltip.hearthandharvest.seed_pouch.contents": "%1$s: %2$s",
+  "tooltip.hearthandharvest.seed_pouch.area": "Area",
+  "tooltip.hearthandharvest.seed_pouch.planting_area": "Planting area",
 
   "item.hearthandharvest.horseshoe": "Horseshoe",
   "hearthandharvest.subtitles.horseshoe.throw": "Horseshoe thrown",
@@ -184,21 +204,6 @@
   "block.hearthandharvest.red_mushroom_crate": "Red Mushroom Crate",
   "block.hearthandharvest.crimson_fungus_crate": "Crimson Fungus Crate",
   "block.hearthandharvest.warped_fungus_crate": "Warped Fungus Crate",
-
-  "item.hearthandharvest.wooden_bucket": "Wooden Bucket",
-
-  "item.hearthandharvest.watering_can": "Watering Can",
-  "tooltip.hearthandharvest.watering_can.water": "Water Level",
-  "tooltip.hearthandharvest.watering_can.bone_meal": "Bone Meal Level",
-
-  "item.hearthandharvest.universal_feed": "Animal Feed",
-  "tooltip.hearthandharvest.universal_feed": "Can be used to breed any animal",
-
-  "item.hearthandharvest.seed_pouch": "Seed Pouch",
-  "tooltip.hearthandharvest.seed_pouch.empty": "Empty",
-  "tooltip.hearthandharvest.seed_pouch.contents": "%1$s: %2$s",
-  "tooltip.hearthandharvest.seed_pouch.area": "Area",
-  "tooltip.hearthandharvest.seed_pouch.planting_area": "Planting area",
 
   "item.hearthandharvest.mead": "Mead",
   "item.hearthandharvest.root_beer": "Root Beer",
@@ -445,7 +450,7 @@
   "hearthandharvest.jei.info.trough": "Can be filled with either food or water. Filling it with animal food will cause them to automatically breed. Water will cause babies to grow up faster",
   "hearthandharvest.jei.info.sprinkler": "Can be filled with water and bonemeal to keep crops hydrated and randomly bonemeal them in a large area. Will also put out fires in its area",
   "hearthandharvest.jei.info.salt_block": "Will keep animals near, who will lick it. Will degrade over time, but can get repaired by adding more salt to it",
-  "hearthandharvest.jei.info.jug": "Can be used like a bucket to pickup and move fluids. Holds 8 buckets at a time. Can be placed, extracted from, and picked up with a shift-click",
+  "hearthandharvest.jei.info.jug": "Can be used like a bucket to pickup and move fluids. Holds 8 buckets at a time. Can be placed, extracted from, fill other containers, and be picked up with a shift-click",
 
   "fluid_type.hearthandharvest.cooking_oil": "Cooking Oil",
   "fluid_type.hearthandharvest.sap": "Sap",

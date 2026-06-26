@@ -1,0 +1,21 @@
+{
+  "type": "hearthandharvest:aging",
+  "cookingtime": 2400,
+  "experience": 2.0,
+  "ingredients": [
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "hearthandharvest:manure"
+    },
+    {
+      "item": "farmersdelight:straw"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:fertilizer_bag"
+  }
+}
