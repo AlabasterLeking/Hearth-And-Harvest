@@ -17,6 +17,9 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @EventBusSubscriber(modid = HearthAndHarvest.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class SaltedEffectEvents {
 
@@ -46,18 +49,18 @@ public class SaltedEffectEvents {
 
         ServerLevel level = (ServerLevel) event.getLevel();
 
+        List<Slime> toHurt = new ArrayList<>();
         for (Entity entity : level.getAllEntities()) {
             if (!(entity instanceof Slime slime)) continue;
-
             AABB check = slime.getBoundingBox().inflate(0.001);
             boolean touchingSalt = BlockPos.betweenClosedStream(
                     BlockPos.containing(check.minX, check.minY, check.minZ),
                     BlockPos.containing(check.maxX, check.maxY, check.maxZ)
             ).anyMatch(pos -> level.getBlockState(pos).is(HHModTags.SALT_BLOCKS));
-
-            if (touchingSalt) {
-                slime.hurt(level.damageSources().magic(), 2.0f);
-            }
+            if (touchingSalt) toHurt.add(slime);
+        }
+        for (Slime slime : toHurt) {
+            slime.hurt(level.damageSources().magic(), 2.0f);
         }
     }
 

@@ -179,6 +179,12 @@ public class ThrownCleaver extends AbstractArrow {
     }
 
     @Override
+    protected boolean tryPickup(Player player) {
+        if (player.getAbilities().instabuild) return true;
+        return super.tryPickup(player);
+    }
+
+    @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return HHModSounds.CLEAVER_HIT.get();
     }

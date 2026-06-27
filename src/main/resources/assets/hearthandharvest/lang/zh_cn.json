@@ -30,9 +30,16 @@
   "tooltip.hearthandharvest.jug.full": "已满！",
   "tooltip.hearthandharvest.jug.wrong_fluid": "液体不匹配！",
 
+  "block.hearthandharvest.trough": "饮水槽",
+
   "block.hearthandharvest.counter": "柜台",
   "block.hearthandharvest.drawer": "抽屉",
   "block.hearthandharvest.basin": "水槽",
+
+  "block.hearthandharvest.sprinkler": "洒水器",
+  "tooltip.hearthandharvest.sprinkler.status": "剩余水量: %s / %s mB | 剩余肥料: %s",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_none": "无",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%s个骨粉",
 
   "block.hearthandharvest.nest": "鸟巢",
   "block.hearthandharvest.hay_rug": "干草地毯",
@@ -41,8 +48,33 @@
   "item.hearthandharvest.scarecrow": "稻草人",
   "block.hearthandharvest.scarecrow": "稻草人",
 
+  "item.hearthandharvest.farmers_hat": "农夫草帽",
+  "tooltip.hearthandharvest.farmers_hat": "装备时收获庄稼可以获得经验",
+
+  "item.hearthandharvest.wooden_bucket": "木桶",
+
+  "item.hearthandharvest.watering_can": "洒水壶",
+  "tooltip.hearthandharvest.watering_can.water": "剩余水量",
+  "tooltip.hearthandharvest.watering_can.bone_meal": "剩余骨粉",
+
+  "item.hearthandharvest.fertilizer_bag": "肥料包",
+
+  "item.hearthandharvest.universal_feed": "动物饲料",
+  "tooltip.hearthandharvest.universal_feed": "可以用于繁殖任意动物",
+
+  "item.hearthandharvest.seed_pouch": "种子包",
+  "tooltip.hearthandharvest.seed_pouch.empty": "空",
+  "tooltip.hearthandharvest.seed_pouch.contents": "%1$s: %2$s",
+  "tooltip.hearthandharvest.seed_pouch.area": "面积",
+  "tooltip.hearthandharvest.seed_pouch.planting_area": "种植面积",
+
+  "item.hearthandharvest.horseshoe": "马蹄铁",
+  "hearthandharvest.subtitles.horseshoe.throw": "马蹄铁掷出",
+  "hearthandharvest.subtitles.horseshoe.hit": "马蹄铁命中",
+
   "item.hearthandharvest.trellis": "藤架",
   "block.hearthandharvest.trellis": "藤架",
+  "block.hearthandharvest.grape_trellis": "葡萄藤架",
   "item.hearthandharvest.bamboo_trellis": "竹制藤架",
   "block.hearthandharvest.bamboo_trellis": "竹制藤架",
   "item.hearthandharvest.stripped_bamboo_trellis": "去皮竹制藤架",
@@ -95,6 +127,13 @@
   "item.hearthandharvest.golden_cleaver": "金菜刀",
   "item.hearthandharvest.diamond_cleaver": "钻石菜刀",
   "item.hearthandharvest.netherite_cleaver": "下界合金菜刀",
+  "hearthandharvest.subtitles.cleaver.throw": "菜刀掷出",
+  "hearthandharvest.subtitles.cleaver.hit": "菜刀命中",
+  "tooltip.hearthandharvest.cleaver.butchering": "屠宰",
+
+  "item.hearthandharvest.pitchfork": "草叉",
+  "hearthandharvest.subtitles.pitchfork.throw": "草叉掷出",
+  "hearthandharvest.subtitles.pitchfork.hit": "草叉命中",
 
   "item.hearthandharvest.raspberry": "覆盆子",
   "item.hearthandharvest.blueberries": "蓝莓",
@@ -142,6 +181,7 @@
   "block.hearthandharvest.apple_crate": "箱装苹果",
   "block.hearthandharvest.golden_apple_crate": "箱装金苹果",
   "block.hearthandharvest.golden_carrot_crate": "箱装金胡萝卜",
+  "block.hearthandharvest.glistering_melon_crate": "箱装闪烁的西瓜片",
   "block.hearthandharvest.poisonous_potato_crate": "箱装毒马铃薯",
   "block.hearthandharvest.rotten_tomato_crate": "箱装烂番茄",
   "block.hearthandharvest.glow_berry_crate": "箱装发光浆果",
@@ -152,21 +192,19 @@
   "block.hearthandharvest.cocoa_bean_bag": "袋装可可豆",
   "block.hearthandharvest.gunpowder_bag": "袋装火药",
   "block.hearthandharvest.corn_kernel_bag": "袋装玉米粒",
+  "block.hearthandharvest.flour_bag": "袋装面粉",
   "block.hearthandharvest.cotton_bale": "棉花捆",
   "block.hearthandharvest.spool": "线捆",
   "block.hearthandharvest.rope_coil": "绳圈",
   "block.hearthandharvest.corn_husk_bundle": "玉米苞叶捆",
   "block.hearthandharvest.charcoal_block": "木炭块",
   "block.hearthandharvest.stick_brush": "木棍捆",
+  "block.hearthandharvest.sugar_cane_bundle": "甘蔗捆",
 
   "block.hearthandharvest.brown_mushroom_crate": "箱装棕色蘑菇",
   "block.hearthandharvest.red_mushroom_crate": "箱装红色蘑菇",
   "block.hearthandharvest.crimson_fungus_crate": "箱装绯红菌",
   "block.hearthandharvest.warped_fungus_crate": "箱装诡异菌",
-
-  "item.hearthandharvest.wooden_bucket": "木桶",
-  "item.hearthandharvest.watering_can": "洒水壶",
-  "item.hearthandharvest.universal_feed": "动物饲料",
 
   "item.hearthandharvest.mead": "蜂蜜酒",
   "item.hearthandharvest.root_beer": "根汁啤酒",
@@ -222,11 +260,19 @@
 
   "item.hearthandharvest.marshmallow_stick": "棉花糖",
   "item.hearthandharvest.roasted_marshmallow_stick": "烤棉花糖",
+  "tooltip.hearthandharvest.roasted_marshmallow_stick": "烤得非常完美！",
   "item.hearthandharvest.charred_marshmallow_stick": "焦糊的棉花糖",
+  "tooltip.hearthandharvest.charred_marshmallow_stick": "哦豁，烤糊了……",
+
+  "tooltip.hearthandharvest.roastable": "手持这个在篝火边烤",
+
   "item.hearthandharvest.smore": "烤棉花糖夹心饼干",
   "item.hearthandharvest.cider_donut": "苹果酒甜甜圈",
   "item.hearthandharvest.baked_apple": "烤苹果",
   "item.hearthandharvest.candy_corn": "玉米糖",
+
+  "item.hearthandharvest.sugar_cubes": "方糖",
+  "item.hearthandharvest.sugar_cubes.tooltip": "暂时提升一匹马25%的速度和跳跃高度。",
 
   "block.hearthandharvest.raspberry_pie": "覆盆子派",
   "item.hearthandharvest.raspberry_pie_slice": "覆盆子派切片",
@@ -247,6 +293,13 @@
 
   "item.hearthandharvest.salt": "盐",
   "block.hearthandharvest.salt_block": "盐块",
+  "block.hearthandharvest.lightly_licked_salt_block": "轻度舔蚀的盐块",
+  "block.hearthandharvest.well_licked_salt_block": "中度舔蚀的盐块",
+  "block.hearthandharvest.heavily_licked_salt_block": "重度舔蚀的盐块",
+  "block.hearthandharvest.waxed_salt_block": "涂蜡的盐块",
+  "block.hearthandharvest.waxed_lightly_licked_salt_block": "涂蜡的轻度舔蚀盐块",
+  "block.hearthandharvest.waxed_well_licked_salt_block": "涂蜡的中度舔蚀盐块",
+  "block.hearthandharvest.waxed_heavily_licked_salt_block": "涂蜡的重度舔蚀盐块",
   "block.hearthandharvest.polished_salt_block": "磨制盐块",
   "block.hearthandharvest.salt_slab": "盐台阶",
   "block.hearthandharvest.polished_salt_slab": "磨制盐台阶",
@@ -259,6 +312,27 @@
   "hearthandharvest.subtitles.salt_lamp.switch": "开关盐灯",
 
   "tooltip.hearthandharvest.salted": "已加盐",
+
+  "hearthandharvest.subtitles.entity.lick": "舔舐",
+
+  "item.hearthandharvest.manure": "粪便",
+  "item.hearthandharvest.wet_manure_brick": "湿粪便块",
+  "item.hearthandharvest.manure_brick": "粪便砖",
+  "block.hearthandharvest.manure_block": "粪便块",
+  "block.hearthandharvest.manure_bag": "袋装粪便",
+  "block.hearthandharvest.mulch": "覆盖料",
+  "block.hearthandharvest.manure_bricks": "粪便砖",
+  "block.hearthandharvest.polished_manure": "磨制粪便",
+  "block.hearthandharvest.manure_brick_stairs": "粪便砖楼梯",
+  "block.hearthandharvest.polished_manure_stairs": "磨制粪便楼梯",
+  "block.hearthandharvest.manure_brick_slab": "粪便砖台阶",
+  "block.hearthandharvest.polished_manure_slab": "磨制粪便台阶",
+  "block.hearthandharvest.manure_brick_wall": "粪便砖墙",
+  "block.hearthandharvest.polished_manure_wall": "磨制粪便墙",
+
+  "hearthandharvest.subtitles.manure.throw": "粪便掷出",
+  "hearthandharvest.subtitles.manure.hit": "粪便飞溅",
+  "hearthandharvest.subtitles.entity.fart": "放屁",
 
   "item.hearthandharvest.cooking_oil": "食用油",
 
@@ -281,6 +355,7 @@
   "item.hearthandharvest.popcorn": "爆米花",
   "item.hearthandharvest.uncooked_corn_on_the_cob": "生玉米棒",
   "item.hearthandharvest.cooked_corn_on_the_cob": "熟玉米棒",
+  "tooltip.hearthandharvest.cooked_corn_on_the_cob": "热乎的，香得很！",
   "item.hearthandharvest.corn_bread": "玉米饼",
   "item.hearthandharvest.corn_stew": "玉米炖",
   "item.hearthandharvest.tamale": "墨西哥玉米粽",
@@ -358,6 +433,9 @@
   "effect.hearthandharvest.prickly": "针刺",
   "effect.hearthandharvest.prickly.0.desc": "与拥有此效果的实体接触会受到伤害",
 
+  "effect.hearthandharvest.pinned": "定身",
+  "effect.hearthandharvest.pinned.0.desc": "将你困在原地",
+
   "hearthandharvest.jei.aging": "陈酿",
   "hearthandharvest.jei.stomping": "踩踏",
   "hearthandharvest.jei.stomping.tooltip": "在装有水果的木盆里跳一跳！",
@@ -370,6 +448,10 @@
   "hearthandharvest.jei.info.pluck_chickens": "空手Shift右键可以给鸡拔毛，但可能会伤到它们。使用剪刀可避免造成伤害。",
   "hearthandharvest.jei.info.nest": "鸟类生物会在巢中放置物品。乌鸦会在里面藏闪闪发光的东西，鸡会在里面下蛋。",
   "hearthandharvest.jei.info.scarecrow": "稻草人、雕刻南瓜和南瓜灯都可以驱赶乌鸦、保护庄稼。",
+  "hearthandharvest.jei.info.trough": "可以放入食物或水。放入动物饲料会让动物自行繁殖。放入水会加速幼年动物成长。",
+  "hearthandharvest.jei.info.sprinkler": "放入水和骨粉以在大范围内浇灌作物、随机施加骨粉，以及灭火。",
+  "hearthandharvest.jei.info.salt_block": "可以聚拢动物。动物会舔舐盐块并逐渐将其消耗。可以添加盐来修复。",
+  "hearthandharvest.jei.info.jug": "像桶一样可以盛放并移动液体，最多8桶。可以放置，以及从其他容器提取或向其他容器转移液体。Shift右键拿起。",
 
   "fluid_type.hearthandharvest.cooking_oil": "食用油",
   "fluid_type.hearthandharvest.sap": "树液",
@@ -397,5 +479,11 @@
   "fluid_type.hearthandharvest.glow_berry_juice": "发光浆果汁",
 
   "item.hearthandharvest.blueberry_pips": "蓝莓种子",
-  "item.hearthandharvest.raspberry_pips": "覆盆子种子"
+  "item.hearthandharvest.raspberry_pips": "覆盆子种子",
+
+  "key.hearthandharvest.poop": "史",
+  "key.categories.hearthandharvest": "暖灶丰年",
+
+  "enchantment.hearthandharvest.tilling": "耕地",
+  "enchantment.hearthandharvest.harvesting": "收获"
 }
