@@ -63,7 +63,7 @@ public class HHFoodValues {
     public static final FoodProperties SWEET_BERRY_WINE = (new FoodProperties.Builder())
             .nutrition(7).saturationMod(0.5f)
             .effect(() -> new MobEffectInstance(ModEffects.COMFORT.get(), MEDIUM_DURATION, 0), 1.0F)
-            .effect(() -> new MobEffectInstance(MobEffects.HEAL, SHORT_DURATION, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.HEAL, 0,0), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.HEALTH_BOOST, SHORT_DURATION, 0), 1.0F)
             .build();
 

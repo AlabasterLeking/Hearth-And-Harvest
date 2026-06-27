@@ -4,7 +4,7 @@ license="MIT License"
 
 [[mods]]
 modId = "hearthandharvest"
-version = "1.0.12"
+version = "1.0.12a"
 displayName = "Hearth and Harvest"
 logoFile="logo.png"
 authors="AlabasterLeking"
@@ -27,6 +27,6 @@ side="BOTH"
 [[dependencies.hearthandharvest]]
 modId = "farmersdelight"
 mandatory = true
-versionRange = "[1.2.3,)"
+versionRange = "[1.3.0,)"
 ordering = "NONE"
 side = "BOTH"

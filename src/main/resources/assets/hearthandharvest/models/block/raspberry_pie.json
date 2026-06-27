@@ -1,5 +1,5 @@
 {
-  "parent": "farmersdelight:block/pie",
+  "parent": "farmersdelight:block/template_pie",
   "textures": {
     "particle": "hearthandharvest:block/raspberry_pie_top",
     "bottom": "farmersdelight:block/pie_bottom",
