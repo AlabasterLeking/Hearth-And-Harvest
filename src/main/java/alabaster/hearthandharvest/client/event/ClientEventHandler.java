@@ -226,8 +226,13 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
+        boolean pressed = false;
         while (HHKeyBindings.POOP.consumeClick()) {
+            pressed = true;
+        }
+        if (pressed && cooldownTicks <= 0) {
             PacketDistributor.sendToServer(new PlayerPoopPacket());
+            cooldownTicks = 300; // optimistic client-side cooldown; server confirmation just reaffirms this
         }
         if (cooldownTicks <= 0) return;
         cooldownTicks--;

@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -17,12 +18,13 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -64,13 +66,13 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
         MultiblockPart role = be.getMultiblockRole();
 
         if (role == MultiblockPart.MEMBER) {
-            renderQuadrantModel(resolveQuadrantModel(be), ps, buf, packedLight, packedOverlay);
+            renderQuadrantModel(be, resolveQuadrantModel(be), ps, buf, packedLight, packedOverlay);
             return;
         }
 
         boolean combined = role == MultiblockPart.CONTROLLER;
 
-        if (combined) renderQuadrantModel(MODEL_NW, ps, buf, packedLight, packedOverlay);
+        if (combined) renderQuadrantModel(be, MODEL_NW, ps, buf, packedLight, packedOverlay);
 
         renderScatteredItems(be, ps, buf, packedLight, packedOverlay, combined);
         renderFluidSurface(be, ps, buf, packedLight, combined);
@@ -88,20 +90,22 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
         return MODEL_NW;
     }
 
-    private void renderQuadrantModel(ModelResourceLocation modelId, PoseStack ps, MultiBufferSource buf, int packedLight, int packedOverlay) {
+    private void renderQuadrantModel(StompingBasinBlockEntity be, ModelResourceLocation modelId, PoseStack ps, MultiBufferSource buf, int packedLight, int packedOverlay) {
         BakedModel model = Minecraft.getInstance().getModelManager().getModel(modelId);
-        VertexConsumer vc = buf.getBuffer(RenderType.entitySolid(InventoryMenu.BLOCK_ATLAS));
+        VertexConsumer vc = buf.getBuffer(RenderType.solid());
         RandomSource random = RandomSource.create();
+        Level level = be.getLevel();
 
-        for (Direction dir : Direction.values()) {
+        if (level != null) {
+            BlockPos pos = be.getBlockPos();
+            BlockState state = level.getBlockState(pos);
+            Minecraft.getInstance().getBlockRenderer().getModelRenderer()
+                    .tesselateBlock(level, model, state, pos, ps, vc, false, random, 42L, packedOverlay);
+        } else {
             random.setSeed(42L);
-            for (BakedQuad quad : model.getQuads(null, dir, random, ModelData.EMPTY, null)) {
+            for (BakedQuad quad : model.getQuads(null, null, random, ModelData.EMPTY, null)) {
                 vc.putBulkData(ps.last(), quad, 1f, 1f, 1f, 1f, packedLight, packedOverlay);
             }
-        }
-        random.setSeed(42L);
-        for (BakedQuad quad : model.getQuads(null, null, random, ModelData.EMPTY, null)) {
-            vc.putBulkData(ps.last(), quad, 1f, 1f, 1f, 1f, packedLight, packedOverlay);
         }
     }
 
@@ -116,6 +120,12 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
         };
     }
 
+    private static int quadrantLight(StompingBasinBlockEntity controller, int dx, int dz) {
+        Level level = controller.getLevel();
+        if (level == null) return 0;
+        return LevelRenderer.getLightColor(level, controller.getBlockPos().offset(dx, 0, dz));
+    }
+
     private void renderScatteredItems(StompingBasinBlockEntity source, PoseStack ps, MultiBufferSource buf, int packedLight, int packedOverlay, boolean combined) {
         float scatterMin  = combined ? BIG_SCATTER_MIN : SCATTER_MIN;
         float scatterSize = combined ? BIG_SCATTER_SIZE : SCATTER_SIZE;
@@ -123,6 +133,11 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
         int renderIndex = 0;
 
         MultiBufferSource solidBuf = wrapSolid(buf);
+
+        int lightNW = combined ? quadrantLight(source, 0, 0) : packedLight;
+        int lightNE = combined ? quadrantLight(source, 1, 0) : packedLight;
+        int lightSW = combined ? quadrantLight(source, 0, 1) : packedLight;
+        int lightSE = combined ? quadrantLight(source, 1, 1) : packedLight;
 
         for (int slot = 0; slot < source.getItemHandler().getSlots(); slot++) {
             ItemStack stack = source.getItemHandler().getStackInSlot(slot);
@@ -135,11 +150,15 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
                 float rotation = pos[2] * 360f;
                 float itemY = FLOOR_Y + renderIndex * ITEM_Y_STEP;
 
+                int itemLight = offsetZ >= 1f
+                        ? (offsetX >= 1f ? lightSE : lightSW)
+                        : (offsetX >= 1f ? lightNE : lightNW);
+
                 ps.pushPose();
                 ps.translate(offsetX, itemY, offsetZ);
                 ps.mulPose(Axis.YP.rotationDegrees(rotation));
                 ps.mulPose(Axis.XP.rotationDegrees(-90f));
-                Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, packedLight, packedOverlay, ps, solidBuf, null, renderIndex);
+                Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GROUND, itemLight, packedOverlay, ps, solidBuf, null, renderIndex);
                 ps.popPose();
             }
         }
@@ -186,10 +205,10 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
 
         if (combined) {
             float mid = 1f;
-            emitFluidQuad(vc, m, BIG_INNER_MIN, mid, BIG_INNER_MIN, mid, surfaceY, r, g, b, a, sprite, ov, packedLight); // NW
-            emitFluidQuad(vc, m, mid, BIG_INNER_MAX, BIG_INNER_MIN, mid, surfaceY, r, g, b, a, sprite, ov, packedLight); // NE
-            emitFluidQuad(vc, m, BIG_INNER_MIN, mid, mid, BIG_INNER_MAX, surfaceY, r, g, b, a, sprite, ov, packedLight); // SW
-            emitFluidQuad(vc, m, mid, BIG_INNER_MAX, mid, BIG_INNER_MAX, surfaceY, r, g, b, a, sprite, ov, packedLight); // SE
+            emitFluidQuad(vc, m, BIG_INNER_MIN, mid, BIG_INNER_MIN, mid, surfaceY, r, g, b, a, sprite, ov, quadrantLight(source, 0, 0)); // NW
+            emitFluidQuad(vc, m, mid, BIG_INNER_MAX, BIG_INNER_MIN, mid, surfaceY, r, g, b, a, sprite, ov, quadrantLight(source, 1, 0)); // NE
+            emitFluidQuad(vc, m, BIG_INNER_MIN, mid, mid, BIG_INNER_MAX, surfaceY, r, g, b, a, sprite, ov, quadrantLight(source, 0, 1)); // SW
+            emitFluidQuad(vc, m, mid, BIG_INNER_MAX, mid, BIG_INNER_MAX, surfaceY, r, g, b, a, sprite, ov, quadrantLight(source, 1, 1)); // SE
         } else {
             emitFluidQuad(vc, m, INNER_MIN, INNER_MAX, INNER_MIN, INNER_MAX, surfaceY, r, g, b, a, sprite, ov, packedLight);
         }

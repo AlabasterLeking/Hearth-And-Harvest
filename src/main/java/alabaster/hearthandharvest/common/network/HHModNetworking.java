@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.network;
 
+import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.client.event.ClientEventHandler;
 import alabaster.hearthandharvest.common.registry.HHModAttachments;
 import alabaster.hearthandharvest.common.registry.HHModItems;
@@ -26,6 +27,7 @@ public class HHModNetworking {
                 PlayerPoopPacket.TYPE,
                 PlayerPoopPacket.STREAM_CODEC,
                 (packet, ctx) -> ctx.enqueueWork(() -> {
+                    if (!Config.PLAYER_POOP_ENABLED.get()) return;
                     ServerPlayer player = (ServerPlayer) ctx.player();
                     long now = player.level().getGameTime();
                     if (now - player.getData(HHModAttachments.PLAYER_LAST_POOP_TIME.get()) < POOP_COOLDOWN_TICKS) return;

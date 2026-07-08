@@ -204,21 +204,24 @@ public class AgingRecipes {
                 .addIngredient(Items.BONE_MEAL)
                 .addIngredient(HHModItems.MANURE.get())
                 .addIngredient(ModItems.TREE_BARK.get())
-                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
+                .unlockedByAnyIngredient()
+                .setRecipeBookTab(CaskRecipeBookTab.MISC)
                 .build(output,"fertilizer_bag_from_bark");
 
         CaskRecipeBuilder.caskRecipe(HHModItems.FERTILIZER_BAG.get(), 1, VERY_SLOW, LARGE_EXP)
                 .addIngredient(Items.BONE_MEAL)
                 .addIngredient(HHModItems.MANURE.get())
                 .addIngredient(HHModItems.CORN_HUSK.get())
-                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
+                .unlockedByAnyIngredient()
+                .setRecipeBookTab(CaskRecipeBookTab.MISC)
                 .build(output,"fertilizer_bag_from_corn_husk");
 
         CaskRecipeBuilder.caskRecipe(HHModItems.FERTILIZER_BAG.get(), 1, VERY_SLOW, LARGE_EXP)
                 .addIngredient(Items.BONE_MEAL)
                 .addIngredient(HHModItems.MANURE.get())
                 .addIngredient(ModItems.STRAW.get())
-                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
+                .unlockedByAnyIngredient()
+                .setRecipeBookTab(CaskRecipeBookTab.MISC)
                 .build(output,"fertilizer_bag_from_straw");
     }
 }

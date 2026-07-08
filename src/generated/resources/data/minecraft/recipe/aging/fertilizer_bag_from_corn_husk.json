@@ -13,7 +13,7 @@
       "item": "hearthandharvest:corn_husk"
     }
   ],
-  "recipe_book_tab": "meals",
+  "recipe_book_tab": "misc",
   "result": {
     "count": 1,
     "id": "hearthandharvest:fertilizer_bag"

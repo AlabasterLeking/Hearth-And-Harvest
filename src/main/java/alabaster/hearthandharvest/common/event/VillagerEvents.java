@@ -40,11 +40,19 @@ public class VillagerEvents
             trades.get(1).add(emeraldForItemsTrade(HHModItems.CHERRY.get(), 10, 16, 2));
             trades.get(1).add(emeraldForItemsTrade(HHModItems.PEANUT.get(), 16, 16, 2));
             trades.get(1).add(emeraldForItemsTrade(HHModItems.COTTON.get(), 16, 16, 2));
+            trades.get(1).add(itemForEmeraldTrade(2, HHModItems.MANURE.get(), 8, 16, 2));
             trades.get(2).add(emeraldForItemsTrade(HHModItems.CORN.get(), 24, 16, 5));
             trades.get(2).add(emeraldForItemsTrade(HHModItems.RED_GRAPES.get(), 24, 16, 5));
             trades.get(2).add(emeraldForItemsTrade(HHModItems.GREEN_GRAPES.get(), 24, 16, 5));
             trades.get(3).add(itemForEmeraldTrade(8, HHModItems.SCARECROW.get(), 8, 24));
             trades.get(3).add(itemForEmeraldTrade(3, HHModItems.NEST.get(), 32, 20));
+            trades.get(3).add(itemForEmeraldTrade(4, HHModItems.SPRINKLER.get(), 10, 24));
+            trades.get(4).add(itemForEmeraldTrade(4, HHModItems.FARMERS_HAT.get(), 8, 30));
+            trades.get(4).add(itemForEmeraldTrade(4, HHModItems.PITCHFORK.get(), 8, 30));
+        }
+        if (professionKey.getPath().equals("mason")) {
+            trades.get(2).add(itemForEmeraldTrade(1, HHModItems.MANURE_BRICK_BLOCK.get(), 8, 16, 5));
+            trades.get(2).add(itemForEmeraldTrade(1, HHModItems.POLISHED_MANURE.get(), 8,16, 5));
         }
     }
 
@@ -60,14 +68,14 @@ public class VillagerEvents
             trades.add(itemForEmeraldTrade(1, HHModItems.COTTON_SEEDS.get(), 1, 12));
             trades.add(itemForEmeraldTrade(1, HHModItems.CORN_KERNELS.get(), 1, 12));
 
-            trades.add(itemForEmeraldTrade(1, HHModItems.YELLOW_MUM.get(), 8, 12));
-            trades.add(itemForEmeraldTrade(1, HHModItems.ORANGE_MUM.get(), 8, 12));
-            trades.add(itemForEmeraldTrade(1, HHModItems.RED_MUM.get(), 8, 12));
-            trades.add(itemForEmeraldTrade(1, HHModItems.BLUE_MUM.get(), 8, 12));
-            trades.add(itemForEmeraldTrade(1, HHModItems.LIGHT_BLUE_MUM.get(), 8, 12));
-            trades.add(itemForEmeraldTrade(1, HHModItems.PURPLE_MUM.get(), 8, 12));
-            trades.add(itemForEmeraldTrade(1, HHModItems.PINK_MUM.get(), 8, 12));
-            trades.add(itemForEmeraldTrade(1, HHModItems.WHITE_MUM.get(), 8, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.YELLOW_MUM.get(), 4, 8, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.ORANGE_MUM.get(), 4, 8, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.RED_MUM.get(), 4, 8, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.BLUE_MUM.get(), 4, 8, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.LIGHT_BLUE_MUM.get(), 4, 8, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.PURPLE_MUM.get(), 4, 8, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.PINK_MUM.get(), 4, 8, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.WHITE_MUM.get(), 4, 8, 12));
         }
     }
 
@@ -76,6 +84,10 @@ public class VillagerEvents
     }
 
     public static BasicItemListing itemForEmeraldTrade(int price, ItemLike item, int maxTrades, int xp) {
-        return new BasicItemListing(price, new ItemStack(item), maxTrades, xp, 0.05F);
+        return itemForEmeraldTrade(price, item, 1, maxTrades, xp);
+    }
+
+    public static BasicItemListing itemForEmeraldTrade(int price, ItemLike item, int count, int maxTrades, int xp) {
+        return new BasicItemListing(price, new ItemStack(item, count), maxTrades, xp, 0.05F);
     }
 }
