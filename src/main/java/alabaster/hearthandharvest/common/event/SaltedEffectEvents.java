@@ -49,8 +49,11 @@ public class SaltedEffectEvents {
 
         ServerLevel level = (ServerLevel) event.getLevel();
 
+        List<Entity> snapshot = new ArrayList<>();
+        level.getAllEntities().forEach(snapshot::add);
+
         List<Slime> toHurt = new ArrayList<>();
-        for (Entity entity : level.getAllEntities()) {
+        for (Entity entity : snapshot) {
             if (!(entity instanceof Slime slime)) continue;
             AABB check = slime.getBoundingBox().inflate(0.001);
             boolean touchingSalt = BlockPos.betweenClosedStream(
@@ -63,15 +66,4 @@ public class SaltedEffectEvents {
             slime.hurt(level.damageSources().magic(), 2.0f);
         }
     }
-
-//    @SubscribeEvent
-//    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-//        var player = event.getEntity();
-//        if (player.level().isClientSide()) return;
-//        if (!player.getMainHandItem().isEmpty()) return;
-//        if (!event.getLevel().getBlockState(event.getPos()).is(HHModTags.SALT_BLOCKS)) return;
-//
-//        player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0, false, true));
-//        event.setCanceled(true);
-//    }
 }

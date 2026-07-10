@@ -40,6 +40,7 @@ public class HHModTags {
 
     public static final TagKey<EntityType<?>> CAN_BE_BUTCHERED = modEntityTag("can_be_butchered");
     public static final TagKey<EntityType<?>> DOES_NOT_POOP = modEntityTag("does_not_poop");
+    public static final TagKey<EntityType<?>> CAN_POOP = modEntityTag("can_poop");
 
     private static TagKey<Block> modBlockTag(String path) {
         return BlockTags.create(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, path));

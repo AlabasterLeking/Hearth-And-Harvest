@@ -6,6 +6,7 @@ import alabaster.hearthandharvest.common.registry.HHModAttachments;
 import alabaster.hearthandharvest.common.registry.HHModEffects;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.common.registry.HHModParticleTypes;
+import alabaster.hearthandharvest.common.tag.HHModTags;
 import com.simibubi.create.AllDamageTypes;
 import com.simibubi.create.content.equipment.potatoCannon.PotatoProjectileEntity;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +25,8 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 public class ManureEvents {
 
     // Player hand-feeds an animal. Fires before the interaction resolves, so we use
-    // isFood() + !isInLove() as a proxy for "this will set love mode".
+    // isFood() + !isInLove() as a proxy for "this will set love mode". Stays Animal-only:
+    // love mode / isFood() don't exist for arbitrary mobs, so this can't generalize to CAN_POOP.
     @SubscribeEvent
     public static void onPlayerFeedAnimal(PlayerInteractEvent.EntityInteract event) {
         if (event.getEntity().level().isClientSide) return;
@@ -37,10 +39,12 @@ public class ManureEvents {
     }
 
     // Fed-poop countdown and random chance. Fires every tick per entity.
+    // Eligible entities are Animals (default) or anything explicitly tagged CAN_POOP.
     @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
-        if (!(event.getEntity() instanceof Animal self)) return;
+        if (!(event.getEntity() instanceof LivingEntity self)) return;
         if (self.level().isClientSide) return;
+        if (!(self instanceof Animal) && !self.getType().is(HHModTags.CAN_POOP)) return;
         if (!ManureDropHelper.canPoop(self)) return;
 
         if (Config.MANURE_FED_POOP_ENABLED.get()) {

@@ -44,7 +44,7 @@ public class HHModSounds {
     public static final Supplier<SoundEvent> MANURE_HIT = SOUNDS.register("items.manure.hit",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.manure.hit")));
     public static final Supplier<SoundEvent> FART = SOUNDS.register("entities.fart",
-            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "entities.fart")));
+            () -> SoundEvent.createFixedRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "entities.fart"), 8.0F));
 
     // Lick
     public static final Supplier<SoundEvent> LICK = SOUNDS.register("entities.lick",
