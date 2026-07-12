@@ -39,7 +39,7 @@
   "block.hearthandharvest.sprinkler": "Спринклер",
   "tooltip.hearthandharvest.sprinkler.status": "Воды: %s / %s mB | Удобрения: %s",
   "tooltip.hearthandharvest.sprinkler.fertilizer_none": "Отсутсвует",
-  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx Костной муки",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx костной муки",
   
   "block.hearthandharvest.nest": "Гнездо",
   "block.hearthandharvest.hay_rug": "Сенной коврик",
@@ -74,14 +74,14 @@
 
   "item.hearthandharvest.trellis": "Трельяж",
   "block.hearthandharvest.trellis": "Трельяж",
-  "block.hearthandharvest.grape_trellis": "Grape Trellis",
-  "item.hearthandharvest.bamboo_trellis": "Bamboo Trellis",
-  "block.hearthandharvest.bamboo_trellis": "Bamboo Trellis",
-  "item.hearthandharvest.stripped_bamboo_trellis": "Stripped Bamboo Trellis",
-  "block.hearthandharvest.stripped_bamboo_trellis": "Stripped Bamboo Trellis",
-  "block.hearthandharvest.trellis.remove_plant_first": "Use shears to remove this plant first!",
-  "block.hearthandharvest.trellis.growth_blocked": "Growth will be blocked on this trellis",
-  "block.hearthandharvest.trellis.growth_allowed": "Growth will be allowed on this trellis",
+  "block.hearthandharvest.grape_trellis": "Виноградный трельяж",
+  "item.hearthandharvest.bamboo_trellis": "Бамбуковый трельяж",
+  "block.hearthandharvest.bamboo_trellis": "Бамбуковый трельяж",
+  "item.hearthandharvest.stripped_bamboo_trellis": "Обтёсанный бамбуковый трельяж",
+  "block.hearthandharvest.stripped_bamboo_trellis": "Обтёсанный бамбуковый трельяж",
+  "block.hearthandharvest.trellis.remove_plant_first": "Используйте ножницы для того, что бы убрать это растение!", 
+  "block.hearthandharvest.trellis.growth_blocked": "Рост не будет доступен на этом трельяже", 
+  "block.hearthandharvest.trellis.growth_allowed": "Рост будет доступен на этом трельяже",
 
   "block.hearthandharvest.oak_half_cabinet": "Дубовая полукладовая",
   "block.hearthandharvest.birch_half_cabinet": "Березовая полукладовая",
@@ -96,9 +96,9 @@
   "block.hearthandharvest.warped_half_cabinet": "Искаженная полукладовая",
   "block.hearthandharvest.palm_half_cabinet": "Пальмовая полукладовая",
 
-  "block.hearthandharvest.crate": "Empty Crate",
-  "block.hearthandharvest.crate.named": "%s Crate",
-  "block.hearthandharvest.crate.mixed": "Mixed Crate",
+  "block.hearthandharvest.crate": "Пустой ящик",
+  "block.hearthandharvest.crate.named": "Ящик с %s",
+  "block.hearthandharvest.crate.mixed": "Смешанный ящик",
 
   "tooltip.hearthandharvest.deprecated": "⚠ Данный предмет будет удален в следующем обновлении ⚠",
   "tooltip.hearthandharvest.deprecated.hint": "Convert it using a crate or turn it back into bottles before it disappears.",
@@ -232,7 +232,7 @@
 
   "hearthandharvest.subtitles.wine.drink": "Вино выпито",
 
-  "item.hearthandharvest.jar": "Jar",
+  "item.hearthandharvest.jar": "Банка",
   "item.hearthandharvest.raspberry_jam": "Малиновый джем",
   "item.hearthandharvest.cherry_jam": "Вишневый джем",
   "item.hearthandharvest.blueberry_jam": "Черничный джем",
