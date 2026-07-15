@@ -57,7 +57,7 @@
   "tooltip.hearthandharvest.watering_can.water": "Уровень воды",
   "tooltip.hearthandharvest.watering_can.bone_meal": "Уровень удобрения",
   "tooltip.hearthandharvest.watering_can.fertilizer": "%s уровень",
-  "tooltip.hearthandharvest.watering_can.wrong_fertilizer": "Already загруженo %s!", 
+  "tooltip.hearthandharvest.watering_can.wrong_fertilizer": "Уже загруженo %s!", 
   
   "item.hearthandharvest.fertilizer_bag": "Мешок удобрений",
   
