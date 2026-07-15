@@ -19,7 +19,7 @@
   "hearthandharvest.container.cask.default": "Niveau de lumière environnante non détecté",
   "hearthandharvest.container.recipe_book.ageable": "Affichage des produits à vieillir",
 
-  "block.hearthandharvest.stomping_basin": "Fouloir"
+  "block.hearthandharvest.stomping_basin": "Fouloir",
   "hearthandharvest.subtitles.stomping_basin.stomp": "Objets foulés",
 
   "block.hearthandharvest.empty_jar_display": "Bocaux",
