@@ -55,7 +55,7 @@
 
   "item.hearthandharvest.watering_can": "Watering Can",
   "tooltip.hearthandharvest.watering_can.water": "Water Level",
-  "tooltip.hearthandharvest.watering_can.bone_meal": "Bone Meal Level",
+  "tooltip.hearthandharvest.watering_can.bone_meal": "Fertilizer Level",
   "tooltip.hearthandharvest.watering_can.fertilizer": "%s Level",
   "tooltip.hearthandharvest.watering_can.wrong_fertilizer": "Already loaded with %s!",
 
