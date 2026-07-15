@@ -80,14 +80,6 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.CORN_STALK.get()
         );
 
-        tag(ModTags.Blocks.STRAW_BLOCKS).add(
-                HHModBlocks.STRAW_RUG.get()
-        );
-
-        tag(ModTags.Blocks.CAMPFIRE_SIGNAL_SMOKE).add(
-                HHModBlocks.STICK_BRUSH.get()
-        );
-
         tag(BlockTags.MAINTAINS_FARMLAND).add(
                 HHModBlocks.COTTON_CROP.get(),
                 HHModBlocks.PEANUT_CROP.get(),
@@ -163,10 +155,21 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.POLISHED_MANURE_WALL.get()
         );
 
+        tag(ModTags.Blocks.STRAW_BLOCKS).add(
+                HHModBlocks.STRAW_RUG.get()
+        );
+
+        tag(ModTags.Blocks.CAMPFIRE_SIGNAL_SMOKE).add(
+                HHModBlocks.STICK_BRUSH.get()
+        );
+
         tag(BlockTags.BAMBOO_PLANTABLE_ON).add(
                 HHModBlocks.MULCH.get()
         );
 
+        tag(BlockTags.DIRT).add(
+                HHModBlocks.MULCH.get()
+        );
     }
 
     protected void registerCommonTags() {
@@ -186,18 +189,6 @@ public class HHBlockTags extends BlockTagsProvider {
                 .add(HHModBlocks.GLOW_BERRY_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_SWEET_BERRY)
                 .add(HHModBlocks.SWEET_BERRY_CRATE.get());
-        tag(HHCommonTags.STORAGE_BLOCKS_SUGAR)
-                .add(HHModBlocks.SUGAR_BAG.get());
-        tag(HHCommonTags.STORAGE_BLOCKS_COCOA_BEAN)
-                .add(HHModBlocks.COCOA_BEAN_BAG.get());
-        tag(HHCommonTags.STORAGE_BLOCKS_GUNPOWDER)
-                .add(HHModBlocks.GUNPOWDER_BAG.get());
-        tag(HHCommonTags.STORAGE_BLOCKS_FLOUR)
-                .add(HHModBlocks.FLOUR_BAG.get());
-        tag(HHCommonTags.STORAGE_BLOCKS_MANURE)
-                .add(HHModBlocks.MANURE_BAG.get());
-        tag(HHCommonTags.STORAGE_BLOCKS_STRING)
-                .add(HHModBlocks.SPOOL.get());
         tag(HHCommonTags.STORAGE_BLOCKS_BROWN_MUSHROOM)
                 .add(HHModBlocks.BROWN_MUSHROOM_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_RED_MUSHROOM)
@@ -211,17 +202,28 @@ public class HHBlockTags extends BlockTagsProvider {
         tag(HHCommonTags.STORAGE_BLOCKS_RASPBERRY)
                 .add(HHModBlocks.RASPBERRY_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_GRAPE)
-                .add(HHModBlocks.GREEN_GRAPE_CRATE.get());
-        tag(HHCommonTags.STORAGE_BLOCKS_GRAPE)
+                .add(HHModBlocks.GREEN_GRAPE_CRATE.get())
                 .add(HHModBlocks.RED_GRAPE_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_CHERRY)
                 .add(HHModBlocks.CHERRY_CRATE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_PEANUT)
                 .add(HHModBlocks.PEANUT_CRATE.get());
-        tag(HHCommonTags.STORAGE_BLOCKS_COTTON)
-                .add(HHModBlocks.COTTON_BALE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_CORN)
                 .add(HHModBlocks.CORN_CRATE.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_COTTON)
+                .add(HHModBlocks.COTTON_BALE.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_SUGAR)
+                .add(HHModBlocks.SUGAR_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_COCOA_BEAN)
+                .add(HHModBlocks.COCOA_BEAN_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_GUNPOWDER)
+                .add(HHModBlocks.GUNPOWDER_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_FLOUR)
+                .add(HHModBlocks.FLOUR_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_MANURE)
+                .add(HHModBlocks.MANURE_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_STRING)
+                .add(HHModBlocks.SPOOL.get());
         tag(HHCommonTags.STORAGE_BLOCKS_CHARCOAL)
                 .add(HHModBlocks.CHARCOAL_BLOCK.get());
         tag(HHCommonTags.STORAGE_BLOCKS_STICK)
@@ -309,7 +311,8 @@ public class HHBlockTags extends BlockTagsProvider {
     }
 
     protected void registerBlockMineables() {
-        tag(BlockTags.MINEABLE_WITH_AXE).add(
+        tag(BlockTags.MINEABLE_WITH_AXE)
+                .add(
                         HHModBlocks.TREE_TAPPER.get(),
                         HHModBlocks.CASK.get(),
                         HHModBlocks.STOMPING_BASIN.get(),
@@ -358,10 +361,10 @@ public class HHBlockTags extends BlockTagsProvider {
                         HHModBlocks.WARPED_FUNGUS_CRATE.get(),
                         HHModBlocks.CRIMSON_FUNGUS_CRATE.get(),
                         HHModBlocks.CORN_STALK.get(),
-                        HHModBlocks.STICK_BRUSH.get())
+                        HHModBlocks.STICK_BRUSH.get()
+                )
                 .addOptional(ResourceLocation.fromNamespaceAndPath("crabbersdelight", "palm_half_cabinet"))
-                .addOptional(ResourceLocation.fromNamespaceAndPath("crabbersdelight", "palm_bottle_rack")
-                );
+                .addOptional(ResourceLocation.fromNamespaceAndPath("crabbersdelight", "palm_bottle_rack"));
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 HHModBlocks.JUG.get(),
@@ -400,6 +403,11 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.SUGAR_CANE_BUNDLE.get()
         );
 
+        tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
+                HHModBlocks.MULCH.get(),
+                HHModBlocks.MANURE_BLOCK.get()
+        );
+
         tag(ModTags.Blocks.MINEABLE_WITH_KNIFE).add(
                 HHModBlocks.HAY_RUG.get(),
                 HHModBlocks.STRAW_RUG.get(),
@@ -412,23 +420,19 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.MANURE_BAG.get()
         );
 
-        tag(BlockTags.MINEABLE_WITH_SHOVEL).add(
-                HHModBlocks.MULCH.get(),
-                HHModBlocks.MANURE_BLOCK.get()
-        );
-
         tag(HHModTags.MINEABLE_WITH_PITCHFORK)
                 .addTag(BlockTags.CROPS)
                 .addTag(BlockTags.LEAVES)
-                .add(Blocks.HAY_BLOCK,
-                ModBlocks.STRAW_BALE.get(),
-                HHModBlocks.HAY_RUG.get(),
-                HHModBlocks.STRAW_RUG.get(),
-                HHModBlocks.MULCH.get(),
-                HHModBlocks.MANURE_BLOCK.get(),
-                HHModBlocks.STICK_BRUSH.get(),
-                HHModBlocks.COTTON_BALE.get(),
-                HHModBlocks.SUGAR_CANE_BUNDLE.get()
-        );
+                .add(
+                        Blocks.HAY_BLOCK,
+                        ModBlocks.STRAW_BALE.get(),
+                        HHModBlocks.HAY_RUG.get(),
+                        HHModBlocks.STRAW_RUG.get(),
+                        HHModBlocks.MULCH.get(),
+                        HHModBlocks.MANURE_BLOCK.get(),
+                        HHModBlocks.STICK_BRUSH.get(),
+                        HHModBlocks.COTTON_BALE.get(),
+                        HHModBlocks.SUGAR_CANE_BUNDLE.get()
+                );
     }
 }

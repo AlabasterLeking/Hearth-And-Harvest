@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.common.block.entity;
 
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
+import alabaster.hearthandharvest.common.tag.HHModTags;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
@@ -15,7 +16,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.sounds.SoundEvents;
@@ -146,7 +146,7 @@ public class SprinklerBlockEntity extends BlockEntity {
     }
 
     public int addFertilizer(ItemStack stack, boolean isCreative) {
-        if (!stack.is(Items.BONE_MEAL)) return 0;
+        if (!stack.is(HHModTags.BONEMEAL_SUBSTITUTES)) return 0;
         ItemStack stored = fertilizerSlot.get(0);
         if (stored.isEmpty()) {
             fertilizerSlot.set(0, stack.copyWithCount(1));

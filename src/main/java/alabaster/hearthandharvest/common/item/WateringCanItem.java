@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import alabaster.hearthandharvest.common.registry.HHModDataComponents;
+import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -31,7 +32,8 @@ public class WateringCanItem extends Item {
     private static final int MAX_BONEMEAL = 16;
 
     public WateringCanItem(Properties properties) {
-        super(properties.component(HHModDataComponents.WATER_LEVEL, 0).component(HHModDataComponents.BONEMEAL_LEVEL, 0).stacksTo(1));
+        super(properties.component(HHModDataComponents.WATER_LEVEL, 0).component(HHModDataComponents.BONEMEAL_LEVEL, 0)
+                .component(HHModDataComponents.FERTILIZER_ITEM, Items.AIR).stacksTo(1));
     }
 
     @Override
@@ -57,21 +59,35 @@ public class WateringCanItem extends Item {
         if (hand == InteractionHand.MAIN_HAND) {
             ItemStack offhandStack = player.getOffhandItem();
 
-            if (offhandStack.is(Items.BONE_MEAL)) {
+            if (offhandStack.is(HHModTags.BONEMEAL_SUBSTITUTES)) {
+                Item offhandItem = offhandStack.getItem();
                 int currentBonemeal = getBoneMealCharge(canStack);
+                Item loadedItem = getFertilizerItem(canStack);
+                // Once charged, the can only accepts more of the same item until it empties out.
+                boolean typeMatches = currentBonemeal == 0 || loadedItem == offhandItem;
+
                 if (currentBonemeal < MAX_BONEMEAL) {
-                    if (!level.isClientSide()) {
-                        offhandStack.shrink(1);
-                        setBoneMealCharge(canStack, currentBonemeal + 1);
-                        level.playSound(null, player.blockPosition(), SoundEvents.BONE_MEAL_USE, SoundSource.PLAYERS, 0.8F, 1.0F);
-                        if (level instanceof ServerLevel serverLevel) {
-                            double x = player.getX();
-                            double y = player.getY() + 0.8;
-                            double z = player.getZ();
-                            serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 10, 0.5, 0.4, 0.5, 0.05);
+                    if (typeMatches) {
+                        if (!level.isClientSide()) {
+                            offhandStack.shrink(1);
+                            setBoneMealCharge(canStack, currentBonemeal + 1);
+                            setFertilizerItem(canStack, offhandItem);
+                            level.playSound(null, player.blockPosition(), SoundEvents.BONE_MEAL_USE, SoundSource.PLAYERS, 0.8F, 1.0F);
+                            if (level instanceof ServerLevel serverLevel) {
+                                double x = player.getX();
+                                double y = player.getY() + 0.8;
+                                double z = player.getZ();
+                                serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 10, 0.5, 0.4, 0.5, 0.05);
+                            }
                         }
+                        return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
+                    } else if (!level.isClientSide()) {
+                        player.displayClientMessage(
+                                Component.translatable("tooltip.hearthandharvest.watering_can.wrong_fertilizer",
+                                        loadedItem.getDefaultInstance().getHoverName()),
+                                true
+                        );
                     }
-                    return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
                 }
             }
 
@@ -183,8 +199,12 @@ public class WateringCanItem extends Item {
     private void consumeBoth(ItemStack stack) {
         int water = stack.get(HHModDataComponents.WATER_LEVEL);
         int boneMeal = stack.get(HHModDataComponents.BONEMEAL_LEVEL);
+        int newBoneMeal = boneMeal - 1;
         stack.update(HHModDataComponents.WATER_LEVEL, 0, oldValue -> water - 1);
-        stack.update(HHModDataComponents.BONEMEAL_LEVEL, 0, oldValue -> boneMeal - 1);
+        stack.update(HHModDataComponents.BONEMEAL_LEVEL, 0, oldValue -> newBoneMeal);
+        if (newBoneMeal <= 0) {
+            stack.set(HHModDataComponents.FERTILIZER_ITEM, Items.AIR);
+        }
     }
 
     private int getWaterCharge(ItemStack stack) {
@@ -201,6 +221,14 @@ public class WateringCanItem extends Item {
 
     private void setBoneMealCharge(ItemStack stack, int value) {
         stack.set(HHModDataComponents.BONEMEAL_LEVEL, value);
+    }
+
+    private Item getFertilizerItem(ItemStack stack) {
+        return stack.get(HHModDataComponents.FERTILIZER_ITEM);
+    }
+
+    private void setFertilizerItem(ItemStack stack, Item item) {
+        stack.set(HHModDataComponents.FERTILIZER_ITEM, item);
     }
 
     private boolean applyBonemeal(Level level, BlockPos centerPos, BlockState state, @Nullable Player player) {
@@ -236,6 +264,12 @@ public class WateringCanItem extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         int waterLevel = getWaterCharge(stack);
         int boneMealLevel = getBoneMealCharge(stack);
+        Item fertilizerItem = getFertilizerItem(stack);
+
+        Component fertilizerLabel = fertilizerItem == Items.AIR
+                ? Component.translatable("tooltip.hearthandharvest.watering_can.bone_meal")
+                : Component.translatable("tooltip.hearthandharvest.watering_can.fertilizer",
+                fertilizerItem.getDefaultInstance().getHoverName());
 
         tooltipComponents.add(
                 Component.translatable("tooltip.hearthandharvest.watering_can.water")
@@ -243,7 +277,7 @@ public class WateringCanItem extends Item {
                         .withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC)
         );
         tooltipComponents.add(
-                Component.translatable("tooltip.hearthandharvest.watering_can.bone_meal")
+                fertilizerLabel.copy()
                         .append(Component.literal(": " + boneMealLevel + " / " + MAX_BONEMEAL))
                         .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
         );

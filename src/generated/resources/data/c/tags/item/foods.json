@@ -1,11 +1,6 @@
 {
   "values": [
     "hearthandharvest:blueberries",
-    "hearthandharvest:raspberry",
-    "hearthandharvest:cherry",
-    "hearthandharvest:red_grapes",
-    "hearthandharvest:green_grapes",
-    "hearthandharvest:blueberries",
     "hearthandharvest:cherry",
     "hearthandharvest:raspberry",
     "hearthandharvest:red_grapes",
@@ -14,7 +9,6 @@
     "hearthandharvest:corn",
     "hearthandharvest:blueberry_jam",
     "hearthandharvest:cherry_jam",
-    "hearthandharvest:raspberry",
     "hearthandharvest:grape_jam",
     "hearthandharvest:apple_jam",
     "hearthandharvest:sweet_berry_jam",
@@ -78,7 +72,6 @@
     "hearthandharvest:glazed_carrots",
     "hearthandharvest:raspberry_scone",
     "hearthandharvest:maple_cookie",
-    "hearthandharvest:taco",
     "hearthandharvest:baked_apple"
   ]
 }

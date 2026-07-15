@@ -39,7 +39,7 @@
   "block.hearthandharvest.sprinkler": "Sprinkler",
   "tooltip.hearthandharvest.sprinkler.status": "Water: %s / %s mB | Fertilizer: %s",
   "tooltip.hearthandharvest.sprinkler.fertilizer_none": "None",
-  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx Bone Meal",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx %s",
 
   "block.hearthandharvest.nest": "Nest",
   "block.hearthandharvest.hay_rug": "Hay Rug",
@@ -56,6 +56,8 @@
   "item.hearthandharvest.watering_can": "Watering Can",
   "tooltip.hearthandharvest.watering_can.water": "Water Level",
   "tooltip.hearthandharvest.watering_can.bone_meal": "Bone Meal Level",
+  "tooltip.hearthandharvest.watering_can.fertilizer": "%s Level",
+  "tooltip.hearthandharvest.watering_can.wrong_fertilizer": "Already loaded with %s!",
 
   "item.hearthandharvest.fertilizer_bag": "Fertilizer Bag",
 
