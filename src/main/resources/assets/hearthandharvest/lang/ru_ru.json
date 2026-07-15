@@ -39,7 +39,7 @@
   "block.hearthandharvest.sprinkler": "Спринклер",
   "tooltip.hearthandharvest.sprinkler.status": "Воды: %s / %s mB | Удобрения: %s",
   "tooltip.hearthandharvest.sprinkler.fertilizer_none": "Отсутсвует",
-  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx костной муки",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx %s",
   
   "block.hearthandharvest.nest": "Гнездо",
   "block.hearthandharvest.hay_rug": "Сенной коврик",
@@ -55,7 +55,9 @@
   
   "item.hearthandharvest.watering_can": "Лейка",
   "tooltip.hearthandharvest.watering_can.water": "Уровень воды",
-  "tooltip.hearthandharvest.watering_can.bone_meal": "Уровень костной муки",
+  "tooltip.hearthandharvest.watering_can.bone_meal": "Уровень удобрения",
+  "tooltip.hearthandharvest.watering_can.fertilizer": "%s уровень",
+  "tooltip.hearthandharvest.watering_can.wrong_fertilizer": "Already загруженo %s!", 
   
   "item.hearthandharvest.fertilizer_bag": "Мешок удобрений",
   
