@@ -39,7 +39,7 @@
   "block.hearthandharvest.sprinkler": "Зрошувач",
   "tooltip.hearthandharvest.sprinkler.status": "Вода: %s / %s мВ | Добриво: %s",
   "tooltip.hearthandharvest.sprinkler.fertilizer_none": "Нічого",
-  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx кісткового борошна",
+  "tooltip.hearthandharvest.sprinkler.fertilizer_count": "%sx %s",
 
   "block.hearthandharvest.nest": "Гніздо",
   "block.hearthandharvest.hay_rug": "Сінний килимок",
@@ -55,7 +55,9 @@
 
   "item.hearthandharvest.watering_can": "Лійка",
   "tooltip.hearthandharvest.watering_can.water": "Рівень води",
-  "tooltip.hearthandharvest.watering_can.bone_meal": "Вміст кісткового борошна",
+  "tooltip.hearthandharvest.watering_can.bone_meal": "Рівень добрива",
+  "tooltip.hearthandharvest.watering_can.fertilizer": "Рівень %s",
+  "tooltip.hearthandharvest.watering_can.wrong_fertilizer": "%s уже набрано!",
 
   "item.hearthandharvest.fertilizer_bag": "Мішечок з добривом",
 
