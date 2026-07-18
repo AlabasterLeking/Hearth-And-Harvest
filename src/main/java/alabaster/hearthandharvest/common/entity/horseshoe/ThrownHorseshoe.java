@@ -33,6 +33,8 @@ public class ThrownHorseshoe extends AbstractArrow {
     private static final EntityDataAccessor<Float> DATA_STUCK_ANGLE =
             SynchedEntityData.defineId(ThrownHorseshoe.class, EntityDataSerializers.FLOAT);
 
+    private boolean creativeThrown;
+
     public ThrownHorseshoe(EntityType<? extends ThrownHorseshoe> type, Level level) {
         super(type, level);
     }
@@ -42,6 +44,7 @@ public class ThrownHorseshoe extends AbstractArrow {
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
         this.setBaseDamage(3.5);
         this.pickup = Pickup.ALLOWED;
+        this.creativeThrown = shooter instanceof Player player && player.getAbilities().instabuild;
     }
 
     @Override
@@ -89,6 +92,7 @@ public class ThrownHorseshoe extends AbstractArrow {
     @Override
     protected boolean tryPickup(Player player) {
         if (player.getAbilities().instabuild) return true;
+        if (this.creativeThrown) return false;
         return super.tryPickup(player);
     }
 
@@ -110,6 +114,7 @@ public class ThrownHorseshoe extends AbstractArrow {
         if (!stack.isEmpty()) tag.put("HorseshoeItem", stack.save(registryAccess()));
         float stuckAngle = this.entityData.get(DATA_STUCK_ANGLE);
         if (stuckAngle >= 0) tag.putFloat("StuckAngle", stuckAngle);
+        tag.putBoolean("CreativeThrown", this.creativeThrown);
     }
 
     @Override
@@ -119,5 +124,6 @@ public class ThrownHorseshoe extends AbstractArrow {
             entityData.set(DATA_ITEM, ItemStack.parseOptional(registryAccess(), tag.getCompound("HorseshoeItem")));
         if (tag.contains("StuckAngle"))
             entityData.set(DATA_STUCK_ANGLE, tag.getFloat("StuckAngle"));
+        this.creativeThrown = tag.getBoolean("CreativeThrown");
     }
 }

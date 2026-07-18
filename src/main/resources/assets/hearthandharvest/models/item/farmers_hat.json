@@ -1,6 +1,9 @@
 {
   "parent": "minecraft:item/handheld",
   "loader": "neoforge:separate_transforms",
+  "textures": {
+    "particle": "hearthandharvest:item/farmers_hat"
+  },
   "base": {
     "parent": "hearthandharvest:item/2d_farmers_hat"
   },

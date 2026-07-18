@@ -32,19 +32,33 @@ public class RoastableItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean isSelected) {
+        if (cookedItem == null) return;
         if (level.isClientSide || !(entity instanceof Player player)) return;
+        if (player.getMainHandItem() != stack && player.getOffhandItem() != stack) return;
 
         if (level.getGameTime() % 20 != 0) return;
         if (!isPlayerNearHeatSource(player, level)) return;
 
         int cookTime = stack.get(HHModDataComponents.COOK_TIME.get());
         int newCookTime = cookTime + 1;
-        stack.update(HHModDataComponents.COOK_TIME.get(), 0, oldValue -> newCookTime);
 
-        if (cookedItem != null && newCookTime >= cookTimeToTransform) {
-            ItemStack newStack = cookedItem.get().getDefaultInstance();
-            newStack.update(HHModDataComponents.COOK_TIME.get(), 0, oldValue -> newCookTime);
-            replaceItemInHand(player, stack, newStack);
+        if (newCookTime >= cookTimeToTransform) {
+            ItemStack cooked = cookedItem.get().getDefaultInstance();
+            if (stack.getCount() > 1) {
+                stack.shrink(1);
+                stack.set(HHModDataComponents.COOK_TIME.get(), 0);
+                giveOrDrop(player, cooked);
+            } else {
+                replaceItemInHand(player, stack, cooked);
+            }
+        } else {
+            stack.update(HHModDataComponents.COOK_TIME.get(), 0, oldValue -> newCookTime);
+        }
+    }
+
+    private void giveOrDrop(Player player, ItemStack stack) {
+        if (!player.getInventory().add(stack)) {
+            player.drop(stack, false);
         }
     }
 

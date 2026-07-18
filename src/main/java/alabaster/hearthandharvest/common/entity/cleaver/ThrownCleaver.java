@@ -38,6 +38,7 @@ public class ThrownCleaver extends AbstractArrow {
             SynchedEntityData.defineId(ThrownCleaver.class, EntityDataSerializers.ITEM_STACK);
 
     private boolean dealtDamage;
+    private boolean creativeThrown;
 
     public ThrownCleaver(EntityType<? extends ThrownCleaver> type, Level level) {
         super(type, level);
@@ -48,6 +49,7 @@ public class ThrownCleaver extends AbstractArrow {
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
         this.setBaseDamage(meleeDamage(stack) / 2.0);
         this.pickup = Pickup.ALLOWED;
+        this.creativeThrown = shooter instanceof Player player && player.getAbilities().instabuild;
     }
 
     private static double meleeDamage(ItemStack stack) {
@@ -181,6 +183,7 @@ public class ThrownCleaver extends AbstractArrow {
     @Override
     protected boolean tryPickup(Player player) {
         if (player.getAbilities().instabuild) return true;
+        if (this.creativeThrown) return false;
         return super.tryPickup(player);
     }
 
@@ -195,6 +198,7 @@ public class ThrownCleaver extends AbstractArrow {
         ItemStack stack = getCleaverStack();
         if (!stack.isEmpty()) tag.put("CleaverItem", stack.save(registryAccess()));
         tag.putBoolean("DealtDamage", this.dealtDamage);
+        tag.putBoolean("CreativeThrown", this.creativeThrown);
     }
 
     @Override
@@ -203,5 +207,6 @@ public class ThrownCleaver extends AbstractArrow {
         if (tag.contains("CleaverItem"))
             entityData.set(DATA_ITEM, ItemStack.parseOptional(registryAccess(), tag.getCompound("CleaverItem")));
         this.dealtDamage = tag.getBoolean("DealtDamage");
+        this.creativeThrown = tag.getBoolean("CreativeThrown");
     }
 }

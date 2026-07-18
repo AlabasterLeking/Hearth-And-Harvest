@@ -270,7 +270,7 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.PINK_MUM.get(), basicItem()));
     public static final Supplier<Item> WHITE_MUM = registerWithTab("white_mum",
             () -> new BlockItem(HHModBlocks.WHITE_MUM.get(), basicItem()));
-    
+
     // Crates
     public static final Supplier<Item> BLUEBERRY_CRATE = registerWithBlockTab("blueberry_crate",
             () -> new BlockItem(HHModBlocks.BLUEBERRY_CRATE.get(), basicItem()));
@@ -302,7 +302,7 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.GLOW_BERRY_CRATE.get(), basicItem()));
     public static final Supplier<Item> SWEET_BERRY_CRATE = registerWithBlockTab("sweet_berry_crate",
             () -> new BlockItem(HHModBlocks.SWEET_BERRY_CRATE.get(), basicItem()));
-    
+
     // Bags
     public static final Supplier<Item> SALT_BAG = registerWithBlockTab("salt_bag",
             () -> new BlockItem(HHModBlocks.SALT_BAG.get(), basicItem()));
@@ -318,7 +318,7 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.FLOUR_BAG.get(), basicItem()));
     public static final Supplier<Item> MANURE_BAG = registerWithBlockTab("manure_bag",
             () -> new BlockItem(HHModBlocks.MANURE_BAG.get(), basicItem()));
-    
+
     // Misc
     public static final Supplier<Item> COTTON_BALE = registerWithBlockTab("cotton_bale",
             () -> new BlockItem(HHModBlocks.COTTON_BALE.get(), basicItem()));
@@ -364,7 +364,7 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.SALT_DRIP.get(), basicItem()));
     public static final Supplier<Item> SALT_LAMP = registerWithBlockTab("salt_lamp",
             () -> new BlockItem(HHModBlocks.SALT_LAMP.get(), basicItem()));
-    
+
     // Manure
     public static final Supplier<Item> MANURE = registerWithTab("manure",
             () -> new ManureItem(basicItem()));
@@ -498,20 +498,20 @@ public class HHModItems {
             () -> new ConsumableItem(foodItem(HHFoodValues.ROASTED_PEANUTS)));
     public static final Supplier<Item> MARSHMALLOW_STICK = registerWithTab("marshmallow_stick",
             () -> new RoastableItem(
-                    foodItem(HHFoodValues.MARSHMALLOW_STICK).stacksTo(1).craftRemainder(Items.STICK),
+                    foodItem(HHFoodValues.MARSHMALLOW_STICK).craftRemainder(Items.STICK),
                     HHModItems.ROASTED_MARSHMALLOW_STICK,
                     5,
                     Component.translatable("tooltip.hearthandharvest.roastable").withStyle(ChatFormatting.GRAY))
     );
     public static final Supplier<Item> ROASTED_MARSHMALLOW_STICK = registerWithTab("roasted_marshmallow_stick",
-            () -> new RoastableItem(foodItem(HHFoodValues.ROASTED_MARSHMALLOW_STICK).stacksTo(1).craftRemainder(Items.STICK),
+            () -> new RoastableItem(foodItem(HHFoodValues.ROASTED_MARSHMALLOW_STICK).craftRemainder(Items.STICK),
                     HHModItems.CHARRED_MARSHMALLOW_STICK,
                     10,
                     Component.translatable("tooltip.hearthandharvest.roasted_marshmallow_stick").withStyle(ChatFormatting.GOLD))
     );
     public static final Supplier<Item> CHARRED_MARSHMALLOW_STICK = registerWithTab("charred_marshmallow_stick",
             () -> new RoastableItem(
-                    foodItem(HHFoodValues.CHARRED_MARSHMALLOW_STICK).stacksTo(1).craftRemainder(Items.STICK),
+                    foodItem(HHFoodValues.CHARRED_MARSHMALLOW_STICK).craftRemainder(Items.STICK),
                     null,
                     5,
                     Component.translatable("tooltip.hearthandharvest.charred_marshmallow_stick").withStyle(ChatFormatting.DARK_GRAY))
@@ -590,7 +590,7 @@ public class HHModItems {
     public static final Supplier<Item> COOKED_SAUSAGE = registerWithTab("cooked_sausage",
             () -> new ConsumableItem(foodItem(HHFoodValues.COOKED_SAUSAGE)));
     public static final Supplier<Item> RAW_SKEWERED_SAUSAGE = registerWithTab("raw_skewered_sausage",
-            () -> new RoastableItem(foodItem(HHFoodValues.RAW_SKEWERED_SAUSAGE).stacksTo(1).craftRemainder(Items.STICK),
+            () -> new RoastableItem(foodItem(HHFoodValues.RAW_SKEWERED_SAUSAGE).craftRemainder(Items.STICK),
                     HHModItems.SKEWERED_SAUSAGE,
                     10,
                     Component.translatable("tooltip.hearthandharvest.roastable").withStyle(ChatFormatting.GRAY))
@@ -608,7 +608,7 @@ public class HHModItems {
     public static final Supplier<Item> POPCORN = registerWithTab("popcorn",
             () -> new ConsumableItem(foodItem(HHFoodValues.POPCORN)));
     public static final Supplier<Item> UNCOOKED_CORN_ON_THE_COB = registerWithTab("uncooked_corn_on_the_cob",
-            () -> new RoastableItem(foodItem(HHFoodValues.UNCOOKED_CORN_ON_THE_COB).stacksTo(1).craftRemainder(Items.STICK),
+            () -> new RoastableItem(foodItem(HHFoodValues.UNCOOKED_CORN_ON_THE_COB).craftRemainder(Items.STICK),
                     HHModItems.COOKED_CORN_ON_THE_COB,
                     10,
                     Component.translatable("tooltip.hearthandharvest.roastable").withStyle(ChatFormatting.GRAY))

@@ -443,7 +443,7 @@
   "hearthandharvest.jei.stomping.tooltip": "Jump in the Stomping Basin to process!",
 
   "hearthandharvest.jei.info.salt": "Salt can be applied to any food to increase the hunger value it restores, while decreasing the saturation it provides",
-  "hearthandharvest.jei.info.watering_can": "Watering cans can be charged with bone meal by holding some in the off hand and clicking, and charged with water by clicking on a water source block. The watering can is used to apply a bone meal effect to a 3x3 area when clicked. It can also be used to extinguish fire and lit blocks.",
+  "hearthandharvest.jei.info.watering_can": "Watering cans can be charged with valid fertilizers by holding some in the off hand and clicking, and charged with water by clicking on a water source block. The watering can is used to apply a bone meal effect to a 3x3 area when clicked. It can also be used to extinguish fire and lit blocks.",
   "hearthandharvest.jei.info.tree_tapper": "Tree tappers can be placed on Spruce and Dark Oak trees to collect sap over time. Collect the sap with a bucket when full.",
   "hearthandharvest.jei.info.sap_bucket": "Sap buckets can be put into a cauldron, and when over fire will slowly boil down into syrup. This syrup can be collected using bottles.",
   "hearthandharvest.jei.info.wild_grapes": "Grapes can be commonly found as a wild plant in temperate lands, such as plains and forests.",

@@ -38,6 +38,7 @@ public class ThrownPitchfork extends AbstractArrow {
             SynchedEntityData.defineId(ThrownPitchfork.class, EntityDataSerializers.ITEM_STACK);
 
     private boolean dealtDamage;
+    private boolean creativeThrown;
 
     public ThrownPitchfork(EntityType<? extends ThrownPitchfork> type, Level level) {
         super(type, level);
@@ -48,6 +49,7 @@ public class ThrownPitchfork extends AbstractArrow {
         this.entityData.set(DATA_ITEM, stack.copyWithCount(1));
         this.setBaseDamage(meleeDamage(stack) / 2.5);
         this.pickup = Pickup.ALLOWED;
+        this.creativeThrown = shooter instanceof Player player && player.getAbilities().instabuild;
     }
 
     private static double meleeDamage(ItemStack stack) {
@@ -186,6 +188,7 @@ public class ThrownPitchfork extends AbstractArrow {
     @Override
     protected boolean tryPickup(Player player) {
         if (player.getAbilities().instabuild) return true;
+        if (this.creativeThrown) return false;
         return super.tryPickup(player);
     }
 
@@ -200,6 +203,7 @@ public class ThrownPitchfork extends AbstractArrow {
         ItemStack stack = getPitchforkStack();
         if (!stack.isEmpty()) tag.put("PitchforkItem", stack.save(registryAccess()));
         tag.putBoolean("DealtDamage", this.dealtDamage);
+        tag.putBoolean("CreativeThrown", this.creativeThrown);
     }
 
     @Override
@@ -208,5 +212,6 @@ public class ThrownPitchfork extends AbstractArrow {
         if (tag.contains("PitchforkItem"))
             entityData.set(DATA_ITEM, ItemStack.parseOptional(registryAccess(), tag.getCompound("PitchforkItem")));
         this.dealtDamage = tag.getBoolean("DealtDamage");
+        this.creativeThrown = tag.getBoolean("CreativeThrown");
     }
 }
