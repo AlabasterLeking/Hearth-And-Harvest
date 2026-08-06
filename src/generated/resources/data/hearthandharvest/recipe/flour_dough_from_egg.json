@@ -10,7 +10,7 @@
       "item": "hearthandharvest:flour"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "c:dusts/salt"
     },
     {
       "tag": "c:eggs"

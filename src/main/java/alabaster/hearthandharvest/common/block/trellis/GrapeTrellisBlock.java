@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block.trellis;
 
+import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.BlockPos;
@@ -77,7 +78,7 @@ public class GrapeTrellisBlock extends TrellisBlock implements IHarvestable {
 
     private void tickGrape(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         BlockPos base = findGrapeColumnBase(level, pos, state.getValue(PLANT));
-        if (!level.getBlockState(base.below()).is(Tags.Blocks.VILLAGER_FARMLANDS)) return;
+        if (Config.GRAPE_REQUIRE_FARMLAND.get() && !level.getBlockState(base.below()).is(Tags.Blocks.VILLAGER_FARMLANDS)) return;
 
         int heightFromBase = pos.getY() - base.getY();
         int age = state.getValue(AGE);

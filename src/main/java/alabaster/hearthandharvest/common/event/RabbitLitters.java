@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.Config;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Rabbit;
@@ -12,6 +13,7 @@ public class RabbitLitters {
     @SubscribeEvent
     public void onRabbitBreed(BabyEntitySpawnEvent event) {
         if (!(event.getParentA() instanceof Rabbit) || !(event.getParentB() instanceof Rabbit)) return;
+        if (Config.DISABLE_RABBIT_LITTERS.get()) return;
         Level world = event.getParentA().level();
         RandomSource random = event.getParentA().getRandom();
         int extraCount = 1 + random.nextInt(3);

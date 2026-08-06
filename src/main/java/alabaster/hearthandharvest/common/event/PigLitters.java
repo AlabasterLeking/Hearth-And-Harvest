@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.Config;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Pig;
@@ -12,9 +13,10 @@ public class PigLitters {
     @SubscribeEvent
     public void onPigBreed(BabyEntitySpawnEvent event) {
         if (!(event.getParentA() instanceof Pig) || !(event.getParentB() instanceof Pig)) return;
+        if (Config.DISABLE_PIG_LITTERS.get()) return;
         Level world = event.getParentA().level();
         RandomSource random = event.getParentA().getRandom();
-        int extraCount = 1 + random.nextInt(3); // 1–3 extras; vanilla spawns 1, total = 2–4
+        int extraCount = 1 + random.nextInt(3);
 
         for (int i = 0; i < extraCount; i++) {
             Pig babyPig = EntityType.PIG.create(world);

@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -18,6 +19,7 @@ public class ChickenPlucking {
     @SubscribeEvent
     public static void onPlayerInteractEntity(PlayerInteractEvent.EntityInteract event) {
         if (!(event.getTarget() instanceof Chicken chicken)) return;
+        if (Config.DISABLE_CHICKEN_PLUCKING.get()) return;
         Player player = event.getEntity();
         Level world = player.level();
 
@@ -28,12 +30,10 @@ public class ChickenPlucking {
 
             ItemStack heldItem = player.getMainHandItem();
 
-            // If using shears, do not damage the chicken, but damage the shears
             if (heldItem.is(Items.SHEARS)) {
                 heldItem.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
                 chicken.hurt(chicken.damageSources().playerAttack(player), 0.0F);
             } else {
-                // 25% chance to do 1/2 heart (1 damage) to the chicken
                 if (world.random.nextDouble() < 0.25) {
                     chicken.hurt(chicken.damageSources().playerAttack(player), 1.0F);
                 }

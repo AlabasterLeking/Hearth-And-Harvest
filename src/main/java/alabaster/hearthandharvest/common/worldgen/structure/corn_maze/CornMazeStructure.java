@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.worldgen.structure.corn_maze;
 
+import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.common.registry.HHModStructures;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -30,6 +31,8 @@ public class CornMazeStructure extends Structure {
 
     @Override
     public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+        if (!Config.GENERATE_CORN_MAZES.get()) return Optional.empty();
+
         RandomSource random = context.random();
         int w = 23 + random.nextInt(7) * 2;
         int h = 23 + random.nextInt(7) * 2;

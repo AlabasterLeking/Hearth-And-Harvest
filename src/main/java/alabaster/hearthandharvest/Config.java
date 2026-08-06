@@ -21,6 +21,7 @@ public class Config {
     public static ModConfigSpec.BooleanValue GENERATE_CORN_MAZES;
     public static ModConfigSpec.BooleanValue DISABLE_BOTTLE_MILKING;
     public static ModConfigSpec.BooleanValue TRELLIS_PLACEMENT_PREVIEW;
+    public static ModConfigSpec.BooleanValue GRAPE_REQUIRE_FARMLAND;
     public static ModConfigSpec.DoubleValue SALTED_HUNGER_BONUS;
     public static ModConfigSpec.DoubleValue SALTED_SATURATION_PENALTY;
     public static ModConfigSpec.IntValue SALT_ANIMAL_RADIUS;
@@ -31,6 +32,9 @@ public class Config {
     public static ModConfigSpec.BooleanValue MANURE_FED_POOP_ENABLED;
     public static ModConfigSpec.BooleanValue MANURE_RANDOM_POOP_ENABLED;
     public static ModConfigSpec.IntValue MANURE_RANDOM_POOP_CHANCE;
+    public static ModConfigSpec.BooleanValue DISABLE_PIG_LITTERS;
+    public static ModConfigSpec.BooleanValue DISABLE_RABBIT_LITTERS;
+    public static ModConfigSpec.BooleanValue DISABLE_CHICKEN_PLUCKING;
 
     public Config() {
     }
@@ -63,6 +67,11 @@ public class Config {
         TRELLIS_PLACEMENT_PREVIEW = COMMON_BUILDER
                 .comment("Whether a ghost preview of the trellis piece is shown before placing")
                 .define("trellisPlacementPreview", true);
+
+        GRAPE_REQUIRE_FARMLAND = COMMON_BUILDER
+                .comment("Whether grapes on a trellis require farmland beneath the base of the column to grow and spread.\n" +
+                        "Set to false to let grapes grow anywhere, like the Vine and Rose Bush trellis plants.")
+                .define("grapeRequireFarmland", true);
 
         TROUGH_ANIMAL_CAP = COMMON_BUILDER
                 .comment("Max animals in a 10-block radius before the food trough stops triggering breeding.")
@@ -120,6 +129,18 @@ public class Config {
         MANURE_RANDOM_POOP_CHANCE  = COMMON_BUILDER
                 .comment("1-in-N chance per second for random drop")
                 .defineInRange("manure.randomPoopChance", 300, 1, 10000);
+
+        DISABLE_PIG_LITTERS = COMMON_BUILDER
+                .comment("Disables the extra baby pigs spawned when pigs breed")
+                .define("breeding.disablePigLitters", false);
+
+        DISABLE_RABBIT_LITTERS = COMMON_BUILDER
+                .comment("Disables the extra baby rabbits spawned when rabbits breed")
+                .define("breeding.disableRabbitLitters", false);
+
+        DISABLE_CHICKEN_PLUCKING = COMMON_BUILDER
+                .comment("Disables shift-right-click plucking feathers from chickens")
+                .define("breeding.disableChickenPlucking", false);
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }

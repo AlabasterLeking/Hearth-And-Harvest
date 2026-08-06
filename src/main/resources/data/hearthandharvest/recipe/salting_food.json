@@ -2,6 +2,6 @@
   "type": "hearthandharvest:salting",
   "category": "misc",
   "salt": {
-    "item": "hearthandharvest:salt"
+    "tag": "c:dusts/salt"
   }
 }
