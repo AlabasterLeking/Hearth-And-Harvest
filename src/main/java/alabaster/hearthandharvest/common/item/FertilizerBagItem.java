@@ -65,16 +65,7 @@ public class FertilizerBagItem extends Item {
             }
             used = true;
         } else if (block instanceof CropBlock crop) {
-            try {
-                java.lang.reflect.Method getAgeProp = CropBlock.class.getDeclaredMethod("getAgeProperty");
-                getAgeProp.setAccessible(true);
-                net.minecraft.world.level.block.state.properties.IntegerProperty ageProp =
-                        (net.minecraft.world.level.block.state.properties.IntegerProperty) getAgeProp.invoke(crop);
-                level.setBlock(pos, state.setValue(ageProp, crop.getMaxAge()), Block.UPDATE_ALL);
-            } catch (Exception e) {
-                if (state.hasProperty(BlockStateProperties.AGE_7))
-                    level.setBlock(pos, state.setValue(BlockStateProperties.AGE_7, 7), Block.UPDATE_ALL);
-            }
+            level.setBlock(pos, crop.getStateForAge(crop.getMaxAge()), Block.UPDATE_ALL);
             used = true;
         } else if (block instanceof IHarvestable harvestable) {
             if (harvestable.isHarvestReady(state)) {

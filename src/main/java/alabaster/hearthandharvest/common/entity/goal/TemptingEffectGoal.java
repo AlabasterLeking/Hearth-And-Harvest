@@ -10,9 +10,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.List;
 
 public class TemptingEffectGoal extends Goal {
+    private static final int SCAN_INTERVAL = 20;
+
+    private int scanCooldown;
     private final Mob mob; // This should be an animal
     private LivingEntity attractSource;
     private final double approachSpeed;
@@ -24,6 +28,7 @@ public class TemptingEffectGoal extends Goal {
         this.approachSpeed = approachSpeed;
         this.closeSpeed = closeSpeed;
         this.baseRadius = baseRadius;
+        setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
     // Helper method to compute the effective radius based on the amplifier of the Tempting effect.
@@ -41,6 +46,9 @@ public class TemptingEffectGoal extends Goal {
         if (!(mob instanceof Animal)) {
             return false;
         }
+
+        if (--scanCooldown > 0) return false;
+        scanCooldown = SCAN_INTERVAL;
 
         // Search for any living entity (other than the mob itself) within the base radius that has the Tempting effect.
         List<LivingEntity> candidates = mob.level().getEntitiesOfClass(

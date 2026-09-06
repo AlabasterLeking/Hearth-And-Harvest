@@ -48,7 +48,11 @@ public class TroughBlockEntity extends BlockEntity {
 
         @Override
         protected void onContentsChanged() {
-            setChanged(); syncToClient();
+            setChanged();
+            syncToClient();
+            if (level != null && !level.isClientSide) {
+                level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+            }
         }
     };
 

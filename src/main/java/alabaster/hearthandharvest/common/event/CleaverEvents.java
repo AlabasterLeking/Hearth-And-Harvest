@@ -7,6 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import alabaster.hearthandharvest.common.entity.cleaver.ThrownCleaver;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -33,8 +35,11 @@ public class CleaverEvents {
         if (!(event.getSource().getEntity() instanceof Player player))
             return;
 
-        ItemStack weapon = player.getMainHandItem();
-        if (weapon.getItem() instanceof CleaverItem) {
+        Entity direct = event.getSource().getDirectEntity();
+        boolean cleaverKill = direct instanceof ThrownCleaver
+                || (direct == player && player.getMainHandItem().getItem() instanceof CleaverItem);
+
+        if (cleaverKill) {
             CLEAVER_KILL.put(target, true);
         }
     }
@@ -43,15 +48,12 @@ public class CleaverEvents {
     public static void onDrops(LivingDropsEvent event) {
         LivingEntity target = event.getEntity();
 
+        if (CLEAVER_KILL.remove(target) == null)
+            return;
+
         // Only affect entities in the tag
         if (!target.getType().is(HHModTags.CAN_BE_BUTCHERED))
             return;
-
-        if (!CLEAVER_KILL.containsKey(target))
-            return;
-
-        // Clean up marker
-        CLEAVER_KILL.remove(target);
 
         // Remove non-meat drops
         event.getDrops().removeIf(drop -> !drop.getItem().is(ItemTags.MEAT));
@@ -83,7 +85,13 @@ public class CleaverEvents {
         Player player = event.getEntity();
         var attr = player.getAttribute(Attributes.MOVEMENT_SPEED);
         if (attr == null) return;
-        if (player.isUsingItem() && player.getUseItem().getItem() instanceof CleaverItem) {
+        boolean compensating = player.isUsingItem()
+                && player.getUseItem().getItem() instanceof CleaverItem
+                && !player.isPassenger()
+                && !player.isInWater()
+                && !player.isSwimming();
+
+        if (compensating) {
             if (!attr.hasModifier(CLEAVER_SPEED_ID))
                 attr.addTransientModifier(new AttributeModifier(CLEAVER_SPEED_ID, 4.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
         } else {

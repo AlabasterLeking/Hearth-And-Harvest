@@ -31,6 +31,12 @@ public class HHModAttachments {
                     AttachmentType.builder(() -> 0).serialize(Codec.INT).build()
             );
 
+    // Ticks remaining before a chicken can be plucked again. 0 = ready.
+    public static final Supplier<AttachmentType<Integer>> PLUCK_COOLDOWN =
+            ATTACHMENT_TYPES.register("pluck_cooldown", () ->
+                    AttachmentType.builder(() -> 0).serialize(Codec.INT).build()
+            );
+
     // Stores the actual ItemStack so enchantments are preserved on removal.
     // Empty stack = no horseshoe equipped.
     public static final Supplier<AttachmentType<ItemStack>> HORSESHOE_ITEM =

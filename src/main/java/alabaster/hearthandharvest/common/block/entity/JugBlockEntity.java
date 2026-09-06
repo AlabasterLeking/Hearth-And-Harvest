@@ -1,18 +1,18 @@
 package alabaster.hearthandharvest.common.block.entity;
 
+import alabaster.hearthandharvest.common.item.JugBlockItem;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-
-import java.awt.*;
 
 public class JugBlockEntity extends BlockEntity {
 
@@ -72,12 +72,15 @@ public class JugBlockEntity extends BlockEntity {
     }
 
     private FluidTank createFluidTank() {
-        return new FluidTank(8000) {
+        return new FluidTank(JugBlockItem.JUG_CAPACITY) {
             @Override
             protected void onContentsChanged() {
                 super.onContentsChanged();
                 setChanged();
                 syncToClient();
+                if (level != null && !level.isClientSide) {
+                    level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+                }
             }
         };
     }
@@ -99,7 +102,7 @@ public class JugBlockEntity extends BlockEntity {
 
     public void syncToClient() {
         if (level != null && !level.isClientSide) {
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
         }
     }
 }

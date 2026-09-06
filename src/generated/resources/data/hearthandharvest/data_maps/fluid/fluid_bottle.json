@@ -1,0 +1,27 @@
+{
+  "values": {
+    "hearthandharvest:apple_cider": "farmersdelight:apple_cider",
+    "hearthandharvest:blueberry_juice": "hearthandharvest:blueberry_juice",
+    "hearthandharvest:blueberry_wine": "hearthandharvest:blueberry_wine",
+    "hearthandharvest:cherry_juice": "hearthandharvest:cherry_juice",
+    "hearthandharvest:cherry_wine": "hearthandharvest:cherry_wine",
+    "hearthandharvest:cooking_oil": "hearthandharvest:cooking_oil",
+    "hearthandharvest:glow_berry_juice": "hearthandharvest:glow_berry_juice",
+    "hearthandharvest:glow_berry_wine": "hearthandharvest:glow_berry_wine",
+    "hearthandharvest:green_grape_juice": "hearthandharvest:green_grape_juice",
+    "hearthandharvest:green_grape_wine": "hearthandharvest:green_grape_wine",
+    "hearthandharvest:hard_cider": "hearthandharvest:hard_cider",
+    "hearthandharvest:mead": "hearthandharvest:mead",
+    "hearthandharvest:melon_juice": "farmersdelight:melon_juice",
+    "hearthandharvest:melon_wine": "hearthandharvest:melon_wine",
+    "hearthandharvest:moonshine": "hearthandharvest:moonshine",
+    "hearthandharvest:raspberry_juice": "hearthandharvest:raspberry_juice",
+    "hearthandharvest:raspberry_wine": "hearthandharvest:raspberry_wine",
+    "hearthandharvest:red_grape_juice": "hearthandharvest:red_grape_juice",
+    "hearthandharvest:red_grape_wine": "hearthandharvest:red_grape_wine",
+    "hearthandharvest:root_beer": "hearthandharvest:root_beer",
+    "hearthandharvest:sweet_berry_juice": "hearthandharvest:sweet_berry_juice",
+    "hearthandharvest:sweet_berry_wine": "hearthandharvest:sweet_berry_wine",
+    "hearthandharvest:syrup": "hearthandharvest:syrup_bottle"
+  }
+}

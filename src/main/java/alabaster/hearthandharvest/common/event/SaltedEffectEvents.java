@@ -7,7 +7,7 @@ import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
@@ -49,12 +49,11 @@ public class SaltedEffectEvents {
 
         ServerLevel level = (ServerLevel) event.getLevel();
 
-        List<Entity> snapshot = new ArrayList<>();
-        level.getAllEntities().forEach(snapshot::add);
+        List<Slime> slimes = new ArrayList<>();
+        level.getEntities(EntityTypeTest.forClass(Slime.class), Slime::isAlive, slimes);
 
         List<Slime> toHurt = new ArrayList<>();
-        for (Entity entity : snapshot) {
-            if (!(entity instanceof Slime slime)) continue;
+        for (Slime slime : slimes) {
             AABB check = slime.getBoundingBox().inflate(0.001);
             boolean touchingSalt = BlockPos.betweenClosedStream(
                     BlockPos.containing(check.minX, check.minY, check.minZ),

@@ -84,7 +84,7 @@ public class WineBottleItem extends Item {
         if (!level.isClientSide && food != null) {
             float drunkProbability = 0.0F;
             for (FoodProperties.PossibleEffect possible : food.effects()) {
-                if (possible.effect().getEffect().equals(HHModEffects.DRUNK)) {
+                if (possible.effect().getEffect().value() == HHModEffects.DRUNK.value()) {
                     drunkProbability = possible.probability();
                     break;
                 }

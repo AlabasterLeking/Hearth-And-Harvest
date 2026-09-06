@@ -1,9 +1,8 @@
 package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.common.block.entity.StompingBasinBlockEntity;
-import alabaster.hearthandharvest.common.fluid.HHFluidType;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
-import alabaster.hearthandharvest.common.registry.HHModFluids;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,8 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -39,9 +36,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.fluids.FluidActionResult;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,8 +62,6 @@ public class StompingBasinBlock extends BaseEntityBlock {
     private static final VoxelShape SHAPE_NE = Shapes.or(FLOOR, EAST_WALL,  box(0,  1,  0,  14, 12, 2));
     private static final VoxelShape SHAPE_SW = Shapes.or(FLOOR, WEST_WALL,  box(2,  1,  14, 16, 12, 16));
     private static final VoxelShape SHAPE_SE = Shapes.or(FLOOR, EAST_WALL,  box(0,  1,  14, 14, 12, 16));
-
-    private static final int BOTTLE_VOLUME = 250;
 
     private static final float MIN_STOMP_FALL = 0.3f;
     private static final float RIM_Y = 12f / 16f;
@@ -168,99 +160,32 @@ public class StompingBasinBlock extends BaseEntityBlock {
         }
     }
 
-    private static boolean isWaterBottle(ItemStack stack) {
-        if (!stack.is(Items.POTION)) return false;
-        PotionContents contents = stack.get(DataComponents.POTION_CONTENTS);
-        return contents != null
-                && contents.potion().isPresent()
-                && contents.potion().get().is(Potions.WATER);
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof StompingBasinBlockEntity basin) {
+            return HHFluidHandling.comparatorOutput(basin.getFluidHandlerForCapability());
+        }
+        return 0;
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) return ItemInteractionResult.SUCCESS;
-
         if (!(level.getBlockEntity(pos) instanceof StompingBasinBlockEntity basin))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
+        if (level.isClientSide) return ItemInteractionResult.SUCCESS;
+
+        ItemInteractionResult fluidResult = HHFluidHandling.useOnTank(
+                level, pos, player, hand, basin.getFluidTank(), null);
+        if (fluidResult != ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) return fluidResult;
+
         ItemStack inHand = player.getItemInHand(hand);
-        FluidStack tankFluid = basin.getFluidTank().getFluid();
-
-        if (inHand.is(Items.GLASS_BOTTLE) && !tankFluid.isEmpty() && tankFluid.getAmount() >= BOTTLE_VOLUME) {
-            ItemStack result = null;
-
-            if (tankFluid.getFluid().isSame(Fluids.WATER)) {
-                result = new ItemStack(Items.POTION);
-                result.set(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER));
-            } else {
-                Item bottleItem = HHModFluids.FLUIDS.getEntries().stream()
-                        .map(h -> h.get())
-                        .filter(f -> f instanceof HHFluidType hhf && hhf.isSource(f.defaultFluidState()))
-                        .filter(f -> f.isSame(tankFluid.getFluid()))
-                        .map(f -> ((HHFluidType) f).getBottle())
-                        .filter(item -> item != Items.AIR && item != null)
-                        .findFirst()
-                        .orElse(null);
-                if (bottleItem != null) result = new ItemStack(bottleItem);
-            }
-
-            if (result != null) {
-                basin.getFluidTank().drain(BOTTLE_VOLUME, IFluidHandler.FluidAction.EXECUTE);
-                inHand.shrink(1);
-                if (inHand.isEmpty()) {
-                    player.setItemInHand(hand, result);
-                } else if (!player.addItem(result)) {
-                    level.addFreshEntity(new ItemEntity(level, player.getX(), player.getY(), player.getZ(), result));
-                }
-                level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
-                return ItemInteractionResult.CONSUME;
-            }
-        }
-
-        FluidActionResult fillResult = FluidUtil.tryFillContainer(
-                inHand, basin.getFluidTank(), Integer.MAX_VALUE, player, true);
-        if (fillResult.isSuccess()) {
-            ItemStack filled = fillResult.getResult();
-            inHand.shrink(1);
-            if (inHand.isEmpty()) {
-                player.setItemInHand(hand, filled);
-            } else if (!player.addItem(filled)) {
-                player.drop(filled, false);
-            }
-            level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
-            return ItemInteractionResult.CONSUME;
-        }
-
-        if (isWaterBottle(inHand)) {
-            int accepted = basin.getFluidTank().fill(new FluidStack(Fluids.WATER, BOTTLE_VOLUME), IFluidHandler.FluidAction.SIMULATE);
-            if (accepted == BOTTLE_VOLUME) {
-                basin.getFluidTank().fill(new FluidStack(Fluids.WATER, BOTTLE_VOLUME), IFluidHandler.FluidAction.EXECUTE);
-                inHand.shrink(1);
-                ItemStack glass = new ItemStack(Items.GLASS_BOTTLE);
-                if (inHand.isEmpty()) {
-                    player.setItemInHand(hand, glass);
-                } else if (!player.addItem(glass)) {
-                    player.drop(glass, false);
-                }
-                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f);
-                return ItemInteractionResult.CONSUME;
-            }
-        }
-
-        FluidActionResult emptyResult = FluidUtil.tryEmptyContainer(
-                inHand, basin.getFluidTank(), Integer.MAX_VALUE, player, true);
-        if (emptyResult.isSuccess()) {
-            ItemStack emptied = emptyResult.getResult();
-            inHand.shrink(1);
-            if (inHand.isEmpty()) {
-                player.setItemInHand(hand, emptied);
-            } else if (!player.addItem(emptied)) {
-                player.drop(emptied, false);
-            }
-            level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f);
-            return ItemInteractionResult.CONSUME;
-        }
-
         if (!inHand.isEmpty()) {
             ItemStack remainder = basin.insertItem(inHand.copy());
             if (remainder.getCount() < inHand.getCount()) {
@@ -367,14 +292,22 @@ public class StompingBasinBlock extends BaseEntityBlock {
             if (controllerPos == null) return;
         }
 
-        StompingBasinBlockEntity controllerBE = getBE(level, controllerPos);
-        if (controllerBE != null) controllerBE.dissolve();
-
         BlockPos nePos = controllerPos.east();
         BlockPos swPos = controllerPos.south();
         BlockPos sePos = controllerPos.east().south();
+        List<BlockPos> quadrants = List.of(controllerPos, nePos, swPos, sePos);
 
-        for (BlockPos p : List.of(controllerPos, nePos, swPos, sePos)) {
+        List<StompingBasinBlockEntity> survivors = new ArrayList<>();
+        for (BlockPos p : quadrants) {
+            if (p.equals(brokenPos)) continue;
+            StompingBasinBlockEntity be = getBE(level, p);
+            if (be != null) survivors.add(be);
+        }
+
+        StompingBasinBlockEntity controllerBE = getBE(level, controllerPos);
+        if (controllerBE != null) controllerBE.dissolve(survivors);
+
+        for (BlockPos p : quadrants) {
             if (p.equals(brokenPos)) continue;
             BlockState bs = level.getBlockState(p);
             if (bs.is(this) && bs.getValue(MULTIBLOCK_PART) != MultiblockPart.NONE) {

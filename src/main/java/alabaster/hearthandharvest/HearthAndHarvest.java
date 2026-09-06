@@ -130,6 +130,7 @@ public class HearthAndHarvest {
 
     @SubscribeEvent
     public void onEntityJoin(EntityJoinLevelEvent event) {
+        if (event.getLevel().isClientSide()) return;
         if (event.getEntity() instanceof Mob mob) {
             mob.goalSelector.addGoal(1, new PungentEffectGoal(mob, 1.0D, 1.5D, 8.0D));
             mob.goalSelector.addGoal(1, new TemptingEffectGoal(mob, 1.0D, 1.25D, 8.0D));

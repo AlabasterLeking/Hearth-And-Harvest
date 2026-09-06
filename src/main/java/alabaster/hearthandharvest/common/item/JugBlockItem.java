@@ -1,15 +1,14 @@
 package alabaster.hearthandharvest.common.item;
 
 import alabaster.hearthandharvest.common.block.entity.JugBlockEntity;
+import alabaster.hearthandharvest.common.registry.HHModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -25,16 +24,19 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -42,52 +44,86 @@ public class JugBlockItem extends BlockItem {
 
     public static final int JUG_CAPACITY = 8000;
 
+    private static final String LEGACY_TANK_KEY = "FluidTank";
+
     public JugBlockItem(Block block, Properties properties) {
         super(block, properties);
     }
 
+    public static FluidStack getFluid(ItemStack stack, @Nullable HolderLookup.Provider registries) {
+        SimpleFluidContent content = stack.get(HHModDataComponents.JUG_FLUID.get());
+        if (content != null) return content.copy();
+        if (registries == null) return FluidStack.EMPTY;
+        return readLegacyFluid(stack, registries);
+    }
+
+    public static void setFluid(ItemStack stack, FluidStack fluid) {
+        if (fluid.isEmpty()) {
+            stack.remove(HHModDataComponents.JUG_FLUID.get());
+        } else {
+            stack.set(HHModDataComponents.JUG_FLUID.get(), SimpleFluidContent.copyOf(fluid));
+        }
+        stripLegacyTank(stack);
+    }
+
+    public static FluidTank readTank(ItemStack stack, @Nullable HolderLookup.Provider registries) {
+        FluidTank tank = new FluidTank(JUG_CAPACITY);
+        tank.setFluid(getFluid(stack, registries));
+        return tank;
+    }
+
+    public static void writeTank(ItemStack stack, FluidTank tank) {
+        setFluid(stack, tank.getFluid());
+    }
+
+    private static FluidStack readLegacyFluid(ItemStack stack, HolderLookup.Provider registries) {
+        CompoundTag tankTag = legacyTankTag(stack.get(DataComponents.CUSTOM_DATA));
+        if (tankTag == null) tankTag = legacyTankTag(stack.get(DataComponents.BLOCK_ENTITY_DATA));
+        if (tankTag == null) return FluidStack.EMPTY;
+
+        FluidTank tank = new FluidTank(JUG_CAPACITY);
+        tank.readFromNBT(registries, tankTag);
+        return tank.getFluid();
+    }
+
+    @Nullable
+    private static CompoundTag legacyTankTag(@Nullable CustomData data) {
+        if (data == null || data.isEmpty()) return null;
+        CompoundTag tag = data.copyTag();
+        return tag.contains(LEGACY_TANK_KEY, Tag.TAG_COMPOUND) ? tag.getCompound(LEGACY_TANK_KEY) : null;
+    }
+
+    private static void stripLegacyTank(ItemStack stack) {
+        stripLegacyTank(stack, DataComponents.CUSTOM_DATA);
+        stripLegacyTank(stack, DataComponents.BLOCK_ENTITY_DATA);
+    }
+
+    private static void stripLegacyTank(ItemStack stack, net.minecraft.core.component.DataComponentType<CustomData> type) {
+        CustomData data = stack.get(type);
+        if (data == null || data.isEmpty()) return;
+        CompoundTag tag = data.copyTag();
+        if (!tag.contains(LEGACY_TANK_KEY)) return;
+        tag.remove(LEGACY_TANK_KEY);
+        if (tag.isEmpty()) stack.remove(type);
+        else stack.set(type, CustomData.of(tag));
+    }
+
     @Override
     public InteractionResult place(BlockPlaceContext context) {
-        ItemStack stack = context.getItemInHand();
-
-        CompoundTag fluidTag = findFluidTag(stack);
+        Level level = context.getLevel();
+        FluidStack carried = getFluid(context.getItemInHand(), level.registryAccess());
 
         InteractionResult result = super.place(context);
 
-        if (result.consumesAction() && !context.getLevel().isClientSide) {
-            BlockPos pos = context.getClickedPos();
-            Level level = context.getLevel();
-
-            if (level.getBlockEntity(pos) instanceof JugBlockEntity jug) {
-                if (fluidTag != null) {
-                    jug.getFluidTank().readFromNBT(level.registryAccess(), fluidTag);
-                    jug.setChanged();
-                    jug.syncToClient();
-                }
+        if (result.consumesAction() && !level.isClientSide && !carried.isEmpty()) {
+            if (level.getBlockEntity(context.getClickedPos()) instanceof JugBlockEntity jug) {
+                jug.getFluidTank().setFluid(carried);
+                jug.setChanged();
+                jug.syncToClient();
             }
         }
 
         return result;
-    }
-
-    private CompoundTag findFluidTag(ItemStack stack) {
-        var customData = stack.get(DataComponents.CUSTOM_DATA);
-        if (customData != null && !customData.isEmpty()) {
-            CompoundTag tag = customData.copyTag();
-            if (tag.contains("FluidTank", Tag.TAG_COMPOUND)) {
-                return tag.getCompound("FluidTank");
-            }
-        }
-
-        var beData = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (beData != null && !beData.isEmpty()) {
-            CompoundTag tag = beData.copyTag();
-            if (tag.contains("FluidTank", Tag.TAG_COMPOUND)) {
-                return tag.getCompound("FluidTank");
-            }
-        }
-
-        return null;
     }
 
     @Override
@@ -95,34 +131,50 @@ public class JugBlockItem extends BlockItem {
         ItemStack stack = player.getItemInHand(hand);
 
         BlockHitResult fluidHit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
-        if (fluidHit.getType() != HitResult.Type.MISS) {
-            BlockPos pos = fluidHit.getBlockPos();
-            FluidState fluidState = level.getFluidState(pos);
+        if (fluidHit.getType() != HitResult.Type.BLOCK) return super.use(level, player, hand);
 
-            if (fluidState.isSource()) {
-                FluidStack incoming = new FluidStack(fluidState.getType(), 1000);
-                FluidTank tank = readTank(stack, level);
+        BlockPos pos = fluidHit.getBlockPos();
+        FluidState fluidState = level.getFluidState(pos);
+        if (!fluidState.isSource()) return super.use(level, player, hand);
 
-                if (tank.fill(incoming, IFluidHandler.FluidAction.SIMULATE) == 1000) {
-                    if (!level.isClientSide) {
-                        tank.fill(incoming, IFluidHandler.FluidAction.EXECUTE);
-                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
-                        writeTank(stack, tank, level);
-                        level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    }
-                    return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
-                } else {
-                    if (level.isClientSide) {
-                        player.displayClientMessage(
-                                Component.translatable("tooltip.hearthandharvest.jug.full")
-                                        .withStyle(ChatFormatting.RED), true);
-                    }
-                    return InteractionResultHolder.fail(stack);
-                }
-            }
+        if (!player.mayUseItemAt(pos, fluidHit.getDirection(), stack)) {
+            return InteractionResultHolder.fail(stack);
         }
 
-        return super.use(level, player, hand);
+        ItemStack singleJug = stack.copyWithCount(1);
+        FluidTank tank = readTank(singleJug, level.registryAccess());
+        FluidStack incoming = new FluidStack(fluidState.getType(), FluidType.BUCKET_VOLUME);
+
+        if (tank.fill(incoming, IFluidHandler.FluidAction.SIMULATE) != FluidType.BUCKET_VOLUME) {
+            if (level.isClientSide) {
+                player.displayClientMessage(
+                        Component.translatable("tooltip.hearthandharvest.jug.full")
+                                .withStyle(ChatFormatting.RED), true);
+            }
+            return InteractionResultHolder.fail(stack);
+        }
+
+        if (level.isClientSide) return InteractionResultHolder.sidedSuccess(stack, true);
+
+        if (!pickUpSource(player, level, pos)) return InteractionResultHolder.fail(stack);
+        tank.fill(incoming, IFluidHandler.FluidAction.EXECUTE);
+        writeTank(singleJug, tank);
+        level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+        return InteractionResultHolder.sidedSuccess(swapForFilled(player, stack, singleJug), false);
+    }
+
+    private static ItemStack swapForFilled(Player player, ItemStack held, ItemStack modified) {
+        if (held.getCount() == 1) return modified;
+        held.shrink(1);
+        if (!player.addItem(modified)) player.drop(modified, false);
+        return held;
+    }
+
+    private static boolean pickUpSource(Player player, Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (!(state.getBlock() instanceof BucketPickup pickup)) return false;
+        return !pickup.pickupBlock(player, level, pos, state).isEmpty();
     }
 
     @Override
@@ -136,127 +188,79 @@ public class JugBlockItem extends BlockItem {
 
         IFluidHandler fluidHandler = level.getCapability(
                 Capabilities.FluidHandler.BLOCK, pos, context.getClickedFace());
+        if (fluidHandler == null) return super.useOn(context);
 
-        if (fluidHandler != null) {
-            ItemStack singleJug = stack.copyWithCount(1);
-            FluidTank jugTank = readTank(singleJug, level);
+        if (!player.mayUseItemAt(pos, context.getClickedFace(), stack)) return InteractionResult.FAIL;
 
-            // Pour FROM jug INTO container if jug has fluid
-            if (!jugTank.getFluid().isEmpty()) {
-                FluidStack jugFluid = jugTank.getFluid().copy();
-                int simFill = fluidHandler.fill(jugFluid, IFluidHandler.FluidAction.SIMULATE);
-                if (simFill > 0) {
-                    if (!level.isClientSide) {
-                        fluidHandler.fill(new FluidStack(jugFluid.getFluid(), simFill), IFluidHandler.FluidAction.EXECUTE);
-                        jugTank.drain(simFill, IFluidHandler.FluidAction.EXECUTE);
-                        writeTank(singleJug, jugTank, level);
-                        stack.shrink(1);
-                        if (stack.isEmpty()) {
-                            player.setItemInHand(context.getHand(), singleJug);
-                        } else {
-                            if (!player.addItem(singleJug)) player.drop(singleJug, false);
-                        }
-                        level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
+        ItemStack singleJug = stack.copyWithCount(1);
+        FluidTank jugTank = readTank(singleJug, level.registryAccess());
+
+        FluidStack jugFluid = jugTank.getFluid().copy();
+        if (!jugFluid.isEmpty()) {
+            int simFill = fluidHandler.fill(jugFluid, IFluidHandler.FluidAction.SIMULATE);
+            if (simFill > 0) {
+                if (!level.isClientSide) {
+                    fluidHandler.fill(jugFluid.copyWithAmount(simFill), IFluidHandler.FluidAction.EXECUTE);
+                    jugTank.drain(simFill, IFluidHandler.FluidAction.EXECUTE);
+                    writeTank(singleJug, jugTank);
+                    giveBack(player, context.getHand(), stack, singleJug);
+                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
                 }
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
-
-            // Drain FROM container INTO jug
-            int space = JUG_CAPACITY - jugTank.getFluidAmount();
-            if (space <= 0) {
-                if (level.isClientSide) {
-                    player.displayClientMessage(
-                            Component.translatable("tooltip.hearthandharvest.jug.full")
-                                    .withStyle(ChatFormatting.RED), true);
-                }
-                return InteractionResult.FAIL;
-            }
-
-            if (fluidHandler.getTanks() == 0) return InteractionResult.PASS;
-            FluidStack inSource = fluidHandler.getFluidInTank(0);
-            if (inSource.isEmpty()) return InteractionResult.PASS;
-
-            FluidStack simDrain = fluidHandler.drain(new FluidStack(inSource.getFluid(), space), IFluidHandler.FluidAction.SIMULATE);
-            if (!simDrain.isEmpty()) {
-                int simFill = jugTank.fill(simDrain, IFluidHandler.FluidAction.SIMULATE);
-                if (simFill > 0) {
-                    if (!level.isClientSide) {
-                        FluidStack actualDrain = fluidHandler.drain(new FluidStack(inSource.getFluid(), simFill), IFluidHandler.FluidAction.EXECUTE);
-                        jugTank.fill(actualDrain, IFluidHandler.FluidAction.EXECUTE);
-                        writeTank(singleJug, jugTank, level);
-                        stack.shrink(1);
-                        if (stack.isEmpty()) {
-                            player.setItemInHand(context.getHand(), singleJug);
-                        } else {
-                            if (!player.addItem(singleJug)) player.drop(singleJug, false);
-                        }
-                        level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                } else {
-                    if (level.isClientSide) {
-                        player.displayClientMessage(
-                                Component.translatable("tooltip.hearthandharvest.jug.wrong_fluid")
-                                        .withStyle(ChatFormatting.RED), true);
-                    }
-                    return InteractionResult.FAIL;
-                }
-            }
-            return InteractionResult.PASS;
         }
-        return super.useOn(context);
+
+        int space = JUG_CAPACITY - jugTank.getFluidAmount();
+        if (space <= 0) {
+            if (level.isClientSide) {
+                player.displayClientMessage(
+                        Component.translatable("tooltip.hearthandharvest.jug.full")
+                                .withStyle(ChatFormatting.RED), true);
+            }
+            return InteractionResult.FAIL;
+        }
+
+        if (fluidHandler.getTanks() == 0) return InteractionResult.PASS;
+        FluidStack inSource = fluidHandler.getFluidInTank(0);
+        if (inSource.isEmpty()) return InteractionResult.PASS;
+
+        FluidStack simDrain = fluidHandler.drain(inSource.copyWithAmount(space), IFluidHandler.FluidAction.SIMULATE);
+        if (simDrain.isEmpty()) return InteractionResult.PASS;
+
+        int simFill = jugTank.fill(simDrain, IFluidHandler.FluidAction.SIMULATE);
+        if (simFill <= 0) {
+            if (level.isClientSide) {
+                player.displayClientMessage(
+                        Component.translatable("tooltip.hearthandharvest.jug.wrong_fluid")
+                                .withStyle(ChatFormatting.RED), true);
+            }
+            return InteractionResult.FAIL;
+        }
+
+        if (!level.isClientSide) {
+            FluidStack actualDrain = fluidHandler.drain(inSource.copyWithAmount(simFill), IFluidHandler.FluidAction.EXECUTE);
+            jugTank.fill(actualDrain, IFluidHandler.FluidAction.EXECUTE);
+            writeTank(singleJug, jugTank);
+            giveBack(player, context.getHand(), stack, singleJug);
+            level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private FluidTank readTank(ItemStack stack, Level level) {
-        FluidTank tank = new FluidTank(JUG_CAPACITY);
-        var data = stack.get(DataComponents.CUSTOM_DATA);
-        if (data == null || data.isEmpty()) return tank;
-
-        CompoundTag tag = data.copyTag();
-        if (!tag.contains("FluidTank", Tag.TAG_COMPOUND)) return tank;
-
-        tank.readFromNBT(level.registryAccess(), tag.getCompound("FluidTank"));
-        return tank;
-    }
-
-    private void writeTank(ItemStack stack, FluidTank tank, Level level) {
-        var existing = stack.get(DataComponents.CUSTOM_DATA);
-        CompoundTag tag = (existing != null && !existing.isEmpty())
-                ? existing.copyTag()
-                : new CompoundTag();
-
-        CompoundTag tankTag = new CompoundTag();
-        tank.writeToNBT(level.registryAccess(), tankTag);
-        tag.put("FluidTank", tankTag);
-
-        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-    }
-
-    public static FluidTank readTankStatic(ItemStack stack) {
-        FluidTank tank = new FluidTank(JUG_CAPACITY);
-        var data = stack.get(DataComponents.CUSTOM_DATA);
-        if (data == null || data.isEmpty()) return tank;
-        CompoundTag tag = data.copyTag();
-        if (!tag.contains("FluidTank", Tag.TAG_COMPOUND)) return tank;
-
-        CompoundTag fluidTag = tag.getCompound("FluidTank");
-        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-        HolderLookup.Provider registries = server != null
-                ? server.registryAccess()
-                : RegistryAccess.EMPTY;
-
-        tank.readFromNBT(registries, fluidTag);
-        return tank;
+    private static void giveBack(Player player, InteractionHand hand, ItemStack held, ItemStack modified) {
+        held.shrink(1);
+        if (held.isEmpty()) {
+            player.setItemInHand(hand, modified);
+        } else if (!player.addItem(modified)) {
+            player.drop(modified, false);
+        }
     }
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, ctx, tooltip, flag);
-        HolderLookup.Provider lookup = ctx.registries();
-        if (lookup == null) return;
 
-        FluidStack fs = readFluidForTooltip(stack, lookup);
+        FluidStack fs = getFluid(stack, ctx.registries());
 
         if (fs.isEmpty()) {
             tooltip.add(Component.translatable("tooltip.hearthandharvest.jug.empty").withStyle(ChatFormatting.GRAY));
@@ -265,29 +269,5 @@ public class JugBlockItem extends BlockItem {
 
         tooltip.add(fs.getHoverName().copy().withStyle(ChatFormatting.BLUE));
         tooltip.add(Component.literal(fs.getAmount() + " mB").withStyle(ChatFormatting.GRAY));
-    }
-
-    private FluidStack readFluidForTooltip(ItemStack stack, HolderLookup.Provider lookup) {
-        var customData = stack.get(DataComponents.CUSTOM_DATA);
-        if (customData != null && !customData.isEmpty()) {
-            CompoundTag tag = customData.copyTag();
-            if (tag.contains("FluidTank", Tag.TAG_COMPOUND)) {
-                FluidTank tank = new FluidTank(JUG_CAPACITY);
-                tank.readFromNBT(lookup, tag.getCompound("FluidTank"));
-                if (!tank.getFluid().isEmpty()) return tank.getFluid();
-            }
-        }
-
-        var beData = stack.get(DataComponents.BLOCK_ENTITY_DATA);
-        if (beData != null && !beData.isEmpty()) {
-            CompoundTag tag = beData.copyTag();
-            if (tag.contains("FluidTank", Tag.TAG_COMPOUND)) {
-                FluidTank tank = new FluidTank(JUG_CAPACITY);
-                tank.readFromNBT(lookup, tag.getCompound("FluidTank"));
-                return tank.getFluid();
-            }
-        }
-
-        return FluidStack.EMPTY;
     }
 }

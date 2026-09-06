@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.common.block.entity.TreeTapperBlockEntity;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import alabaster.hearthandharvest.common.registry.HHModParticleTypes;
 import alabaster.hearthandharvest.common.tag.HHModTags;
@@ -116,7 +117,7 @@ public class TreeTapperBlock extends BaseEntityBlock {
         @Override
         public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
                 if (level.getBlockEntity(pos) instanceof TreeTapperBlockEntity tapper)
-                        return (int) ((float) tapper.tank.getFluidAmount() / TreeTapperBlockEntity.CAPACITY * 15);
+                        return HHFluidHandling.comparatorOutput(tapper.tank);
                 return 0;
         }
 

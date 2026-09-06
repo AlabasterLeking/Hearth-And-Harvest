@@ -85,7 +85,8 @@ public class CleaverItem extends KnifeItem {
         if (!(entity instanceof Player player)) return;
         if (getUseDuration(stack, entity) - timeLeft < MIN_THROW_TICKS) return;
         if (level.isClientSide) return;
-        stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+        EquipmentSlot slot = player.getOffhandItem() == stack ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
+        stack.hurtAndBreak(1, player, slot);
         ThrownCleaver thrown = new ThrownCleaver(level, player, stack);
         thrown.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 2.0f, 1.0f);
         level.addFreshEntity(thrown);

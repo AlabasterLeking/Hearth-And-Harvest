@@ -98,8 +98,8 @@ public class WateringCanItem extends Item {
 
                 if (targetState.getBlock() == Blocks.WATER) {
                     if (getWaterCharge(canStack) < MAX_WATER) {
-                        setWaterCharge(canStack, MAX_WATER);
                         if (!level.isClientSide()) {
+                            setWaterCharge(canStack, MAX_WATER);
                             level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
                         }
                         return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
@@ -109,21 +109,15 @@ public class WateringCanItem extends Item {
                 // Extinguish fire or any LIT block
                 if (isExtinguishable(targetState)) {
                     if (getWaterCharge(canStack) > 0) {
-                        // Extinguish the fire by setting the block to AIR (for fire blocks)
-                        if (targetState.getBlock() == Blocks.FIRE) {
-                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3); // Set fire block to AIR
-                        }
-                        // Extinguish the campfire or any other LIT block by toggling LIT to false
-                        else {
-                            level.setBlock(pos, targetState.setValue(CampfireBlock.LIT, false), 3); // Set LIT to false to extinguish
-                        }
-
-                        if (level.isClientSide()) {
+                        if (!level.isClientSide()) {
+                            if (targetState.getBlock() == Blocks.FIRE) {
+                                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                            } else {
+                                level.setBlock(pos, targetState.setValue(CampfireBlock.LIT, false), 3);
+                            }
                             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 1.0F);
+                            consumeWater(canStack);
                         }
-
-                        // Consume one water charge
-                        consumeWater(canStack);
                         return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
                     }
                 }
@@ -133,6 +127,9 @@ public class WateringCanItem extends Item {
                     int water = getWaterCharge(canStack);
                     int bonemeal = getBoneMealCharge(canStack);
                     if (water > 0 && bonemeal > 0) {
+                        if (level.isClientSide()) {
+                            return InteractionResultHolder.sidedSuccess(canStack, true);
+                        }
                         boolean applied = applyBonemeal(level, pos, targetState, player);
                         if (applied) {
                             consumeBoth(canStack);
@@ -140,8 +137,7 @@ public class WateringCanItem extends Item {
                             if (level instanceof ServerLevel serverLevel) {
                                 serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, 0.25, 0.3, 0.25, 0.05);
                             }
-
-                            return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
+                            return InteractionResultHolder.sidedSuccess(canStack, false);
                         }
                     }
                 }
@@ -192,13 +188,13 @@ public class WateringCanItem extends Item {
     }
 
     private void consumeWater(ItemStack stack) {
-        int water = stack.get(HHModDataComponents.WATER_LEVEL);
+        int water = stack.getOrDefault(HHModDataComponents.WATER_LEVEL, 0);
         stack.update(HHModDataComponents.WATER_LEVEL, 0, oldValue -> water - 1);
     }
 
     private void consumeBoth(ItemStack stack) {
-        int water = stack.get(HHModDataComponents.WATER_LEVEL);
-        int boneMeal = stack.get(HHModDataComponents.BONEMEAL_LEVEL);
+        int water = stack.getOrDefault(HHModDataComponents.WATER_LEVEL, 0);
+        int boneMeal = stack.getOrDefault(HHModDataComponents.BONEMEAL_LEVEL, 0);
         int newBoneMeal = boneMeal - 1;
         stack.update(HHModDataComponents.WATER_LEVEL, 0, oldValue -> water - 1);
         stack.update(HHModDataComponents.BONEMEAL_LEVEL, 0, oldValue -> newBoneMeal);
@@ -208,7 +204,7 @@ public class WateringCanItem extends Item {
     }
 
     private int getWaterCharge(ItemStack stack) {
-        return stack.get(HHModDataComponents.WATER_LEVEL);
+        return stack.getOrDefault(HHModDataComponents.WATER_LEVEL, 0);
     }
 
     private void setWaterCharge(ItemStack stack, int value) {
@@ -216,7 +212,7 @@ public class WateringCanItem extends Item {
     }
 
     private int getBoneMealCharge(ItemStack stack) {
-        return stack.get(HHModDataComponents.BONEMEAL_LEVEL);
+        return stack.getOrDefault(HHModDataComponents.BONEMEAL_LEVEL, 0);
     }
 
     private void setBoneMealCharge(ItemStack stack, int value) {
@@ -224,7 +220,7 @@ public class WateringCanItem extends Item {
     }
 
     private Item getFertilizerItem(ItemStack stack) {
-        return stack.get(HHModDataComponents.FERTILIZER_ITEM);
+        return stack.getOrDefault(HHModDataComponents.FERTILIZER_ITEM, Items.AIR);
     }
 
     private void setFertilizerItem(ItemStack stack, Item item) {

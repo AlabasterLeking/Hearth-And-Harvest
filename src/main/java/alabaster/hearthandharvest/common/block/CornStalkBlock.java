@@ -109,8 +109,6 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
                     if (!drop.isEmpty()) {
                         Block.popResource(level, pos, drop);
                     }
-
-                    level.destroyBlock(pos, false);
                 }
                 return Blocks.AIR.defaultBlockState();
             }

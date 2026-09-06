@@ -278,6 +278,19 @@ public class HHBlockTags extends BlockTagsProvider {
         tag(ModTags.Blocks.COMPOST_ACTIVATORS).add(
                 HHModBlocks.MULCH.get()
         );
+
+        tag(ModTags.Blocks.CABINETS_WOODEN).add(
+                HHModBlocks.BIRCH_HALF_CABINET.get(),
+                HHModBlocks.SPRUCE_HALF_CABINET.get(),
+                HHModBlocks.JUNGLE_HALF_CABINET.get(),
+                HHModBlocks.ACACIA_HALF_CABINET.get(),
+                HHModBlocks.DARK_OAK_HALF_CABINET.get(),
+                HHModBlocks.MANGROVE_HALF_CABINET.get(),
+                HHModBlocks.CHERRY_HALF_CABINET.get(),
+                HHModBlocks.BAMBOO_HALF_CABINET.get(),
+                HHModBlocks.CRIMSON_HALF_CABINET.get(),
+                HHModBlocks.WARPED_HALF_CABINET.get()
+        );
     }
 
     protected void registerCompatTags() {

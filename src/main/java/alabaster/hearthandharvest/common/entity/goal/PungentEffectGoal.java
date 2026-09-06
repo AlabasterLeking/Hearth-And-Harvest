@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.entity.goal;
 
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.List;
 
 import alabaster.hearthandharvest.common.registry.HHModEffects;
@@ -11,17 +12,22 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.phys.Vec3;
 
 public class PungentEffectGoal extends Goal {
+    private static final int SCAN_INTERVAL = 20;
+
     private final Mob mob;
     private LivingEntity pungentSource;
     private final double farSpeed;
     private final double nearSpeed;
     private final double baseRadius;
 
+    private int scanCooldown;
+
     public PungentEffectGoal(Mob mob, double farSpeed, double nearSpeed, double baseRadius) {
         this.mob = mob;
         this.farSpeed = farSpeed;
         this.nearSpeed = nearSpeed;
         this.baseRadius = baseRadius;
+        setFlags(EnumSet.of(Goal.Flag.MOVE));
     }
 
     // Computes the effective radius using the amplifier of the Pungent effect.
@@ -35,6 +41,9 @@ public class PungentEffectGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (--scanCooldown > 0) return false;
+        scanCooldown = SCAN_INTERVAL;
+
         // Search for any living entity (other than the mob itself) within the base radius that has the Pungent effect.
         List<LivingEntity> candidates = mob.level().getEntitiesOfClass(
                 LivingEntity.class,

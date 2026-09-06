@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.common.block.entity.TroughBlockEntity;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -13,8 +14,6 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -28,11 +27,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.fluids.FluidActionResult;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,7 +48,6 @@ public class TroughBlock extends BaseEntityBlock {
         SHAPE = Shapes.or(legNW, legNE, legSW, legSE, bottom, wallN, wallS, wallW, wallE);
     }
 
-    private static final int BOTTLE_VOLUME = 250;
 
     public TroughBlock(Properties properties) {
         super(properties);
@@ -74,82 +67,29 @@ public class TroughBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof TroughBlockEntity trough) {
+            return HHFluidHandling.comparatorOutput(trough.getFluidTank());
+        }
+        return 0;
+    }
+
+    @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) return ItemInteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof TroughBlockEntity trough))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
+        ItemInteractionResult fluidResult = HHFluidHandling.useOnTank(
+                level, pos, player, hand, trough.getFluidTank(), null);
+        if (fluidResult != ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) return fluidResult;
+
         ItemStack inHand = player.getItemInHand(hand);
-        FluidStack tankFluid = trough.getFluidTank().getFluid();
-
-        // Glass bottle: drain water from trough
-        if (inHand.is(Items.GLASS_BOTTLE) && !tankFluid.isEmpty() && tankFluid.getAmount() >= BOTTLE_VOLUME) {
-            ItemStack waterBottle = new ItemStack(Items.POTION);
-            waterBottle.set(DataComponents.POTION_CONTENTS, new PotionContents(Potions.WATER));
-            trough.getFluidTank().drain(BOTTLE_VOLUME, IFluidHandler.FluidAction.EXECUTE);
-            inHand.shrink(1);
-            if (inHand.isEmpty()) player.setItemInHand(hand, waterBottle);
-            else if (!player.addItem(waterBottle)) player.drop(waterBottle, false);
-            level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1f, 1f);
-            return ItemInteractionResult.CONSUME;
-        }
-
-        // Water bottle: fill trough
-        if (isWaterBottle(inHand)) {
-            int accepted = trough.getFluidTank().fill(new FluidStack(Fluids.WATER, BOTTLE_VOLUME), IFluidHandler.FluidAction.SIMULATE);
-            if (accepted == BOTTLE_VOLUME) {
-                trough.getFluidTank().fill(new FluidStack(Fluids.WATER, BOTTLE_VOLUME), IFluidHandler.FluidAction.EXECUTE);
-                inHand.shrink(1);
-                ItemStack glass = new ItemStack(Items.GLASS_BOTTLE);
-                if (inHand.isEmpty()) player.setItemInHand(hand, glass);
-                else if (!player.addItem(glass)) player.drop(glass, false);
-                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1f, 1f);
-                return ItemInteractionResult.CONSUME;
-            }
-        }
-
-        // Fluid containers (buckets, etc.)
-        FluidActionResult emptyResult = FluidUtil.tryEmptyContainer(inHand, trough.getFluidTank(), Integer.MAX_VALUE, player, true);
-        if (emptyResult.isSuccess()) {
-            ItemStack emptied = emptyResult.getResult();
-            inHand.shrink(1);
-            if (inHand.isEmpty()) player.setItemInHand(hand, emptied);
-            else if (!player.addItem(emptied)) player.drop(emptied, false);
-            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1f, 1f);
-            return ItemInteractionResult.CONSUME;
-        }
-
-        // Fallback: containers like buckets cannot partially drain, so tryEmptyContainer fails
-        // when the tank already has some fluid. Drain the full container and cap the fill.
-        IFluidHandlerItem containerHandler = inHand.getCapability(Capabilities.FluidHandler.ITEM);
-        if (containerHandler != null) {
-            FluidStack avail = containerHandler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
-            if (!avail.isEmpty() && trough.getFluidTank().isFluidValid(avail)) {
-                int canFit = trough.getFluidTank().fill(avail, IFluidHandler.FluidAction.SIMULATE);
-                if (canFit > 0 && canFit < avail.getAmount()) {
-                    containerHandler.drain(avail.getAmount(), IFluidHandler.FluidAction.EXECUTE);
-                    trough.getFluidTank().fill(new FluidStack(avail.getFluid(), canFit), IFluidHandler.FluidAction.EXECUTE);
-                    ItemStack result = containerHandler.getContainer();
-                    inHand.shrink(1);
-                    if (inHand.isEmpty()) player.setItemInHand(hand, result);
-                    else if (!player.addItem(result)) player.drop(result, false);
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1f, 1f);
-                    return ItemInteractionResult.CONSUME;
-                }
-            }
-        }
-
-        FluidActionResult fillResult = FluidUtil.tryFillContainer(inHand, trough.getFluidTank(), Integer.MAX_VALUE, player, true);
-        if (fillResult.isSuccess()) {
-            ItemStack filled = fillResult.getResult();
-            inHand.shrink(1);
-            if (inHand.isEmpty()) player.setItemInHand(hand, filled);
-            else if (!player.addItem(filled)) player.drop(filled, false);
-            level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1f, 1f);
-            return ItemInteractionResult.CONSUME;
-        }
-
-        // Food insertion
         if (!inHand.isEmpty() && trough.getFluidTank().isEmpty()) {
             ItemStack remainder = trough.insertItem(inHand.copy());
             if (remainder.getCount() < inHand.getCount()) {
@@ -184,11 +124,6 @@ public class TroughBlock extends BaseEntityBlock {
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
-    private static boolean isWaterBottle(ItemStack stack) {
-        if (!stack.is(Items.POTION)) return false;
-        PotionContents contents = stack.get(DataComponents.POTION_CONTENTS);
-        return contents != null && contents.potion().isPresent() && contents.potion().get().is(Potions.WATER);
-    }
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

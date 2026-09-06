@@ -31,6 +31,7 @@ public class BasinBlockEntity extends BlockEntity {
             setChanged();
             if (level != null && !level.isClientSide) {
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+                level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
                 if (tank.getFluidAmount() < CAPACITY) {
                     level.scheduleTick(worldPosition, getBlockState().getBlock(), 60);
                 }

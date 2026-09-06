@@ -51,8 +51,8 @@ public class ManureItem extends Item {
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     HHModSounds.MANURE_THROW.get(), SoundSource.PLAYERS,
                     0.5f, 1.0f + level.random.nextFloat() * 0.4f);
+            if (!player.getAbilities().instabuild) stack.shrink(1);
         }
-        if (!player.getAbilities().instabuild) stack.shrink(1);
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
 }

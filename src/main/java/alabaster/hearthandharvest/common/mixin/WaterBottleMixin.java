@@ -18,15 +18,15 @@ public abstract class WaterBottleMixin {
             at = @At("RETURN")
     )
     private int restrictNonWaterPotions(int original) {
-        try {
-            if (!Config.STACK_WATER_BOTTLES.getAsBoolean()) return original;
-        } catch (IllegalStateException e) {
-            return original;
-        }
-
         ItemStack stack = (ItemStack)(Object)this;
 
         if (!stack.is(Items.POTION)) {
+            return original;
+        }
+
+        try {
+            if (!Config.STACK_WATER_BOTTLES.getAsBoolean()) return original;
+        } catch (IllegalStateException e) {
             return original;
         }
 

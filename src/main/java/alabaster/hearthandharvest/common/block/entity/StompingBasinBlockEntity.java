@@ -18,6 +18,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -31,6 +32,7 @@ import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -131,7 +133,11 @@ public class StompingBasinBlockEntity extends BlockEntity  {
 
         @Override
         protected void onContentsChanged() {
-            setChanged(); syncToClient();
+            setChanged();
+            syncToClient();
+            if (level != null && !level.isClientSide) {
+                level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+            }
         }
 
         void setEffectiveCapacity(int cap) {
@@ -287,10 +293,14 @@ public class StompingBasinBlockEntity extends BlockEntity  {
                 member.itemHandler.setStackInSlot(s, ItemStack.EMPTY);
             }
 
-            FluidStack memberFluid = member.fluidTank.getFluid();
+            FluidStack memberFluid = member.fluidTank.getFluid().copy();
             if (!memberFluid.isEmpty()) {
-                fluidTank.fill(memberFluid.copy(), IFluidHandler.FluidAction.EXECUTE);
-                member.fluidTank.setFluid(FluidStack.EMPTY);
+                int accepted = fluidTank.fill(memberFluid, IFluidHandler.FluidAction.EXECUTE);
+                if (accepted >= memberFluid.getAmount()) {
+                    member.fluidTank.setFluid(FluidStack.EMPTY);
+                } else {
+                    member.fluidTank.setFluid(memberFluid.copyWithAmount(memberFluid.getAmount() - accepted));
+                }
             }
 
             member.setChanged();
@@ -308,7 +318,7 @@ public class StompingBasinBlockEntity extends BlockEntity  {
         syncToClient();
     }
 
-    public void dissolve() {
+    public void dissolve(List<StompingBasinBlockEntity> survivors) {
         this.role = MultiblockPart.NONE;
         this.controllerPos = null;
         this.itemSlotLimit = SOLO_ITEM_LIMIT;
@@ -322,14 +332,31 @@ public class StompingBasinBlockEntity extends BlockEntity  {
             }
         }
 
-        if (fluidTank.getFluidAmount() > SOLO_TANK_CAPACITY) {
-            fluidTank.setFluid(fluidTank.getFluid().copyWithAmount(SOLO_TANK_CAPACITY));
-        }
         fluidTank.setEffectiveCapacity(SOLO_TANK_CAPACITY);
+        int overflow = fluidTank.getFluidAmount() - SOLO_TANK_CAPACITY;
+        if (overflow > 0) {
+            FluidStack held = fluidTank.getFluid().copy();
+            FluidStack moving = held.copyWithAmount(overflow);
+            fluidTank.setFluid(held.copyWithAmount(SOLO_TANK_CAPACITY));
+
+            for (StompingBasinBlockEntity survivor : survivors) {
+                if (moving.isEmpty()) break;
+                if (survivor == this) continue;
+                survivor.fluidTank.setEffectiveCapacity(SOLO_TANK_CAPACITY);
+                int accepted = survivor.fluidTank.fill(moving.copy(), IFluidHandler.FluidAction.EXECUTE);
+                if (accepted > 0) {
+                    moving.shrink(accepted);
+                    survivor.setChanged();
+                    survivor.syncToClient();
+                }
+            }
+
+        }
 
         setChanged();
         syncToClient();
     }
+
 
     public void dissolveAsMember() {
         this.role = MultiblockPart.NONE;
@@ -404,6 +431,15 @@ public class StompingBasinBlockEntity extends BlockEntity  {
         if (role == MultiblockPart.MEMBER) {
             StompingBasinBlockEntity controller = getControllerBE();
             if (controller != null) return controller.fluidTank;
+        }
+        return fluidTank;
+    }
+
+    @Nullable
+    public FluidTank getFluidHandlerForCapability() {
+        if (role == MultiblockPart.MEMBER) {
+            StompingBasinBlockEntity controller = getControllerBE();
+            return controller != null ? controller.fluidTank : null;
         }
         return fluidTank;
     }

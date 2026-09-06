@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.common.block.entity.SprinklerBlockEntity;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import alabaster.hearthandharvest.common.tag.HHModTags;
 import com.mojang.serialization.MapCodec;
@@ -74,7 +75,7 @@ public class SprinklerBlock extends BaseEntityBlock {
     @Override
     public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         if (!(level.getBlockEntity(pos) instanceof SprinklerBlockEntity be)) return 0;
-        return (int) ((float) be.tank.getFluidAmount() / SprinklerBlockEntity.CAPACITY * 15);
+        return HHFluidHandling.comparatorOutput(be.tank);
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -75,12 +76,12 @@ public class TrellisBlockItem extends BlockItem {
     }
 
     private Optional<PlacementResult> simulateTrellisTopFace(BlockState state, BlockPos pos, Level level, boolean sneaking, double lx, double lz, Direction playerFacing) {
-        if (sneaking) return simulatePlaceOrMerge(level, pos.above(), state.getValue(TrellisBlock.MATERIAL), TrellisBlock.HAS_FLAT);
+        if (sneaking) return simulatePlaceOrMerge(level, pos.above(), TrellisBlock.HAS_FLAT);
         if (hasSide(state) && !state.getValue(TrellisBlock.HAS_TOP)) return Optional.of(new PlacementResult(pos, state.setValue(TrellisBlock.HAS_TOP, true)));
         if (state.getValue(TrellisBlock.HAS_FLAT) || state.getValue(TrellisBlock.HAS_TOP)) {
             BooleanProperty toExtend = state.getValue(TrellisBlock.HAS_FLAT) ? TrellisBlock.HAS_FLAT : TrellisBlock.HAS_TOP;
             Direction extDir = horizontalDirectionFromHit(lx, lz);
-            if (extDir != null) return simulatePlaceOrMerge(level, pos.relative(extDir), state.getValue(TrellisBlock.MATERIAL), toExtend);
+            if (extDir != null) return simulatePlaceOrMerge(level, pos.relative(extDir), toExtend);
         }
         BooleanProperty component = componentFromTopHit(lx, lz, playerFacing);
         if (component == null) return Optional.empty();
@@ -90,11 +91,11 @@ public class TrellisBlockItem extends BlockItem {
     }
 
     private Optional<PlacementResult> simulateTrellisBottomFace(BlockState state, BlockPos pos, Level level, boolean sneaking, double lx, double lz) {
-        if (sneaking) return simulatePlaceOrMerge(level, pos.below(), state.getValue(TrellisBlock.MATERIAL), TrellisBlock.HAS_TOP);
+        if (sneaking) return simulatePlaceOrMerge(level, pos.below(), TrellisBlock.HAS_TOP);
         if (state.getValue(TrellisBlock.HAS_TOP) || state.getValue(TrellisBlock.HAS_FLAT)) {
             BooleanProperty toExtend = state.getValue(TrellisBlock.HAS_TOP) ? TrellisBlock.HAS_TOP : TrellisBlock.HAS_FLAT;
             Direction extDir = horizontalDirectionFromHit(lx, lz);
-            if (extDir != null) return simulatePlaceOrMerge(level, pos.relative(extDir), state.getValue(TrellisBlock.MATERIAL), toExtend);
+            if (extDir != null) return simulatePlaceOrMerge(level, pos.relative(extDir), toExtend);
         }
         return Optional.empty();
     }
@@ -106,15 +107,16 @@ public class TrellisBlockItem extends BlockItem {
 
         if (sneaking && hasSideProp) {
             if (hasOppSide) return Optional.of(new PlacementResult(pos, state.setValue(vert > 0.5 ? TrellisBlock.HAS_TOP : TrellisBlock.HAS_FLAT, true)));
-            return simulatePlaceOrMerge(level, pos.relative(dir), material, oppSideProp);
+            return simulatePlaceOrMerge(level, pos.relative(dir), oppSideProp);
         }
         if (sneaking && hasOppSide) return Optional.of(new PlacementResult(pos, state.setValue(vert > 0.5 ? TrellisBlock.HAS_TOP : TrellisBlock.HAS_FLAT, true)));
-        if (!sneaking && hasSideProp) return simulatePlaceOrMerge(level, pos.relative(extensionDirection(dir, vert, lx, lz)), material, sideProp);
-        if (!sneaking && hasOppSide) return simulatePlaceOrMerge(level, pos.relative(extensionDirection(dir, vert, lx, lz)), material, oppSideProp);
-        if (!sneaking && hasMiddleProp) return simulatePlaceOrMerge(level, pos.relative(extensionDirection(dir, vert, lx, lz)), material, middleProp);
+        if (!sneaking && hasSideProp) return simulatePlaceOrMerge(level, pos.relative(extensionDirection(dir, vert, lx, lz)), sideProp);
+        if (!sneaking && hasOppSide) return simulatePlaceOrMerge(level, pos.relative(extensionDirection(dir, vert, lx, lz)), oppSideProp);
+        if (!sneaking && hasMiddleProp) return simulatePlaceOrMerge(level, pos.relative(extensionDirection(dir, vert, lx, lz)), middleProp);
         if (!sneaking) {
             if (hasMiddle(state)) return Optional.empty();
             if (state.getValue(sideProp)) return Optional.empty();
+            if (state.getValue(TrellisBlock.MATERIAL) != material) return Optional.empty();
             return Optional.of(new PlacementResult(pos, state.setValue(sideProp, true)));
         }
         return Optional.empty();
@@ -131,10 +133,10 @@ public class TrellisBlockItem extends BlockItem {
             case WEST -> TrellisBlock.SIDE_WEST;
         };
         if (component == null) return Optional.empty();
-        return simulatePlaceOrMerge(level, targetPos, material, component);
+        return simulatePlaceOrMerge(level, targetPos, component);
     }
 
-    private Optional<PlacementResult> simulatePlaceOrMerge(Level level, BlockPos targetPos, TrellisMaterial mat, BooleanProperty component) {
+    private Optional<PlacementResult> simulatePlaceOrMerge(Level level, BlockPos targetPos, BooleanProperty component) {
         BlockState targetState = level.getBlockState(targetPos);
         if (targetState.getBlock() instanceof TrellisBlock) {
             if (targetState.getValue(TrellisBlock.MATERIAL) != material) return Optional.empty();
@@ -145,7 +147,7 @@ public class TrellisBlockItem extends BlockItem {
         }
         if (!targetState.isAir() && !targetState.canBeReplaced()) return Optional.empty();
         BlockState newState = getBlock().defaultBlockState()
-                .setValue(TrellisBlock.MATERIAL, mat)
+                .setValue(TrellisBlock.MATERIAL, material)
                 .setValue(component, true);
         return Optional.of(new PlacementResult(targetPos, newState));
     }
@@ -280,7 +282,14 @@ public class TrellisBlockItem extends BlockItem {
         return placeOrMerge(ctx, level, targetPos, material, component);
     }
 
+    private static boolean mayModify(UseOnContext ctx, BlockPos targetPos) {
+        Player player = ctx.getPlayer();
+        if (player == null) return true;
+        return player.mayUseItemAt(targetPos, ctx.getClickedFace(), ctx.getItemInHand());
+    }
+
     private InteractionResult placeOrMerge(UseOnContext ctx, Level level, BlockPos targetPos, TrellisMaterial mat, BooleanProperty component) {
+        if (!mayModify(ctx, targetPos)) return InteractionResult.FAIL;
         BlockState targetState = level.getBlockState(targetPos);
 
         if (targetState.getBlock() instanceof TrellisBlock) {
@@ -310,6 +319,7 @@ public class TrellisBlockItem extends BlockItem {
     }
 
     private InteractionResult mergeIntoBlock(UseOnContext ctx, BlockState state, BlockPos pos, Level level, BooleanProperty component) {
+        if (!mayModify(ctx, pos)) return InteractionResult.FAIL;
         if (state.getValue(TrellisBlock.MATERIAL) != material) return InteractionResult.FAIL;
         if (state.getValue(component)) return InteractionResult.FAIL;
         if (!level.isClientSide()) {

@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.common.block.entity.BasinBlockEntity;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -13,10 +14,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -37,7 +35,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class BasinBlock extends BaseEntityBlock {
@@ -96,10 +93,18 @@ public class BasinBlock extends BaseEntityBlock {
         return new BasinBlockEntity(pos, state);
     }
 
-    private static boolean isWaterBottle(ItemStack stack) {
-        if (!stack.is(Items.POTION)) return false;
-        PotionContents contents = stack.get(DataComponents.POTION_CONTENTS);
-        return contents != null && contents.potion().isPresent() && contents.potion().get().is(Potions.WATER);
+
+    @Override
+    protected boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof BasinBlockEntity basin) {
+            return HHFluidHandling.comparatorOutput(basin.tank);
+        }
+        return 0;
     }
 
     @Override
@@ -108,47 +113,7 @@ public class BasinBlock extends BaseEntityBlock {
         if (!(level.getBlockEntity(pos) instanceof BasinBlockEntity basin))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        if (FluidUtil.interactWithFluidHandler(player, hand, level, pos, hit.getDirection()))
-            return ItemInteractionResult.sidedSuccess(false);
-
-        int amount = basin.tank.getFluidAmount();
-        ItemStack waterBottle = PotionContents.createItemStack(Items.POTION, Potions.WATER);
-
-        if (isWaterBottle(heldStack)) {
-            if (amount < BasinBlockEntity.CAPACITY) {
-                basin.tank.fill(new FluidStack(Fluids.WATER, BasinBlockEntity.BOTTLE_AMOUNT), IFluidHandler.FluidAction.EXECUTE);
-                if (!player.getAbilities().instabuild)
-                    player.setItemInHand(hand, ItemUtils.createFilledResult(heldStack, player, new ItemStack(Items.GLASS_BOTTLE)));
-                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1f, 1f);
-                return ItemInteractionResult.sidedSuccess(false);
-            }
-        } else if (heldStack.is(Items.WATER_BUCKET)) {
-            if (amount < BasinBlockEntity.CAPACITY) {
-                basin.tank.fill(new FluidStack(Fluids.WATER, BasinBlockEntity.CAPACITY - amount), IFluidHandler.FluidAction.EXECUTE);
-                if (!player.getAbilities().instabuild)
-                    player.setItemInHand(hand, ItemUtils.createFilledResult(heldStack, player, new ItemStack(Items.BUCKET)));
-                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1f, 1f);
-                return ItemInteractionResult.sidedSuccess(false);
-            }
-        } else if (heldStack.is(Items.GLASS_BOTTLE)) {
-            if (amount >= BasinBlockEntity.BOTTLE_AMOUNT) {
-                basin.tank.drain(BasinBlockEntity.BOTTLE_AMOUNT, IFluidHandler.FluidAction.EXECUTE);
-                if (!player.getAbilities().instabuild)
-                    player.setItemInHand(hand, ItemUtils.createFilledResult(heldStack, player, waterBottle));
-                level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1f, 1f);
-                return ItemInteractionResult.sidedSuccess(false);
-            }
-        } else if (heldStack.is(Items.BUCKET)) {
-            if (basin.isFull()) {
-                basin.tank.drain(BasinBlockEntity.CAPACITY, IFluidHandler.FluidAction.EXECUTE);
-                if (!player.getAbilities().instabuild)
-                    player.setItemInHand(hand, ItemUtils.createFilledResult(heldStack, player, new ItemStack(Items.WATER_BUCKET)));
-                level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1f, 1f);
-                return ItemInteractionResult.sidedSuccess(false);
-            }
-        }
-
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return HHFluidHandling.useOnTank(level, pos, player, hand, basin.tank, null);
     }
 
     @Override

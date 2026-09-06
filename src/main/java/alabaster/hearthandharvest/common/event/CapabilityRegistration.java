@@ -1,12 +1,11 @@
 package alabaster.hearthandharvest.common.event;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
-import alabaster.hearthandharvest.common.block.MultiblockPart;
 import alabaster.hearthandharvest.common.block.entity.StompingBasinBlockEntity;
-import alabaster.hearthandharvest.common.fluid.HHFluidType;
 import alabaster.hearthandharvest.common.item.JugBlockItem;
+import alabaster.hearthandharvest.common.registry.HHDataMaps;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
-import alabaster.hearthandharvest.common.registry.HHModFluids;
+import alabaster.hearthandharvest.common.registry.HHModDataComponents;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +18,12 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
+import org.jetbrains.annotations.Nullable;
+import vectorwing.farmersdelight.common.registry.ModItems;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EventBusSubscriber(modid = HearthAndHarvest.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class CapabilityRegistration {
@@ -32,17 +36,14 @@ public class CapabilityRegistration {
                 Capabilities.ItemHandler.BLOCK,
                 HHModBlockEntities.STOMPING_BASIN.get(),
                 (be, side) -> {
-                    if (be.getMultiblockRole() == MultiblockPart.MEMBER) {
-                        StompingBasinBlockEntity controller = be.getControllerBE();
-                        return controller != null ? controller.getItemHandler() : be.getItemHandler();
-                    }
-                    return be.getItemHandler();
+                    StompingBasinBlockEntity controller = be.getControllerBE();
+                    return controller != null ? controller.getItemHandler() : be.getItemHandler();
                 }
         );
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 HHModBlockEntities.STOMPING_BASIN.get(),
-                (be, side) -> be.getMultiblockRole() == MultiblockPart.MEMBER ? null : be.getFluidTank()
+                (be, side) -> be.getFluidHandlerForCapability()
         );
 
         // Trough block entity
@@ -82,108 +83,95 @@ public class CapabilityRegistration {
         // Jug item
         event.registerItem(
                 Capabilities.FluidHandler.ITEM,
-                (stack, ctx) -> new IFluidHandlerItem() {
-                    private final FluidTank tank = JugBlockItem.readTankStatic(stack);
-
-                    @Override public int getTanks() {
-                        return 1;
-                    }
-
-                    @Override public FluidStack getFluidInTank(int t) {
-                        return tank.getFluid();
-                    }
-
-                    @Override public int getTankCapacity(int t) {
-                        return JugBlockItem.JUG_CAPACITY;
-                    }
-
-                    @Override public boolean isFluidValid(int t, FluidStack f) {
-                        return true;
-                    }
-
-                    @Override public int fill(FluidStack r, IFluidHandler.FluidAction a) {
-                        return 0;
-                    }
-
-                    @Override public FluidStack drain(FluidStack r, IFluidHandler.FluidAction a) {
-                        return FluidStack.EMPTY;
-                    }
-
-                    @Override public FluidStack drain(int m, IFluidHandler.FluidAction a) {
-                        return FluidStack.EMPTY;
-                    }
-
-                    @Override public ItemStack getContainer() {
-                        return stack;
-                    }
-                },
+                (stack, ctx) -> new FluidHandlerItemStack(
+                        HHModDataComponents.JUG_FLUID, stack, JugBlockItem.JUG_CAPACITY),
                 HHModItems.JUG.get()
         );
 
-        for (var fluidHolder : HHModFluids.FLUIDS.getEntries()) {
-            Fluid fluid = fluidHolder.get();
-            if (!(fluid instanceof HHFluidType hhFluid)) continue;
-            if (!hhFluid.isSource(fluid.defaultFluidState())) continue;
-
-            Item bottleItem = hhFluid.getBottle();
-            if (bottleItem == Items.AIR || bottleItem == null) continue;
-
-            event.registerItem(
+        event.registerItem(
                 Capabilities.FluidHandler.ITEM,
-                (stack, ctx) -> new IFluidHandlerItem() {
-                    private static final int BOTTLE_VOLUME = 250;
-                    private final Fluid containedFluid = hhFluid;
-                    private ItemStack container = stack.copy();
+                CapabilityRegistration::bottleHandler,
+                bottleCandidates()
+        );
+    }
 
-                    @Override
-                    public int getTanks() {
-                        return 1;
-                    }
+    private static Item[] bottleCandidates() {
+        List<Item> items = new ArrayList<>();
+        for (var holder : HHModItems.ITEMS.getEntries()) {
+            items.add(holder.get());
+        }
+        items.add(ModItems.APPLE_CIDER.get());
+        items.add(ModItems.MELON_JUICE.get());
+        return items.toArray(new Item[0]);
+    }
 
-                    @Override
-                    public FluidStack getFluidInTank(int tank) {
-                        if (container.getItem() != bottleItem) return FluidStack.EMPTY;
-                        return new FluidStack(containedFluid, BOTTLE_VOLUME);
-                    }
+    @Nullable
+    private static IFluidHandlerItem bottleHandler(ItemStack stack, Void ctx) {
+        Fluid fluid = HHDataMaps.getFluidForBottle(stack.getItem());
+        if (fluid == null) return null;
+        return new BottleFluidHandler(stack, fluid);
+    }
 
-                    @Override
-                    public int getTankCapacity(int tank) {
-                        return BOTTLE_VOLUME;
-                    }
+    private static class BottleFluidHandler implements IFluidHandlerItem {
+        private final Item bottleItem;
+        private final Fluid containedFluid;
+        private ItemStack container;
 
-                    @Override
-                    public boolean isFluidValid(int tank, FluidStack f) {
-                        return f.getFluid().isSame(containedFluid);
-                    }
+        BottleFluidHandler(ItemStack stack, Fluid containedFluid) {
+            this.bottleItem = stack.getItem();
+            this.containedFluid = containedFluid;
+            this.container = stack;
+        }
 
-                    @Override
-                    public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
-                        return 0;
-                    }
+        private boolean isFullBottle() {
+            return container.getCount() == 1 && container.getItem() == bottleItem;
+        }
 
-                    @Override
-                    public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) {
-                        if (!resource.getFluid().isSame(containedFluid)) return FluidStack.EMPTY;
-                        return drain(resource.getAmount(), action);
-                    }
+        @Override
+        public int getTanks() {
+            return 1;
+        }
 
-                    @Override
-                    public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) {
-                        if (container.getItem() != bottleItem) return FluidStack.EMPTY;
-                        int amount = Math.min(maxDrain, BOTTLE_VOLUME);
-                        if (action.execute()) {
-                            container = new ItemStack(Items.GLASS_BOTTLE);
-                        }
-                        return new FluidStack(containedFluid, amount);
-                    }
+        @Override
+        public FluidStack getFluidInTank(int tank) {
+            if (!isFullBottle()) return FluidStack.EMPTY;
+            return new FluidStack(containedFluid, HHDataMaps.BOTTLE_VOLUME);
+        }
 
-                    @Override
-                    public ItemStack getContainer() {
-                        return container;
-                    }
-                },
-                bottleItem
-            );
+        @Override
+        public int getTankCapacity(int tank) {
+            return HHDataMaps.BOTTLE_VOLUME;
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, FluidStack f) {
+            return f.getFluid().isSame(containedFluid);
+        }
+
+        @Override
+        public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
+            return 0;
+        }
+
+        @Override
+        public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) {
+            if (!resource.getFluid().isSame(containedFluid)) return FluidStack.EMPTY;
+            return drain(resource.getAmount(), action);
+        }
+
+        @Override
+        public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) {
+            if (!isFullBottle()) return FluidStack.EMPTY;
+            if (maxDrain < HHDataMaps.BOTTLE_VOLUME) return FluidStack.EMPTY;
+            if (action.execute()) {
+                container = new ItemStack(Items.GLASS_BOTTLE);
+            }
+            return new FluidStack(containedFluid, HHDataMaps.BOTTLE_VOLUME);
+        }
+
+        @Override
+        public ItemStack getContainer() {
+            return container;
         }
     }
 }

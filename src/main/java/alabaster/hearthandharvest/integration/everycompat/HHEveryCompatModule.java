@@ -12,9 +12,9 @@ import net.mehvahdjukaar.every_compat.modules.farmersdelight.FarmersDelightModul
 import net.mehvahdjukaar.moonlight.api.resources.pack.ResourceGenTask;
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodTypes;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -24,9 +24,15 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.tags.BlockTags;
 import vectorwing.farmersdelight.common.registry.ModBlockEntityTypes;
+import vectorwing.farmersdelight.common.tag.ModTags;
 
 import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+import static net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys.SLAB;
+import static net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys.TRAPDOOR;
 
 public class HHEveryCompatModule extends EveryCompatModule {
 
@@ -38,7 +44,7 @@ public class HHEveryCompatModule extends EveryCompatModule {
     public HHEveryCompatModule(String modId) {
         super(modId, "hnh");
 
-        ResourceKey<CreativeModeTab> tab = HHModCreativeTabs.BLOCKS_TAB_KEY;
+        Supplier<CreativeModeTab> tab = getTab(HHModCreativeTabs.BLOCKS_TAB_KEY);
 
         halfCabinets = SimpleEntrySet.builder(
                         WoodType.class,
@@ -47,21 +53,29 @@ public class HHEveryCompatModule extends EveryCompatModule {
                         () -> VanillaWoodTypes.OAK,
                         w -> new HalfCabinetBlock(BlockBehaviour.Properties.ofFullCopy(w.planks))
                 )
+                .requiresChildren(TRAPDOOR, SLAB)
                 .addTile(ModBlockEntityTypes.CABINET)
-                .setTabKey(tab)
-                .addTexture(ResourceLocation.fromNamespaceAndPath(HH, "block/oak_half_cabinet_side"))
-                .addTexture(ResourceLocation.fromNamespaceAndPath(HH, "block/oak_half_cabinet_top"))
+                .setTab(tab)
+                .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
+                .addTag(ModTags.Blocks.CABINETS, Registries.BLOCK, Registries.ITEM)
+                .addTag(ModTags.Blocks.CABINETS_WOODEN, Registries.BLOCK, Registries.ITEM)
+                .addTexture(
+                        ResourceLocation.fromNamespaceAndPath(HH, "block/oak_half_cabinet_side"),
+                        FarmersDelightModule.CUSTOM_PALETTE)
+                .addTexture(
+                        ResourceLocation.fromNamespaceAndPath(HH, "block/oak_half_cabinet_top"),
+                        FarmersDelightModule.CUSTOM_PALETTE)
                 .addTextureM(
                         ResourceLocation.fromNamespaceAndPath(HH, "block/oak_cabinet_front"),
                         EveryCompat.res("block/fd/oak_cabinet_front_m"),
-                        FarmersDelightModule.customPalette)
+                        FarmersDelightModule.CUSTOM_PALETTE)
                 .addTextureM(
                         ResourceLocation.fromNamespaceAndPath(HH, "block/oak_cabinet_front_open"),
                         EveryCompat.res("block/fd/oak_cabinet_front_m"),
-                        FarmersDelightModule.customPalette)
+                        FarmersDelightModule.CUSTOM_PALETTE)
                 .addTexture(
                         ResourceLocation.fromNamespaceAndPath(HH, "block/oak_cabinet_side"),
-                        FarmersDelightModule.customPalette)
+                        FarmersDelightModule.CUSTOM_PALETTE)
                 .build();
         addEntry(halfCabinets);
 
@@ -73,13 +87,18 @@ public class HHEveryCompatModule extends EveryCompatModule {
                         w -> new BottleRackBlock(BlockBehaviour.Properties.ofFullCopy(w.planks))
                 )
                 .addTile(HHModBlockEntities.BOTTLE_RACK)
-                .setTabKey(tab)
+                .setTab(tab)
                 .defaultRecipe()
-                .addTexture(ResourceLocation.fromNamespaceAndPath(HH, "block/oak_half_cabinet_side"))
-                .addTexture(ResourceLocation.fromNamespaceAndPath(HH, "block/oak_half_cabinet_top"))
+                .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
+                .addTexture(
+                        ResourceLocation.fromNamespaceAndPath(HH, "block/oak_half_cabinet_side"),
+                        FarmersDelightModule.CUSTOM_PALETTE)
+                .addTexture(
+                        ResourceLocation.fromNamespaceAndPath(HH, "block/oak_half_cabinet_top"),
+                        FarmersDelightModule.CUSTOM_PALETTE)
                 .addTexture(
                         ResourceLocation.fromNamespaceAndPath(HH, "block/oak_cabinet_side"),
-                        FarmersDelightModule.customPalette)
+                        FarmersDelightModule.CUSTOM_PALETTE)
                 .build();
         addEntry(bottleRacks);
     }

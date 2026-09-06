@@ -52,6 +52,8 @@ import vectorwing.farmersdelight.common.utility.ItemUtils;
 import vectorwing.farmersdelight.common.utility.TextUtils;
 
 import javax.annotation.Nullable;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +67,7 @@ public class CaskBlockEntity extends SyncedBlockEntity implements MenuProvider, 
     private final ItemStackHandler inventory;
     private final IItemHandler inputHandler;
     private final IItemHandler outputHandler;
+    private final Map<Direction, IItemHandler> sideHandlers = new EnumMap<>(Direction.class);
 
     private int ageTime;
     private int ageTimeTotal;
@@ -80,6 +83,9 @@ public class CaskBlockEntity extends SyncedBlockEntity implements MenuProvider, 
         this.inventory = createHandler();
         this.inputHandler = new CaskItemHandler(inventory, Direction.UP);
         this.outputHandler = new CaskItemHandler(inventory, Direction.DOWN);
+        for (Direction d : Direction.Plane.HORIZONTAL) {
+            this.sideHandlers.put(d, new CaskItemHandler(inventory, d));
+        }
         this.cookingPotData = createIntArray();
         this.usedRecipeTracker = new Object2IntOpenHashMap<>();
         this.quickCheck = RecipeManager.createCheck(HHModRecipeTypes.AGING.get());
@@ -91,11 +97,9 @@ public class CaskBlockEntity extends SyncedBlockEntity implements MenuProvider, 
                 Capabilities.ItemHandler.BLOCK,
                 HHModBlockEntities.CASK.get(),
                 (be, context) -> {
-                    if (context == null) return be.inputHandler;
-                    if (context == Direction.DOWN) {
-                        return new CaskItemHandler(be.outputHandler, Direction.DOWN);
-                    }
-                    return new CaskItemHandler(be.inputHandler, context);
+                    if (context == null || context == Direction.UP) return be.inputHandler;
+                    if (context == Direction.DOWN) return be.outputHandler;
+                    return be.sideHandlers.get(context);
                 }
         );
     }
@@ -148,12 +152,6 @@ public class CaskBlockEntity extends SyncedBlockEntity implements MenuProvider, 
             }
         } else if (caskBlock.ageTime > 0) {
             caskBlock.ageTime = Mth.clamp(caskBlock.ageTime - 2, 0, caskBlock.ageTimeTotal);
-        }
-
-        ItemStack mealStack = caskBlock.getMeal();
-        if (!mealStack.isEmpty()) {
-            caskBlock.moveMealToOutput();
-            didInventoryChange = true;
         }
 
         if (didInventoryChange) {
@@ -219,7 +217,7 @@ public class CaskBlockEntity extends SyncedBlockEntity implements MenuProvider, 
         int effectiveCookTime = Math.max(1, (int)(baseCookTime * effectiveMultiplier));
 
         ++ageTime;
-        ageTimeTotal = baseCookTime;
+        ageTimeTotal = effectiveCookTime;
         if (ageTime < effectiveCookTime) {
             return false;
         }
@@ -311,18 +309,6 @@ public class CaskBlockEntity extends SyncedBlockEntity implements MenuProvider, 
             }
         }
         return drops;
-    }
-
-    private void moveMealToOutput() {
-        ItemStack mealStack = inventory.getStackInSlot(MEAL_DISPLAY_SLOT);
-        ItemStack outputStack = inventory.getStackInSlot(OUTPUT_SLOT);
-        int mealCount = Math.min(mealStack.getCount(), mealStack.getMaxStackSize() - outputStack.getCount());
-        if (outputStack.isEmpty()) {
-            inventory.setStackInSlot(OUTPUT_SLOT, mealStack.split(mealCount));
-        } else if (outputStack.getItem() == mealStack.getItem()) {
-            mealStack.shrink(mealCount);
-            outputStack.grow(mealCount);
-        }
     }
 
     @Override

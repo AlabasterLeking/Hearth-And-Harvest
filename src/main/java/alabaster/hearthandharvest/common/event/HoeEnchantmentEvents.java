@@ -1,4 +1,4 @@
-package alabaster.hearthandharvest.common.events;
+package alabaster.hearthandharvest.common.event;
 
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.event.FarmersHatEvents;
@@ -62,11 +62,15 @@ public class HoeEnchantmentEvents {
                 && TILL_MAP.containsKey(centerState.getBlock())
                 && level.getBlockState(center.above()).isAir()) {
             int r = tillingLevel;
+            boolean tilledAny = false;
             for (int dx = -r; dx <= r; dx++) {
                 for (int dz = -r; dz <= r; dz++) {
                     if (dx == 0 && dz == 0) continue;
-                    tryTill(level, center.offset(dx, 0, dz), player);
+                    if (tryTill(level, center.offset(dx, 0, dz), player, hoe, event.getFace())) tilledAny = true;
                 }
+            }
+            if (tilledAny) {
+                hoe.hurtAndBreak(1, player, LivingEntity.getSlotForHand(event.getHand()));
             }
         }
 
@@ -104,13 +108,15 @@ public class HoeEnchantmentEvents {
         }
     }
 
-    private static void tryTill(Level level, BlockPos pos, Player player) {
+    private static boolean tryTill(Level level, BlockPos pos, Player player, ItemStack hoe, Direction face) {
         BlockState state = level.getBlockState(pos);
         BlockState result = TILL_MAP.get(state.getBlock());
-        if (result == null || !level.getBlockState(pos.above()).isAir()) return;
+        if (result == null || !level.getBlockState(pos.above()).isAir()) return false;
+        if (!player.mayUseItemAt(pos, face == null ? Direction.UP : face, hoe)) return false;
         level.setBlock(pos, result, Block.UPDATE_ALL);
         level.playSound(null, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player));
+        return true;
     }
 
     private static void harvestCrop(Level level, BlockPos pos, BlockState state, Player player, ItemStack tool) {
