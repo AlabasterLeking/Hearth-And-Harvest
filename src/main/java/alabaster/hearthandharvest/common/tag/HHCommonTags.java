@@ -29,7 +29,7 @@ public class HHCommonTags {
 
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GOLDEN_CARROT = commonItemTag("storage_blocks/golden_carrot");
     public static final TagKey<Block> STORAGE_BLOCKS_GOLDEN_CARROT = commonBlockTag("storage_blocks/golden_carrot");
-    
+
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GLISTERING_MELON = commonItemTag("storage_blocks/glistering_melon");
     public static final TagKey<Block> STORAGE_BLOCKS_GLISTERING_MELON = commonBlockTag("storage_blocks/glistering_melon");
 
@@ -47,7 +47,7 @@ public class HHCommonTags {
 
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SUGAR = commonItemTag("storage_blocks/sugar");
     public static final TagKey<Block> STORAGE_BLOCKS_SUGAR = commonBlockTag("storage_blocks/sugar");
-    
+
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_COCOA_BEAN = commonItemTag("storage_blocks/cocoa_bean");
     public static final TagKey<Block> STORAGE_BLOCKS_COCOA_BEAN = commonBlockTag("storage_blocks/cocoa_bean");
 
@@ -104,6 +104,36 @@ public class HHCommonTags {
 
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SUGAR_CANE = commonItemTag("storage_blocks/sugar_cane");
     public static final TagKey<Block> STORAGE_BLOCKS_SUGAR_CANE = commonBlockTag("storage_blocks/sugar_cane");
+
+    public static final TagKey<Item> FIBERS = commonItemTag("fibers");
+    public static final TagKey<Item> MANURE = commonItemTag("manure");
+    public static final TagKey<Item> BUTTER = commonItemTag("butter");
+    public static final TagKey<Item> NUTS = commonItemTag("nuts");
+
+    public static final TagKey<Item> SEEDS_COTTON = commonItemTag("seeds/cotton");
+    public static final TagKey<Item> SEEDS_BLUEBERRY = commonItemTag("seeds/blueberry");
+    public static final TagKey<Item> SEEDS_RASPBERRY = commonItemTag("seeds/raspberry");
+
+    public static final TagKey<Item> BUCKETS_SAP = commonItemTag("buckets/sap");
+
+    public static final TagKey<Item> FOODS_NUT = commonItemTag("foods/nut");
+    public static final TagKey<Item> FOODS_CARAMEL = commonItemTag("foods/caramel");
+    public static final TagKey<Item> FOODS_COTTON_CANDY = commonItemTag("foods/cotton_candy");
+    public static final TagKey<Item> FOODS_CHOCOLATE = commonItemTag("foods/chocolate");
+    public static final TagKey<Item> FOODS_RAISIN = commonItemTag("foods/raisin");
+    public static final TagKey<Item> FOODS_POPCORN = commonItemTag("foods/popcorn");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SALT = commonItemTag("storage_blocks/salt");
+    public static final TagKey<Block> STORAGE_BLOCKS_SALT = commonBlockTag("storage_blocks/salt");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CORN_KERNEL = commonItemTag("storage_blocks/corn_kernel");
+    public static final TagKey<Block> STORAGE_BLOCKS_CORN_KERNEL = commonBlockTag("storage_blocks/corn_kernel");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CORN_HUSK = commonItemTag("storage_blocks/corn_husk");
+    public static final TagKey<Block> STORAGE_BLOCKS_CORN_HUSK = commonBlockTag("storage_blocks/corn_husk");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_ROPE = commonItemTag("storage_blocks/rope");
+    public static final TagKey<Block> STORAGE_BLOCKS_ROPE = commonBlockTag("storage_blocks/rope");
 
     public static final TagKey<Item> DRINKS_JUICE = commonItemTag("drinks/juice");
     public static final TagKey<Item> DRINKS_ALCOHOL = commonItemTag("drinks/alcohol");

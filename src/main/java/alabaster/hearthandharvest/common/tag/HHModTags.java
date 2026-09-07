@@ -30,12 +30,16 @@ public class HHModTags {
     public static final TagKey<Item> CROW_TEMPT_ITEMS = modItemTag("crow_tempt_items");
     public static final TagKey<Item> CROW_SHINY_ITEMS = modItemTag("crow_shiny_items");
     public static final TagKey<Item> BONEMEAL_SUBSTITUTES = modItemTag("bonemeal_substitutes");
+    public static final TagKey<Item> BOTTLE_RACK_ITEMS = modItemTag("bottle_racks");
+    public static final TagKey<Item> TRELLIS_ITEMS = modItemTag("trellises");
 
     public static final TagKey<Block> CROW_EDIBLE_CROPS = modBlockTag("crow_edible_crops");
     public static final TagKey<Block> REPELS_CROWS = modBlockTag("repels_crows");
     public static final TagKey<Block> SALT_BLOCKS = modBlockTag("salt_blocks");
     public static final TagKey<Block> RIGHT_CLICK_HARVESTABLE = modBlockTag("right_click_harvestable");
     public static final TagKey<Block> MINEABLE_WITH_PITCHFORK = modBlockTag("mineable_with_pitchfork");
+    public static final TagKey<Block> BOTTLE_RACKS = modBlockTag("bottle_racks");
+    public static final TagKey<Block> TRELLISES = modBlockTag("trellises");
 
     public static final TagKey<Biome> HAS_CROWS = modBiomeTag("has_crows");
 

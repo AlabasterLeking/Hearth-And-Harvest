@@ -1,5 +1,7 @@
 {
   "values": [
+    "hearthandharvest:spool",
+    "hearthandharvest:rope_coil",
     "hearthandharvest:tree_tapper",
     "hearthandharvest:cask",
     "hearthandharvest:stomping_basin",
@@ -18,6 +20,7 @@
     "hearthandharvest:bamboo_half_cabinet",
     "hearthandharvest:crimson_half_cabinet",
     "hearthandharvest:warped_half_cabinet",
+    "hearthandharvest:oak_bottle_rack",
     "hearthandharvest:birch_bottle_rack",
     "hearthandharvest:spruce_bottle_rack",
     "hearthandharvest:jungle_bottle_rack",
@@ -50,11 +53,11 @@
     "hearthandharvest:corn_stalk",
     "hearthandharvest:stick_brush",
     {
-      "id": "crabbersdelight:palm_half_cabinet",
+      "id": "hearthandharvest:palm_half_cabinet",
       "required": false
     },
     {
-      "id": "crabbersdelight:palm_bottle_rack",
+      "id": "hearthandharvest:palm_bottle_rack",
       "required": false
     }
   ]

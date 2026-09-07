@@ -12,7 +12,7 @@
     "hearthandharvest:crimson_half_cabinet",
     "hearthandharvest:warped_half_cabinet",
     {
-      "id": "crabbersdelight:palm_half_cabinet",
+      "id": "hearthandharvest:palm_half_cabinet",
       "required": false
     }
   ]

@@ -2,6 +2,14 @@
   "values": [
     "hearthandharvest:cotton_seeds",
     "hearthandharvest:sunflower_seeds",
-    "hearthandharvest:corn_kernels"
+    "hearthandharvest:corn_kernels",
+    {
+      "id": "hearthandharvest:blueberry_pips",
+      "required": false
+    },
+    {
+      "id": "hearthandharvest:raspberry_pips",
+      "required": false
+    }
   ]
 }

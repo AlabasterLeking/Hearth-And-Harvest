@@ -3,6 +3,7 @@ package alabaster.hearthandharvest.data;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.common.tag.HHCommonTags;
+import alabaster.hearthandharvest.common.tag.HHCompatibilityTags;
 import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -32,6 +33,116 @@ public class HHItemTags extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         this.registerModTags();
+        this.registerInteropTags();
+    }
+
+    private void registerInteropTags() {
+
+        tag(HHModTags.BOTTLE_RACK_ITEMS)
+                .add(HHModItems.OAK_BOTTLE_RACK.get())
+                .add(HHModItems.BIRCH_BOTTLE_RACK.get())
+                .add(HHModItems.SPRUCE_BOTTLE_RACK.get())
+                .add(HHModItems.JUNGLE_BOTTLE_RACK.get())
+                .add(HHModItems.ACACIA_BOTTLE_RACK.get())
+                .add(HHModItems.DARK_OAK_BOTTLE_RACK.get())
+                .add(HHModItems.MANGROVE_BOTTLE_RACK.get())
+                .add(HHModItems.CHERRY_BOTTLE_RACK.get())
+                .add(HHModItems.BAMBOO_BOTTLE_RACK.get())
+                .add(HHModItems.CRIMSON_BOTTLE_RACK.get())
+                .add(HHModItems.WARPED_BOTTLE_RACK.get())
+                .addOptional(ResourceLocation.fromNamespaceAndPath("hearthandharvest", "palm_bottle_rack"));
+
+        tag(HHModTags.TRELLIS_ITEMS)
+                .add(HHModItems.TRELLIS.get())
+                .add(HHModItems.BAMBOO_TRELLIS.get())
+                .add(HHModItems.STRIPPED_BAMBOO_TRELLIS.get());
+
+        tag(Tags.Items.STORAGE_BLOCKS).add(HHModItems.ROTTEN_TOMATO_CRATE.get());
+
+        tag(HHCommonTags.SEEDS_COTTON).add(HHModItems.COTTON_SEEDS.get());
+
+        tag(ModTags.Items.WILD_CROPS)
+                .add(HHModItems.WILD_COTTON.get())
+                .add(HHModItems.WILD_PEANUTS.get())
+                .add(HHModItems.WILD_GREEN_GRAPES.get())
+                .add(HHModItems.WILD_RED_GRAPES.get());
+
+        tag(HHCommonTags.FIBERS).add(HHModItems.CORN_HUSK.get());
+
+        tag(Tags.Items.SEEDS)
+                .addOptional(ResourceLocation.fromNamespaceAndPath("hearthandharvest", "blueberry_pips"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("hearthandharvest", "raspberry_pips"));
+        tag(HHCommonTags.SEEDS_BLUEBERRY).addOptional(ResourceLocation.fromNamespaceAndPath("hearthandharvest","blueberry_pips"));
+        tag(HHCommonTags.SEEDS_RASPBERRY).addOptional(ResourceLocation.fromNamespaceAndPath("hearthandharvest","raspberry_pips"));
+
+        tag(HHCommonTags.MANURE).add(HHModItems.MANURE.get());
+        tag(Tags.Items.BRICKS).add(HHModItems.MANURE_BRICK.get());
+        tag(HHCommonTags.BUTTER).add(HHModItems.BUTTER.get());
+
+        tag(HHCommonTags.FOODS_CARAMEL).add(HHModItems.CARAMEL.get());
+        tag(HHCommonTags.FOODS_COTTON_CANDY).add(HHModItems.COTTON_CANDY.get());
+        tag(HHCommonTags.FOODS_CHOCOLATE).add(HHModItems.CHOCOLATE_BAR.get());
+        tag(HHCommonTags.FOODS_RAISIN).add(HHModItems.RAISINS.get());
+        tag(HHCommonTags.FOODS_POPCORN).add(HHModItems.POPCORN.get());
+        tag(Tags.Items.FOODS_COOKIE).add(HHModItems.MAPLE_COOKIE.get());
+        tag(Tags.Items.FOODS_BREAD).add(HHModItems.CORN_BREAD.get());
+        tag(Tags.Items.FOODS_FOOD_POISONING).add(HHModItems.CHARRED_MARSHMALLOW_STICK.get());
+
+        tag(HHCommonTags.NUTS).add(HHModItems.PEANUT.get());
+        tag(HHCommonTags.FOODS_NUT).add(HHModItems.PEANUT.get());
+
+        tag(Tags.Items.FOODS_RAW_MEAT)
+                .add(HHModItems.RAW_SAUSAGE.get())
+                .add(HHModItems.RAW_SKEWERED_SAUSAGE.get());
+        tag(Tags.Items.FOODS_COOKED_MEAT)
+                .add(HHModItems.COOKED_SAUSAGE.get())
+                .add(HHModItems.SKEWERED_SAUSAGE.get())
+                .add(HHModItems.JERKY.get());
+        tag(ItemTags.MEAT)
+                .add(HHModItems.RAW_SAUSAGE.get())
+                .add(HHModItems.RAW_SKEWERED_SAUSAGE.get())
+                .add(HHModItems.COOKED_SAUSAGE.get())
+                .add(HHModItems.SKEWERED_SAUSAGE.get())
+                .add(HHModItems.JERKY.get());
+
+        tag(Tags.Items.BUCKETS).add(HHModItems.SAP_BUCKET.get());
+        tag(HHCommonTags.BUCKETS_SAP).add(HHModItems.SAP_BUCKET.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_SALT).add(HHModItems.SALT_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CORN_KERNEL).add(HHModItems.CORN_KERNEL_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CORN_HUSK).add(HHModItems.CORN_HUSK_BUNDLE.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_ROPE).add(HHModItems.ROPE_COIL.get());
+
+        tag(ModTags.Items.PIES)
+                .add(HHModItems.BLUEBERRY_PIE.get())
+                .add(HHModItems.RASPBERRY_PIE.get())
+                .add(HHModItems.GRAPE_PIE.get())
+                .add(HHModItems.PEANUT_BUTTER_PIE.get())
+                .add(HHModItems.CHICKEN_POT_PIE.get());
+
+        // Tempt items
+        tag(ItemTags.HORSE_TEMPT_ITEMS)
+                .add(HHModItems.SUGAR_CUBES.get())
+                .add(HHModItems.UNIVERSAL_FEED.get());
+        tag(ItemTags.LLAMA_TEMPT_ITEMS).add(HHModItems.UNIVERSAL_FEED.get());
+        tag(Tags.Items.ANIMAL_FOODS).add(HHModItems.UNIVERSAL_FEED.get());
+
+        // Supplementaries jar sweets
+        tag(HHCompatibilityTags.SUPPLEMENTARIES_JAR_COOKIES)
+                .add(HHModItems.CARAMEL_APPLE.get())
+                .add(HHModItems.CIDER_DONUT.get())
+                .add(HHModItems.CANDY_CORN.get());
+
+        // Create belts
+        tag(HHCompatibilityTags.CREATE_UPRIGHT_ON_BELT)
+                .addTags(HHModTags.BOTTLES, HHModTags.JAMS,
+                        HHCommonTags.DRINKS_JUICE, HHCommonTags.DRINKS_ALCOHOL)
+                .add(HHModItems.SYRUP_BOTTLE.get())
+                .add(HHModItems.CORN_STEW.get())
+                .add(HHModItems.MACARONI_AND_CHEESE.get())
+                .add(HHModItems.MASHED_POTATOES.get())
+                .add(HHModItems.BISCUITS_AND_GRAVY.get())
+                .add(HHModItems.GLAZED_CARROTS.get());
     }
 
     private void registerModTags() {
@@ -100,7 +211,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.BAMBOO_HALF_CABINET.get())
                 .add(HHModItems.CRIMSON_HALF_CABINET.get())
                 .add(HHModItems.WARPED_HALF_CABINET.get())
-                .addOptional(ResourceLocation.fromNamespaceAndPath("crabbersdelight", "palm_half_cabinet"));
+                .addOptional(ResourceLocation.fromNamespaceAndPath("hearthandharvest", "palm_half_cabinet"));
 
         // Fertilizer & farming inputs
         tag(HHModTags.BONEMEAL_SUBSTITUTES)
@@ -306,7 +417,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.RASPBERRY.get())
                 .add(HHModItems.RED_GRAPES.get())
                 .add(HHModItems.GREEN_GRAPES.get())
-                .add(HHModItems.PEANUT_BUTTER.get())
+                .add(HHModItems.PEANUT.get())
                 .add(HHModItems.COTTON.get())
                 .add(HHModItems.CORN.get());
         tag(Tags.Items.FOODS_BERRY)

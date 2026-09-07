@@ -33,6 +33,7 @@ public class HHBlockTags extends BlockTagsProvider {
         this.registerCommonTags();
         this.registerCompatTags();
         this.registerFDTags();
+        this.registerInteropTags();
         this.registerBlockMineables();
     }
 
@@ -293,6 +294,75 @@ public class HHBlockTags extends BlockTagsProvider {
         );
     }
 
+    protected void registerInteropTags() {
+
+        tag(HHModTags.BOTTLE_RACKS).add(
+                HHModBlocks.OAK_BOTTLE_RACK.get(),
+                HHModBlocks.BIRCH_BOTTLE_RACK.get(),
+                HHModBlocks.SPRUCE_BOTTLE_RACK.get(),
+                HHModBlocks.JUNGLE_BOTTLE_RACK.get(),
+                HHModBlocks.ACACIA_BOTTLE_RACK.get(),
+                HHModBlocks.DARK_OAK_BOTTLE_RACK.get(),
+                HHModBlocks.MANGROVE_BOTTLE_RACK.get(),
+                HHModBlocks.CHERRY_BOTTLE_RACK.get(),
+                HHModBlocks.BAMBOO_BOTTLE_RACK.get(),
+                HHModBlocks.CRIMSON_BOTTLE_RACK.get(),
+                HHModBlocks.WARPED_BOTTLE_RACK.get()
+        );
+        tag(HHModTags.TRELLISES).add(
+                HHModBlocks.TRELLIS.get(),
+                HHModBlocks.GRAPE_TRELLIS.get()
+        );
+
+        tag(ModTags.Blocks.CABINETS_WOODEN).add(
+                HHModBlocks.OAK_HALF_CABINET.get(),
+                HHModBlocks.BIRCH_HALF_CABINET.get(),
+                HHModBlocks.SPRUCE_HALF_CABINET.get(),
+                HHModBlocks.JUNGLE_HALF_CABINET.get(),
+                HHModBlocks.ACACIA_HALF_CABINET.get(),
+                HHModBlocks.DARK_OAK_HALF_CABINET.get(),
+                HHModBlocks.MANGROVE_HALF_CABINET.get(),
+                HHModBlocks.CHERRY_HALF_CABINET.get(),
+                HHModBlocks.BAMBOO_HALF_CABINET.get(),
+                HHModBlocks.CRIMSON_HALF_CABINET.get(),
+                HHModBlocks.WARPED_HALF_CABINET.get()
+        );
+
+        tag(BlockTags.MINEABLE_WITH_AXE)
+                .add(HHModBlocks.SPOOL.get())
+                .add(HHModBlocks.ROPE_COIL.get());
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(HHModBlocks.SALT_LAMP.get());
+
+        tag(Tags.Blocks.STORAGE_BLOCKS).add(HHModBlocks.SUGAR_CANE_BUNDLE.get());
+
+        tag(ModTags.Blocks.PIES).add(
+                HHModBlocks.BLUEBERRY_PIE.get(),
+                HHModBlocks.RASPBERRY_PIE.get(),
+                HHModBlocks.GRAPE_PIE.get(),
+                HHModBlocks.PEANUT_BUTTER_PIE.get(),
+                HHModBlocks.CHICKEN_POT_PIE.get()
+        );
+        tag(ModTags.Blocks.MINEABLE_WITH_KNIFE).add(
+                HHModBlocks.BLUEBERRY_PIE.get(),
+                HHModBlocks.RASPBERRY_PIE.get(),
+                HHModBlocks.GRAPE_PIE.get(),
+                HHModBlocks.PEANUT_BUTTER_PIE.get(),
+                HHModBlocks.CHICKEN_POT_PIE.get()
+        );
+        tag(HHCompatibilityTags.CREATE_BRITTLE).add(
+                HHModBlocks.BLUEBERRY_PIE.get(),
+                HHModBlocks.RASPBERRY_PIE.get(),
+                HHModBlocks.GRAPE_PIE.get(),
+                HHModBlocks.PEANUT_BUTTER_PIE.get(),
+                HHModBlocks.CHICKEN_POT_PIE.get()
+        );
+
+        tag(HHCommonTags.STORAGE_BLOCKS_SALT).add(HHModBlocks.SALT_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_CORN_KERNEL).add(HHModBlocks.CORN_KERNEL_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_CORN_HUSK).add(HHModBlocks.CORN_HUSK_BUNDLE.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_ROPE).add(HHModBlocks.ROPE_COIL.get());
+    }
+
     protected void registerCompatTags() {
         tag(CompatibilityTags.SERENE_SEASONS_SPRING_CROPS_BLOCK).add(
                 HHModBlocks.BLUEBERRY_BUSH.get(),
@@ -344,6 +414,7 @@ public class HHBlockTags extends BlockTagsProvider {
                         HHModBlocks.BAMBOO_HALF_CABINET.get(),
                         HHModBlocks.CRIMSON_HALF_CABINET.get(),
                         HHModBlocks.WARPED_HALF_CABINET.get(),
+                        HHModBlocks.OAK_BOTTLE_RACK.get(),
                         HHModBlocks.BIRCH_BOTTLE_RACK.get(),
                         HHModBlocks.SPRUCE_BOTTLE_RACK.get(),
                         HHModBlocks.JUNGLE_BOTTLE_RACK.get(),
@@ -376,8 +447,8 @@ public class HHBlockTags extends BlockTagsProvider {
                         HHModBlocks.CORN_STALK.get(),
                         HHModBlocks.STICK_BRUSH.get()
                 )
-                .addOptional(ResourceLocation.fromNamespaceAndPath("crabbersdelight", "palm_half_cabinet"))
-                .addOptional(ResourceLocation.fromNamespaceAndPath("crabbersdelight", "palm_bottle_rack"));
+                .addOptional(ResourceLocation.fromNamespaceAndPath("hearthandharvest", "palm_half_cabinet"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("hearthandharvest", "palm_bottle_rack"));
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
                 HHModBlocks.JUG.get(),
