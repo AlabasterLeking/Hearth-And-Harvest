@@ -42,6 +42,7 @@ public class HHModTags {
     public static final TagKey<Block> TRELLISES = modBlockTag("trellises");
 
     public static final TagKey<Biome> HAS_CROWS = modBiomeTag("has_crows");
+    public static final TagKey<Biome> HAS_LILLIPUT_LANE = modBiomeTag("has_structure/lilliput_lane");
 
     public static final TagKey<EntityType<?>> CAN_BE_BUTCHERED = modEntityTag("can_be_butchered");
     public static final TagKey<EntityType<?>> DOES_NOT_POOP = modEntityTag("does_not_poop");

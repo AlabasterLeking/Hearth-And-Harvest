@@ -1,0 +1,18 @@
+{
+  "structures": [
+    {
+      "structure": "hearthandharvest:lilliput_lane",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 851347,
+    "spacing": 40,
+    "separation": 15,
+    "exclusion_zone": {
+      "other_set": "minecraft:villages",
+      "chunk_count": 6
+    }
+  }
+}

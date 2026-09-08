@@ -19,6 +19,8 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -191,6 +193,45 @@ public class JarBlock extends BaseEntityBlock {
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext ctx) {
         return COMBINED_SHAPES[slotMask(state)];
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return switch (rotation) {
+            case CLOCKWISE_90 -> state
+                    .setValue(SLOT_1, state.getValue(SLOT_0))
+                    .setValue(SLOT_3, state.getValue(SLOT_1))
+                    .setValue(SLOT_2, state.getValue(SLOT_3))
+                    .setValue(SLOT_0, state.getValue(SLOT_2));
+            case CLOCKWISE_180 -> state
+                    .setValue(SLOT_3, state.getValue(SLOT_0))
+                    .setValue(SLOT_0, state.getValue(SLOT_3))
+                    .setValue(SLOT_2, state.getValue(SLOT_1))
+                    .setValue(SLOT_1, state.getValue(SLOT_2));
+            case COUNTERCLOCKWISE_90 -> state
+                    .setValue(SLOT_2, state.getValue(SLOT_0))
+                    .setValue(SLOT_3, state.getValue(SLOT_2))
+                    .setValue(SLOT_1, state.getValue(SLOT_3))
+                    .setValue(SLOT_0, state.getValue(SLOT_1));
+            default -> state;
+        };
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return switch (mirror) {
+            case LEFT_RIGHT -> state
+                    .setValue(SLOT_2, state.getValue(SLOT_0))
+                    .setValue(SLOT_0, state.getValue(SLOT_2))
+                    .setValue(SLOT_3, state.getValue(SLOT_1))
+                    .setValue(SLOT_1, state.getValue(SLOT_3));
+            case FRONT_BACK -> state
+                    .setValue(SLOT_1, state.getValue(SLOT_0))
+                    .setValue(SLOT_0, state.getValue(SLOT_1))
+                    .setValue(SLOT_3, state.getValue(SLOT_2))
+                    .setValue(SLOT_2, state.getValue(SLOT_3));
+            default -> state;
+        };
     }
 
     @Override

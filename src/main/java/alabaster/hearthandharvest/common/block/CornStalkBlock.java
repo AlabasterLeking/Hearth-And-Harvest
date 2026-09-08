@@ -24,6 +24,8 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
@@ -83,6 +85,41 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
                 .setValue(TRIM_SOUTH, false)
                 .setValue(TRIM_WEST, false)
                 .setValue(CROW_PROOF, false));
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return switch (rotation) {
+            case CLOCKWISE_90 -> state
+                    .setValue(TRIM_NORTH, state.getValue(TRIM_WEST))
+                    .setValue(TRIM_EAST, state.getValue(TRIM_NORTH))
+                    .setValue(TRIM_SOUTH, state.getValue(TRIM_EAST))
+                    .setValue(TRIM_WEST, state.getValue(TRIM_SOUTH));
+            case CLOCKWISE_180 -> state
+                    .setValue(TRIM_NORTH, state.getValue(TRIM_SOUTH))
+                    .setValue(TRIM_SOUTH, state.getValue(TRIM_NORTH))
+                    .setValue(TRIM_EAST, state.getValue(TRIM_WEST))
+                    .setValue(TRIM_WEST, state.getValue(TRIM_EAST));
+            case COUNTERCLOCKWISE_90 -> state
+                    .setValue(TRIM_NORTH, state.getValue(TRIM_EAST))
+                    .setValue(TRIM_WEST, state.getValue(TRIM_NORTH))
+                    .setValue(TRIM_SOUTH, state.getValue(TRIM_WEST))
+                    .setValue(TRIM_EAST, state.getValue(TRIM_SOUTH));
+            default -> state;
+        };
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return switch (mirror) {
+            case LEFT_RIGHT -> state
+                    .setValue(TRIM_NORTH, state.getValue(TRIM_SOUTH))
+                    .setValue(TRIM_SOUTH, state.getValue(TRIM_NORTH));
+            case FRONT_BACK -> state
+                    .setValue(TRIM_EAST, state.getValue(TRIM_WEST))
+                    .setValue(TRIM_WEST, state.getValue(TRIM_EAST));
+            default -> state;
+        };
     }
 
     @Override

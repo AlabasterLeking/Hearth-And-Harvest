@@ -26,5 +26,10 @@ public class HHBiomeTags extends BiomeTagsProvider {
         tag(HHModTags.HAS_CROWS)
                 .addTag(Tags.Biomes.IS_PLAINS)
                 .addTag(Tags.Biomes.IS_FOREST);
+
+        tag(HHModTags.HAS_LILLIPUT_LANE)
+                .addTag(Tags.Biomes.IS_FOREST)
+                .addTag(Tags.Biomes.IS_BIRCH_FOREST)
+                .addTag(Tags.Biomes.IS_TAIGA);
     }
 }

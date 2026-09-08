@@ -22,6 +22,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -96,6 +98,45 @@ public class TrellisBlock extends Block implements BonemealableBlock {
                 .setValue(GROWTH_BLOCKED, false)
                 .setValue(MATERIAL, TrellisMaterial.STICK)
                 .setValue(getPlantProperty(), TrellisPlant.NONE));
+    }
+
+    @Override
+    protected BlockState rotate(BlockState state, Rotation rotation) {
+        return switch (rotation) {
+            case CLOCKWISE_90 -> state
+                    .setValue(SIDE_NORTH, state.getValue(SIDE_WEST))
+                    .setValue(SIDE_EAST, state.getValue(SIDE_NORTH))
+                    .setValue(SIDE_SOUTH, state.getValue(SIDE_EAST))
+                    .setValue(SIDE_WEST, state.getValue(SIDE_SOUTH))
+                    .setValue(MIDDLE_EW, state.getValue(MIDDLE_NS))
+                    .setValue(MIDDLE_NS, state.getValue(MIDDLE_EW));
+            case CLOCKWISE_180 -> state
+                    .setValue(SIDE_NORTH, state.getValue(SIDE_SOUTH))
+                    .setValue(SIDE_SOUTH, state.getValue(SIDE_NORTH))
+                    .setValue(SIDE_EAST, state.getValue(SIDE_WEST))
+                    .setValue(SIDE_WEST, state.getValue(SIDE_EAST));
+            case COUNTERCLOCKWISE_90 -> state
+                    .setValue(SIDE_NORTH, state.getValue(SIDE_EAST))
+                    .setValue(SIDE_WEST, state.getValue(SIDE_NORTH))
+                    .setValue(SIDE_SOUTH, state.getValue(SIDE_WEST))
+                    .setValue(SIDE_EAST, state.getValue(SIDE_SOUTH))
+                    .setValue(MIDDLE_EW, state.getValue(MIDDLE_NS))
+                    .setValue(MIDDLE_NS, state.getValue(MIDDLE_EW));
+            default -> state;
+        };
+    }
+
+    @Override
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return switch (mirror) {
+            case LEFT_RIGHT -> state
+                    .setValue(SIDE_NORTH, state.getValue(SIDE_SOUTH))
+                    .setValue(SIDE_SOUTH, state.getValue(SIDE_NORTH));
+            case FRONT_BACK -> state
+                    .setValue(SIDE_EAST, state.getValue(SIDE_WEST))
+                    .setValue(SIDE_WEST, state.getValue(SIDE_EAST));
+            default -> state;
+        };
     }
 
     @Override
