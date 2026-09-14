@@ -1,7 +1,6 @@
 package alabaster.hearthandharvest.data.recipe;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
-import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
@@ -20,9 +19,6 @@ public class CuttingRecipes {
 
         // Knife
         cuttingFoods(consumer);
-
-        // Cleaver
-        choppingAnimalItems(consumer);
 
         // Axe
         halfCabinets(consumer);
@@ -48,19 +44,6 @@ public class CuttingRecipes {
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.SUNFLOWER), Ingredient.of(ModTags.Items.KNIVES), HHModItems.SUNFLOWER_SEEDS.get(), 2)
                 .addResultWithChance(HHModItems.SUNFLOWER_SEEDS.get(), 0.5F, 2)
                 .save(consumer);
-    }
-
-    private static void choppingAnimalItems(Consumer<FinishedRecipe> consumer) {
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.BEEF), Ingredient.of(HHModTags.CLEAVERS), HHModItems.RAW_SAUSAGE.get(), 3)
-                .save(consumer, new ResourceLocation(HearthAndHarvest.MODID,"sausage_from_beef"));
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.PORKCHOP), Ingredient.of(HHModTags.CLEAVERS), HHModItems.RAW_SAUSAGE.get(), 2)
-                .save(consumer, new ResourceLocation(HearthAndHarvest.MODID,"sausage_from_porkchop"));
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.MUTTON), Ingredient.of(HHModTags.CLEAVERS), HHModItems.RAW_SAUSAGE.get(), 3)
-                .save(consumer, new ResourceLocation(HearthAndHarvest.MODID, "sausage_from_mutton"));
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.CHICKEN), Ingredient.of(HHModTags.CLEAVERS), HHModItems.RAW_SAUSAGE.get(), 1)
-                .save(consumer, new ResourceLocation(HearthAndHarvest.MODID, "sausage_from_chicken"));
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.RABBIT), Ingredient.of(HHModTags.CLEAVERS), HHModItems.RAW_SAUSAGE.get(), 1)
-                .save(consumer, new ResourceLocation(HearthAndHarvest.MODID, "sausage_from_rabbit"));
     }
 
     private static void halfCabinets(Consumer<FinishedRecipe> consumer) {

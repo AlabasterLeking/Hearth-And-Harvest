@@ -12,7 +12,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import vectorwing.farmersdelight.common.item.DrinkableItem;
 import vectorwing.farmersdelight.common.item.FuelBlockItem;
-import vectorwing.farmersdelight.common.item.KnifeItem;
 import vectorwing.farmersdelight.common.item.MilkBottleItem;
 import vectorwing.farmersdelight.common.registry.ModMaterials;
 
@@ -59,15 +58,15 @@ public class HHModItems {
 
     // Tools
     public static final RegistryObject<Item> FLINT_CLEAVER = registerWithTab("flint_cleaver",
-            () -> new KnifeItem(ModMaterials.FLINT, 2.0F, -3.0F, basicItem()));
+            () -> new CleaverItem(ModMaterials.FLINT, 2.0F, -3.0F, basicItem()));
     public static final RegistryObject<Item> IRON_CLEAVER = registerWithTab("iron_cleaver",
-            () -> new KnifeItem(Tiers.IRON, 2.0F, -3.0F, basicItem()));
+            () -> new CleaverItem(Tiers.IRON, 2.0F, -3.0F, basicItem()));
     public static final RegistryObject<Item> DIAMOND_CLEAVER = registerWithTab("diamond_cleaver",
-            () -> new KnifeItem(Tiers.DIAMOND, 2.0F, -3.0F, basicItem()));
+            () -> new CleaverItem(Tiers.DIAMOND, 2.0F, -3.0F, basicItem()));
     public static final RegistryObject<Item> NETHERITE_CLEAVER = registerWithTab("netherite_cleaver",
-            () -> new KnifeItem(Tiers.NETHERITE, 2.0F, -3.0F, basicItem().fireResistant()));
+            () -> new CleaverItem(Tiers.NETHERITE, 2.0F, -3.0F, basicItem().fireResistant()));
     public static final RegistryObject<Item> GOLDEN_CLEAVER = registerWithTab("golden_cleaver",
-            () -> new KnifeItem(Tiers.GOLD, 2.0F, -3.0F, basicItem()));
+            () -> new CleaverItem(Tiers.GOLD, 2.0F, -3.0F, basicItem()));
 
     public static final RegistryObject<Item> WATERING_CAN = registerWithTab("watering_can",
             () -> new WateringCanItem(basicItem()));
@@ -176,7 +175,7 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.WILD_COTTON.get(), basicItem()));
     public static final RegistryObject<Item> WILD_PEANUTS = registerWithTab("wild_peanuts",
             () -> new BlockItem(HHModBlocks.WILD_PEANUTS.get(), basicItem()));
-    
+
     // Storage Blocks
 
     // Crates
@@ -204,7 +203,7 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.GLOW_BERRY_CRATE.get(), basicItem()));
     public static final RegistryObject<Item> SWEET_BERRY_CRATE = registerWithBlockTab("sweet_berry_crate",
             () -> new BlockItem(HHModBlocks.SWEET_BERRY_CRATE.get(), basicItem()));
-    
+
     // Bags
     public static final RegistryObject<Item> SALT_BAG = registerWithBlockTab("salt_bag",
             () -> new BlockItem(HHModBlocks.SALT_BAG.get(), basicItem()));
@@ -214,7 +213,7 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.COCOA_BEAN_BAG.get(), basicItem()));
     public static final RegistryObject<Item> GUNPOWDER_BAG = registerWithBlockTab("gunpowder_bag",
             () -> new BlockItem(HHModBlocks.GUNPOWDER_BAG.get(), basicItem()));
-    
+
     // Misc
     public static final RegistryObject<Item> COTTON_BALE = registerWithBlockTab("cotton_bale",
             () -> new BlockItem(HHModBlocks.COTTON_BALE.get(), basicItem()));

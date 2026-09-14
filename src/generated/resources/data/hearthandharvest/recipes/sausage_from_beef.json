@@ -1,17 +1,16 @@
 {
-  "type": "farmersdelight:cutting",
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
+    {
+      "tag": "hearthandharvest:cleavers"
+    },
     {
       "item": "minecraft:beef"
     }
   ],
-  "result": [
-    {
-      "count": 3,
-      "item": "hearthandharvest:raw_sausage"
-    }
-  ],
-  "tool": {
-    "tag": "hearthandharvest:cleavers"
+  "result": {
+    "count": 3,
+    "item": "hearthandharvest:raw_sausage"
   }
 }
