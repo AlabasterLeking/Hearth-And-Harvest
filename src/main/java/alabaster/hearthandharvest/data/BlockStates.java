@@ -106,13 +106,14 @@ public class BlockStates extends BlockStateProvider {
         this.axisBlock((RotatedPillarBlock) HHModBlocks.STICK_BRUSH.get());
         this.axisBlock((RotatedPillarBlock) HHModBlocks.SUGAR_CANE_BUNDLE.get());
 
-        this.bagBlock(HHModBlocks.SALT_BAG.get(), "salt");
-        this.bagBlock(HHModBlocks.SUGAR_BAG.get(), "sugar");
-        this.bagBlock(HHModBlocks.COCOA_BEAN_BAG.get(), "cocoa_bean");
-        this.bagBlock(HHModBlocks.GUNPOWDER_BAG.get(), "gunpowder");
-        this.bagBlock(HHModBlocks.CORN_KERNEL_BAG.get(), "corn_kernel");
-        this.bagBlock(HHModBlocks.FLOUR_BAG.get(), "flour");
-        this.bagBlock(HHModBlocks.MANURE_BAG.get(), "manure");
+        this.bagBlockSimple(HHModBlocks.SALT_BAG.get());
+        this.bagBlockSimple(HHModBlocks.SUGAR_BAG.get());
+        this.bagBlockSimple(HHModBlocks.COCOA_BEAN_BAG.get());
+        this.bagBlockSimple(HHModBlocks.GUNPOWDER_BAG.get());
+        this.bagBlockSimple(HHModBlocks.CORN_KERNEL_BAG.get());
+        this.bagBlockSimple(HHModBlocks.FLOUR_BAG.get());
+
+        this.bagBlockCustom(HHModBlocks.MANURE_BAG.get());
 
         this.simpleBlock(HHModBlocks.CHARCOAL_BLOCK.get());
 
@@ -371,16 +372,28 @@ public class BlockStates extends BlockStateProvider {
                         resourceBlock(cropName + "_crate_top")));
     }
 
-    public void bagBlock(Block block, String cropName) {
-        this.simpleBlock(block,
-                models().cube(blockName(block),
-                                resourceBlock("bag_bottom"),
-                                resourceBlock(cropName + "_bag_top"),
-                                resourceBlock("bag_side_tied"),
-                                resourceBlock("bag_side_tied"),
-                                resourceBlock("bag_side"),
-                                resourceBlock("bag_side"))
-                        .texture("particle", resourceBlock(cropName + "_bag_top")));
+    public void bagBlockSimple(Block block) {
+        bagBlock(block, true, true, true);
+    }
+
+    public void bagBlockCustom(Block block) {
+        bagBlock(block, false, false, false);
+    }
+
+    public void bagBlock(Block block, boolean defaultSide, boolean defaultSideTied, boolean defaultBottom) {
+        String bagName = blockName(block);
+        ResourceLocation top = resourceBlock(bagName + "_top");
+        ResourceLocation bottom = resourceBlock(defaultBottom ? "bag_bottom" : bagName + "_bottom");
+        ResourceLocation sideTied = resourceBlock(defaultSideTied ? "bag_side_tied" : bagName + "_side_tied");
+        ResourceLocation side = resourceBlock(defaultSide ? "bag_side" : bagName + "_side");
+        this.simpleBlock(block, models().withExistingParent(bagName, mcLoc("block/cube"))
+                .texture("particle", top)
+                .texture("down", bottom)
+                .texture("up", top)
+                .texture("north", sideTied)
+                .texture("south", sideTied)
+                .texture("east", side)
+                .texture("west", side));
     }
 
     public void pieBlock(Block block) {
