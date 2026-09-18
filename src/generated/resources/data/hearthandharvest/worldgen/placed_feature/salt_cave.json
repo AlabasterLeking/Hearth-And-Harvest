@@ -2,10 +2,6 @@
   "feature": "hearthandharvest:salt_cave",
   "placement": [
     {
-      "type": "minecraft:rarity_filter",
-      "chance": 12
-    },
-    {
       "type": "minecraft:in_square"
     },
     {
@@ -13,10 +9,10 @@
       "height": {
         "type": "minecraft:uniform",
         "max_inclusive": {
-          "above_bottom": 80
+          "absolute": 30
         },
         "min_inclusive": {
-          "above_bottom": 10
+          "absolute": -40
         }
       }
     },

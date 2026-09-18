@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#minecraft:is_overworld",
+  "biomes": "#hearthandharvest:has_salt_caves",
   "features": "hearthandharvest:salt_cave",
   "step": "underground_decoration"
 }

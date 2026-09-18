@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:jigsaw",
+  "type": "hearthandharvest:lilliput_lane",
   "biomes": "#hearthandharvest:has_structure/lilliput_lane",
   "step": "surface_structures",
   "terrain_adaptation": "beard_thin",

@@ -27,9 +27,19 @@ public class HHBiomeTags extends BiomeTagsProvider {
                 .addTag(Tags.Biomes.IS_PLAINS)
                 .addTag(Tags.Biomes.IS_FOREST);
 
+        tag(HHModTags.HAS_CORN_MAZE)
+                .addTag(Tags.Biomes.IS_PLAINS);
+
         tag(HHModTags.HAS_LILLIPUT_LANE)
                 .addTag(Tags.Biomes.IS_FOREST)
                 .addTag(Tags.Biomes.IS_BIRCH_FOREST)
                 .addTag(Tags.Biomes.IS_TAIGA);
+
+        tag(HHModTags.HAS_SALT_CAVES)
+                .addTag(Tags.Biomes.IS_DRY_OVERWORLD)
+                .addTag(Tags.Biomes.IS_DESERT)
+                .addTag(Tags.Biomes.IS_BADLANDS)
+                .addTag(Tags.Biomes.IS_SAVANNA)
+                .addTag(Tags.Biomes.IS_BEACH);
     }
 }

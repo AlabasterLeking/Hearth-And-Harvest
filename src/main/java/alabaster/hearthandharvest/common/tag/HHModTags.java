@@ -35,6 +35,7 @@ public class HHModTags {
 
     public static final TagKey<Block> CROW_EDIBLE_CROPS = modBlockTag("crow_edible_crops");
     public static final TagKey<Block> REPELS_CROWS = modBlockTag("repels_crows");
+    public static final TagKey<Block> NESTS = modBlockTag("nests");
     public static final TagKey<Block> SALT_BLOCKS = modBlockTag("salt_blocks");
     public static final TagKey<Block> RIGHT_CLICK_HARVESTABLE = modBlockTag("right_click_harvestable");
     public static final TagKey<Block> MINEABLE_WITH_PITCHFORK = modBlockTag("mineable_with_pitchfork");
@@ -43,10 +44,13 @@ public class HHModTags {
 
     public static final TagKey<Biome> HAS_CROWS = modBiomeTag("has_crows");
     public static final TagKey<Biome> HAS_LILLIPUT_LANE = modBiomeTag("has_structure/lilliput_lane");
+    public static final TagKey<Biome> HAS_CORN_MAZE = modBiomeTag("has_structure/corn_maze");
+    public static final TagKey<Biome> HAS_SALT_CAVES = modBiomeTag("has_salt_caves");
 
     public static final TagKey<EntityType<?>> CAN_BE_BUTCHERED = modEntityTag("can_be_butchered");
     public static final TagKey<EntityType<?>> DOES_NOT_POOP = modEntityTag("does_not_poop");
     public static final TagKey<EntityType<?>> CAN_POOP = modEntityTag("can_poop");
+    public static final TagKey<EntityType<?>> SCARY_FOR_CROW = modEntityTag("scary_for_crow");
 
     private static TagKey<Block> modBlockTag(String path) {
         return BlockTags.create(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, path));

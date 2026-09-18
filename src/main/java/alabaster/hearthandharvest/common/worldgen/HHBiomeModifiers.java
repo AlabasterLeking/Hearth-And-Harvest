@@ -1,12 +1,12 @@
 package alabaster.hearthandharvest.common.worldgen;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -44,9 +44,8 @@ public class HHBiomeModifiers {
                 GenerationStep.Decoration.VEGETAL_DECORATION
         ));
 
-        // Salt cave pockets
         context.register(ADD_SALT_CAVES, new BiomeModifiers.AddFeaturesBiomeModifier(
-                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                biomes.getOrThrow(HHModTags.HAS_SALT_CAVES),
                 HolderSet.direct(placedFeatures.getOrThrow(HHPlacedFeatures.SALT_CAVE)),
                 GenerationStep.Decoration.UNDERGROUND_DECORATION
         ));

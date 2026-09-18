@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.network;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.client.event.ClientEventHandler;
 import alabaster.hearthandharvest.common.registry.HHModAttachments;
@@ -40,6 +42,7 @@ public class HHModNetworking {
                             HHModSounds.FART.get(), SoundSource.PLAYERS,
                             0.7f, 0.8f + player.getRandom().nextFloat() * 0.4f);
                     PacketDistributor.sendToPlayer(player, new PlayerPoopCooldownPacket());
+                    HHSimpleTrigger.trigger(HHModTriggers.PLAYER_POOPED.get(), player);
                 })
         );
 

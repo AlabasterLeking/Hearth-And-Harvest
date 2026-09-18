@@ -1,14 +1,4 @@
 {
-  "type": "minecraft:simple_block",
-  "config": {
-    "to_place": {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "hearthandharvest:nest",
-        "Properties": {
-          "generated": "true"
-        }
-      }
-    }
-  }
+  "type": "hearthandharvest:nest",
+  "config": {}
 }

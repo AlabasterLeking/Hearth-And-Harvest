@@ -17,8 +17,20 @@ public class Config {
     public static ModConfigSpec.IntValue CROW_SPAWN_NUMBER_OF_CROPS;
     public static ModConfigSpec.IntValue CROW_SPAWN_RADIUS;
     public static ModConfigSpec.IntValue CROW_SCARE_RADIUS;
+    public static ModConfigSpec.BooleanValue CROW_SPAWN_NEAR_NESTS;
+    public static ModConfigSpec.BooleanValue CHICKENS_SEEK_NESTS;
+    public static ModConfigSpec.BooleanValue GENERATE_NESTS;
+    public static ModConfigSpec.BooleanValue CROW_STEAL_SHINY_ITEMS;
+    public static ModConfigSpec.BooleanValue CROW_FETCH_ITEMS;
+    public static ModConfigSpec.BooleanValue CROW_FETCH_THROWN_ITEMS;
+    public static ModConfigSpec.BooleanValue CROW_LEAVE_SHOULDER_TO_FETCH;
+    public static ModConfigSpec.BooleanValue CROW_EAT_DROPPED_FOOD;
+    public static ModConfigSpec.BooleanValue CROW_TEMPTING;
+    public static ModConfigSpec.BooleanValue CROW_FLOCK_ALARM;
+    public static ModConfigSpec.BooleanValue CROW_EAT_CROPS;
     public static ModConfigSpec.BooleanValue STACK_WATER_BOTTLES;
     public static ModConfigSpec.BooleanValue GENERATE_CORN_MAZES;
+    public static ModConfigSpec.BooleanValue GENERATE_LILLIPUT_LANE;
     public static ModConfigSpec.BooleanValue DISABLE_BOTTLE_MILKING;
     public static ModConfigSpec.BooleanValue TRELLIS_PLACEMENT_PREVIEW;
     public static ModConfigSpec.BooleanValue GRAPE_REQUIRE_FARMLAND;
@@ -27,6 +39,10 @@ public class Config {
     public static ModConfigSpec.IntValue SALT_ANIMAL_RADIUS;
     public static ModConfigSpec.IntValue SALT_LICK_INTERVAL;
     public static ModConfigSpec.DoubleValue SALT_PLAYER_LICK_CHANCE;
+    public static ModConfigSpec.BooleanValue SALT_CAVES_ENABLED;
+    public static ModConfigSpec.IntValue SALT_CAVE_RARITY;
+    public static ModConfigSpec.IntValue SALT_CAVE_MIN_Y;
+    public static ModConfigSpec.IntValue SALT_CAVE_MAX_Y;
     public static ModConfigSpec.IntValue TROUGH_ANIMAL_CAP;
     public static ModConfigSpec.BooleanValue PLAYER_POOP_ENABLED;
     public static ModConfigSpec.BooleanValue MANURE_FED_POOP_ENABLED;
@@ -35,6 +51,7 @@ public class Config {
     public static ModConfigSpec.BooleanValue DISABLE_PIG_LITTERS;
     public static ModConfigSpec.BooleanValue DISABLE_RABBIT_LITTERS;
     public static ModConfigSpec.BooleanValue DISABLE_CHICKEN_PLUCKING;
+    public static ModConfigSpec.BooleanValue CHICKEN_GLIDING;
 
     public Config() {
     }
@@ -64,6 +81,10 @@ public class Config {
                 .comment("Whether corn mazes should spawn in the world")
                 .define("generateCornMazes", true);
 
+        GENERATE_LILLIPUT_LANE = COMMON_BUILDER
+                .comment("Whether Lilliput Lane should spawn in the world")
+                .define("generateLilliputLane", true);
+
         TRELLIS_PLACEMENT_PREVIEW = COMMON_BUILDER
                 .comment("Whether a ghost preview of the trellis piece is shown before placing")
                 .define("trellisPlacementPreview", true);
@@ -79,7 +100,7 @@ public class Config {
 
         CROW_SPAWN_NUMBER_OF_CROPS = COMMON_BUILDER
                 .comment("Amount of crops that need to be in an area for a crow to spawn nearby. Used alongside the crowSpawnRadius config to control crow spawning.\n" +
-                        "Setting to 0 would prevent crow spawning")
+                        "Setting to 0 disables crop-based crow spawning. Crows can still spawn near naturally generated nests unless crow.spawnNearNests is false")
                 .defineInRange("crow.crowCropRequirement", 8, 0, 192);
 
         CROW_SPAWN_RADIUS = COMMON_BUILDER
@@ -91,6 +112,50 @@ public class Config {
                 .comment("Radius that players, villgers, and repelling blocks will be effective towards scaring wild crows.\n" +
                         "Setting to 0 would prevent crows from being scared")
                 .defineInRange("crow.crowScareRadius", 6, 0, 64);
+
+        CROW_SPAWN_NEAR_NESTS = COMMON_BUILDER
+                .comment("Whether crows can spawn near naturally generated nests without needing nearby crops")
+                .define("crow.spawnNearNests", true);
+
+        CHICKENS_SEEK_NESTS = COMMON_BUILDER
+                .comment("Whether chickens walk to a nest before laying an egg. Disable if another mod already adds nest-seeking behavior")
+                .define("nests.chickensSeekNests", true);
+
+        GENERATE_NESTS = COMMON_BUILDER
+                .comment("Whether nests generate naturally in the world")
+                .define("nests.generateNests", true);
+
+        CROW_STEAL_SHINY_ITEMS = COMMON_BUILDER
+                .comment("Whether wild crows snatch shiny items off the ground and carry them to nests")
+                .define("crow.stealShinyItems", true);
+
+        CROW_FETCH_ITEMS = COMMON_BUILDER
+                .comment("Whether tamed crows pick up nearby items and bring them to their owner")
+                .define("crow.fetchItems", true);
+
+        CROW_FETCH_THROWN_ITEMS = COMMON_BUILDER
+                .comment("Whether tamed crows also fetch items their owner threw away")
+                .define("crow.fetchThrownItems", true);
+
+        CROW_LEAVE_SHOULDER_TO_FETCH = COMMON_BUILDER
+                .comment("Whether tamed crows hop off their owner's shoulder to fetch nearby items")
+                .define("crow.leaveShoulderToFetch", true);
+
+        CROW_EAT_DROPPED_FOOD = COMMON_BUILDER
+                .comment("Whether wild crows eat crow food dropped on the ground, with a chance to be tamed if a player threw it")
+                .define("crow.eatDroppedFood", true);
+
+        CROW_TEMPTING = COMMON_BUILDER
+                .comment("Whether wild crows are drawn to players holding crow food and slowly learn to trust them")
+                .define("crow.tempting", true);
+
+        CROW_FLOCK_ALARM = COMMON_BUILDER
+                .comment("Whether hurting a wild crow makes nearby crows flee from the attacker")
+                .define("crow.flockAlarm", true);
+
+        CROW_EAT_CROPS = COMMON_BUILDER
+                .comment("Whether wild crows peck at and damage crops. Also requires the mobGriefing gamerule")
+                .define("crow.eatCrops", true);
 
         SALTED_HUNGER_BONUS = COMMON_BUILDER
                 .comment("Multiplier applied to a food's nutrition value to determine bonus hunger granted when eating salted food.\n" +
@@ -113,6 +178,22 @@ public class Config {
         SALT_PLAYER_LICK_CHANCE = COMMON_BUILDER
                 .comment("Chance (0.0–1.0) that a player's right-click lick degrades the salt block.")
                 .defineInRange("salt.saltPlayerLickChance", 0.05D, 0.0D, 1.0D);
+
+        SALT_CAVES_ENABLED = COMMON_BUILDER
+                .comment("Whether salt caves generate underground in biomes tagged #hearthandharvest:has_salt_caves")
+                .define("salt.generateSaltCaves", true);
+
+        SALT_CAVE_RARITY = COMMON_BUILDER
+                .comment("Salt caves attempt to generate on average once every this many chunks in eligible biomes")
+                .defineInRange("salt.saltCaveRarity", 24, 1, 1000);
+
+        SALT_CAVE_MIN_Y = COMMON_BUILDER
+                .comment("Lowest Y level a salt cave can be centered on. Caves always stay clear of bedrock")
+                .defineInRange("salt.saltCaveMinY", -40, -64, 320);
+
+        SALT_CAVE_MAX_Y = COMMON_BUILDER
+                .comment("Highest Y level a salt cave can be centered on")
+                .defineInRange("salt.saltCaveMaxY", 30, -64, 320);
 
         PLAYER_POOP_ENABLED = COMMON_BUILDER
                 .comment("Whether players are able to poop using the poop keybind")
@@ -141,6 +222,10 @@ public class Config {
         DISABLE_CHICKEN_PLUCKING = COMMON_BUILDER
                 .comment("Disables shift-right-click plucking feathers from chickens")
                 .define("breeding.disableChickenPlucking", false);
+
+        CHICKEN_GLIDING = COMMON_BUILDER
+                .comment("Whether players can pick up a chicken with an empty hand and glide while holding it overhead. Sneak to put it down")
+                .define("breeding.chickenGliding", true);
 
         COMMON_CONFIG = COMMON_BUILDER.build();
     }

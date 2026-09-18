@@ -36,6 +36,7 @@ public class CornMazeStructure extends Structure {
         RandomSource random = context.random();
         int w = 23 + random.nextInt(7) * 2;
         int h = 23 + random.nextInt(7) * 2;
+        long mazeSeed = random.nextLong();
 
         int baseX = context.chunkPos().getMinBlockX();
         int baseZ = context.chunkPos().getMinBlockZ();
@@ -51,7 +52,7 @@ public class CornMazeStructure extends Structure {
         );
 
         BlockPos origin = new BlockPos(baseX, surfaceY, baseZ);
-        return Optional.of(new GenerationStub(origin, builder -> buildMazePieces(builder, origin, w, h)));
+        return Optional.of(new GenerationStub(origin, builder -> buildMazePieces(builder, origin, w, h, mazeSeed)));
     }
 
     private boolean isValidPlacement(GenerationContext context, int baseX, int baseZ, int w, int h) {
@@ -82,7 +83,7 @@ public class CornMazeStructure extends Structure {
         return (maxY - minY) <= MAX_HEIGHT_VARIANCE;
     }
 
-    private void buildMazePieces(StructurePiecesBuilder builder, BlockPos origin, int w, int h) {
-        builder.addPiece(new CornMazeStructurePiece(origin, w, h));
+    private void buildMazePieces(StructurePiecesBuilder builder, BlockPos origin, int w, int h, long mazeSeed) {
+        builder.addPiece(new CornMazeStructurePiece(origin, w, h, mazeSeed));
     }
 }

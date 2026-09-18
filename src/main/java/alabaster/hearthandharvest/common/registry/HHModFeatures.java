@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.registry;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.worldgen.NestFeature;
 import alabaster.hearthandharvest.common.worldgen.SaltCaveFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -16,4 +17,7 @@ public class HHModFeatures {
 
     public static final Supplier<Feature<NoneFeatureConfiguration>> SALT_CAVE =
             FEATURES.register("salt_cave", () -> new SaltCaveFeature(NoneFeatureConfiguration.CODEC));
+
+    public static final Supplier<Feature<NoneFeatureConfiguration>> NEST =
+            FEATURES.register("nest", () -> new NestFeature(NoneFeatureConfiguration.CODEC));
 }

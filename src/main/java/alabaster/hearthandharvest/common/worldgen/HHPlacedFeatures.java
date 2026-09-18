@@ -23,15 +23,13 @@ public class HHPlacedFeatures {
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         var configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
-        // Salt cave
         context.register(SALT_CAVE, new PlacedFeature(
                 configuredFeatures.getOrThrow(HHConfiguredFeatures.SALT_CAVE),
                 List.of(
-                        RarityFilter.onAverageOnceEvery(12),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(
-                                VerticalAnchor.aboveBottom(10),
-                                VerticalAnchor.aboveBottom(80)),
+                                VerticalAnchor.absolute(-40),
+                                VerticalAnchor.absolute(30)),
                         BiomeFilter.biome()
                 )
         ));
