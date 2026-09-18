@@ -39,6 +39,11 @@ public class HHBlockTags extends BlockTagsProvider {
 
     protected void registerModTags() {
 
+        tag(HHModTags.NESTS)
+                .add(HHModBlocks.NEST.get())
+                .addOptional(ResourceLocation.fromNamespaceAndPath("incubation", "twig_nest"))
+                .addOptional(ResourceLocation.fromNamespaceAndPath("incubation", "hay_nest"));
+
         tag(HHModTags.CROW_EDIBLE_CROPS).add(
                 Blocks.WHEAT,
                 Blocks.PUMPKIN_STEM,

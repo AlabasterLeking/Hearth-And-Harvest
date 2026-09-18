@@ -31,6 +31,13 @@ public class CapabilityRegistration {
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
 
+        // Nest Block
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                HHModBlockEntities.NEST.get(),
+                (be, side) -> be.getInventory()
+        );
+
         // Stomping Basin
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,

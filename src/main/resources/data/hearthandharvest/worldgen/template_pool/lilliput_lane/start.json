@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "hearthandharvest:lilliput_lane",
-        "processors": "minecraft:empty",
+        "processors": "hearthandharvest:lilliput_lane",
         "projection": "rigid"
       }
     }

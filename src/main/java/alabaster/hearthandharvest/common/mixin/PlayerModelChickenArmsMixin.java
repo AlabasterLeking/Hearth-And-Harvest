@@ -18,10 +18,10 @@ public abstract class PlayerModelChickenArmsMixin {
         PlayerModel<?> model = (PlayerModel<?>) (Object) this;
         model.rightArm.xRot = (float) -Math.PI;
         model.rightArm.yRot = 0.0F;
-        model.rightArm.zRot = -0.2F;
+        model.rightArm.zRot = 0.0F;
         model.leftArm.xRot = (float) -Math.PI;
         model.leftArm.yRot = 0.0F;
-        model.leftArm.zRot = 0.2F;
+        model.leftArm.zRot = 0.0F;
         model.rightSleeve.copyFrom(model.rightArm);
         model.leftSleeve.copyFrom(model.leftArm);
     }

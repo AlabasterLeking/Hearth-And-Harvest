@@ -68,9 +68,11 @@ public class HearthAndHarvest {
         HHModRecipeTypes.RECIPE_TYPES.register(modEventBus);
         HHModStructurePieces.STRUCTURE_PIECES.register(modEventBus);
         HHModStructures.STRUCTURES.register(modEventBus);
+        HHModStructures.PROCESSORS.register(modEventBus);
         HHModFeatures.FEATURES.register(modEventBus);
         HHModSounds.SOUNDS.register(modEventBus);
         HHModAttachments.ATTACHMENT_TYPES.register(modEventBus);
+        HHModTriggers.TRIGGERS.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(new PigLitters());
         NeoForge.EVENT_BUS.register(new RabbitLitters());
@@ -135,7 +137,7 @@ public class HearthAndHarvest {
             mob.goalSelector.addGoal(1, new PungentEffectGoal(mob, 1.0D, 1.5D, 8.0D));
             mob.goalSelector.addGoal(1, new TemptingEffectGoal(mob, 1.0D, 1.25D, 8.0D));
         }
-        if (event.getEntity() instanceof Chicken chicken) {
+        if (event.getEntity() instanceof Chicken chicken && Config.CHICKENS_SEEK_NESTS.get()) {
             chicken.goalSelector.addGoal(2, new SeekNestGoal(chicken, 1.0D));
         }
     }

@@ -32,5 +32,10 @@ public class HHEntityTags extends EntityTypeTagsProvider
                 EntityType.CHICKEN,
                 HHModEntities.CROW.get()
         );
+
+        this.tag(HHModTags.SCARY_FOR_CROW).add(
+                EntityType.PLAYER,
+                EntityType.VILLAGER
+        );
     }
 }

@@ -12,7 +12,7 @@ import net.neoforged.neoforge.client.event.RenderLivingEvent;
 
 @EventBusSubscriber(modid = HearthAndHarvest.MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ChickenGlideClientEvents {
-    private static final float SINK_INTO_HEAD = 0.3F;
+    private static final float HEIGHT_OFFSET = -0.2F;
 
     @SubscribeEvent
     public static void onRenderPre(RenderLivingEvent.Pre<?, ?> event) {
@@ -30,7 +30,7 @@ public class ChickenGlideClientEvents {
             model.rightLeg.visible = false;
             model.leftLeg.visible = false;
         }
-        event.getPoseStack().translate(0.0F, -SINK_INTO_HEAD, 0.0F);
+        event.getPoseStack().translate(0.0F, HEIGHT_OFFSET, 0.0F);
     }
 
     @SubscribeEvent
@@ -41,6 +41,6 @@ public class ChickenGlideClientEvents {
             model.rightLeg.visible = true;
             model.leftLeg.visible = true;
         }
-        event.getPoseStack().translate(0.0F, SINK_INTO_HEAD, 0.0F);
+        event.getPoseStack().translate(0.0F, -HEIGHT_OFFSET, 0.0F);
     }
 }

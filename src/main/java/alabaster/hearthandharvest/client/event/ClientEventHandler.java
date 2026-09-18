@@ -84,6 +84,10 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(
+                HHModBlockEntities.NEST.get(),
+                NestRenderer::new
+        );
+        event.registerBlockEntityRenderer(
                 HHModBlockEntities.BOTTLE_RACK.get(),
                 BottleRackRenderer::new
         );

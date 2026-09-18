@@ -37,6 +37,12 @@ public class HHModAttachments {
                     AttachmentType.builder(() -> 0).serialize(Codec.INT).build()
             );
 
+    // Packed position of the nest a chicken is walking to. 0 = no claim. Not saved.
+    public static final Supplier<AttachmentType<Long>> CLAIMED_NEST =
+            ATTACHMENT_TYPES.register("claimed_nest", () ->
+                    AttachmentType.builder(() -> 0L).build()
+            );
+
     // Stores the actual ItemStack so enchantments are preserved on removal.
     // Empty stack = no horseshoe equipped.
     public static final Supplier<AttachmentType<ItemStack>> HORSESHOE_ITEM =

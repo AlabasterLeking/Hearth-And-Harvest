@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.registry;
 
+import alabaster.hearthandharvest.common.block.entity.NestBlockEntity;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.entity.*;
 import net.minecraft.core.registries.Registries;
@@ -21,6 +22,9 @@ import java.util.function.Supplier;
 public class HHModBlockEntities {
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, HearthAndHarvest.MODID);
+
+    public static final Supplier<BlockEntityType<NestBlockEntity>> NEST = BLOCK_ENTITY_TYPES.register("nest",
+            () -> BlockEntityType.Builder.of(NestBlockEntity::new, HHModBlocks.NEST.get()).build(null));
 
     public static final Supplier<BlockEntityType<JugBlockEntity>> JUG = BLOCK_ENTITY_TYPES.register("jug_tile",
             () -> BlockEntityType.Builder.of(JugBlockEntity::new, HHModBlocks.JUG.get()).build(null));
@@ -62,10 +66,10 @@ public class HHModBlockEntities {
             () -> BlockEntityType.Builder.of(TroughBlockEntity::new, HHModBlocks.TROUGH.get()).build(null));
 
     public static final Supplier<BlockEntityType<TreeTapperBlockEntity>> TREE_TAPPER = BLOCK_ENTITY_TYPES.register("tree_tapper_tile", () ->
-                    BlockEntityType.Builder.of(TreeTapperBlockEntity::new, HHModBlocks.TREE_TAPPER.get()).build(null));
+            BlockEntityType.Builder.of(TreeTapperBlockEntity::new, HHModBlocks.TREE_TAPPER.get()).build(null));
 
     public static final Supplier<BlockEntityType<BasinBlockEntity>> BASIN = BLOCK_ENTITY_TYPES.register("basin_tile", () ->
-                    BlockEntityType.Builder.of(BasinBlockEntity::new, HHModBlocks.BASIN.get()).build(null));
+            BlockEntityType.Builder.of(BasinBlockEntity::new, HHModBlocks.BASIN.get()).build(null));
 
     public static final Supplier<BlockEntityType<SprinklerBlockEntity>> SPRINKLER = BLOCK_ENTITY_TYPES.register("sprinkler_tile", () ->
             BlockEntityType.Builder.of(SprinklerBlockEntity::new, HHModBlocks.SPRINKLER.get()).build(null));
