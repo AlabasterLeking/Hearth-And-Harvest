@@ -11,7 +11,8 @@
     "HorseHurtMixin"
   ],
   "client": [
-    "HideBreakProgressMixin"
+    "HideBreakProgressMixin",
+    "PlayerModelChickenArmsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
