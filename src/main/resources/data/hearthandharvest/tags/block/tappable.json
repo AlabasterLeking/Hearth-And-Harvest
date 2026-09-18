@@ -6,6 +6,8 @@
     { "id": "biomesoplenty:maple_log", "required": false },
     { "id": "biomesoplenty:pine_log", "required": false },
     { "id": "autumnity:maple_log", "required": false },
-    { "id": "autumnity:sappy_maple_log", "required": false }
+    { "id": "autumnity:sappy_maple_log", "required": false },
+    { "id": "would:maple_log", "required": false },
+    { "id": "would:maple_log_sappy", "required": false }
   ]
 }
