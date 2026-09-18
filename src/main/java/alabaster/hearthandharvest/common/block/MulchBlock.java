@@ -1,13 +1,16 @@
 package alabaster.hearthandharvest.common.block;
 
+import java.util.function.BiConsumer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BambooSaplingBlock;
 import net.minecraft.world.level.block.BambooStalkBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 
 public class MulchBlock extends Block {
     public MulchBlock(Properties properties) {
@@ -16,6 +19,11 @@ public class MulchBlock extends Block {
 
     @Override
     public boolean isRandomlyTicking(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public boolean onTreeGrow(BlockState state, LevelReader level, BiConsumer<BlockPos, BlockState> placeFunction, RandomSource randomSource, BlockPos pos, TreeConfiguration config) {
         return true;
     }
 
