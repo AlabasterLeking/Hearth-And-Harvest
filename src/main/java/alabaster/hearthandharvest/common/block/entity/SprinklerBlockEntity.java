@@ -1,5 +1,8 @@
 package alabaster.hearthandharvest.common.block.entity;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
+import net.minecraft.world.entity.EntitySelector;
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import alabaster.hearthandharvest.common.tag.HHModTags;
@@ -105,6 +108,7 @@ public class SprinklerBlockEntity extends BlockEntity {
     }
 
     private void extinguishFires(ServerLevel level, BlockPos center) {
+        boolean extinguished = false;
         for (BlockPos scan : BlockPos.betweenClosed(
                 center.offset(-HYDRATE_RADIUS, -1, -HYDRATE_RADIUS),
                 center.offset(HYDRATE_RADIUS, 3, HYDRATE_RADIUS))) {
@@ -113,6 +117,11 @@ public class SprinklerBlockEntity extends BlockEntity {
             level.removeBlock(scan, false);
             level.playSound(null, scan, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
             tank.drain(WATER_PER_FIRE, IFluidHandler.FluidAction.EXECUTE);
+            extinguished = true;
+        }
+        if (extinguished) {
+            HHSimpleTrigger.trigger(HHModTriggers.SPRINKLER_EXTINGUISHED.get(),
+                    level.getNearestPlayer(center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, 32.0D, EntitySelector.NO_SPECTATORS));
         }
     }
 

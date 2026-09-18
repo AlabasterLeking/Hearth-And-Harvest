@@ -1,0 +1,112 @@
+{
+  "parent": "hearthandharvest:kitchen/sugaring_off",
+  "criteria": {
+    "blueberry_muffin": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:blueberry_muffin"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "candy_corn": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:candy_corn"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "caramel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:caramel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "caramel_apple": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:caramel_apple"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "chocolate_bar": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:chocolate_bar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cotton_candy": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:cotton_candy"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raspberry_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raspberry_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.sweet_tooth.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:cotton_candy"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.sweet_tooth"
+    }
+  },
+  "requirements": [
+    [
+      "chocolate_bar"
+    ],
+    [
+      "blueberry_muffin"
+    ],
+    [
+      "raspberry_jam"
+    ],
+    [
+      "caramel"
+    ],
+    [
+      "cotton_candy"
+    ],
+    [
+      "candy_corn"
+    ],
+    [
+      "caramel_apple"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

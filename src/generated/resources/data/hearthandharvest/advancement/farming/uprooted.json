@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:farming/shucks",
+  "criteria": {
+    "uprooted": {
+      "trigger": "hearthandharvest:hoe_area_work"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.uprooted.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:iron_hoe"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.uprooted"
+    }
+  },
+  "requirements": [
+    [
+      "uprooted"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

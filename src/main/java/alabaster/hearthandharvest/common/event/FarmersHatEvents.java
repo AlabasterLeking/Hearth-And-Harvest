@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModEnchantments;
@@ -76,7 +78,9 @@ public class FarmersHatEvents {
 
     public static void damageHat(Player player) {
         ItemStack hat = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (hat.is(HHModItems.FARMERS_HAT.get()))
+        if (hat.is(HHModItems.FARMERS_HAT.get())) {
             hat.hurtAndBreak(1, player, EquipmentSlot.HEAD);
+            if (hat.isEmpty()) HHSimpleTrigger.trigger(HHModTriggers.FARMERS_HAT_WORN_OUT.get(), player);
+        }
     }
 }

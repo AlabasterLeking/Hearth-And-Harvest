@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.registry.HHModDataComponents;
@@ -40,6 +42,8 @@ public class SaltedEffectEvents {
         float saturationGranted = food.nutrition() * food.saturation() * 2.0f;
         float newSaturation = Math.max(0f, player.getFoodData().getSaturationLevel() - saturationGranted * Config.SALTED_SATURATION_PENALTY.get().floatValue());
         player.getFoodData().setSaturation(newSaturation);
+
+        HHSimpleTrigger.trigger(HHModTriggers.ATE_SALTED_FOOD.get(), player);
     }
 
     @SubscribeEvent

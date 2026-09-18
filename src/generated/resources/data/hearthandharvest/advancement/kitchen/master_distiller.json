@@ -1,0 +1,73 @@
+{
+  "parent": "hearthandharvest:kitchen/aged_to_perfection",
+  "criteria": {
+    "hard_cider": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:hard_cider"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "mead": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:mead"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "moonshine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:moonshine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "root_beer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:root_beer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.master_distiller.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:mead"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.master_distiller"
+    }
+  },
+  "requirements": [
+    [
+      "mead"
+    ],
+    [
+      "hard_cider"
+    ],
+    [
+      "root_beer"
+    ],
+    [
+      "moonshine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

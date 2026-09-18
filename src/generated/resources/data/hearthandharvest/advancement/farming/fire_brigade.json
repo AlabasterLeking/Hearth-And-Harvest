@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:farming/let_it_rain",
+  "criteria": {
+    "fire_brigade": {
+      "trigger": "hearthandharvest:sprinkler_extinguished"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.fire_brigade.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:water_bucket"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.fire_brigade"
+    }
+  },
+  "requirements": [
+    [
+      "fire_brigade"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

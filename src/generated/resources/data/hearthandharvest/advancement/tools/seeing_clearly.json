@@ -1,0 +1,32 @@
+{
+  "parent": "hearthandharvest:kitchen/aged_to_perfection",
+  "criteria": {
+    "seeing_clearly": {
+      "conditions": {
+        "effects": {
+          "hearthandharvest:clarity": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.seeing_clearly.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:spyglass"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.seeing_clearly"
+    }
+  },
+  "requirements": [
+    [
+      "seeing_clearly"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

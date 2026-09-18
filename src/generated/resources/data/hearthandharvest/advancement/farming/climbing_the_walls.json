@@ -1,0 +1,38 @@
+{
+  "parent": "hearthandharvest:main/root",
+  "criteria": {
+    "climbing_the_walls": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:trellis",
+              "hearthandharvest:bamboo_trellis",
+              "hearthandharvest:stripped_bamboo_trellis"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.climbing_the_walls.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:trellis"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.climbing_the_walls"
+    }
+  },
+  "requirements": [
+    [
+      "climbing_the_walls"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

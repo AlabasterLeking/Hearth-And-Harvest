@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:tools/clever_girl",
+  "criteria": {
+    "pitch_perfect": {
+      "trigger": "hearthandharvest:pitchfork_kill"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.pitch_perfect.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:pitchfork"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.pitch_perfect"
+    }
+  },
+  "requirements": [
+    [
+      "pitch_perfect"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

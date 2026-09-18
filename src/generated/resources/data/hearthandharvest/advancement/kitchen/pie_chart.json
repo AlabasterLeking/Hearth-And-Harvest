@@ -1,0 +1,86 @@
+{
+  "parent": "hearthandharvest:kitchen/sugaring_off",
+  "criteria": {
+    "blueberry_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:blueberry_pie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "chicken_pot_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:chicken_pot_pie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "grape_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:grape_pie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "peanut_butter_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:peanut_butter_pie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raspberry_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raspberry_pie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.pie_chart.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:blueberry_pie"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.pie_chart"
+    }
+  },
+  "requirements": [
+    [
+      "blueberry_pie"
+    ],
+    [
+      "raspberry_pie"
+    ],
+    [
+      "grape_pie"
+    ],
+    [
+      "peanut_butter_pie"
+    ],
+    [
+      "chicken_pot_pie"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.block.entity.container;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.block.entity.CaskBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -55,6 +57,7 @@ public class CaskResultSlot extends SlotItemHandler
 
         if (!this.player.level().isClientSide) {
             tileEntity.awardUsedRecipes(this.player, tileEntity.getDroppableInventory());
+            if (!stack.isEmpty()) HHSimpleTrigger.trigger(HHModTriggers.CASK_AGED.get(), this.player);
         }
 
         this.removeCount = 0;

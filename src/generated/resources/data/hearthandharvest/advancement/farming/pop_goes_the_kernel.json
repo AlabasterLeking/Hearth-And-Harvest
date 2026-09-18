@@ -1,0 +1,34 @@
+{
+  "parent": "hearthandharvest:farming/shucks",
+  "criteria": {
+    "pop_goes_the_kernel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:popcorn"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.pop_goes_the_kernel.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:popcorn"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.pop_goes_the_kernel"
+    }
+  },
+  "requirements": [
+    [
+      "pop_goes_the_kernel"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

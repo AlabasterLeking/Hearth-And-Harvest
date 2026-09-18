@@ -1,0 +1,28 @@
+{
+  "parent": "hearthandharvest:animals/number_two",
+  "criteria": {
+    "nature_calls": {
+      "trigger": "hearthandharvest:player_pooped"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.nature_calls.desc"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:manure"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.nature_calls"
+    }
+  },
+  "requirements": [
+    [
+      "nature_calls"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

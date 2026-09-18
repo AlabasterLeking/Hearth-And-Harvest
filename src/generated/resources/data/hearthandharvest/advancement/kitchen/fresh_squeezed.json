@@ -1,0 +1,42 @@
+{
+  "parent": "hearthandharvest:kitchen/stomp_the_yard",
+  "criteria": {
+    "fresh_squeezed": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:blueberry_juice",
+              "hearthandharvest:cherry_juice",
+              "hearthandharvest:raspberry_juice",
+              "hearthandharvest:red_grape_juice",
+              "hearthandharvest:green_grape_juice",
+              "hearthandharvest:sweet_berry_juice",
+              "hearthandharvest:glow_berry_juice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.fresh_squeezed.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:red_grape_juice"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.fresh_squeezed"
+    }
+  },
+  "requirements": [
+    [
+      "fresh_squeezed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

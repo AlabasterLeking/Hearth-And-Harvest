@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.Config;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +19,7 @@ public class RabbitLitters {
         Level world = event.getParentA().level();
         RandomSource random = event.getParentA().getRandom();
         int extraCount = 1 + random.nextInt(3);
+        if (extraCount == 3) HHSimpleTrigger.trigger(HHModTriggers.BIG_RABBIT_LITTER.get(), event.getCausedByPlayer());
 
         for (int i = 0; i < extraCount; i++) {
             Rabbit babyRabbit = EntityType.RABBIT.create(world);

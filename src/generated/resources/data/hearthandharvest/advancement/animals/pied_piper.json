@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:animals/plucky",
+  "criteria": {
+    "pied_piper": {
+      "trigger": "hearthandharvest:tempting_crowd"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.pied_piper.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:wheat"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.pied_piper"
+    }
+  },
+  "requirements": [
+    [
+      "pied_piper"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

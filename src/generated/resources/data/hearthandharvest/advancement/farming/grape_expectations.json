@@ -1,0 +1,37 @@
+{
+  "parent": "hearthandharvest:farming/climbing_the_walls",
+  "criteria": {
+    "grape_expectations": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:red_grapes",
+              "hearthandharvest:green_grapes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.grape_expectations.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:red_grapes"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.grape_expectations"
+    }
+  },
+  "requirements": [
+    [
+      "grape_expectations"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

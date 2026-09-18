@@ -1,0 +1,43 @@
+{
+  "parent": "hearthandharvest:kitchen/fresh_squeezed",
+  "criteria": {
+    "wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:blueberry_wine",
+              "hearthandharvest:cherry_wine",
+              "hearthandharvest:raspberry_wine",
+              "hearthandharvest:red_grape_wine",
+              "hearthandharvest:green_grape_wine",
+              "hearthandharvest:sweet_berry_wine",
+              "hearthandharvest:glow_berry_wine",
+              "hearthandharvest:melon_wine"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.aged_to_perfection.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:red_grape_wine"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.aged_to_perfection"
+    }
+  },
+  "requirements": [
+    [
+      "wine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

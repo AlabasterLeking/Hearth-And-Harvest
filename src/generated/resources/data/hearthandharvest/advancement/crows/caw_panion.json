@@ -1,0 +1,38 @@
+{
+  "parent": "hearthandharvest:farming/scare_tactics",
+  "criteria": {
+    "caw_panion": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "hearthandharvest:crow"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:tame_animal"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.caw_panion.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:corn_kernels"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.caw_panion"
+    }
+  },
+  "requirements": [
+    [
+      "caw_panion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

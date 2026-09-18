@@ -1,0 +1,40 @@
+{
+  "parent": "hearthandharvest:kitchen/salt_of_the_earth",
+  "criteria": {
+    "in_a_pickle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:pickled_beetroots",
+              "hearthandharvest:pickled_cabbage",
+              "hearthandharvest:pickled_carrots",
+              "hearthandharvest:pickled_onions",
+              "hearthandharvest:pickled_potatoes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.in_a_pickle.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:pickled_carrots"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.in_a_pickle"
+    }
+  },
+  "requirements": [
+    [
+      "in_a_pickle"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

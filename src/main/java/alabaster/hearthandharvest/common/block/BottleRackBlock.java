@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.block;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.block.entity.BottleRackBlockEntity;
 import alabaster.hearthandharvest.common.block.entity.container.BottleRackSlotHelper;
 import alabaster.hearthandharvest.common.tag.HHModTags;
@@ -9,7 +11,6 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -100,6 +101,9 @@ public class BottleRackBlock extends Block implements EntityBlock {
                     heldStack.shrink(1);
                 }
                 level.sendBlockUpdated(pos, state, state, 3);
+                if (!level.isClientSide && isFull(rack)) {
+                    HHSimpleTrigger.trigger(HHModTriggers.FILLED_BOTTLE_RACK.get(), player);
+                }
                 return ItemInteractionResult.SUCCESS;
             }
         } else {
@@ -112,6 +116,13 @@ public class BottleRackBlock extends Block implements EntityBlock {
         }
 
         return ItemInteractionResult.CONSUME;
+    }
+
+    private static boolean isFull(BottleRackBlockEntity rack) {
+        for (int i = 0; i < rack.getContainerSize(); i++) {
+            if (rack.getItem(i).isEmpty()) return false;
+        }
+        return true;
     }
 
     @Override

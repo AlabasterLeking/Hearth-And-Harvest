@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:main/root",
+  "criteria": {
+    "clever_girl": {
+      "trigger": "hearthandharvest:cleaver_kill"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.clever_girl.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:iron_cleaver"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.clever_girl"
+    }
+  },
+  "requirements": [
+    [
+      "clever_girl"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

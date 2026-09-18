@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.entity.cleaver;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
 import alabaster.hearthandharvest.common.registry.HHModSounds;
 import net.minecraft.core.registries.Registries;
@@ -9,7 +11,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,7 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ProjectileDeflection;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -125,6 +125,7 @@ public class ThrownCleaver extends AbstractArrow {
             if (entity instanceof LivingEntity livingEntity) {
                 this.doKnockback(livingEntity, source);
                 this.doPostHurtEffects(livingEntity);
+                if (livingEntity.isDeadOrDying()) HHSimpleTrigger.trigger(HHModTriggers.CLEAVER_KILL.get(), owner);
             }
             if (this.level() instanceof ServerLevel serverLevel)
                 EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, source, this.getWeaponItem());

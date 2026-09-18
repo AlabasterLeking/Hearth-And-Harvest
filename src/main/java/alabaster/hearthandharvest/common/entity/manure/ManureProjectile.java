@@ -1,8 +1,9 @@
 package alabaster.hearthandharvest.common.entity.manure;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.*;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -38,6 +39,7 @@ public class ManureProjectile extends ThrowableItemProjectile {
             target.addEffect(new MobEffectInstance(HHModEffects.PUNGENT, 100, 0));
             target.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 0));
             target.setData(HHModAttachments.MANURE_FLY_TICKS.get(), 200);
+            HHSimpleTrigger.trigger(HHModTriggers.MANURE_HIT.get(), getOwner());
         }
         splat();
         discard();

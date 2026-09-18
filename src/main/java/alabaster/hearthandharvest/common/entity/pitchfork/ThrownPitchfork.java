@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.entity.pitchfork;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.HHModEffects;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
 import alabaster.hearthandharvest.common.registry.HHModSounds;
@@ -117,6 +119,7 @@ public class ThrownPitchfork extends AbstractArrow {
             if (entity instanceof LivingEntity livingEntity) {
                 this.doKnockback(livingEntity, source);
                 this.doPostHurtEffects(livingEntity);
+                if (livingEntity.isDeadOrDying()) HHSimpleTrigger.trigger(HHModTriggers.PITCHFORK_KILL.get(), owner);
             }
             if (this.level() instanceof ServerLevel serverLevel)
                 EnchantmentHelper.doPostAttackEffectsWithItemSource(serverLevel, entity, source, this.getWeaponItem());

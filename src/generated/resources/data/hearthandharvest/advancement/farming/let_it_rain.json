@@ -1,0 +1,35 @@
+{
+  "parent": "hearthandharvest:farming/mulch_obliged",
+  "criteria": {
+    "let_it_rain": {
+      "conditions": {
+        "location": [
+          {
+            "block": "hearthandharvest:sprinkler",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.let_it_rain.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:sprinkler"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.let_it_rain"
+    }
+  },
+  "requirements": [
+    [
+      "let_it_rain"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

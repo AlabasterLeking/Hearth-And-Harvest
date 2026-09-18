@@ -1,0 +1,32 @@
+{
+  "parent": "hearthandharvest:kitchen/roasting_pro",
+  "criteria": {
+    "just_one_smore": {
+      "conditions": {
+        "item": {
+          "items": "hearthandharvest:smore"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.just_one_smore.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:smore"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.just_one_smore"
+    }
+  },
+  "requirements": [
+    [
+      "just_one_smore"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

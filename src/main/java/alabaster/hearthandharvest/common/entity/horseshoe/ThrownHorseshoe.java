@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.entity.horseshoe;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
 import alabaster.hearthandharvest.common.registry.HHModSounds;
 import net.minecraft.core.BlockPos;
@@ -10,7 +12,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -63,6 +64,7 @@ public class ThrownHorseshoe extends AbstractArrow {
         BlockPos hitPos = result.getBlockPos();
         BlockState hitState = serverLevel.getBlockState(hitPos);
         if (!hitState.is(BlockTags.FENCES)) return;
+        HHSimpleTrigger.trigger(HHModTriggers.HORSESHOE_RINGER.get(), this.getOwner());
         serverLevel.updateNeighborsAt(hitPos, hitState.getBlock());
         for (Direction dir : Direction.values()) {
             BlockPos neighborPos = hitPos.relative(dir);

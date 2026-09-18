@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:kitchen/stomp_the_yard",
+  "criteria": {
+    "patience_is_a_virtue": {
+      "trigger": "hearthandharvest:cask_aged"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.patience_is_a_virtue.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:cask"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.patience_is_a_virtue"
+    }
+  },
+  "requirements": [
+    [
+      "patience_is_a_virtue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

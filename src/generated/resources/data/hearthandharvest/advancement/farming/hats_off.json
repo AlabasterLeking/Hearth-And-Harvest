@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:farming/uprooted",
+  "criteria": {
+    "hats_off": {
+      "trigger": "hearthandharvest:farmers_hat_worn_out"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.hats_off.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:farmers_hat"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.hats_off"
+    }
+  },
+  "requirements": [
+    [
+      "hats_off"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

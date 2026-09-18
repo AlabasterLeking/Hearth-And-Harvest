@@ -1,0 +1,35 @@
+{
+  "parent": "hearthandharvest:main/root",
+  "criteria": {
+    "scare_tactics": {
+      "conditions": {
+        "location": [
+          {
+            "block": "hearthandharvest:scarecrow",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.scare_tactics.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:scarecrow"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.scare_tactics"
+    }
+  },
+  "requirements": [
+    [
+      "scare_tactics"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

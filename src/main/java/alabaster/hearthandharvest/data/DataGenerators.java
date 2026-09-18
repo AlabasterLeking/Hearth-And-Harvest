@@ -36,7 +36,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new HHBiomeTags(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new HHEnchantmentTags(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new Recipes(output, lookupProvider));
-        //generator.addProvider(event.includeServer(), new Advancements(output, lookupProvider, helper));
+        generator.addProvider(event.includeServer(), new Advancements(output, lookupProvider, helper));
         generator.addProvider(event.includeServer(), new LootTableProvider(output, Collections.emptySet(), List.of(
                 new LootTableProvider.SubProviderEntry(HHBlockLoot::new, LootContextParamSets.BLOCK)
         ), lookupProvider));

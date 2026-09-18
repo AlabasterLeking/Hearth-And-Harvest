@@ -1,0 +1,28 @@
+{
+  "parent": "hearthandharvest:animals/well_shod",
+  "criteria": {
+    "horseshoe_toss": {
+      "trigger": "hearthandharvest:horseshoe_ringer"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.horseshoe_toss.desc"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:horseshoe"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.horseshoe_toss"
+    }
+  },
+  "requirements": [
+    [
+      "horseshoe_toss"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

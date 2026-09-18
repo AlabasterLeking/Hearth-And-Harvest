@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:crows/daylight_robbery",
+  "criteria": {
+    "stash_found": {
+      "trigger": "hearthandharvest:crow_stash_found"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.stash_found.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:gold_nugget"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.stash_found"
+    }
+  },
+  "requirements": [
+    [
+      "stash_found"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

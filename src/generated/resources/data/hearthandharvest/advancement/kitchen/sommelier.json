@@ -1,0 +1,125 @@
+{
+  "parent": "hearthandharvest:kitchen/aged_to_perfection",
+  "criteria": {
+    "blueberry_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:blueberry_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cherry_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:cherry_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "glow_berry_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:glow_berry_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "green_grape_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:green_grape_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "melon_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:melon_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raspberry_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raspberry_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "red_grape_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:red_grape_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sweet_berry_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:sweet_berry_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.sommelier.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:green_grape_wine"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.sommelier"
+    }
+  },
+  "requirements": [
+    [
+      "blueberry_wine"
+    ],
+    [
+      "cherry_wine"
+    ],
+    [
+      "raspberry_wine"
+    ],
+    [
+      "red_grape_wine"
+    ],
+    [
+      "green_grape_wine"
+    ],
+    [
+      "sweet_berry_wine"
+    ],
+    [
+      "glow_berry_wine"
+    ],
+    [
+      "melon_wine"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

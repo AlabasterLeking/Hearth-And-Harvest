@@ -1,0 +1,34 @@
+{
+  "parent": "hearthandharvest:kitchen/sap_happens",
+  "criteria": {
+    "roasting_pro": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:roasted_marshmallow_stick"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.roasting_pro.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:roasted_marshmallow_stick"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.roasting_pro"
+    }
+  },
+  "requirements": [
+    [
+      "roasting_pro"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:crows/caw_panion",
+  "criteria": {
+    "special_delivery": {
+      "trigger": "hearthandharvest:crow_delivered_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.special_delivery.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:crow_feather"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.special_delivery"
+    }
+  },
+  "requirements": [
+    [
+      "special_delivery"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

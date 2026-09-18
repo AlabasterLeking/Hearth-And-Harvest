@@ -1,0 +1,34 @@
+{
+  "parent": "hearthandharvest:animals/plucky",
+  "criteria": {
+    "number_two": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:manure"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.number_two.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:manure"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.number_two"
+    }
+  },
+  "requirements": [
+    [
+      "number_two"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:kitchen/salt_of_the_earth",
+  "criteria": {
+    "a_lick_too_far": {
+      "trigger": "hearthandharvest:licked_salt_away"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.a_lick_too_far.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:heavily_licked_salt_block"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.a_lick_too_far"
+    }
+  },
+  "requirements": [
+    [
+      "a_lick_too_far"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

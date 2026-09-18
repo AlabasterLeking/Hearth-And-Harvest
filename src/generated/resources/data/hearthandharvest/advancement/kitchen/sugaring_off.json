@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:kitchen/sap_happens",
+  "criteria": {
+    "sugaring_off": {
+      "trigger": "hearthandharvest:bottled_syrup"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.sugaring_off.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:syrup_bottle"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.sugaring_off"
+    }
+  },
+  "requirements": [
+    [
+      "sugaring_off"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

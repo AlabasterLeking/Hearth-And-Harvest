@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.item;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.HHModEffects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -33,6 +35,7 @@ public class SugarCubesItem extends ConsumableItem {
                 horse.level().playSound(null, horse.getX(), horse.getY(), horse.getZ(),
                         SoundEvents.HORSE_EAT, SoundSource.NEUTRAL, 1.0f, 1.0f);
                 if (!player.getAbilities().instabuild) stack.shrink(1);
+                HHSimpleTrigger.trigger(HHModTriggers.FED_SUGAR_CUBES.get(), player);
             }
             return InteractionResult.sidedSuccess(player.level().isClientSide());
         }

@@ -1,0 +1,125 @@
+{
+  "parent": "hearthandharvest:farming/climbing_the_walls",
+  "criteria": {
+    "blue_mum": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:blue_mum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "light_blue_mum": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:light_blue_mum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "orange_mum": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:orange_mum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "pink_mum": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pink_mum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "purple_mum": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:purple_mum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "red_mum": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:red_mum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "white_mum": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:white_mum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "yellow_mum": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:yellow_mum"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.floriculture.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:red_mum"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.floriculture"
+    }
+  },
+  "requirements": [
+    [
+      "yellow_mum"
+    ],
+    [
+      "orange_mum"
+    ],
+    [
+      "red_mum"
+    ],
+    [
+      "blue_mum"
+    ],
+    [
+      "light_blue_mum"
+    ],
+    [
+      "purple_mum"
+    ],
+    [
+      "pink_mum"
+    ],
+    [
+      "white_mum"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

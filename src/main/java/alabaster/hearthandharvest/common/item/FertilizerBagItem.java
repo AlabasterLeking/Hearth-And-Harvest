@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.item;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -66,6 +68,7 @@ public class FertilizerBagItem extends Item {
             used = true;
         } else if (block instanceof CropBlock crop) {
             level.setBlock(pos, crop.getStateForAge(crop.getMaxAge()), Block.UPDATE_ALL);
+            HHSimpleTrigger.trigger(HHModTriggers.FERTILIZER_GREW_CROP.get(), player);
             used = true;
         } else if (block instanceof IHarvestable harvestable) {
             if (harvestable.isHarvestReady(state)) {

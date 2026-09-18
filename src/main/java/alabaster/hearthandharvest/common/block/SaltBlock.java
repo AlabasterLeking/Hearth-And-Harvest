@@ -1,6 +1,8 @@
 package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.Config;
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.common.registry.HHModSounds;
@@ -23,7 +25,6 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.BlockItemStateProperties;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -151,7 +152,9 @@ public class SaltBlock extends Block {
             level.playSound(null, pos, HHModSounds.LICK.get(), SoundSource.BLOCKS,
                     0.8f, 0.8f + level.random.nextFloat() * 0.7f);
             if (level.random.nextFloat() < Config.SALT_PLAYER_LICK_CHANCE.get().floatValue()) {
+                boolean finalLick = getNextByBlock().get(state.getBlock()) == null;
                 degradeBlock(level, pos, state);
+                if (finalLick) HHSimpleTrigger.trigger(HHModTriggers.LICKED_SALT_AWAY.get(), player);
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());

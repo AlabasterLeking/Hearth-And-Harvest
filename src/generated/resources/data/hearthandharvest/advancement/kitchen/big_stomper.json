@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:kitchen/stomp_the_yard",
+  "criteria": {
+    "big_stomper": {
+      "trigger": "hearthandharvest:big_stomp"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.big_stomper.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:stomping_basin"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.big_stomper"
+    }
+  },
+  "requirements": [
+    [
+      "big_stomper"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

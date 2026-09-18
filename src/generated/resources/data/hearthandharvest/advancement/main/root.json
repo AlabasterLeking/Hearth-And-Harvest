@@ -1,0 +1,28 @@
+{
+  "criteria": {
+    "root": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/spruce_planks.png",
+    "description": {
+      "translate": "advancement.hearthandharvest.root.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:blueberries"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.hearthandharvest.root"
+    }
+  },
+  "requirements": [
+    [
+      "root"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

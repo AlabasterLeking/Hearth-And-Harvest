@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:farming/mulch_obliged",
+  "criteria": {
+    "green_thumb": {
+      "trigger": "hearthandharvest:fertilizer_grew_crop"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.green_thumb.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:fertilizer_bag"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.green_thumb"
+    }
+  },
+  "requirements": [
+    [
+      "green_thumb"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

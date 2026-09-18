@@ -1,0 +1,203 @@
+{
+  "parent": "hearthandharvest:kitchen/in_a_pickle",
+  "criteria": {
+    "apple_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:apple_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "blueberry_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:blueberry_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cherry_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:cherry_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "glow_berry_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:glow_berry_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "grape_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:grape_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "melon_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:melon_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "peanut_butter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:peanut_butter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "pickled_beetroots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pickled_beetroots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "pickled_cabbage": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pickled_cabbage"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "pickled_carrots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pickled_carrots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "pickled_onions": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pickled_onions"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "pickled_potatoes": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pickled_potatoes"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raspberry_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raspberry_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "sweet_berry_jam": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:sweet_berry_jam"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.well_preserved.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:sweet_berry_jam"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.well_preserved"
+    }
+  },
+  "requirements": [
+    [
+      "pickled_beetroots"
+    ],
+    [
+      "pickled_cabbage"
+    ],
+    [
+      "pickled_carrots"
+    ],
+    [
+      "pickled_onions"
+    ],
+    [
+      "pickled_potatoes"
+    ],
+    [
+      "blueberry_jam"
+    ],
+    [
+      "cherry_jam"
+    ],
+    [
+      "raspberry_jam"
+    ],
+    [
+      "grape_jam"
+    ],
+    [
+      "apple_jam"
+    ],
+    [
+      "sweet_berry_jam"
+    ],
+    [
+      "glow_berry_jam"
+    ],
+    [
+      "melon_jam"
+    ],
+    [
+      "peanut_butter"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,7 +1,8 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.block.IHarvestable;
-import alabaster.hearthandharvest.common.event.FarmersHatEvents;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.server.level.ServerLevel;
 import alabaster.hearthandharvest.common.registry.HHModEnchantments;
@@ -71,6 +72,7 @@ public class HoeEnchantmentEvents {
             }
             if (tilledAny) {
                 hoe.hurtAndBreak(1, player, LivingEntity.getSlotForHand(event.getHand()));
+                HHSimpleTrigger.trigger(HHModTriggers.HOE_AREA_WORK.get(), player);
             }
         }
 
@@ -82,6 +84,7 @@ public class HoeEnchantmentEvents {
             Deque<BlockPos> queue = new ArrayDeque<>();
 
             harvestCrop(level, center, centerState, player, hoe);
+            int harvested = 1;
             visited.add(center);
             queue.add(center);
 
@@ -97,11 +100,13 @@ public class HoeEnchantmentEvents {
                     BlockState state = level.getBlockState(neighbor);
                     if (!isFullyGrownCrop(state)) continue;
                     harvestCrop(level, neighbor, state, player, hoe);
+                    harvested++;
                     queue.add(neighbor);
                 }
             }
 
             hoe.hurtAndBreak(1, player, LivingEntity.getSlotForHand(event.getHand()));
+            if (harvested > 1) HHSimpleTrigger.trigger(HHModTriggers.HOE_AREA_WORK.get(), player);
             FarmersHatEvents.damageHat(player);
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.SUCCESS);

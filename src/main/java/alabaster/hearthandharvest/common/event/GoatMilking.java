@@ -2,6 +2,8 @@ package alabaster.hearthandharvest.common.event;
 
 import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -20,12 +22,17 @@ public class GoatMilking {
 
     @SubscribeEvent
     public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
-        if (Config.DISABLE_BOTTLE_MILKING.get()) return;
-
         Player player = event.getEntity();
         Level level = player.level();
         InteractionHand hand = event.getHand();
         ItemStack heldItem = player.getItemInHand(hand);
+
+        if (event.getTarget() instanceof Goat goat && heldItem.is(Items.BUCKET) && !goat.isBaby() && !level.isClientSide) {
+            HHSimpleTrigger.trigger(HHModTriggers.MILKED_GOAT.get(), player);
+            return;
+        }
+
+        if (Config.DISABLE_BOTTLE_MILKING.get()) return;
 
         if (event.getTarget() instanceof Goat goat && heldItem.is(Items.GLASS_BOTTLE)) {
             if (!level.isClientSide) {
@@ -36,6 +43,7 @@ public class GoatMilking {
                 if (!added) {
                     player.drop(goatMilk, false);
                 }
+                HHSimpleTrigger.trigger(HHModTriggers.MILKED_GOAT.get(), player);
                 event.setCancellationResult(InteractionResult.SUCCESS);
                 event.setCanceled(true);
             }

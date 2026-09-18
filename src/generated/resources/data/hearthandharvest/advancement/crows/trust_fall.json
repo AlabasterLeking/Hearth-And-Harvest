@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:farming/scare_tactics",
+  "criteria": {
+    "trust_fall": {
+      "trigger": "hearthandharvest:crow_full_trust"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.trust_fall.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:corn_kernels"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.trust_fall"
+    }
+  },
+  "requirements": [
+    [
+      "trust_fall"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

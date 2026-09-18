@@ -1,10 +1,12 @@
 package alabaster.hearthandharvest.common.block.entity;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
 import alabaster.hearthandharvest.common.block.MultiblockPart;
 import alabaster.hearthandharvest.common.crafting.StompingBasinRecipe;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import alabaster.hearthandharvest.common.registry.HHModRecipeTypes;
 import alabaster.hearthandharvest.common.registry.HHModSounds;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -18,7 +20,6 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -264,6 +265,9 @@ public class StompingBasinBlockEntity extends BlockEntity  {
 
         ItemStack resultItem = recipe.getResultItem();
         if (!resultItem.isEmpty()) dropAtBasin(resultItem.copy());
+
+        HHSimpleTrigger.trigger(HHModTriggers.STOMPED_RECIPE.get(), entity);
+        if (role == MultiblockPart.CONTROLLER) HHSimpleTrigger.trigger(HHModTriggers.BIG_STOMP.get(), entity);
 
         setChanged();
         syncToClient();

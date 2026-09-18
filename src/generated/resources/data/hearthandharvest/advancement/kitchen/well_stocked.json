@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:kitchen/aged_to_perfection",
+  "criteria": {
+    "well_stocked": {
+      "trigger": "hearthandharvest:filled_bottle_rack"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.well_stocked.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:oak_bottle_rack"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.well_stocked"
+    }
+  },
+  "requirements": [
+    [
+      "well_stocked"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

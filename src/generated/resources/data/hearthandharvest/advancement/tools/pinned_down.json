@@ -1,0 +1,33 @@
+{
+  "parent": "hearthandharvest:tools/pitch_perfect",
+  "criteria": {
+    "pinned_down": {
+      "conditions": {
+        "effects": {
+          "hearthandharvest:pinned": {}
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.pinned_down.desc"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:pitchfork"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.pinned_down"
+    }
+  },
+  "requirements": [
+    [
+      "pinned_down"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
