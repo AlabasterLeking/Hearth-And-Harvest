@@ -24,14 +24,14 @@ public class NestRenderer implements BlockEntityRenderer<NestBlockEntity> {
     private static final float CORNER = 0.12F;
     private static final float[][] CORNERS = {
             {CORNER, CORNER},
-            {-CORNER, CORNER},
+            {CORNER, -CORNER},
             {-CORNER, -CORNER},
-            {CORNER, -CORNER}
+            {-CORNER, CORNER}
     };
 
     private static final float EGG_SCALE = 0.7F;
     private static final float EGG_HEIGHT = 1.0F / 16.0F;
-    private static final float ITEM_SCALE = 0.3F;
+    private static final float ITEM_SCALE = 0.5F;
     private static final float ITEM_HEIGHT = 1.0F / 16.0F;
 
     private final ItemRenderer itemRenderer;
@@ -60,8 +60,9 @@ public class NestRenderer implements BlockEntityRenderer<NestBlockEntity> {
                 itemRenderer.render(stack, ItemDisplayContext.FIXED, false, poseStack, buffer, packedLight, packedOverlay, model);
             } else {
                 poseStack.mulPose(Axis.YP.rotationDegrees(15.0F + (90.0F * slot)));
+                poseStack.mulPose(Axis.XP.rotationDegrees(75.0F));
                 poseStack.scale(ITEM_SCALE, ITEM_SCALE, ITEM_SCALE);
-                poseStack.translate(0.0F, 0.5F, 0.0F);
+                poseStack.translate(-0.2F, 0.15F, -0.2F);
                 itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, nest.getLevel(), slot * 1013);
             }
 

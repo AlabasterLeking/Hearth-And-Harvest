@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -75,7 +76,7 @@ public class NestBlock extends Block implements EntityBlock {
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockPos below = pos.below();
-        return !level.getFluidState(below).isSource() && Block.canSupportCenter(level, below, Direction.UP);
+        return !level.getFluidState(below).isSource() && !level.getBlockState(below).is(Blocks.AIR);
     }
 
     @Override
