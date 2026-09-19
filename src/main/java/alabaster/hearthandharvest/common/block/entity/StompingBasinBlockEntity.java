@@ -13,8 +13,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.LivingEntity;
@@ -38,7 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class StompingBasinBlockEntity extends BlockEntity  {
+public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
 
     public static final int ITEM_SLOTS = 4;
 
@@ -361,7 +359,6 @@ public class StompingBasinBlockEntity extends BlockEntity  {
         syncToClient();
     }
 
-
     public void dissolveAsMember() {
         this.role = MultiblockPart.NONE;
         this.controllerPos = null;
@@ -384,23 +381,6 @@ public class StompingBasinBlockEntity extends BlockEntity  {
         if (level != null && !level.isClientSide) {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
         }
-    }
-
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        CompoundTag tag = new CompoundTag();
-        saveAdditional(tag, registries);
-        return tag;
-    }
-
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
-        if (pkt.getTag() != null) loadAdditional(pkt.getTag(), lookupProvider);
     }
 
     @Override

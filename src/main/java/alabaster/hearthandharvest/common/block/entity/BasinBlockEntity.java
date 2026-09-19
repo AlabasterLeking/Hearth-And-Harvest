@@ -4,19 +4,13 @@ import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
-import javax.annotation.Nullable;
-
-public class BasinBlockEntity extends BlockEntity {
+public class BasinBlockEntity extends HHSyncedBlockEntity {
     public static final int CAPACITY = 1000;
     public static final int BOTTLE_AMOUNT = 250;
 
@@ -65,9 +59,4 @@ public class BasinBlockEntity extends BlockEntity {
         return tag;
     }
 
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
 }

@@ -3,6 +3,7 @@ package alabaster.hearthandharvest.common.block.entity;
 import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
 import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import net.minecraft.world.entity.EntitySelector;
+
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import alabaster.hearthandharvest.common.tag.HHModTags;
@@ -12,9 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
@@ -28,7 +26,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -36,7 +33,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
-public class SprinklerBlockEntity extends BlockEntity {
+public class SprinklerBlockEntity extends HHSyncedBlockEntity {
 
     public static final int CAPACITY = 10_000;
     public static final int HYDRATE_RADIUS = 7;
@@ -204,9 +201,4 @@ public class SprinklerBlockEntity extends BlockEntity {
         return tag;
     }
 
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
 }

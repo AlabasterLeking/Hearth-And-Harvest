@@ -8,21 +8,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
-import javax.annotation.Nullable;
 
-public class TreeTapperBlockEntity extends BlockEntity {
+public class TreeTapperBlockEntity extends HHSyncedBlockEntity {
     public static final int CAPACITY = 1000;
     private static final int CHECK_INTERVAL = 40;  // ticks between fill attempts (~2 seconds)
     private static final int FILL_PER_CHECK  = 10; // mB added per successful check (100 steps to fill)
@@ -82,9 +77,4 @@ public class TreeTapperBlockEntity extends BlockEntity {
         return tag;
     }
 
-    @Nullable
-    @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
 }
