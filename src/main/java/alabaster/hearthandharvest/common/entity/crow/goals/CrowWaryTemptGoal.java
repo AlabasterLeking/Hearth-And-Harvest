@@ -35,7 +35,7 @@ public class CrowWaryTemptGoal extends Goal {
     }
 
     private boolean isUnavailable() {
-        return crow.isTame() || crow.isOrderedToSit() || crow.isPassenger() || crow.isAlarmed() || !crow.getMainHandItem().isEmpty();
+        return crow.isTame() || crow.isBusy() || crow.isAlarmed() || !crow.getMainHandItem().isEmpty();
     }
 
     @Override

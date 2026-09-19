@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 
 public class CrowRenderer extends MobRenderer<CrowEntity, CrowModel<CrowEntity>> {
     public CrowRenderer(EntityRendererProvider.Context context) {
@@ -23,8 +22,8 @@ public class CrowRenderer extends MobRenderer<CrowEntity, CrowModel<CrowEntity>>
     @Override
     protected void setupRotations(CrowEntity entity, PoseStack poseStack, float bob, float yBodyRot, float partialTick, float scale) {
         super.setupRotations(entity, poseStack, bob, yBodyRot, partialTick, scale);
-        float pitch = Mth.lerp(partialTick, entity.flightPitchO, entity.flightPitch);
-        float roll = Mth.lerp(partialTick, entity.flightRollO, entity.flightRoll);
+        float pitch = entity.getFlightPose().pitch(partialTick);
+        float roll = entity.getFlightPose().roll(partialTick);
         if (Math.abs(pitch) < 0.01F && Math.abs(roll) < 0.01F) return;
 
         float pivot = entity.getBbHeight() * 0.5F;

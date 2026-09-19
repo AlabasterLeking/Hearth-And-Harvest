@@ -41,7 +41,7 @@ public class CrowAvoidRepellingBlocksGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (crow.isTame() || crow.isOrderedToSit() || crow.isPassenger()) return false;
+        if (crow.isTame() || crow.isBusy()) return false;
         if (--scanCooldown > 0) return false;
         scanCooldown = 10 + crow.getRandom().nextInt(10);
 

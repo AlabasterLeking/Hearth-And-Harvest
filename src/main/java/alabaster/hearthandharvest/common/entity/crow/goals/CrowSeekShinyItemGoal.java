@@ -9,7 +9,6 @@ import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -17,35 +16,27 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
-import java.util.Comparator;
 import java.util.EnumSet;
 
-public class CrowSeekShinyItemGoal extends Goal {
+public class CrowSeekShinyItemGoal extends CrowItemGoal {
     private static final int SCAN_INTERVAL = 10;
     private static final double SCAN_RADIUS = 10.0D;
+    private static final int REPATH_INTERVAL = 5;
+    private static final double PICKUP_RANGE_SQR = 2.25D;
     private static final double MAX_CHASE_DISTANCE_SQR = 16.0D * 16.0D;
     private static final int NEST_SEARCH_RADIUS = 16;
     private static final int NEST_ARRIVAL_TICKS = 20;
     private static final int CARRY_TICKS = 100;
-    private static final int REPATH_INTERVAL = 5;
 
-    private final CrowEntity crow;
-    private final double speed;
-
-    private ItemEntity targetItem;
     private BlockPos nestTarget;
     private boolean nestSearched;
     private Vec3 escapeTarget;
     private int carryTimer;
     private int nestArrivalTimer;
-    private int repathTimer;
-    private int cooldown;
     private boolean completed;
 
     public CrowSeekShinyItemGoal(CrowEntity crow, double speed) {
-        this.crow = crow;
-        this.speed = speed;
-        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        super(crow, speed, SCAN_INTERVAL, SCAN_RADIUS, REPATH_INTERVAL, EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     private boolean isHoldingShiny() {
@@ -54,7 +45,7 @@ public class CrowSeekShinyItemGoal extends Goal {
     }
 
     private boolean isUnavailable() {
-        return crow.isTame() || crow.isOrderedToSit() || crow.isPassenger();
+        return crow.isTame() || crow.isBusy();
     }
 
     @Override
@@ -62,9 +53,9 @@ public class CrowSeekShinyItemGoal extends Goal {
         if (isUnavailable()) return false;
         if (isHoldingShiny()) return true;
         if (!Config.CROW_STEAL_SHINY_ITEMS.get()) return false;
-        if (--cooldown > 0) return false;
-        cooldown = SCAN_INTERVAL;
-        targetItem = findTarget();
+        if (!scanReady()) return false;
+
+        targetItem = findNearestTarget();
         return targetItem != null;
     }
 
@@ -83,25 +74,20 @@ public class CrowSeekShinyItemGoal extends Goal {
         escapeTarget = null;
         carryTimer = CARRY_TICKS;
         nestArrivalTimer = -1;
-        repathTimer = 0;
         completed = false;
+        resetRepath();
     }
 
     @Override
     public void stop() {
+        super.stop();
         crow.setSnatching(false);
-        targetItem = null;
         nestTarget = null;
         nestSearched = false;
         escapeTarget = null;
         nestArrivalTimer = -1;
-        cooldown = completed ? 100 + crow.getRandom().nextInt(80) : 20;
+        setScanCooldown(completed ? 100 + crow.getRandom().nextInt(80) : 20);
         completed = false;
-    }
-
-    @Override
-    public boolean requiresUpdateEveryTick() {
-        return true;
     }
 
     @Override
@@ -116,15 +102,8 @@ public class CrowSeekShinyItemGoal extends Goal {
     private void chaseTarget() {
         if (!isValidTarget(targetItem)) return;
 
-        crow.getLookControl().setLookAt(targetItem.getX(), targetItem.getY() + 0.3, targetItem.getZ());
-
-        if (crow.distanceToSqr(targetItem) > 2.25D) {
-            if (--repathTimer <= 0 || crow.getNavigation().isDone()) {
-                repathTimer = REPATH_INTERVAL;
-                crow.getNavigation().moveTo(targetItem, speed);
-            }
-            return;
-        }
+        lookAtTarget(0.3D);
+        if (!approach(targetItem, PICKUP_RANGE_SQR)) return;
 
         Player thrower = targetItem.getOwner() instanceof Player player ? player : null;
         ItemStack remaining = targetItem.getItem().copy();
@@ -138,7 +117,6 @@ public class CrowSeekShinyItemGoal extends Goal {
 
         crow.holdItem(single);
         crow.playSound(SoundEvents.ITEM_PICKUP, 0.4F, 1.4F);
-        crow.getNavigation().stop();
 
         if (thrower != null) {
             HHSimpleTrigger.trigger(HHModTriggers.CROW_STOLE_ITEM.get(), thrower);
@@ -175,10 +153,7 @@ public class CrowSeekShinyItemGoal extends Goal {
 
         if (crow.distanceToSqr(x, y, z) >= 1.5D) {
             nestArrivalTimer = -1;
-            if (--repathTimer <= 0 || crow.getNavigation().isDone()) {
-                repathTimer = REPATH_INTERVAL;
-                crow.getNavigation().moveTo(x, y, z, speed * 1.2);
-            }
+            repath(x, y, z, speed * 1.2, REPATH_INTERVAL);
             return;
         }
 
@@ -199,10 +174,7 @@ public class CrowSeekShinyItemGoal extends Goal {
 
         boolean arrived = crow.distanceToSqr(escapeTarget) < 4.0D;
         if (!arrived && --carryTimer > 0) {
-            if (--repathTimer <= 0 || crow.getNavigation().isDone()) {
-                repathTimer = REPATH_INTERVAL * 2;
-                crow.getNavigation().moveTo(escapeTarget.x, escapeTarget.y, escapeTarget.z, speed * 1.2);
-            }
+            repath(escapeTarget.x, escapeTarget.y, escapeTarget.z, speed * 1.2, REPATH_INTERVAL * 2);
             return;
         }
 
@@ -221,16 +193,13 @@ public class CrowSeekShinyItemGoal extends Goal {
         return pos != null ? pos : crow.position();
     }
 
-    @Nullable
-    private ItemEntity findTarget() {
-        return crow.level().getEntitiesOfClass(ItemEntity.class, crow.getBoundingBox().inflate(SCAN_RADIUS), this::isValidTarget)
-                .stream()
-                .filter(item -> !isNearNest(item.blockPosition()))
-                .min(Comparator.comparingDouble(crow::distanceToSqr))
-                .orElse(null);
+    @Override
+    protected boolean isWorthApproaching(ItemEntity item) {
+        return !isNearNest(item.blockPosition());
     }
 
-    private boolean isValidTarget(@Nullable ItemEntity item) {
+    @Override
+    protected boolean isValidTarget(@Nullable ItemEntity item) {
         return item != null
                 && item.isAlive()
                 && !item.getItem().isEmpty()
@@ -264,6 +233,7 @@ public class CrowSeekShinyItemGoal extends Goal {
             nest.markCrowStash();
             if (stack.isEmpty()) return;
         }
+
         double angle = crow.getRandom().nextDouble() * Math.PI * 2.0;
         ItemEntity itemEntity = new ItemEntity(server,
                 pos.getX() + 0.5 + Math.cos(angle) * 0.9,

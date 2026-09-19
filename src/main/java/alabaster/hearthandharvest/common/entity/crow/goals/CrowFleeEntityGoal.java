@@ -39,7 +39,7 @@ public class CrowFleeEntityGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (crow.isTame() || crow.isOrderedToSit() || crow.isPassenger()) return false;
+        if (crow.isTame() || crow.isBusy()) return false;
         if (--scanCooldown > 0 && !crow.consumeFreshAlarm()) return false;
         scanCooldown = 10 + crow.getRandom().nextInt(10);
 
