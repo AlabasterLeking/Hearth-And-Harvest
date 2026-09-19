@@ -26,9 +26,8 @@ public class CrowSpawnRules {
         int radius = Config.CROW_SPAWN_RADIUS.get();
         int cropRequirement = Config.CROW_SPAWN_NUMBER_OF_CROPS.get();
 
+        if (Config.CROW_SPAWN_NEAR_NESTS.get() && hasNearbyGeneratedNest(level, pos, radius)) return true;
         if (cropRequirement == 0) return false;
-
-        if (hasNearbyGeneratedNest(level, pos, radius)) return true;
 
         return countNearbyCrops(level, pos, radius) >= cropRequirement;
     }

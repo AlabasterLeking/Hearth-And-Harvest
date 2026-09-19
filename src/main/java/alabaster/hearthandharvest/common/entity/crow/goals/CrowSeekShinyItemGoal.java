@@ -1,33 +1,46 @@
 package alabaster.hearthandharvest.common.entity.crow.goals;
 
+import alabaster.hearthandharvest.Config;
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.block.entity.NestBlockEntity;
 import alabaster.hearthandharvest.common.entity.crow.CrowEntity;
-import alabaster.hearthandharvest.common.registry.HHModBlocks;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
+import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.EnumSet;
-import java.util.List;
 
 public class CrowSeekShinyItemGoal extends Goal {
+    private static final int SCAN_INTERVAL = 10;
+    private static final double SCAN_RADIUS = 10.0D;
+    private static final double MAX_CHASE_DISTANCE_SQR = 16.0D * 16.0D;
+    private static final int NEST_SEARCH_RADIUS = 16;
+    private static final int NEST_ARRIVAL_TICKS = 20;
+    private static final int CARRY_TICKS = 100;
+    private static final int REPATH_INTERVAL = 5;
+
     private final CrowEntity crow;
     private final double speed;
 
     private ItemEntity targetItem;
     private BlockPos nestTarget;
-
-    private int cooldown = 0;
-    private int dropTimer = 0;
-    private int nestArrivalTimer = -1;
-    private static final int IGNORE_RADIUS_AROUND_NEST = 1;
-    private static final BlockPos NO_NEST = new BlockPos(0, Integer.MIN_VALUE, 0);
+    private boolean nestSearched;
+    private Vec3 escapeTarget;
+    private int carryTimer;
+    private int nestArrivalTimer;
+    private int repathTimer;
+    private int cooldown;
+    private boolean completed;
 
     public CrowSeekShinyItemGoal(CrowEntity crow, double speed) {
         this.crow = crow;
@@ -35,191 +48,231 @@ public class CrowSeekShinyItemGoal extends Goal {
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
+    private boolean isHoldingShiny() {
+        ItemStack held = crow.getMainHandItem();
+        return !held.isEmpty() && held.is(HHModTags.CROW_SHINY_ITEMS);
+    }
+
+    private boolean isUnavailable() {
+        return crow.isTame() || crow.isOrderedToSit() || crow.isPassenger();
+    }
+
     @Override
     public boolean canUse() {
-        if (crow.isTame() || crow.isOrderedToSit() || crow.isPassenger())
-            return false;
-
-        if (!crow.getMainHandItem().isEmpty() && crow.getMainHandItem().is(HHModTags.CROW_SHINY_ITEMS))
-            return true;
-
-        if (--cooldown > 0)
-            return false;
-
-        List<ItemEntity> nearby = crow.level().getEntitiesOfClass(
-                ItemEntity.class,
-                crow.getBoundingBox().inflate(10),
-                e -> e.isAlive()
-                        && e.getItem().is(HHModTags.CROW_SHINY_ITEMS)
-                        && !isNearNest(e.blockPosition(), IGNORE_RADIUS_AROUND_NEST)
-        );
-
-        if (nearby.isEmpty())
-            return false;
-
-        targetItem = nearby.get(crow.getRandom().nextInt(nearby.size()));
-        return true;
+        if (isUnavailable()) return false;
+        if (isHoldingShiny()) return true;
+        if (!Config.CROW_STEAL_SHINY_ITEMS.get()) return false;
+        if (--cooldown > 0) return false;
+        cooldown = SCAN_INTERVAL;
+        targetItem = findTarget();
+        return targetItem != null;
     }
 
     @Override
     public boolean canContinueToUse() {
-        if (!crow.getMainHandItem().isEmpty() && crow.getMainHandItem().is(HHModTags.CROW_SHINY_ITEMS))
-            return true;
-        return targetItem != null && targetItem.isAlive();
+        if (isUnavailable()) return false;
+        if (isHoldingShiny()) return true;
+        return isValidTarget(targetItem) && crow.distanceToSqr(targetItem) < MAX_CHASE_DISTANCE_SQR;
     }
 
     @Override
     public void start() {
-        dropTimer = 0;
+        crow.setSnatching(true);
         nestTarget = null;
+        nestSearched = false;
+        escapeTarget = null;
+        carryTimer = CARRY_TICKS;
         nestArrivalTimer = -1;
+        repathTimer = 0;
+        completed = false;
     }
 
     @Override
     public void stop() {
+        crow.setSnatching(false);
         targetItem = null;
         nestTarget = null;
+        nestSearched = false;
+        escapeTarget = null;
         nestArrivalTimer = -1;
-        cooldown = 100 + crow.getRandom().nextInt(80);
+        cooldown = completed ? 100 + crow.getRandom().nextInt(80) : 20;
+        completed = false;
+    }
+
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
     }
 
     @Override
     public void tick() {
-        if (targetItem != null && crow.getMainHandItem().isEmpty()) {
-            Vec3 targetPos = targetItem.position();
-            crow.getLookControl().setLookAt(targetPos.x, targetPos.y + 0.3, targetPos.z);
+        if (crow.getMainHandItem().isEmpty()) {
+            chaseTarget();
+        } else if (isHoldingShiny()) {
+            carryLoot();
+        }
+    }
 
-            if (crow.distanceTo(targetItem) > 1.5) {
+    private void chaseTarget() {
+        if (!isValidTarget(targetItem)) return;
+
+        crow.getLookControl().setLookAt(targetItem.getX(), targetItem.getY() + 0.3, targetItem.getZ());
+
+        if (crow.distanceToSqr(targetItem) > 2.25D) {
+            if (--repathTimer <= 0 || crow.getNavigation().isDone()) {
+                repathTimer = REPATH_INTERVAL;
                 crow.getNavigation().moveTo(targetItem, speed);
-                return;
             }
-
-            ItemStack stack = targetItem.getItem();
-            ItemStack single = stack.split(1);
-            crow.setItemInHand(crow.getUsedItemHand(), single);
-
-            if (!crow.level().isClientSide) {
-                Entity owner = targetItem.getOwner();
-                if (owner instanceof Player player) {
-                    crow.tryTameFromPickup(player);
-                }
-            }
-
-            if (stack.isEmpty()) {
-                targetItem.discard();
-            }
-
-            targetItem = null;
-            dropTimer = 40;
             return;
         }
 
-        if (!crow.getMainHandItem().isEmpty() && crow.getMainHandItem().is(HHModTags.CROW_SHINY_ITEMS)) {
+        Player thrower = targetItem.getOwner() instanceof Player player ? player : null;
+        ItemStack remaining = targetItem.getItem().copy();
+        ItemStack single = remaining.split(1);
+        crow.take(targetItem, 1);
+        if (remaining.isEmpty()) {
+            targetItem.discard();
+        } else {
+            targetItem.setItem(remaining);
+        }
 
-            if (dropTimer > 0) {
-                dropTimer--;
-                return;
-            }
+        crow.holdItem(single);
+        crow.playSound(SoundEvents.ITEM_PICKUP, 0.4F, 1.4F);
+        crow.getNavigation().stop();
 
-            if (nestTarget == null) {
-                BlockPos found = findNearestNest(16);
-                nestTarget = (found != null) ? found : NO_NEST;
-                if (nestTarget == NO_NEST) {
-                    dropTimer = 60;
-                }
-            }
+        if (thrower != null) {
+            HHSimpleTrigger.trigger(HHModTriggers.CROW_STOLE_ITEM.get(), thrower);
+            crow.tryTameFromPickup(thrower);
+        }
 
-            if (nestTarget == NO_NEST) {
-                if (dropTimer > 0) {
-                    dropTimer--;
-                } else {
-                    crow.spawnAtLocation(crow.getMainHandItem().copy());
-                    crow.setItemInHand(crow.getUsedItemHand(), ItemStack.EMPTY);
-                }
-                return;
-            }
+        targetItem = null;
+        carryTimer = CARRY_TICKS;
+    }
 
-            BlockState nestState = crow.level().getBlockState(nestTarget);
-            if (!nestState.is(HHModBlocks.NEST.get())) {
-                nestTarget = null;
-                return;
-            }
+    private void carryLoot() {
+        if (!nestSearched) {
+            nestSearched = true;
+            nestTarget = findNearestNest();
+        }
 
-            crow.getNavigation().moveTo(
-                    nestTarget.getX() + 0.5,
-                    nestTarget.getY() + 1.1,
-                    nestTarget.getZ() + 0.5,
-                    speed * 1.2
-            );
+        if (nestTarget != null && !crow.level().getBlockState(nestTarget).is(HHModTags.NESTS)) {
+            nestSearched = false;
+            nestTarget = null;
+            return;
+        }
 
-            double dist = crow.distanceToSqr(
-                    nestTarget.getX() + 0.5,
-                    nestTarget.getY() + 1.1,
-                    nestTarget.getZ() + 0.5
-            );
-
-            if (dist < 1.5) {
-                crow.getNavigation().stop();
-
-                if (nestArrivalTimer < 0) {
-                    nestArrivalTimer = 40;
-                    return;
-                }
-
-                nestArrivalTimer--;
-
-                if (nestArrivalTimer <= 0) {
-                    depositIntoNest(nestTarget);
-                    crow.setItemInHand(crow.getUsedItemHand(), ItemStack.EMPTY);
-
-                    cooldown = 80;
-                    nestTarget = null;
-                    nestArrivalTimer = -1;
-                }
-            } else {
-                nestArrivalTimer = -1;
-            }
+        if (nestTarget != null) {
+            flyToNest();
+        } else {
+            escapeAndDrop();
         }
     }
 
-    private BlockPos findNearestNest(int radius) {
-        BlockPos crowPos = crow.blockPosition();
-        BlockPos.MutableBlockPos check = new BlockPos.MutableBlockPos();
+    private void flyToNest() {
+        double x = nestTarget.getX() + 0.5;
+        double y = nestTarget.getY() + 1.1;
+        double z = nestTarget.getZ() + 0.5;
 
-        for (int dx = -radius; dx <= radius; dx++) {
-            for (int dy = -3; dy <= 3; dy++) {
-                for (int dz = -radius; dz <= radius; dz++) {
-                    check.set(crowPos.getX() + dx, crowPos.getY() + dy, crowPos.getZ() + dz);
-                    if (crow.level().getBlockState(check).is(HHModBlocks.NEST.get()))
-                        return check.immutable();
-                }
+        if (crow.distanceToSqr(x, y, z) >= 1.5D) {
+            nestArrivalTimer = -1;
+            if (--repathTimer <= 0 || crow.getNavigation().isDone()) {
+                repathTimer = REPATH_INTERVAL;
+                crow.getNavigation().moveTo(x, y, z, speed * 1.2);
             }
+            return;
         }
-        return null;
+
+        crow.getNavigation().stop();
+        if (nestArrivalTimer < 0) {
+            nestArrivalTimer = NEST_ARRIVAL_TICKS;
+            return;
+        }
+        if (--nestArrivalTimer > 0) return;
+
+        depositIntoNest(nestTarget);
     }
 
-    private boolean isNearNest(BlockPos pos, int radius) {
-        BlockPos.MutableBlockPos check = new BlockPos.MutableBlockPos();
-        for (int dx = -radius; dx <= radius; dx++) {
-            for (int dy = -2; dy <= 2; dy++) {
-                for (int dz = -radius; dz <= radius; dz++) {
-                    check.set(pos.getX() + dx, pos.getY() + dy, pos.getZ() + dz);
-                    if (crow.level().getBlockState(check).is(HHModBlocks.NEST.get()))
-                        return true;
-                }
+    private void escapeAndDrop() {
+        if (escapeTarget == null) {
+            escapeTarget = findEscapeTarget();
+        }
+
+        boolean arrived = crow.distanceToSqr(escapeTarget) < 4.0D;
+        if (!arrived && --carryTimer > 0) {
+            if (--repathTimer <= 0 || crow.getNavigation().isDone()) {
+                repathTimer = REPATH_INTERVAL * 2;
+                crow.getNavigation().moveTo(escapeTarget.x, escapeTarget.y, escapeTarget.z, speed * 1.2);
             }
+            return;
+        }
+
+        ItemStack held = crow.getMainHandItem().copy();
+        crow.holdItem(ItemStack.EMPTY);
+        ItemEntity dropped = crow.spawnAtLocation(held);
+        if (dropped != null) dropped.setThrower(crow);
+        completed = true;
+    }
+
+    private Vec3 findEscapeTarget() {
+        Player nearest = crow.level().getNearestPlayer(crow, 16.0D);
+        Vec3 pos = nearest != null
+                ? LandRandomPos.getPosAway(crow, 16, 7, nearest.position())
+                : LandRandomPos.getPos(crow, 12, 7);
+        return pos != null ? pos : crow.position();
+    }
+
+    @Nullable
+    private ItemEntity findTarget() {
+        return crow.level().getEntitiesOfClass(ItemEntity.class, crow.getBoundingBox().inflate(SCAN_RADIUS), this::isValidTarget)
+                .stream()
+                .filter(item -> !isNearNest(item.blockPosition()))
+                .min(Comparator.comparingDouble(crow::distanceToSqr))
+                .orElse(null);
+    }
+
+    private boolean isValidTarget(@Nullable ItemEntity item) {
+        return item != null
+                && item.isAlive()
+                && !item.getItem().isEmpty()
+                && item.getItem().is(HHModTags.CROW_SHINY_ITEMS)
+                && !(item.getOwner() instanceof CrowEntity);
+    }
+
+    @Nullable
+    private BlockPos findNearestNest() {
+        return BlockPos.findClosestMatch(crow.blockPosition(), NEST_SEARCH_RADIUS, 3,
+                pos -> crow.level().getBlockState(pos).is(HHModTags.NESTS)).orElse(null);
+    }
+
+    private boolean isNearNest(BlockPos pos) {
+        for (BlockPos check : BlockPos.betweenClosed(pos.offset(-1, -2, -1), pos.offset(1, 2, 1))) {
+            if (crow.level().getBlockState(check).is(HHModTags.NESTS)) return true;
         }
         return false;
     }
 
     private void depositIntoNest(BlockPos pos) {
-        if (!(crow.level() instanceof ServerLevel server))
-            return;
-
         ItemStack stack = crow.getMainHandItem().copy();
-        ItemEntity itemEntity = new ItemEntity(server, pos.getX() + 0.5, pos.getY() + 0.25, pos.getZ() + 0.5, stack);
+        crow.holdItem(ItemStack.EMPTY);
+        completed = true;
+        nestTarget = null;
+        nestArrivalTimer = -1;
+
+        if (!(crow.level() instanceof ServerLevel server)) return;
+        if (server.getBlockEntity(pos) instanceof NestBlockEntity nest) {
+            stack = nest.insert(stack);
+            nest.markCrowStash();
+            if (stack.isEmpty()) return;
+        }
+        double angle = crow.getRandom().nextDouble() * Math.PI * 2.0;
+        ItemEntity itemEntity = new ItemEntity(server,
+                pos.getX() + 0.5 + Math.cos(angle) * 0.9,
+                pos.getY() + 0.25,
+                pos.getZ() + 0.5 + Math.sin(angle) * 0.9,
+                stack);
         itemEntity.setDefaultPickUpDelay();
         itemEntity.setDeltaMovement(0, 0, 0);
+        itemEntity.setThrower(crow);
         server.addFreshEntity(itemEntity);
     }
 }

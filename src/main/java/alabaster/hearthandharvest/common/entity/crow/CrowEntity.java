@@ -1,5 +1,9 @@
 package alabaster.hearthandharvest.common.entity.crow;
 
+import alabaster.hearthandharvest.Config;
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
+
 import javax.annotation.Nullable;
 
 import alabaster.hearthandharvest.common.entity.crow.goals.*;
@@ -7,8 +11,9 @@ import alabaster.hearthandharvest.common.registry.HHModEntities;
 import alabaster.hearthandharvest.common.registry.HHModSounds;
 import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -27,7 +32,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.FollowMobGoal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
@@ -40,30 +44,51 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.ShoulderRidingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 
 public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
+    public static final double ALARM_RANGE = 16.0D;
+    private static final int ALARM_DURATION = 120;
+    private static final int FULL_TRUST = 200;
+    private static final EntityDataAccessor<Boolean> DATA_GLIDING = SynchedEntityData.defineId(CrowEntity.class, EntityDataSerializers.BOOLEAN);
     public float flap;
     public float flapSpeed;
     public float oFlapSpeed;
     public float oFlap;
     private float flapping = 1.0F;
     private float nextFlap = 1.0F;
+    private boolean snatching;
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState flyingAnimationState = new AnimationState();
     public final AnimationState sittingAnimationState = new AnimationState();
+    public final AnimationState glidingAnimationState = new AnimationState();
+    public float flightPitch;
+    public float flightPitchO;
+    public float flightRoll;
+    public float flightRollO;
+    private float flapAnimationSpeed = 1.0F;
+    private int airborneTicks;
+    @Nullable
+    private LivingEntity alarmSource;
+    private int alarmTicks;
+    private boolean freshAlarm;
+    private int temptTrust;
+    private boolean beingTempted;
 
     public CrowEntity(EntityType<? extends ShoulderRidingEntity> entityType, Level level) {
         super(entityType, level);
-        this.moveControl = new FlyingMoveControl(this, 10, false);
+        this.moveControl = new CrowMoveControl(this);
         this.setPathfindingMalus(PathType.DANGER_FIRE, -1.0F);
         this.setPathfindingMalus(PathType.DAMAGE_FIRE, -1.0F);
     }
@@ -81,28 +106,59 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
         if (!this.level().isClientSide()) return;
 
         if (isInSittingPose()) {
-            if (!sittingAnimationState.isStarted()) {
-                idleAnimationState.stop();
-                flyingAnimationState.stop();
-                sittingAnimationState.start(this.tickCount);
+            startAnimation(sittingAnimationState);
+        } else if (isVisuallyFlying()) {
+            startAnimation(isGliding() ? glidingAnimationState : flyingAnimationState);
+        } else {
+            startAnimation(idleAnimationState);
+        }
+    }
+
+    private void startAnimation(AnimationState active) {
+        if (active.isStarted()) return;
+        for (AnimationState state : new AnimationState[]{idleAnimationState, flyingAnimationState, sittingAnimationState, glidingAnimationState}) {
+            if (state != active) state.stop();
+        }
+        active.start(this.tickCount);
+    }
+
+    public boolean isVisuallyFlying() {
+        return !isInSittingPose() && !isPassenger() && (airborneTicks > 3 || (airborneTicks > 0 && isGliding()));
+    }
+
+    private void updateFlightPose() {
+        airborneTicks = onGround() || isPassenger() ? 0 : airborneTicks + 1;
+        flightPitchO = flightPitch;
+        flightRollO = flightRoll;
+        float targetPitch = 0.0F;
+        float targetRoll = 0.0F;
+        float targetFlapSpeed = 1.0F;
+
+        if (isVisuallyFlying() && !isInWater()) {
+            double vy = getY() - yo;
+            double vh = Math.sqrt(Mth.square(getX() - xo) + Mth.square(getZ() - zo));
+            if (vh + Math.abs(vy) > 0.02D) {
+                targetPitch = (float) Mth.clamp(Mth.atan2(vy, vh) * Mth.RAD_TO_DEG * 0.7D, -35.0D, 30.0D);
             }
-            return;
+            targetRoll = Mth.clamp(Mth.wrapDegrees(getYRot() - yRotO) * 3.0F, -45.0F, 45.0F);
+            if (vy > 0.05D) targetFlapSpeed = 1.35F;
         }
 
-        if (isFlying()) {
-            if (!flyingAnimationState.isStarted()) {
-                idleAnimationState.stop();
-                sittingAnimationState.stop();
-                flyingAnimationState.start(this.tickCount);
-            }
-            return;
-        }
+        flightPitch += (targetPitch - flightPitch) * 0.2F;
+        flightRoll += (targetRoll - flightRoll) * 0.2F;
+        flapAnimationSpeed += (targetFlapSpeed - flapAnimationSpeed) * 0.1F;
+    }
 
-        if (!idleAnimationState.isStarted()) {
-            flyingAnimationState.stop();
-            sittingAnimationState.stop();
-            idleAnimationState.start(this.tickCount);
-        }
+    public float getFlapAnimationSpeed() {
+        return flapAnimationSpeed;
+    }
+
+    public boolean isGliding() {
+        return this.entityData.get(DATA_GLIDING);
+    }
+
+    public void setGliding(boolean gliding) {
+        this.entityData.set(DATA_GLIDING, gliding);
     }
 
     protected void registerGoals() {
@@ -111,14 +167,16 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
         this.goalSelector.addGoal(1, new CrowFleeEntityGoal(this, 1.8F));
         this.goalSelector.addGoal(1, new CrowAvoidRepellingBlocksGoal(this, 1.6F));
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(3, new CrowSeekShinyItemGoal(this, 1.2D));
         this.goalSelector.addGoal(3, new CrowRetrieveItemsGoal(this, 1.2D));
-        this.goalSelector.addGoal(4, new CrowEatCropsGoal(this, 1.2F));
+        this.goalSelector.addGoal(3, new CrowEatDroppedFoodGoal(this, 1.1D));
+        this.goalSelector.addGoal(4, new CrowWaryTemptGoal(this, 1.0D));
+        this.goalSelector.addGoal(5, new CrowEatCropsGoal(this, 1.2F));
         this.goalSelector.addGoal(4, new FollowOwnerGoal(this, 1.0F, 5.0F, 1.0F));
         this.goalSelector.addGoal(5, new LandOnOwnersShoulderGoal(this));
         this.goalSelector.addGoal(5, new CrowWanderGoal(this, 1.0F));
         this.goalSelector.addGoal(6, new FollowMobGoal(this, 1.0F, 3.0F, 7.0F));
+        this.goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -126,6 +184,7 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
                 .add(Attributes.MAX_HEALTH, 6.0F)
                 .add(Attributes.FLYING_SPEED, 0.8F)
                 .add(Attributes.MOVEMENT_SPEED, 0.4F)
+                .add(Attributes.FOLLOW_RANGE, 32.0F)
                 .add(Attributes.ATTACK_DAMAGE, 3.0F);
     }
 
@@ -139,7 +198,114 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
     public void aiStep() {
         super.aiStep();
+        if (this.level().isClientSide()) {
+            this.updateFlightPose();
+        } else {
+            this.tickWariness();
+            this.syncSittingPose();
+        }
         this.calculateFlapping();
+    }
+
+    private void syncSittingPose() {
+        if (this.isTame() && this.isOrderedToSit() && this.onGround() && !this.isInSittingPose()) {
+            this.setInSittingPose(true);
+        }
+    }
+
+    private void tickWariness() {
+        if (alarmTicks > 0 && --alarmTicks == 0) {
+            alarmSource = null;
+        }
+        if (!beingTempted && temptTrust > 0) {
+            temptTrust--;
+        }
+    }
+
+    public void alarm(LivingEntity source) {
+        if (this.isTame()) return;
+        this.alarmSource = source;
+        this.alarmTicks = ALARM_DURATION;
+        this.freshAlarm = true;
+        this.temptTrust = 0;
+    }
+
+    public boolean isAlarmed() {
+        return alarmTicks > 0 && alarmSource != null && alarmSource.isAlive();
+    }
+
+    @Nullable
+    public LivingEntity getAlarmSource() {
+        return isAlarmed() ? alarmSource : null;
+    }
+
+    public boolean consumeFreshAlarm() {
+        boolean fresh = freshAlarm;
+        freshAlarm = false;
+        return fresh && isAlarmed();
+    }
+
+    private void raiseAlarm(LivingEntity attacker) {
+        this.alarm(attacker);
+        if (!this.isSilent()) {
+            this.playSound(HHModSounds.CROW_SQUAWK.get(), 2.0F, 1.25F);
+        }
+        int alarmed = 1;
+        for (CrowEntity other : this.level().getEntitiesOfClass(CrowEntity.class, this.getBoundingBox().inflate(ALARM_RANGE), crow -> crow != this && !crow.isTame())) {
+            other.alarm(attacker);
+            alarmed++;
+            if (!other.isSilent() && other.getRandom().nextInt(3) == 0) {
+                other.playSound(HHModSounds.CROW_SQUAWK.get(), 1.5F, getPitch(other.getRandom()) + 0.15F);
+            }
+        }
+        if (alarmed >= 5) HHSimpleTrigger.trigger(HHModTriggers.CROW_FLOCK_ALARM.get(), attacker);
+    }
+
+    public void setBeingTempted(boolean beingTempted) {
+        this.beingTempted = beingTempted;
+    }
+
+    public void addTemptTrust(int amount) {
+        this.temptTrust = Mth.clamp(this.temptTrust + amount, 0, FULL_TRUST);
+    }
+
+    public boolean isFullyTrusting() {
+        return temptTrust >= FULL_TRUST;
+    }
+
+    private float getTrustProgress() {
+        return (float) temptTrust / FULL_TRUST;
+    }
+
+    public double getComfortDistance() {
+        return Mth.lerp(getTrustProgress(), 4.0D, 1.5D);
+    }
+
+    public double getWaryDistance() {
+        return Mth.lerp(getTrustProgress(), 2.5D, 1.0D);
+    }
+
+    public static boolean isHoldingTemptItem(LivingEntity entity) {
+        return entity.getMainHandItem().is(HHModTags.CROW_TEMPT_ITEMS) || entity.getOffhandItem().is(HHModTags.CROW_TEMPT_ITEMS);
+    }
+
+    public double getThreatRadius(LivingEntity entity, double baseRadius) {
+        if (entity == this || !entity.isAlive()) return -1.0D;
+        if (entity == getAlarmSource()) return ALARM_RANGE;
+        if (!entity.getType().is(HHModTags.SCARY_FOR_CROW)) return -1.0D;
+        if (entity instanceof Player player) {
+            if (player.isCreative() || player.isSpectator()) return -1.0D;
+            if (Config.CROW_TEMPTING.get() && isHoldingTemptItem(player)) return Math.min(baseRadius, getWaryDistance());
+        }
+        return baseRadius;
+    }
+
+    public boolean isSpotThreatened(Vec3 pos, double baseRadius) {
+        double scan = isAlarmed() ? Math.max(baseRadius, ALARM_RANGE) : baseRadius;
+        return !this.level().getEntitiesOfClass(LivingEntity.class, AABB.ofSize(pos, scan * 2.0D, scan * 2.0D, scan * 2.0D), entity -> {
+            double radius = getThreatRadius(entity, baseRadius);
+            return radius > 0.0D && entity.distanceToSqr(pos) <= radius * radius;
+        }).isEmpty();
     }
 
     private void calculateFlapping() {
@@ -153,10 +319,6 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
         }
 
         this.flapping *= 0.9F;
-        Vec3 vec3 = this.getDeltaMovement();
-        if (!this.onGround() && vec3.y < (double)0.0F) {
-            this.setDeltaMovement(vec3.multiply((double)1.0F, 0.6, (double)1.0F));
-        }
 
         this.flap += this.flapping * 2.0F;
     }
@@ -180,11 +342,13 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
 
             return InteractionResult.sidedSuccess(this.level().isClientSide);
         } else if (!itemstack.is(ItemTags.PARROT_POISONOUS_FOOD)) {
-            if (!this.isFlying() && this.isTame() && this.isOwnedBy(player)) {
+            if (this.isTame() && this.isOwnedBy(player)) {
+                if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
                 if (!this.level().isClientSide) {
                     boolean sit = !this.isOrderedToSit();
                     this.setOrderedToSit(sit);
-                    this.setInSittingPose(sit);
+                    this.setInSittingPose(sit && this.onGround());
+                    this.getNavigation().stop();
                 }
 
                 return InteractionResult.sidedSuccess(this.level().isClientSide);
@@ -202,6 +366,16 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
         }
     }
 
+    public void tryTameFromFood(@Nullable Player player) {
+        if (player == null || this.isTame() || this.level().isClientSide) return;
+        if (this.random.nextInt(8) == 0 && !EventHooks.onAnimalTame(this, player)) {
+            this.tame(player);
+            this.level().broadcastEntityEvent(this, (byte) 7);
+        } else {
+            this.level().broadcastEntityEvent(this, (byte) 6);
+        }
+    }
+
     public void tryTameFromPickup(@Nullable Player player) {
         if (player == null || this.isTame())
             return;
@@ -215,14 +389,33 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
                 this.level().broadcastEntityEvent(this, (byte)7);
 
                 if (!held.isEmpty()) {
-                    this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-                    this.spawnAtLocation(held, 0.3F);
+                    this.holdItem(ItemStack.EMPTY);
+                    ItemEntity dropped = this.spawnAtLocation(held, 0.3F);
+                    if (dropped != null) dropped.setThrower(player);
                 }
 
             } else {
                 this.level().broadcastEntityEvent(this, (byte)6);
             }
         }
+    }
+
+    public boolean isSnatching() {
+        return snatching;
+    }
+
+    public void setSnatching(boolean snatching) {
+        this.snatching = snatching;
+    }
+
+    @Override
+    public boolean canSitOnShoulder() {
+        return super.canSitOnShoulder() && this.getMainHandItem().isEmpty();
+    }
+
+    public void holdItem(ItemStack stack) {
+        this.setItemSlot(EquipmentSlot.MAINHAND, stack);
+        if (!stack.isEmpty()) this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
     }
 
     public boolean isFood(ItemStack stack) {
@@ -307,12 +500,17 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
                 this.setOrderedToSit(false);
             }
 
-            return super.hurt(source, amount);
+            boolean hurt = super.hurt(source, amount);
+            if (hurt && !this.level().isClientSide && !this.isTame() && Config.CROW_FLOCK_ALARM.get() && source.getEntity() instanceof LivingEntity attacker && attacker != this) {
+                this.raiseAlarm(attacker);
+            }
+            return hurt;
         }
     }
 
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
+        builder.define(DATA_GLIDING, false);
     }
 
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -336,41 +534,84 @@ public class CrowEntity extends ShoulderRidingEntity implements FlyingAnimal {
     }
 
     static class CrowWanderGoal extends WaterAvoidingRandomFlyingGoal {
+        private static final int PERCH_SAMPLES = 16;
+        private static final int PERCH_HORIZONTAL_RANGE = 12;
+        private static final int PERCH_VERTICAL_RANGE = 8;
+        private static final int PERCHED_INTERVAL = 400;
+        private static final int GROUND_INTERVAL = 120;
+
         public CrowWanderGoal(PathfinderMob mob, double speedModifier) {
             super(mob, speedModifier);
         }
 
-        @Nullable
-        protected Vec3 getPosition() {
-            Vec3 vec3 = null;
-            if (this.mob.isInWater()) {
-                vec3 = LandRandomPos.getPos(this.mob, 15, 15);
-            }
+        @Override
+        public boolean canUse() {
+            if (this.mob instanceof TamableAnimal tamable && tamable.isOrderedToSit()) return false;
+            this.setInterval(isPerched() ? PERCHED_INTERVAL : GROUND_INTERVAL);
+            return super.canUse();
+        }
 
-            if (this.mob.getRandom().nextFloat() >= this.probability) {
-                vec3 = this.getTreePos();
-            }
+        private boolean isPerched() {
+            if (!this.mob.onGround()) return false;
+            return isPerchBlock(this.mob.level().getBlockState(this.mob.blockPosition().below()));
+        }
 
-            return vec3 == null ? super.getPosition() : vec3;
+        private static boolean isPerchBlock(BlockState state) {
+            return state.getBlock() instanceof LeavesBlock
+                    || state.is(BlockTags.LOGS)
+                    || state.is(BlockTags.FENCES)
+                    || state.is(BlockTags.WALLS);
         }
 
         @Nullable
-        private Vec3 getTreePos() {
-            BlockPos blockpos = this.mob.blockPosition();
-            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
-            BlockPos.MutableBlockPos blockpos$mutableblockpos1 = new BlockPos.MutableBlockPos();
+        @Override
+        protected Vec3 getPosition() {
+            if (this.mob.isInWater()) {
+                Vec3 land = LandRandomPos.getPos(this.mob, 15, 15);
+                if (land != null) return land;
+            }
 
-            for(BlockPos blockpos1 : BlockPos.betweenClosed(Mth.floor(this.mob.getX() - (double)3.0F), Mth.floor(this.mob.getY() - (double)6.0F), Mth.floor(this.mob.getZ() - (double)3.0F), Mth.floor(this.mob.getX() + (double)3.0F), Mth.floor(this.mob.getY() + (double)6.0F), Mth.floor(this.mob.getZ() + (double)3.0F))) {
-                if (!blockpos.equals(blockpos1)) {
-                    BlockState blockstate = this.mob.level().getBlockState(blockpos$mutableblockpos1.setWithOffset(blockpos1, Direction.DOWN));
-                    boolean flag = blockstate.getBlock() instanceof LeavesBlock || blockstate.is(BlockTags.LOGS);
-                    if (flag && this.mob.level().isEmptyBlock(blockpos1) && this.mob.level().isEmptyBlock(blockpos$mutableblockpos.setWithOffset(blockpos1, Direction.UP))) {
-                        return Vec3.atBottomCenterOf(blockpos1);
-                    }
+            if (this.mob.onGround() && !isPerched() && this.mob.getRandom().nextFloat() < 0.4F) {
+                Vec3 stroll = LandRandomPos.getPos(this.mob, 4, 2);
+                if (stroll != null) return stroll;
+            }
+
+            Vec3 perch = findPerch();
+            return perch != null ? perch : super.getPosition();
+        }
+
+        @Nullable
+        private Vec3 findPerch() {
+            Level level = this.mob.level();
+            RandomSource random = this.mob.getRandom();
+            BlockPos origin = this.mob.blockPosition();
+            BlockPos best = null;
+            double bestScore = Double.NEGATIVE_INFINITY;
+
+            for (int i = 0; i < PERCH_SAMPLES; i++) {
+                BlockPos column = origin.offset(
+                        random.nextInt(PERCH_HORIZONTAL_RANGE * 2 + 1) - PERCH_HORIZONTAL_RANGE,
+                        0,
+                        random.nextInt(PERCH_HORIZONTAL_RANGE * 2 + 1) - PERCH_HORIZONTAL_RANGE);
+                if (!level.hasChunkAt(column)) continue;
+
+                BlockPos top = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, column);
+                int rise = top.getY() - origin.getY();
+                if (Math.abs(rise) > PERCH_VERTICAL_RANGE) continue;
+                if (top.closerThan(origin, 3.0D)) continue;
+                if (!level.getFluidState(top.below()).isEmpty()) continue;
+
+                BlockState below = level.getBlockState(top.below());
+                if (below.is(HHModTags.REPELS_CROWS)) continue;
+
+                double score = rise + (isPerchBlock(below) ? 6.0D : 0.0D) + random.nextDouble() * 4.0D;
+                if (score > bestScore) {
+                    bestScore = score;
+                    best = top;
                 }
             }
 
-            return null;
+            return best != null ? Vec3.atBottomCenterOf(best) : null;
         }
     }
 }

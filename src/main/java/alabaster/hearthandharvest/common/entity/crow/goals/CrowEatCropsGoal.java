@@ -1,18 +1,18 @@
 package alabaster.hearthandharvest.common.entity.crow.goals;
 
+import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.common.block.CornStalkBlock;
 import alabaster.hearthandharvest.common.entity.crow.CrowEntity;
 import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
@@ -35,7 +35,7 @@ public class CrowEatCropsGoal extends Goal {
     @Override
     public boolean canUse() {
         if (crow.isTame() || crow.isBaby()) return false;
-        if (!crow.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) return false;
+        if (!Config.CROW_EAT_CROPS.get() || !EventHooks.canEntityGrief(crow.level(), crow)) return false;
         if (crow.getRandom().nextInt(50) != 0) return false; // run occasionally
 
         BlockPos pos = findNearbyEdibleCrop();
@@ -49,7 +49,7 @@ public class CrowEatCropsGoal extends Goal {
     @Override
     public boolean canContinueToUse() {
         if (targetCropPos == null) return false;
-        if (!crow.level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) return false;
+        if (!Config.CROW_EAT_CROPS.get() || !EventHooks.canEntityGrief(crow.level(), crow)) return false;
 
         BlockState state = crow.level().getBlockState(targetCropPos);
 

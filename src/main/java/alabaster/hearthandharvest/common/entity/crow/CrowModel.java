@@ -98,10 +98,22 @@ public class CrowModel<T extends CrowEntity> extends HierarchicalModel<T> {
     public void setupAnim(CrowEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw, headPitch);
-        this.animateWalk(CrowAnimations.walking, limbSwing, limbSwingAmount, 2f, 5f);
+        if (!entity.isVisuallyFlying()) {
+            this.animateWalk(CrowAnimations.walking, limbSwing, limbSwingAmount, 2f, 5f);
+        }
         this.animate(entity.idleAnimationState, CrowAnimations.idle, ageInTicks, 1f);
-        this.animate(entity.flyingAnimationState, CrowAnimations.flying, ageInTicks, 1f);
+        this.animate(entity.flyingAnimationState, CrowAnimations.flying, ageInTicks, entity.getFlapAnimationSpeed());
+        this.animate(entity.glidingAnimationState, CrowAnimations.gliding, ageInTicks, 1f);
         this.animate(entity.sittingAnimationState, CrowAnimations.sitting, ageInTicks, 1f);
+        if (!entity.getMainHandItem().isEmpty()) {
+            this.lowerbeak.xRot += 0.35F;
+        }
+    }
+
+    public void translateToBeak(PoseStack poseStack) {
+        this.crow.translateAndRotate(poseStack);
+        this.head.translateAndRotate(poseStack);
+        this.beak.translateAndRotate(poseStack);
     }
 
     @Override

@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 
 public class NestRenderer implements BlockEntityRenderer<NestBlockEntity> {
     private static final ModelResourceLocation EGG_MODEL = ModelResourceLocation.standalone(
-            ResourceLocation.withDefaultNamespace("bottle_rack/egg"));
+            ResourceLocation.withDefaultNamespace("display/egg"));
 
     private static final float CORNER = 0.12F;
     private static final float[][] CORNERS = {

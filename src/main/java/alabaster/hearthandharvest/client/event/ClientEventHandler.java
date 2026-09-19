@@ -60,7 +60,7 @@ public class ClientEventHandler {
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
         // Bottle Racks
         ResourceManager rm = Minecraft.getInstance().getResourceManager();
-        rm.listResources("models/bottle_rack", path -> path.getPath().endsWith(".json"))
+        rm.listResources("models/display", path -> path.getPath().endsWith(".json"))
                 .keySet()
                 .forEach(resourceLocation -> {
                     String path = resourceLocation.getPath();

@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 
 public class CrateRenderer implements BlockEntityRenderer<CrateBlockEntity> {
 
-    private static final double PX        = 1.0 / 16.0;
-    private static final double SPACING   = PX;
+    private static final double PX = 1.0 / 16.0;
+    private static final double SPACING = PX;
     private static final double SLOT_SIZE = 4 * PX;
 
     private final ItemRenderer itemRenderer;
@@ -39,7 +39,7 @@ public class CrateRenderer implements BlockEntityRenderer<CrateBlockEntity> {
         ModelResourceLocation modelLoc = ModelResourceLocation.standalone(
                 ResourceLocation.fromNamespaceAndPath(
                         itemId.getNamespace(),
-                        "bottle_rack/" + itemId.getPath()
+                        "display/" + itemId.getPath()
                 )
         );
         BakedModel model = Minecraft.getInstance().getModelManager().getModel(modelLoc);
@@ -55,10 +55,10 @@ public class CrateRenderer implements BlockEntityRenderer<CrateBlockEntity> {
 
         Direction facing = state.getValue(CrateBlock.FACING);
         float yRot = switch (facing) {
-            case EAST  -> -90f;
-            case SOUTH ->  180f;
-            case WEST  ->  90f;
-            default    ->  0f;
+            case EAST -> -90f;
+            case SOUTH -> 180f;
+            case WEST -> 90f;
+            default ->  0f;
         };
 
         pose.pushPose();

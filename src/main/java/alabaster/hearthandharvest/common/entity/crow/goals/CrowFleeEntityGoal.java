@@ -8,19 +8,17 @@ import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.common.entity.crow.CrowEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.phys.Vec3;
 
 public class CrowFleeEntityGoal extends Goal {
+    private static final double SNATCHING_FLEE_RADIUS = 2.5D;
 
     private final CrowEntity crow;
     private final double speedModifier;
 
     private double fleeDist = -1;
-    private double stopDist = -1;
 
     private LivingEntity threat;
     private Vec3 fleeTarget;
@@ -36,14 +34,13 @@ public class CrowFleeEntityGoal extends Goal {
         if (fleeDist < 0) {
             double r = Config.CROW_SCARE_RADIUS.get();
             fleeDist = r;
-            stopDist = r * 1.6;
         }
     }
 
     @Override
     public boolean canUse() {
         if (crow.isTame() || crow.isOrderedToSit() || crow.isPassenger()) return false;
-        if (--scanCooldown > 0) return false;
+        if (--scanCooldown > 0 && !crow.consumeFreshAlarm()) return false;
         scanCooldown = 10 + crow.getRandom().nextInt(10);
 
         initDistances();
@@ -66,7 +63,12 @@ public class CrowFleeEntityGoal extends Goal {
             return false;
 
         initDistances();
-        return crow.distanceToSqr(threat) < (stopDist * stopDist);
+        double radius = crow.getThreatRadius(threat, fleeDist);
+        if (radius <= 0.0D)
+            return false;
+
+        double stop = threat == crow.getAlarmSource() ? radius * 1.25D : radius * 1.6D;
+        return crow.distanceToSqr(threat) < stop * stop;
     }
 
     @Override
@@ -95,35 +97,27 @@ public class CrowFleeEntityGoal extends Goal {
     @Nullable
     private LivingEntity getNearestThreat() {
         initDistances();
-        Player player = crow.level().getNearestPlayer(crow, fleeDist);
+        double baseRadius = crow.isSnatching() ? Math.min(fleeDist, SNATCHING_FLEE_RADIUS) : fleeDist;
+        double scanRadius = crow.isAlarmed() ? Math.max(baseRadius, CrowEntity.ALARM_RANGE) : baseRadius;
 
-        if (player != null && (player.isCreative() || player.isSpectator())) {
-            player = null;
-        }
-
-        Villager villager = getNearestVillager(fleeDist);
-
-        if (player != null && villager != null) {
-            double dp = crow.distanceToSqr(player);
-            double dv = crow.distanceToSqr(villager);
-            return dp < dv ? player : villager;
-        }
-
-        return player != null ? player : villager;
-    }
-
-    @Nullable
-    private Villager getNearestVillager(double distance) {
-        List<Villager> villagers = crow.level().getEntitiesOfClass(
-                Villager.class,
-                crow.getBoundingBox().inflate(distance)
+        List<LivingEntity> candidates = crow.level().getEntitiesOfClass(
+                LivingEntity.class,
+                crow.getBoundingBox().inflate(scanRadius),
+                entity -> {
+                    double radius = crow.getThreatRadius(entity, baseRadius);
+                    return radius > 0.0D && crow.distanceToSqr(entity) <= radius * radius;
+                }
         );
 
-        if (villagers.isEmpty())
+        if (candidates.isEmpty())
             return null;
 
+        LivingEntity alarmSource = crow.getAlarmSource();
+        if (alarmSource != null && candidates.contains(alarmSource))
+            return alarmSource;
+
         return crow.level().getNearestEntity(
-                villagers,
+                candidates,
                 TargetingConditions.forNonCombat(),
                 crow,
                 crow.getX(),

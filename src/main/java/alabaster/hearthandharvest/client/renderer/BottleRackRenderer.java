@@ -29,7 +29,7 @@ public class BottleRackRenderer implements BlockEntityRenderer<BottleRackBlockEn
     private BakedModel getBottleRackModel(ItemStack stack) {
         ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
         ModelResourceLocation modelLoc = ModelResourceLocation.standalone(
-                ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "bottle_rack/" + itemId.getPath())
+                ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "display/" + itemId.getPath())
         );
         BakedModel model = Minecraft.getInstance().getModelManager().getModel(modelLoc);
         if (model == Minecraft.getInstance().getModelManager().getMissingModel()) return null;
