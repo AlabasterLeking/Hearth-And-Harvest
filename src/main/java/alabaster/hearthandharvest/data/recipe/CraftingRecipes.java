@@ -8,13 +8,17 @@ import alabaster.hearthandharvest.common.tag.HHModTags;
 import alabaster.hearthandharvest.data.builder.ShapelessRemainderRecipeBuilder;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.Tags;
@@ -213,7 +217,7 @@ public class CraftingRecipes
                 .requires(HHModItems.WARPED_HALF_CABINET.get())
                 .unlockedBy("has_warped_half_cabinet", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.WARPED_HALF_CABINET.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "warped_cabinet_from_halves"));
-        
+
         // Half-Cabinets
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, HHModItems.OAK_HALF_CABINET.get(), 2)
                 .requires(ModItems.OAK_CABINET.get())
@@ -430,239 +434,41 @@ public class CraftingRecipes
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "canvas_from_corn_husks"));
 
         // Storage Blocks
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.BLUEBERRY_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHCommonTags.FRUITS_BLUEBERRY)
-                .unlockedBy("has_blueberry", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.BLUEBERRIES.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.CHERRY_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHCommonTags.FRUITS_CHERRY)
-                .unlockedBy("has_cherry", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHERRY.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.RASPBERRY_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHCommonTags.FRUITS_RASPBERRY)
-                .unlockedBy("has_raspberry", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.RASPBERRY.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.RED_GRAPE_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHModItems.RED_GRAPES.get())
-                .unlockedBy("has_red_grapes", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.RED_GRAPES.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.GREEN_GRAPE_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHModItems.GREEN_GRAPES.get())
-                .unlockedBy("has_green_grapes", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.GREEN_GRAPES.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.PEANUT_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHCommonTags.CROPS_PEANUT)
-                .unlockedBy("has_peanut", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.PEANUT.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.CORN_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHCommonTags.VEGETABLES_CORN)
-                .unlockedBy("has_corn", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CORN.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.APPLE_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.APPLE)
-                .unlockedBy("has_apple", InventoryChangeTrigger.TriggerInstance.hasItems(Items.APPLE))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.GOLDEN_APPLE_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.GOLDEN_APPLE)
-                .unlockedBy("has_golden_apple", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLDEN_APPLE))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.GOLDEN_CARROT_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.GOLDEN_CARROT)
-                .unlockedBy("has_golden_carrot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLDEN_CARROT))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.GLISTERING_MELON_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.GLISTERING_MELON_SLICE)
-                .unlockedBy("has_glistering_melon_slice", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GLISTERING_MELON_SLICE))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.POISONOUS_POTATO_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.POISONOUS_POTATO)
-                .unlockedBy("has_poisonous_potato", InventoryChangeTrigger.TriggerInstance.hasItems(Items.POISONOUS_POTATO))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.ROTTEN_TOMATO_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', ModItems.ROTTEN_TOMATO.get())
-                .unlockedBy("has_rotten_tomato", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ROTTEN_TOMATO.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.GLOW_BERRY_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.GLOW_BERRIES)
-                .unlockedBy("has_glow_berries", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GLOW_BERRIES))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SWEET_BERRY_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.SWEET_BERRIES)
-                .unlockedBy("has_sweet_berries", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SWEET_BERRIES))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.COTTON_BALE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHCommonTags.CROPS_COTTON)
-                .unlockedBy("has_cotton", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.COTTON.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SPOOL.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.STRING)
-                .unlockedBy("has_string", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STRING))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.ROPE_COIL.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', ModItems.ROPE.get())
-                .unlockedBy("has_rope", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ROPE.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.CORN_KERNEL_BAG.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHModItems.CORN_KERNELS.get())
-                .unlockedBy("has_corn_kernels", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CORN_KERNELS.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.CORN_HUSK_BUNDLE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHModItems.CORN_HUSK.get())
-                .unlockedBy("has_corn_husk", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CORN_HUSK.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SALT_BAG.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHCommonTags.DUSTS_SALT)
-                .unlockedBy("has_salt", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SALT.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SUGAR_BAG.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.SUGAR)
-                .unlockedBy("has_sugar", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SUGAR))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.COCOA_BEAN_BAG.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.COCOA_BEANS)
-                .unlockedBy("has_cocoa_bean", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COCOA_BEANS))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.GUNPOWDER_BAG.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.GUNPOWDER)
-                .unlockedBy("has_gunpowder", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GUNPOWDER))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.FLOUR_BAG.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHModItems.FLOUR.get())
-                .unlockedBy("has_flour", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.FLOUR.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.MANURE_BAG.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', HHModItems.MANURE.get())
-                .unlockedBy("has_manure", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.MANURE.get()))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.CHARCOAL_BLOCK.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.CHARCOAL)
-                .unlockedBy("has_charcoal", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CHARCOAL))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.STICK_BRUSH.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.STICK)
-                .unlockedBy("has_stick", InventoryChangeTrigger.TriggerInstance.hasItems(Items.STICK))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SUGAR_CANE_BUNDLE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.SUGAR_CANE)
-                .unlockedBy("has_sugar_cane", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SUGAR_CANE))
-                .save(output);
+        packTag(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.BLUEBERRY_CRATE.get(), HHCommonTags.FRUITS_BLUEBERRY, HHModItems.BLUEBERRIES.get());
+        packTag(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CHERRY_CRATE.get(), HHCommonTags.FRUITS_CHERRY, HHModItems.CHERRY.get());
+        packTag(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.RASPBERRY_CRATE.get(), HHCommonTags.FRUITS_RASPBERRY, HHModItems.RASPBERRY.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.RED_GRAPE_CRATE.get(), HHModItems.RED_GRAPES.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.GREEN_GRAPE_CRATE.get(), HHModItems.GREEN_GRAPES.get());
+        packTag(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.PEANUT_CRATE.get(), HHCommonTags.CROPS_PEANUT, HHModItems.PEANUT.get());
+        packTag(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CORN_CRATE.get(), HHCommonTags.VEGETABLES_CORN, HHModItems.CORN.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.APPLE_CRATE.get(), Items.APPLE);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.GOLDEN_APPLE_CRATE.get(), Items.GOLDEN_APPLE);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.GOLDEN_CARROT_CRATE.get(), Items.GOLDEN_CARROT);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.GLISTERING_MELON_CRATE.get(), Items.GLISTERING_MELON_SLICE);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.POISONOUS_POTATO_CRATE.get(), Items.POISONOUS_POTATO);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.ROTTEN_TOMATO_CRATE.get(), ModItems.ROTTEN_TOMATO.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.GLOW_BERRY_CRATE.get(), Items.GLOW_BERRIES);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SWEET_BERRY_CRATE.get(), Items.SWEET_BERRIES);
+        packTag(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.COTTON_BALE.get(), HHCommonTags.CROPS_COTTON, HHModItems.COTTON.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SPOOL.get(), Items.STRING);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.ROPE_COIL.get(), ModItems.ROPE.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CORN_KERNEL_BAG.get(), HHModItems.CORN_KERNELS.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CORN_HUSK_BUNDLE.get(), HHModItems.CORN_HUSK.get());
+        packTag(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SALT_BAG.get(), HHCommonTags.DUSTS_SALT, HHModItems.SALT.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SUGAR_BAG.get(), Items.SUGAR);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.COCOA_BEAN_BAG.get(), Items.COCOA_BEANS);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.GUNPOWDER_BAG.get(), Items.GUNPOWDER);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.FLOUR_BAG.get(), HHModItems.FLOUR.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.MANURE_BAG.get(), HHModItems.MANURE.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CHARCOAL_BLOCK.get(), Items.CHARCOAL);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.STICK_BRUSH.get(), Items.STICK);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SUGAR_CANE_BUNDLE.get(), Items.SUGAR_CANE);
 
         // Half Crates
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.BROWN_MUSHROOM_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.BROWN_MUSHROOM)
-                .unlockedBy("has_brown_mushroom", InventoryChangeTrigger.TriggerInstance.hasItems(Items.BROWN_MUSHROOM))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.RED_MUSHROOM_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.RED_MUSHROOM)
-                .unlockedBy("has_red_mushroom", InventoryChangeTrigger.TriggerInstance.hasItems(Items.RED_MUSHROOM))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.CRIMSON_FUNGUS_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.CRIMSON_FUNGUS)
-                .unlockedBy("has_crimson_fungus", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CRIMSON_FUNGUS))
-                .save(output);
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.WARPED_FUNGUS_CRATE.get(), 1)
-                .pattern("###")
-                .pattern("###")
-                .pattern("###")
-                .define('#', Items.WARPED_FUNGUS)
-                .unlockedBy("has_warped_fungus", InventoryChangeTrigger.TriggerInstance.hasItems(Items.WARPED_FUNGUS))
-                .save(output);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.BROWN_MUSHROOM_CRATE.get(), Items.BROWN_MUSHROOM);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.RED_MUSHROOM_CRATE.get(), Items.RED_MUSHROOM);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CRIMSON_FUNGUS_CRATE.get(), Items.CRIMSON_FUNGUS);
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.WARPED_FUNGUS_CRATE.get(), Items.WARPED_FUNGUS);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SALT_BLOCK.get(), 1)
                 .pattern("##")
@@ -919,50 +725,20 @@ public class CraftingRecipes
                 .requires(HHModItems.CORN_CRATE.get())
                 .unlockedBy("has_corn_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CORN_CRATE.get()))
                 .save(output);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.APPLE, 9)
-                .requires(HHModItems.APPLE_CRATE.get())
-                .unlockedBy("has_apple_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.APPLE_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "apple_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.GOLDEN_APPLE, 9)
-                .requires(HHModItems.GOLDEN_APPLE_CRATE.get())
-                .unlockedBy("has_golden_apple_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.GOLDEN_APPLE_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "golden_apple_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.GOLDEN_CARROT, 9)
-                .requires(HHModItems.GOLDEN_CARROT_CRATE.get())
-                .unlockedBy("has_golden_carrot_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.GOLDEN_CARROT_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "golden_carrot_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.GLISTERING_MELON_SLICE, 9)
-                .requires(HHModItems.GLISTERING_MELON_CRATE.get())
-                .unlockedBy("has_glistering_melon_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.GLISTERING_MELON_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "glistering_melon_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.POISONOUS_POTATO, 9)
-                .requires(HHModItems.POISONOUS_POTATO_CRATE.get())
-                .unlockedBy("has_poisonous_potato_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.POISONOUS_POTATO_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "poisonous_potato_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.ROTTEN_TOMATO.get(), 9)
-                .requires(HHModItems.ROTTEN_TOMATO_CRATE.get())
-                .unlockedBy("has_rotten_tomato_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.ROTTEN_TOMATO_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "rotten_tomato_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.GLOW_BERRIES, 9)
-                .requires(HHModItems.GLOW_BERRY_CRATE.get())
-                .unlockedBy("has_glow_berry_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.GLOW_BERRY_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "glow_berry_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.SWEET_BERRIES, 9)
-                .requires(HHModItems.SWEET_BERRY_CRATE.get())
-                .unlockedBy("has_sweet_berry_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SWEET_BERRY_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "sweet_berry_from_crate"));
+        unpack(output, RecipeCategory.FOOD, Items.APPLE, HHModItems.APPLE_CRATE.get(), "apple_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.GOLDEN_APPLE, HHModItems.GOLDEN_APPLE_CRATE.get(), "golden_apple_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.GOLDEN_CARROT, HHModItems.GOLDEN_CARROT_CRATE.get(), "golden_carrot_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.GLISTERING_MELON_SLICE, HHModItems.GLISTERING_MELON_CRATE.get(), "glistering_melon_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.POISONOUS_POTATO, HHModItems.POISONOUS_POTATO_CRATE.get(), "poisonous_potato_from_crate");
+        unpack(output, RecipeCategory.FOOD, ModItems.ROTTEN_TOMATO.get(), HHModItems.ROTTEN_TOMATO_CRATE.get(), "rotten_tomato_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.GLOW_BERRIES, HHModItems.GLOW_BERRY_CRATE.get(), "glow_berry_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.SWEET_BERRIES, HHModItems.SWEET_BERRY_CRATE.get(), "sweet_berry_from_crate");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HHModItems.COTTON.get(), 9)
                 .requires(HHModItems.COTTON_BALE.get())
                 .unlockedBy("has_cotton_bale", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.COTTON_BALE.get()))
                 .save(output);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STRING, 9)
-                .requires(HHModItems.SPOOL.get())
-                .unlockedBy("has_spool", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SPOOL.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "string_from_spool"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ROPE.get(), 9)
-                .requires(HHModItems.ROPE_COIL.get())
-                .unlockedBy("has_rope_coil", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.ROPE_COIL.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "rope_from_coil"));
+        unpack(output, RecipeCategory.MISC, Items.STRING, HHModItems.SPOOL.get(), "string_from_spool");
+        unpack(output, RecipeCategory.MISC, ModItems.ROPE.get(), HHModItems.ROPE_COIL.get(), "rope_from_coil");
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.CORN_KERNELS.get(), 9)
                 .requires(HHModItems.CORN_KERNEL_BAG.get())
                 .unlockedBy("has_corn_kernel_bag", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CORN_KERNEL_BAG.get()))
@@ -979,50 +755,17 @@ public class CraftingRecipes
                 .requires(HHModItems.SALT_BAG.get())
                 .unlockedBy("has_salt_bag", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SALT_BAG.get()))
                 .save(output);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.SUGAR, 9)
-                .requires(HHModItems.SUGAR_BAG.get())
-                .unlockedBy("has_sugar_bag", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SUGAR_BAG.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "sugar_from_bag"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.COCOA_BEANS, 9)
-                .requires(HHModItems.COCOA_BEAN_BAG.get())
-                .unlockedBy("has_cocoa_bean_bag", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.COCOA_BEAN_BAG.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "cocoa_bean_from_bag"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.GUNPOWDER, 9)
-                .requires(HHModItems.GUNPOWDER_BAG.get())
-                .unlockedBy("has_gunpowder_bag", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.GUNPOWDER_BAG.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "gunpowder_from_bag"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, HHModItems.MANURE.get(), 9)
-                .requires(HHModItems.MANURE_BAG.get())
-                .unlockedBy("has_manure_bag", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.MANURE_BAG.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "manure_from_bag"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.CHARCOAL, 9)
-                .requires(HHModItems.CHARCOAL_BLOCK.get())
-                .unlockedBy("has_charcoal_block", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHARCOAL_BLOCK.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "charcoal_from_block"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STICK, 9)
-                .requires(HHModItems.STICK_BRUSH.get())
-                .unlockedBy("has_stick_brush", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.STICK_BRUSH.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "stick_from_brush"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.SUGAR_CANE, 9)
-                .requires(HHModItems.SUGAR_CANE_BUNDLE.get())
-                .unlockedBy("has_sugar_cane_bundle", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SUGAR_CANE_BUNDLE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "sugar_cane_from_bundle"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.BROWN_MUSHROOM, 9)
-                .requires(HHModItems.BROWN_MUSHROOM_CRATE.get())
-                .unlockedBy("has_brown_mushroom_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.BROWN_MUSHROOM_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "brown_mushroom_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.RED_MUSHROOM, 9)
-                .requires(HHModItems.RED_MUSHROOM_CRATE.get())
-                .unlockedBy("has_red_mushroom_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.RED_MUSHROOM_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "red_mushroom_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.CRIMSON_FUNGUS, 9)
-                .requires(HHModItems.CRIMSON_FUNGUS_CRATE.get())
-                .unlockedBy("has_crimson_fungus_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CRIMSON_FUNGUS_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "crimson_fungus_from_crate"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.WARPED_FUNGUS, 9)
-                .requires(HHModItems.WARPED_FUNGUS_CRATE.get())
-                .unlockedBy("has_warped_fungus_crate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.WARPED_FUNGUS_CRATE.get()))
-                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "warped_fungus_from_crate"));
+        unpack(output, RecipeCategory.FOOD, Items.SUGAR, HHModItems.SUGAR_BAG.get(), "sugar_from_bag");
+        unpack(output, RecipeCategory.FOOD, Items.COCOA_BEANS, HHModItems.COCOA_BEAN_BAG.get(), "cocoa_bean_from_bag");
+        unpack(output, RecipeCategory.MISC, Items.GUNPOWDER, HHModItems.GUNPOWDER_BAG.get(), "gunpowder_from_bag");
+        unpack(output, RecipeCategory.MISC, HHModItems.MANURE.get(), HHModItems.MANURE_BAG.get(), "manure_from_bag");
+        unpack(output, RecipeCategory.MISC, Items.CHARCOAL, HHModItems.CHARCOAL_BLOCK.get(), "charcoal_from_block");
+        unpack(output, RecipeCategory.MISC, Items.STICK, HHModItems.STICK_BRUSH.get(), "stick_from_brush");
+        unpack(output, RecipeCategory.MISC, Items.SUGAR_CANE, HHModItems.SUGAR_CANE_BUNDLE.get(), "sugar_cane_from_bundle");
+        unpack(output, RecipeCategory.FOOD, Items.BROWN_MUSHROOM, HHModItems.BROWN_MUSHROOM_CRATE.get(), "brown_mushroom_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.RED_MUSHROOM, HHModItems.RED_MUSHROOM_CRATE.get(), "red_mushroom_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.CRIMSON_FUNGUS, HHModItems.CRIMSON_FUNGUS_CRATE.get(), "crimson_fungus_from_crate");
+        unpack(output, RecipeCategory.FOOD, Items.WARPED_FUNGUS, HHModItems.WARPED_FUNGUS_CRATE.get(), "warped_fungus_from_crate");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.STRING, 2)
                 .requires(HHCommonTags.CROPS_COTTON)
@@ -1375,5 +1118,36 @@ public class CraftingRecipes
                 .requires(Items.SUGAR)
                 .unlockedBy("has_sugar", InventoryChangeTrigger.TriggerInstance.hasItems(Items.SUGAR))
                 .save(output);
+    }
+
+    private static void pack(RecipeOutput output, RecipeCategory category, ItemLike result, ItemLike ingredient) {
+        ShapedRecipeBuilder.shaped(category, result, 1)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', ingredient)
+                .unlockedBy(has(ingredient), InventoryChangeTrigger.TriggerInstance.hasItems(ingredient))
+                .save(output);
+    }
+
+    private static void packTag(RecipeOutput output, RecipeCategory category, ItemLike result, TagKey<Item> ingredient, ItemLike unlockItem) {
+        ShapedRecipeBuilder.shaped(category, result, 1)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', ingredient)
+                .unlockedBy(has(unlockItem), InventoryChangeTrigger.TriggerInstance.hasItems(unlockItem))
+                .save(output);
+    }
+
+    private static void unpack(RecipeOutput output, RecipeCategory category, ItemLike result, ItemLike container, String recipeId) {
+        ShapelessRecipeBuilder.shapeless(category, result, 9)
+                .requires(container)
+                .unlockedBy(has(container), InventoryChangeTrigger.TriggerInstance.hasItems(container))
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, recipeId));
+    }
+
+    private static String has(ItemLike item) {
+        return "has_" + BuiltInRegistries.ITEM.getKey(item.asItem()).getPath();
     }
 }
