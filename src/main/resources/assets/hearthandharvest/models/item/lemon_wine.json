@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "particle": "hearthandharvest:item/lemon_wine"
+  },
+  "loader": "neoforge:separate_transforms",
+  "base": {
+    "parent": "hearthandharvest:block/lemon_wine_bottle"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "hearthandharvest:item/2d_lemon_wine"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_lemon_wine"
+    },
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_lemon_wine"
+    }
+  }
+}
