@@ -1,5 +1,6 @@
 {
   "values": [
+    "hearthandharvest:rotten_tomato_crate",
     "hearthandharvest:raspberry_crate",
     "hearthandharvest:blueberry_crate",
     "hearthandharvest:red_grape_crate",
@@ -32,7 +33,6 @@
     "hearthandharvest:corn_kernel_bag",
     "hearthandharvest:charcoal_block",
     "hearthandharvest:stick_brush",
-    "hearthandharvest:sugar_cane_bundle",
-    "hearthandharvest:rotten_tomato_crate"
+    "hearthandharvest:sugar_cane_bundle"
   ]
 }

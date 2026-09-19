@@ -173,6 +173,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.GUNPOWDER_BAG.get())
                 .add(HHModItems.FLOUR_BAG.get())
                 .add(HHModItems.MANURE_BAG.get())
+                .add(HHModItems.FEATHER_BAG.get())
                 .add(HHModItems.SALT_BAG.get())
                 .add(HHModItems.SUGAR_BAG.get())
                 .add(HHModItems.COCOA_BEAN_BAG.get())
@@ -568,6 +569,7 @@ public class HHItemTags extends ItemTagsProvider {
 
         tag(Tags.Items.FOODS_COOKIE)
                 .add(HHModItems.MAPLE_COOKIE.get())
+                .add(HHModItems.RAISIN_COOKIE.get())
                 .add(HHModItems.PEANUT_BUTTER_COOKIE.get());
 
         tag(Tags.Items.FOODS_BREAD)
