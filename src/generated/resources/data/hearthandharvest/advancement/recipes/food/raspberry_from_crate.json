@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_salt_bag": {
+    "has_raspberry_crate": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:salt_bag"
+            "items": "hearthandharvest:raspberry_crate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:salt"
+        "recipe": "hearthandharvest:raspberry_from_crate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_salt_bag"
+      "has_raspberry_crate"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:salt"
+      "hearthandharvest:raspberry_from_crate"
     ]
   }
 }

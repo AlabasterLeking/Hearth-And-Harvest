@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_corn_husk_bundle": {
+    "has_cherry_crate": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:corn_husk_bundle"
+            "items": "hearthandharvest:cherry_crate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:corn_husk"
+        "recipe": "hearthandharvest:cherry_from_crate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_corn_husk_bundle"
+      "has_cherry_crate"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:corn_husk"
+      "hearthandharvest:cherry_from_crate"
     ]
   }
 }

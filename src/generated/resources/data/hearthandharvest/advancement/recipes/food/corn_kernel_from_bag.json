@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_flour_bag": {
+    "has_corn_kernel_bag": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:flour_bag"
+            "items": "hearthandharvest:corn_kernel_bag"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:flour"
+        "recipe": "hearthandharvest:corn_kernel_from_bag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_flour_bag"
+      "has_corn_kernel_bag"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:flour"
+      "hearthandharvest:corn_kernel_from_bag"
     ]
   }
 }

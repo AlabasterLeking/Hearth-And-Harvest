@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cherry_crate": {
+    "has_cotton_bale": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:cherry_crate"
+            "items": "hearthandharvest:cotton_bale"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:cherry"
+        "recipe": "hearthandharvest:cotton_from_bale"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_cherry_crate"
+      "has_cotton_bale"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:cherry"
+      "hearthandharvest:cotton_from_bale"
     ]
   }
 }

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_blueberry_crate": {
+    "has_peanut_crate": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:blueberry_crate"
+            "items": "hearthandharvest:peanut_crate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:blueberries"
+        "recipe": "hearthandharvest:peanut_from_crate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_blueberry_crate"
+      "has_peanut_crate"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:blueberries"
+      "hearthandharvest:peanut_from_crate"
     ]
   }
 }

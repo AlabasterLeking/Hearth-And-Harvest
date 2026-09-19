@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_corn_kernel_bag": {
+    "has_blueberry_crate": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:corn_kernel_bag"
+            "items": "hearthandharvest:blueberry_crate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:corn_kernels"
+        "recipe": "hearthandharvest:blueberries_from_crate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_corn_kernel_bag"
+      "has_blueberry_crate"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:corn_kernels"
+      "hearthandharvest:blueberries_from_crate"
     ]
   }
 }

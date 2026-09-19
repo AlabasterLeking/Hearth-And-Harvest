@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_peanut_crate": {
+    "has_salt_bag": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:peanut_crate"
+            "items": "hearthandharvest:salt_bag"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:peanut"
+        "recipe": "hearthandharvest:salt_from_bag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_peanut_crate"
+      "has_salt_bag"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:peanut"
+      "hearthandharvest:salt_from_bag"
     ]
   }
 }

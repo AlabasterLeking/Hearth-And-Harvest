@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_green_grape_crate": {
+    "has_flour_bag": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:green_grape_crate"
+            "items": "hearthandharvest:flour_bag"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:green_grapes"
+        "recipe": "hearthandharvest:flour_from_bag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_green_grape_crate"
+      "has_flour_bag"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:green_grapes"
+      "hearthandharvest:flour_from_bag"
     ]
   }
 }

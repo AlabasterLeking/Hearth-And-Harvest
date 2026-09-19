@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_corn_crate": {
+    "has_green_grape_crate": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:corn_crate"
+            "items": "hearthandharvest:green_grape_crate"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:corn"
+        "recipe": "hearthandharvest:green_grape_from_crate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_corn_crate"
+      "has_green_grape_crate"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:corn"
+      "hearthandharvest:green_grape_from_crate"
     ]
   }
 }

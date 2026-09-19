@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:red_grapes"
+        "recipe": "hearthandharvest:red_grape_from_crate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:red_grapes"
+      "hearthandharvest:red_grape_from_crate"
     ]
   }
 }
