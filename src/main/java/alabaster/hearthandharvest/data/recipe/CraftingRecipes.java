@@ -934,10 +934,12 @@ public class CraftingRecipes
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "cake_from_batter"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.TRAIL_MIX.get())
-                .requires(HHCommonTags.CROPS_PEANUT)
+                .requires(HHModItems.ROASTED_PEANUTS.get())
                 .requires(HHModItems.RAISINS.get())
                 .requires(Items.COCOA_BEANS)
                 .requires(Tags.Items.SEEDS)
+                .unlockedBy("has_roasted_peanuts", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.ROASTED_PEANUTS.get()))
+                .unlockedBy("has_cocoa_beans", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COCOA_BEANS))
                 .unlockedBy("has_raisins", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.RAISINS.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "trail_mix"));
 

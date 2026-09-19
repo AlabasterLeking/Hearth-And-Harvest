@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "c:crops/peanut"
+      "item": "hearthandharvest:roasted_peanuts"
     },
     {
       "item": "hearthandharvest:raisins"
