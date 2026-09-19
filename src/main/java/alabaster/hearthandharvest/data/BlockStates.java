@@ -112,8 +112,8 @@ public class BlockStates extends BlockStateProvider {
         this.bagBlockSimple(HHModBlocks.GUNPOWDER_BAG.get());
         this.bagBlockSimple(HHModBlocks.CORN_KERNEL_BAG.get());
         this.bagBlockSimple(HHModBlocks.FLOUR_BAG.get());
-
         this.bagBlockCustom(HHModBlocks.MANURE_BAG.get());
+        this.bagBlockSimple(HHModBlocks.FEATHER_BAG.get());
 
         this.simpleBlock(HHModBlocks.CHARCOAL_BLOCK.get());
 

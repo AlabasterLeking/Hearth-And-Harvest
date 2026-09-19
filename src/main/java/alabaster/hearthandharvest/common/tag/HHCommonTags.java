@@ -105,6 +105,9 @@ public class HHCommonTags {
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SUGAR_CANE = commonItemTag("storage_blocks/sugar_cane");
     public static final TagKey<Block> STORAGE_BLOCKS_SUGAR_CANE = commonBlockTag("storage_blocks/sugar_cane");
 
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_FEATHER = commonItemTag("storage_blocks/feather");
+    public static final TagKey<Block> STORAGE_BLOCKS_FEATHER = commonBlockTag("storage_blocks/feather");
+
     public static final TagKey<Item> FIBERS = commonItemTag("fibers");
     public static final TagKey<Item> MANURE = commonItemTag("manure");
     public static final TagKey<Item> BUTTER = commonItemTag("butter");

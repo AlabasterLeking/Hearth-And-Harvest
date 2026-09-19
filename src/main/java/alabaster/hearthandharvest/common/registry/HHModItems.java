@@ -318,6 +318,8 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.FLOUR_BAG.get(), basicItem()));
     public static final Supplier<Item> MANURE_BAG = registerWithBlockTab("manure_bag",
             () -> new BlockItem(HHModBlocks.MANURE_BAG.get(), basicItem()));
+    public static final Supplier<Item> FEATHER_BAG = registerWithBlockTab("feather_bag",
+            () -> new BlockItem(HHModBlocks.FEATHER_BAG.get(), basicItem()));
 
     // Misc
     public static final Supplier<Item> COTTON_BALE = registerWithBlockTab("cotton_bale",

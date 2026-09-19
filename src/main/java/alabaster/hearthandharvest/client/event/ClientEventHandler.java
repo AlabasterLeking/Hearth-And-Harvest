@@ -3,6 +3,7 @@ package alabaster.hearthandharvest.client.event;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.client.gui.CaskGUI;
 import alabaster.hearthandharvest.client.particle.DrippingSapParticle;
+import alabaster.hearthandharvest.client.particle.FeatherParticle;
 import alabaster.hearthandharvest.client.particle.FliesParticle;
 import alabaster.hearthandharvest.client.recipebook.RecipeCategories;
 import alabaster.hearthandharvest.client.renderer.*;
@@ -130,6 +131,10 @@ public class ClientEventHandler {
         event.registerSpriteSet(
                 HHModParticleTypes.FLIES.get(),
                 FliesParticle.Provider::new
+        );
+        event.registerSpriteSet(
+                HHModParticleTypes.FEATHER.get(),
+                FeatherParticle.Provider::new
         );
     }
 

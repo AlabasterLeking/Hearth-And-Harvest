@@ -228,6 +228,8 @@ public class HHBlockTags extends BlockTagsProvider {
                 .add(HHModBlocks.FLOUR_BAG.get());
         tag(HHCommonTags.STORAGE_BLOCKS_MANURE)
                 .add(HHModBlocks.MANURE_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_FEATHER)
+                .add(HHModBlocks.FEATHER_BAG.get());
         tag(HHCommonTags.STORAGE_BLOCKS_STRING)
                 .add(HHModBlocks.SPOOL.get());
         tag(HHCommonTags.STORAGE_BLOCKS_CHARCOAL)
@@ -263,6 +265,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.COCOA_BEAN_BAG.get(),
                 HHModBlocks.FLOUR_BAG.get(),
                 HHModBlocks.MANURE_BAG.get(),
+                HHModBlocks.FEATHER_BAG.get(),
                 HHModBlocks.COTTON_BALE.get(),
                 HHModBlocks.SPOOL.get(),
                 HHModBlocks.ROPE_COIL.get(),
@@ -506,7 +509,8 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.CORN_KERNEL_BAG.get(),
                 HHModBlocks.FLOUR_BAG.get(),
                 HHModBlocks.GUNPOWDER_BAG.get(),
-                HHModBlocks.MANURE_BAG.get()
+                HHModBlocks.MANURE_BAG.get(),
+                HHModBlocks.FEATHER_BAG.get()
         );
 
         tag(HHModTags.MINEABLE_WITH_PITCHFORK)

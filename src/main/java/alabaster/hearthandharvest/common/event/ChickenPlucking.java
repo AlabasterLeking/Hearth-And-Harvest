@@ -4,6 +4,7 @@ import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
 import alabaster.hearthandharvest.common.registry.HHModTriggers;
+import alabaster.hearthandharvest.common.event.FeatherParticles;
 import alabaster.hearthandharvest.common.registry.HHModAttachments;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -49,6 +50,7 @@ public class ChickenPlucking {
             }
             chicken.setData(HHModAttachments.PLUCK_COOLDOWN.get(), PLUCK_COOLDOWN_TICKS);
             chicken.spawnAtLocation(Items.FEATHER);
+            FeatherParticles.burst(chicken, 8);
             HHSimpleTrigger.trigger(HHModTriggers.PLUCKED_CHICKEN.get(), player);
 
             ItemStack heldItem = player.getMainHandItem();

@@ -28,6 +28,9 @@ public class ChickenGlideEvents {
     private static final double GLIDE_FORWARD_BOOST = 0.012D;
     private static final double GLIDE_MAX_HORIZONTAL = 0.36D;
     private static final double ADVANCEMENT_DESCENT = 10.0D;
+    private static final int FEATHER_INTERVAL = 4;
+    private static final int CLUCK_MIN_INTERVAL = 40;
+    private static final int CLUCK_CHANCE = 60;
     private static final String GLIDE_START_TAG = "hearthandharvest:glide_start_y";
 
     @SubscribeEvent
@@ -76,6 +79,7 @@ public class ChickenGlideEvents {
 
         if (player instanceof ServerPlayer serverPlayer) {
             trackDescent(serverPlayer);
+            glideEffects(serverPlayer, chicken);
         }
 
         if (player.level().isClientSide && player.isLocalPlayer()) {
@@ -89,6 +93,15 @@ public class ChickenGlideEvents {
                 && chicken.getVehicle() instanceof Player
                 && event.getSource().is(DamageTypes.IN_WALL)) {
             event.setCanceled(true);
+        }
+    }
+
+    private static void glideEffects(ServerPlayer player, Chicken chicken) {
+        if (player.tickCount % FEATHER_INTERVAL == 0) {
+            FeatherParticles.trail(chicken, 1);
+        }
+        if (player.tickCount % CLUCK_MIN_INTERVAL == 0 && player.getRandom().nextInt(CLUCK_CHANCE) < CLUCK_MIN_INTERVAL) {
+            chicken.playSound(SoundEvents.CHICKEN_AMBIENT, 0.8F, 1.1F + player.getRandom().nextFloat() * 0.3F);
         }
     }
 

@@ -294,6 +294,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.GUNPOWDER_BAG.get())
                 .add(HHModItems.FLOUR_BAG.get())
                 .add(HHModItems.MANURE_BAG.get())
+                .add(HHModItems.FEATHER_BAG.get())
                 .add(HHModItems.SALT_BAG.get())
                 .add(HHModItems.SUGAR_BAG.get())
                 .add(HHModItems.COCOA_BEAN_BAG.get())
@@ -363,6 +364,8 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.STICK_BRUSH.get());
         tag(HHCommonTags.STORAGE_BLOCKS_ITEM_SUGAR_CANE)
                 .add(HHModItems.SUGAR_CANE_BUNDLE.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_FEATHER)
+                .add(HHModItems.FEATHER_BAG.get());
 
         // Jams & cheese
         tag(HHModTags.JAMS)

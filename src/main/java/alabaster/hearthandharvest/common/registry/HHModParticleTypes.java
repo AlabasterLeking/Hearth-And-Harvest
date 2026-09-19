@@ -16,4 +16,7 @@ public class HHModParticleTypes {
 
         public static final Supplier<SimpleParticleType> FLIES = PARTICLE_TYPES.register("flies",
                 () -> new SimpleParticleType(true));
+
+        public static final Supplier<SimpleParticleType> FEATHER = PARTICLE_TYPES.register("feather",
+                () -> new SimpleParticleType(false));
 }

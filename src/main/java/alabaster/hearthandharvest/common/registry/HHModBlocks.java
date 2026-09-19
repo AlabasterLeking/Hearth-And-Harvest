@@ -236,6 +236,8 @@ public class HHModBlocks {
             () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
     public static final Supplier<Block> MANURE_BAG = BLOCKS.register("manure_bag",
             () -> new ManureBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
+    public static final Supplier<Block> FEATHER_BAG = BLOCKS.register("feather_bag",
+            () -> new FeatherBagBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
     
     // Misc Storage Blocks
     public static final Supplier<Block> COTTON_BALE = BLOCKS.register("cotton_bale",

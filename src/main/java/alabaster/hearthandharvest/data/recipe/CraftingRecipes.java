@@ -460,6 +460,7 @@ public class CraftingRecipes
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.GUNPOWDER_BAG.get(), Items.GUNPOWDER);
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.FLOUR_BAG.get(), HHModItems.FLOUR.get());
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.MANURE_BAG.get(), HHModItems.MANURE.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.FEATHER_BAG.get(), Items.FEATHER);
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CHARCOAL_BLOCK.get(), Items.CHARCOAL);
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.STICK_BRUSH.get(), Items.STICK);
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SUGAR_CANE_BUNDLE.get(), Items.SUGAR_CANE);
@@ -723,6 +724,7 @@ public class CraftingRecipes
         unpack(output, RecipeCategory.FOOD, Items.COCOA_BEANS, HHModItems.COCOA_BEAN_BAG.get(), "cocoa_bean_from_bag");
         unpack(output, RecipeCategory.MISC, Items.GUNPOWDER, HHModItems.GUNPOWDER_BAG.get(), "gunpowder_from_bag");
         unpack(output, RecipeCategory.MISC, HHModItems.MANURE.get(), HHModItems.MANURE_BAG.get(), "manure_from_bag");
+        unpack(output, RecipeCategory.MISC, Items.FEATHER, HHModItems.FEATHER_BAG.get(), "feather_from_bag");
         unpack(output, RecipeCategory.MISC, Items.CHARCOAL, HHModItems.CHARCOAL_BLOCK.get(), "charcoal_from_block");
         unpack(output, RecipeCategory.MISC, Items.STICK, HHModItems.STICK_BRUSH.get(), "stick_from_brush");
         unpack(output, RecipeCategory.MISC, Items.SUGAR_CANE, HHModItems.SUGAR_CANE_BUNDLE.get(), "sugar_cane_from_bundle");
