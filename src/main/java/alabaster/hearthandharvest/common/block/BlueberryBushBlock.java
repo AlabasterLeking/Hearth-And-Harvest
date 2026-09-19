@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -19,9 +20,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.ModList;
 
-public class BlueberryBushBlock extends SweetBerryBushBlock {
+public class BlueberryBushBlock extends SweetBerryBushBlock implements BerryBush {
     public BlueberryBushBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public Item getBerry() {
+        return HHModItems.BLUEBERRIES.get();
     }
 
     @Override

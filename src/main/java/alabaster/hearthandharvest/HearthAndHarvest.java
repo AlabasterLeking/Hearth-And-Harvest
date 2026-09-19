@@ -4,6 +4,7 @@ import alabaster.hearthandharvest.common.block.SaltBlock;
 import alabaster.hearthandharvest.common.block.StompingBasinBlock;
 import alabaster.hearthandharvest.common.entity.crow.CrowEntity;
 import alabaster.hearthandharvest.common.entity.crow.CrowSpawnRules;
+import alabaster.hearthandharvest.common.entity.goal.FoxEatBushBerriesGoal;
 import alabaster.hearthandharvest.common.entity.goal.PungentEffectGoal;
 import alabaster.hearthandharvest.common.entity.goal.SeekNestGoal;
 import alabaster.hearthandharvest.common.entity.goal.TemptingEffectGoal;
@@ -20,6 +21,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -136,6 +138,9 @@ public class HearthAndHarvest {
         if (event.getEntity() instanceof Mob mob) {
             mob.goalSelector.addGoal(1, new PungentEffectGoal(mob, 1.0D, 1.5D, 8.0D));
             mob.goalSelector.addGoal(1, new TemptingEffectGoal(mob, 1.0D, 1.25D, 8.0D));
+        }
+        if (event.getEntity() instanceof Fox fox) {
+            fox.goalSelector.addGoal(10, new FoxEatBushBerriesGoal(fox, 1.2F, 12, 1));
         }
         if (event.getEntity() instanceof Chicken chicken && Config.CHICKENS_SEEK_NESTS.get()) {
             chicken.goalSelector.addGoal(2, new SeekNestGoal(chicken, 1.0D));
