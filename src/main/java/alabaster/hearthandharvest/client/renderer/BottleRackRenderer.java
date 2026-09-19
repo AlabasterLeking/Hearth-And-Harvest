@@ -4,16 +4,12 @@ import alabaster.hearthandharvest.common.block.entity.BottleRackBlockEntity;
 import alabaster.hearthandharvest.common.tag.HHModTags;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -24,16 +20,6 @@ public class BottleRackRenderer implements BlockEntityRenderer<BottleRackBlockEn
 
     public BottleRackRenderer(BlockEntityRendererProvider.Context context) {
         this.itemRenderer = context.getItemRenderer();
-    }
-
-    private BakedModel getBottleRackModel(ItemStack stack) {
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        ModelResourceLocation modelLoc = ModelResourceLocation.standalone(
-                ResourceLocation.fromNamespaceAndPath(itemId.getNamespace(), "display/" + itemId.getPath())
-        );
-        BakedModel model = Minecraft.getInstance().getModelManager().getModel(modelLoc);
-        if (model == Minecraft.getInstance().getModelManager().getMissingModel()) return null;
-        return model;
     }
 
     @Override
@@ -49,7 +35,7 @@ public class BottleRackRenderer implements BlockEntityRenderer<BottleRackBlockEn
             ItemStack stack = rack.getItem(slot);
             if (stack.isEmpty()) continue;
 
-            BakedModel model = getBottleRackModel(stack);
+            BakedModel model = DisplayModels.get(stack);
             if (model == null) continue;
 
             pose.pushPose();

@@ -4,16 +4,12 @@ import alabaster.hearthandharvest.common.block.CrateBlock;
 import alabaster.hearthandharvest.common.block.entity.CrateBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,20 +27,6 @@ public class CrateRenderer implements BlockEntityRenderer<CrateBlockEntity> {
 
     public CrateRenderer(BlockEntityRendererProvider.Context context) {
         this.itemRenderer = context.getItemRenderer();
-    }
-
-    @Nullable
-    private BakedModel getSlabModel(ItemStack stack) {
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        ModelResourceLocation modelLoc = ModelResourceLocation.standalone(
-                ResourceLocation.fromNamespaceAndPath(
-                        itemId.getNamespace(),
-                        "display/" + itemId.getPath()
-                )
-        );
-        BakedModel model = Minecraft.getInstance().getModelManager().getModel(modelLoc);
-        if (model == Minecraft.getInstance().getModelManager().getMissingModel()) return null;
-        return model;
     }
 
     @Override
@@ -84,7 +66,7 @@ public class CrateRenderer implements BlockEntityRenderer<CrateBlockEntity> {
             ItemStack stack = slab.getItem(slotOffset + i);
             if (stack.isEmpty()) continue;
 
-            BakedModel model = getSlabModel(stack);
+            BakedModel model = DisplayModels.get(stack);
             if (model == null) continue;
 
             int col = i % 3;
