@@ -11,6 +11,7 @@ import java.util.Map;
 @EventBusSubscriber(modid = HearthAndHarvest.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class Config {
     public static ModConfigSpec COMMON_CONFIG;
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
     private static final Map<String, ModConfigSpec.BooleanValue> ITEMS = new HashMap<>();
 
     public static ModConfigSpec.DoubleValue TREE_TAPPER_BASE_CHANCE;
@@ -61,173 +62,97 @@ public class Config {
     }
 
     static {
-        ModConfigSpec.Builder COMMON_BUILDER = new ModConfigSpec.Builder();
+        TREE_TAPPER_BASE_CHANCE = range("treeTapperBaseChance", 0.5D, 0.0D, 1.0D, "Chance (0.0 - 1.0) per check interval (~2 seconds) for a Tree Tapper to collect sap when on a tappable block.\n" + "Higher values make sap fill faster.");
 
-        TREE_TAPPER_BASE_CHANCE = COMMON_BUILDER
-                .comment("Chance (0.0 - 1.0) per check interval (~2 seconds) for a Tree Tapper to collect sap when on a tappable block.\n"
-                        + "Higher values make sap fill faster.")
-                .defineInRange("treeTapperBaseChance", 0.5D, 0.0D, 1.0D);
+        STACK_WATER_BOTTLES = flag("stackWaterBottles", true, "Whether water bottles should stack up to 16");
 
-        STACK_WATER_BOTTLES = COMMON_BUILDER
-                .comment("Whether water bottles should stack up to 16")
-                .define("stackWaterBottles", true);
+        DISABLE_BOTTLE_MILKING = flag("disableBottleMilking", false, "Disables milking cows and goats with glass bottles. \n" + "Be aware that setting this can cause goat milk bottles to be unobtainable unless handled otherwise");
 
-        DISABLE_BOTTLE_MILKING = COMMON_BUILDER
-                .comment("Disables milking cows and goats with glass bottles. \n" +
-                        "Be aware that setting this can cause goat milk bottles to be unobtainable unless handled otherwise")
-                .define("disableBottleMilking", false);
+        GENERATE_CORN_MAZES = flag("generateCornMazes", true, "Whether corn mazes should spawn in the world");
 
-        GENERATE_CORN_MAZES = COMMON_BUILDER
-                .comment("Whether corn mazes should spawn in the world")
-                .define("generateCornMazes", true);
+        GENERATE_LILLIPUT_LANE = flag("generateLilliputLane", true, "Whether Lilliput Lane should spawn in the world");
 
-        GENERATE_LILLIPUT_LANE = COMMON_BUILDER
-                .comment("Whether Lilliput Lane should spawn in the world")
-                .define("generateLilliputLane", true);
+        TRELLIS_PLACEMENT_PREVIEW = flag("trellisPlacementPreview", true, "Whether a ghost preview of the trellis piece is shown before placing");
 
-        TRELLIS_PLACEMENT_PREVIEW = COMMON_BUILDER
-                .comment("Whether a ghost preview of the trellis piece is shown before placing")
-                .define("trellisPlacementPreview", true);
+        GRAPE_REQUIRE_FARMLAND = flag("grapeRequireFarmland", true, "Whether grapes on a trellis require farmland beneath the base of the column to grow and spread.\n" + "Set to false to let grapes grow anywhere, like the Vine and Rose Bush trellis plants.");
 
-        GRAPE_REQUIRE_FARMLAND = COMMON_BUILDER
-                .comment("Whether grapes on a trellis require farmland beneath the base of the column to grow and spread.\n" +
-                        "Set to false to let grapes grow anywhere, like the Vine and Rose Bush trellis plants.")
-                .define("grapeRequireFarmland", true);
+        TROUGH_ANIMAL_CAP = range("troughBreedingCap", 16, 1, 256, "Max animals in a 10-block radius before the food trough stops triggering breeding.");
 
-        TROUGH_ANIMAL_CAP = COMMON_BUILDER
-                .comment("Max animals in a 10-block radius before the food trough stops triggering breeding.")
-                .defineInRange("troughBreedingCap", 16, 1, 256);
+        CROW_SPAWN_NUMBER_OF_CROPS = range("crow.crowCropRequirement", 8, 0, 192, "Amount of crops that need to be in an area for a crow to spawn nearby. Used alongside the crowSpawnRadius config to control crow spawning.\n" + "Setting to 0 disables crop-based crow spawning. Crows can still spawn near naturally generated nests unless crow.spawnNearNests is false");
 
-        CROW_SPAWN_NUMBER_OF_CROPS = COMMON_BUILDER
-                .comment("Amount of crops that need to be in an area for a crow to spawn nearby. Used alongside the crowSpawnRadius config to control crow spawning.\n" +
-                        "Setting to 0 disables crop-based crow spawning. Crows can still spawn near naturally generated nests unless crow.spawnNearNests is false")
-                .defineInRange("crow.crowCropRequirement", 8, 0, 192);
+        CROW_SPAWN_RADIUS = range("crow.crowSpawnRadius", 8, 0, 64, "Radius that crows check for crops to be in when trying to spawn. Larger radius means higher changes of spawning.\n" + "Setting to 0 would prevent crow spawning");
 
-        CROW_SPAWN_RADIUS = COMMON_BUILDER
-                .comment("Radius that crows check for crops to be in when trying to spawn. Larger radius means higher changes of spawning.\n" +
-                        "Setting to 0 would prevent crow spawning")
-                .defineInRange("crow.crowSpawnRadius", 8, 0, 64);
+        CROW_SCARE_RADIUS = range("crow.crowScareRadius", 6, 0, 64, "Radius that players, villgers, and repelling blocks will be effective towards scaring wild crows.\n" + "Setting to 0 would prevent crows from being scared");
 
-        CROW_SCARE_RADIUS = COMMON_BUILDER
-                .comment("Radius that players, villgers, and repelling blocks will be effective towards scaring wild crows.\n" +
-                        "Setting to 0 would prevent crows from being scared")
-                .defineInRange("crow.crowScareRadius", 6, 0, 64);
+        CROW_SPAWN_NEAR_NESTS = flag("crow.spawnNearNests", true, "Whether crows can spawn near naturally generated nests without needing nearby crops");
 
-        CROW_SPAWN_NEAR_NESTS = COMMON_BUILDER
-                .comment("Whether crows can spawn near naturally generated nests without needing nearby crops")
-                .define("crow.spawnNearNests", true);
+        CHICKENS_SEEK_NESTS = flag("nests.chickensSeekNests", true, "Whether chickens walk to a nest before laying an egg. Disable if another mod already adds nest-seeking behavior");
 
-        CHICKENS_SEEK_NESTS = COMMON_BUILDER
-                .comment("Whether chickens walk to a nest before laying an egg. Disable if another mod already adds nest-seeking behavior")
-                .define("nests.chickensSeekNests", true);
+        GENERATE_NESTS = flag("nests.generateNests", true, "Whether nests generate naturally in the world");
 
-        GENERATE_NESTS = COMMON_BUILDER
-                .comment("Whether nests generate naturally in the world")
-                .define("nests.generateNests", true);
+        CROW_STEAL_SHINY_ITEMS = flag("crow.stealShinyItems", true, "Whether wild crows snatch shiny items off the ground and carry them to nests");
 
-        CROW_STEAL_SHINY_ITEMS = COMMON_BUILDER
-                .comment("Whether wild crows snatch shiny items off the ground and carry them to nests")
-                .define("crow.stealShinyItems", true);
+        CROW_FETCH_ITEMS = flag("crow.fetchItems", true, "Whether tamed crows pick up nearby items and bring them to their owner");
 
-        CROW_FETCH_ITEMS = COMMON_BUILDER
-                .comment("Whether tamed crows pick up nearby items and bring them to their owner")
-                .define("crow.fetchItems", true);
+        CROW_FETCH_THROWN_ITEMS = flag("crow.fetchThrownItems", true, "Whether tamed crows also fetch items their owner threw away");
 
-        CROW_FETCH_THROWN_ITEMS = COMMON_BUILDER
-                .comment("Whether tamed crows also fetch items their owner threw away")
-                .define("crow.fetchThrownItems", true);
+        CROW_LEAVE_SHOULDER_TO_FETCH = flag("crow.leaveShoulderToFetch", true, "Whether tamed crows hop off their owner's shoulder to fetch nearby items");
 
-        CROW_LEAVE_SHOULDER_TO_FETCH = COMMON_BUILDER
-                .comment("Whether tamed crows hop off their owner's shoulder to fetch nearby items")
-                .define("crow.leaveShoulderToFetch", true);
+        CROW_EAT_DROPPED_FOOD = flag("crow.eatDroppedFood", true, "Whether wild crows eat crow food dropped on the ground, with a chance to be tamed if a player threw it");
 
-        CROW_EAT_DROPPED_FOOD = COMMON_BUILDER
-                .comment("Whether wild crows eat crow food dropped on the ground, with a chance to be tamed if a player threw it")
-                .define("crow.eatDroppedFood", true);
+        CROW_TEMPTING = flag("crow.tempting", true, "Whether wild crows are drawn to players holding crow food and slowly learn to trust them");
 
-        CROW_TEMPTING = COMMON_BUILDER
-                .comment("Whether wild crows are drawn to players holding crow food and slowly learn to trust them")
-                .define("crow.tempting", true);
+        CROW_FLOCK_ALARM = flag("crow.flockAlarm", true, "Whether hurting a wild crow makes nearby crows flee from the attacker");
 
-        CROW_FLOCK_ALARM = COMMON_BUILDER
-                .comment("Whether hurting a wild crow makes nearby crows flee from the attacker")
-                .define("crow.flockAlarm", true);
+        CROW_EAT_CROPS = flag("crow.eatCrops", true, "Whether wild crows peck at and damage crops. Also requires the mobGriefing gamerule");
 
-        CROW_EAT_CROPS = COMMON_BUILDER
-                .comment("Whether wild crows peck at and damage crops. Also requires the mobGriefing gamerule")
-                .define("crow.eatCrops", true);
+        SALTED_HUNGER_BONUS = range("salt.saltedHungerBonus", 0.2D, 0.0D, 1.0D, "Multiplier applied to a food's nutrition value to determine bonus hunger granted when eating salted food.\n" + "For example, 0.2 means a food restoring 5 hunger gets +1 bonus hunger (20% of 5, minimum 1 for foods with less than 5 hunger).");
 
-        SALTED_HUNGER_BONUS = COMMON_BUILDER
-                .comment("Multiplier applied to a food's nutrition value to determine bonus hunger granted when eating salted food.\n" +
-                        "For example, 0.2 means a food restoring 5 hunger gets +1 bonus hunger (20% of 5, minimum 1 for foods with less than 5 hunger).")
-                .defineInRange("salt.saltedHungerBonus", 0.2D, 0.0D, 1.0D);
+        SALTED_SATURATION_PENALTY = range("salt.saltedSaturationPenalty", 0.1D, 0.0D, 1.0D, "Fraction of the saturation granted by a food that is removed when eating salted food.\n" + "For example, 0.1 means 10% of the saturation normally given is taken away.");
 
-        SALTED_SATURATION_PENALTY = COMMON_BUILDER
-                .comment("Fraction of the saturation granted by a food that is removed when eating salted food.\n" +
-                        "For example, 0.1 means 10% of the saturation normally given is taken away.")
-                .defineInRange("salt.saltedSaturationPenalty", 0.1D, 0.0D, 1.0D);
+        SALT_ANIMAL_RADIUS = range("salt.saltAnimalRadius", 12, 1, 64, "Radius in blocks that animals are kept within when near a salt block.");
 
-        SALT_ANIMAL_RADIUS = COMMON_BUILDER
-                .comment("Radius in blocks that animals are kept within when near a salt block.")
-                .defineInRange("salt.saltAnimalRadius", 12, 1, 64);
+        SALT_LICK_INTERVAL = range("salt.saltLickInterval", 9600, 200, 72000, "Ticks between each animal licking a nearby salt block. 9600 = 8 minutes.");
 
-        SALT_LICK_INTERVAL = COMMON_BUILDER
-                .comment("Ticks between each animal licking a nearby salt block. 9600 = 8 minutes.")
-                .defineInRange("salt.saltLickInterval", 9600, 200, 72000);
+        SALT_PLAYER_LICK_CHANCE = range("salt.saltPlayerLickChance", 0.05D, 0.0D, 1.0D, "Chance (0.0–1.0) that a player's right-click lick degrades the salt block.");
 
-        SALT_PLAYER_LICK_CHANCE = COMMON_BUILDER
-                .comment("Chance (0.0–1.0) that a player's right-click lick degrades the salt block.")
-                .defineInRange("salt.saltPlayerLickChance", 0.05D, 0.0D, 1.0D);
+        SALT_CAVES_ENABLED = flag("salt.generateSaltCaves", true, "Whether salt caves generate underground in biomes tagged #hearthandharvest:has_salt_caves");
 
-        SALT_CAVES_ENABLED = COMMON_BUILDER
-                .comment("Whether salt caves generate underground in biomes tagged #hearthandharvest:has_salt_caves")
-                .define("salt.generateSaltCaves", true);
+        SALT_CAVE_RARITY = range("salt.saltCaveRarity", 24, 1, 1000, "Salt caves attempt to generate on average once every this many chunks in eligible biomes");
 
-        SALT_CAVE_RARITY = COMMON_BUILDER
-                .comment("Salt caves attempt to generate on average once every this many chunks in eligible biomes")
-                .defineInRange("salt.saltCaveRarity", 24, 1, 1000);
+        SALT_CAVE_MIN_Y = range("salt.saltCaveMinY", -40, -64, 320, "Lowest Y level a salt cave can be centered on. Caves always stay clear of bedrock");
 
-        SALT_CAVE_MIN_Y = COMMON_BUILDER
-                .comment("Lowest Y level a salt cave can be centered on. Caves always stay clear of bedrock")
-                .defineInRange("salt.saltCaveMinY", -40, -64, 320);
+        SALT_CAVE_MAX_Y = range("salt.saltCaveMaxY", 30, -64, 320, "Highest Y level a salt cave can be centered on");
 
-        SALT_CAVE_MAX_Y = COMMON_BUILDER
-                .comment("Highest Y level a salt cave can be centered on")
-                .defineInRange("salt.saltCaveMaxY", 30, -64, 320);
+        PLAYER_POOP_ENABLED = flag("manure.playerPoopEnabled", true, "Whether players are able to poop using the poop keybind");
 
-        PLAYER_POOP_ENABLED = COMMON_BUILDER
-                .comment("Whether players are able to poop using the poop keybind")
-                .define("manure.playerPoopEnabled", true);
+        MANURE_FED_POOP_ENABLED = flag("manure.fedPoopEnabled", true, "Drop manure after being fed");
 
-        MANURE_FED_POOP_ENABLED = COMMON_BUILDER
-                .comment("Drop manure after being fed")
-                .define("manure.fedPoopEnabled", true);
+        MANURE_RANDOM_POOP_ENABLED = flag("manure.randomPoopEnabled", false, "Drop manure randomly over time");
 
-        MANURE_RANDOM_POOP_ENABLED = COMMON_BUILDER
-                .comment("Drop manure randomly over time")
-                .define("manure.randomPoopEnabled", false);
+        MANURE_RANDOM_POOP_CHANCE = range("manure.randomPoopChance", 300, 1, 10000, "1-in-N chance per second for random drop");
 
-        MANURE_RANDOM_POOP_CHANCE  = COMMON_BUILDER
-                .comment("1-in-N chance per second for random drop")
-                .defineInRange("manure.randomPoopChance", 300, 1, 10000);
+        DISABLE_PIG_LITTERS = flag("breeding.disablePigLitters", false, "Disables the extra baby pigs spawned when pigs breed");
 
-        DISABLE_PIG_LITTERS = COMMON_BUILDER
-                .comment("Disables the extra baby pigs spawned when pigs breed")
-                .define("breeding.disablePigLitters", false);
+        DISABLE_RABBIT_LITTERS = flag("breeding.disableRabbitLitters", false, "Disables the extra baby rabbits spawned when rabbits breed");
 
-        DISABLE_RABBIT_LITTERS = COMMON_BUILDER
-                .comment("Disables the extra baby rabbits spawned when rabbits breed")
-                .define("breeding.disableRabbitLitters", false);
+        DISABLE_CHICKEN_PLUCKING = flag("breeding.disableChickenPlucking", false, "Disables shift-right-click plucking feathers from chickens");
 
-        DISABLE_CHICKEN_PLUCKING = COMMON_BUILDER
-                .comment("Disables shift-right-click plucking feathers from chickens")
-                .define("breeding.disableChickenPlucking", false);
+        CHICKEN_GLIDING = flag("breeding.chickenGliding", true, "Whether players can pick up a chicken with an empty hand and glide while holding it overhead. Sneak to put it down");
 
-        CHICKEN_GLIDING = COMMON_BUILDER
-                .comment("Whether players can pick up a chicken with an empty hand and glide while holding it overhead. Sneak to put it down")
-                .define("breeding.chickenGliding", true);
+        COMMON_CONFIG = BUILDER.build();
+    }
 
-        COMMON_CONFIG = COMMON_BUILDER.build();
+    private static ModConfigSpec.BooleanValue flag(String key, boolean defaultValue, String comment) {
+        return BUILDER.comment(comment).define(key, defaultValue);
+    }
+
+    private static ModConfigSpec.IntValue range(String key, int defaultValue, int min, int max, String comment) {
+        return BUILDER.comment(comment).defineInRange(key, defaultValue, min, max);
+    }
+
+    private static ModConfigSpec.DoubleValue range(String key, double defaultValue, double min, double max, String comment) {
+        return BUILDER.comment(comment).defineInRange(key, defaultValue, min, max);
     }
 
     private static void put(ModConfigSpec.Builder builder, String name) {

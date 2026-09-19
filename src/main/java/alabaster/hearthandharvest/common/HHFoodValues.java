@@ -17,13 +17,13 @@ public class HHFoodValues {
 
     // Raw Ingredients
     public static final FoodProperties BLUEBERRIES = new FoodProperties.Builder()
-            .nutrition(1).saturationModifier(0.3f).build();
+            .nutrition(1).saturationModifier(0.3f).fast().build();
     public static final FoodProperties RASPBERRY = new FoodProperties.Builder()
-            .nutrition(2).saturationModifier(0.4f).build();
+            .nutrition(2).saturationModifier(0.4f).fast().build();
     public static final FoodProperties CHERRY = new FoodProperties.Builder()
-            .nutrition(3).saturationModifier(0.5f).build();
+            .nutrition(3).saturationModifier(0.5f).fast().build();
     public static final FoodProperties GRAPES = new FoodProperties.Builder()
-            .nutrition(3).saturationModifier(0.3f).build();
+            .nutrition(3).saturationModifier(0.3f).fast().build();
     public static final FoodProperties PEANUT = new FoodProperties.Builder()
             .nutrition(2).saturationModifier(0.3f).build();
     public static final FoodProperties CORN = new FoodProperties.Builder()
