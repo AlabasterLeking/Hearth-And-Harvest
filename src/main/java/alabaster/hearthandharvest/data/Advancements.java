@@ -63,7 +63,8 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.LIGHT_BLUE_MUM,
                 HHModItems.PURPLE_MUM,
                 HHModItems.PINK_MUM,
-                HHModItems.WHITE_MUM);
+                HHModItems.WHITE_MUM
+        );
 
         private static final List<Supplier<Item>> CRATES = List.of(
                 HHModItems.BLUEBERRY_CRATE,
@@ -84,7 +85,8 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.BROWN_MUSHROOM_CRATE,
                 HHModItems.RED_MUSHROOM_CRATE,
                 HHModItems.CRIMSON_FUNGUS_CRATE,
-                HHModItems.WARPED_FUNGUS_CRATE);
+                HHModItems.WARPED_FUNGUS_CRATE
+        );
 
         private static final List<Supplier<Item>> JUICES = List.of(
                 HHModItems.BLUEBERRY_JUICE,
@@ -93,7 +95,8 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.RED_GRAPE_JUICE,
                 HHModItems.GREEN_GRAPE_JUICE,
                 HHModItems.SWEET_BERRY_JUICE,
-                HHModItems.GLOW_BERRY_JUICE);
+                HHModItems.GLOW_BERRY_JUICE
+        );
 
         private static final List<Supplier<Item>> WINES = List.of(
                 HHModItems.BLUEBERRY_WINE,
@@ -103,24 +106,28 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.GREEN_GRAPE_WINE,
                 HHModItems.SWEET_BERRY_WINE,
                 HHModItems.GLOW_BERRY_WINE,
-                HHModItems.MELON_WINE);
+                HHModItems.MELON_WINE
+        );
 
         private static final List<Supplier<Item>> SPIRITS = List.of(
                 HHModItems.MEAD,
                 HHModItems.HARD_CIDER,
                 HHModItems.ROOT_BEER,
-                HHModItems.MOONSHINE);
+                HHModItems.MOONSHINE
+        );
 
         private static final List<Supplier<Item>> CHEESE_WHEELS = List.of(
                 HHModItems.CHEDDAR_CHEESE_WHEEL,
-                HHModItems.GOAT_CHEESE_WHEEL);
+                HHModItems.GOAT_CHEESE_WHEEL
+        );
 
         private static final List<Supplier<Item>> PICKLES = List.of(
                 HHModItems.PICKLED_BEETROOTS,
                 HHModItems.PICKLED_CABBAGE,
                 HHModItems.PICKLED_CARROTS,
                 HHModItems.PICKLED_ONIONS,
-                HHModItems.PICKLED_POTATOES);
+                HHModItems.PICKLED_POTATOES
+        );
 
         private static final List<Supplier<Item>> SPREADS = List.of(
                 HHModItems.BLUEBERRY_JAM,
@@ -131,23 +138,29 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.SWEET_BERRY_JAM,
                 HHModItems.GLOW_BERRY_JAM,
                 HHModItems.MELON_JAM,
-                HHModItems.PEANUT_BUTTER);
+                HHModItems.PEANUT_BUTTER
+        );
 
         private static final List<Supplier<Item>> SWEETS = List.of(
+                HHModItems.MAPLE_COOKIE,
+                HHModItems.PEANUT_BUTTER_COOKIE,
+                HHModItems.RAISIN_COOKIE,
                 HHModItems.CHOCOLATE_BAR,
                 HHModItems.BLUEBERRY_MUFFIN,
                 HHModItems.RASPBERRY_JAM,
                 HHModItems.CARAMEL,
                 HHModItems.COTTON_CANDY,
                 HHModItems.CANDY_CORN,
-                HHModItems.CARAMEL_APPLE);
+                HHModItems.CARAMEL_APPLE
+        );
 
         private static final List<Supplier<Item>> PIES = List.of(
                 HHModItems.BLUEBERRY_PIE,
                 HHModItems.RASPBERRY_PIE,
                 HHModItems.GRAPE_PIE,
                 HHModItems.PEANUT_BUTTER_PIE,
-                HHModItems.CHICKEN_POT_PIE);
+                HHModItems.CHICKEN_POT_PIE
+        );
 
         private Consumer<AdvancementHolder> saver;
         private ExistingFileHelper fileHelper;
@@ -183,7 +196,9 @@ public class Advancements extends AdvancementProvider {
 
             AdvancementHolder trellis = task(root, "farming/climbing_the_walls", HHModItems.TRELLIS.get(),
                     has(HHModItems.TRELLIS, HHModItems.BAMBOO_TRELLIS, HHModItems.STRIPPED_BAMBOO_TRELLIS));
-            task(trellis, "farming/grape_expectations", HHModItems.RED_GRAPES.get(), has(HHModItems.RED_GRAPES, HHModItems.GREEN_GRAPES));
+            AdvancementHolder grape_expectations = task(trellis, "farming/grape_expectations", HHModItems.RED_GRAPES.get(), has(HHModItems.RED_GRAPES, HHModItems.GREEN_GRAPES));
+
+            hidden(grape_expectations, "farming/disappointing", HHModItems.RAISIN_COOKIE.get(), has(HHModItems.RAISIN_COOKIE));
             challenge(trellis, "farming/floriculture", HHModItems.RED_MUM.get(), MUMS);
         }
 

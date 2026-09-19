@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raisins": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raisins"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:raisin_cookie"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raisins"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:raisin_cookie"
+    ]
+  }
+}

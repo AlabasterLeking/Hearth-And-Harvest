@@ -781,6 +781,12 @@ public class CraftingRecipes
                 .requires(HHModItems.PEANUT_BUTTER.get())
                 .unlockedBy("has_peanut_butter", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.PEANUT_BUTTER.get()))
                 .save(output);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.RAISIN_COOKIE.get(), 8)
+                .requires(Items.WHEAT)
+                .requires(Items.WHEAT)
+                .requires(HHModItems.RAISINS.get())
+                .unlockedBy("has_raisins", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.RAISINS.get()))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HHModItems.BLUEBERRY_MUFFIN.get(), 1)
                 .pattern(" B ")
                 .pattern("BSB")

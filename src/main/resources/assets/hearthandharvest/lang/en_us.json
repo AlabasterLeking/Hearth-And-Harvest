@@ -353,6 +353,7 @@
   "item.hearthandharvest.batter": "Batter",
   "item.hearthandharvest.butter": "Butter",
   "item.hearthandharvest.raisins": "Raisins",
+  "item.hearthandharvest.raisin_cookie": "Raisin Cookie",
   "item.hearthandharvest.sunflower_seeds": "Sunflower Seeds",
   "item.hearthandharvest.popcorn": "Popcorn",
   "item.hearthandharvest.uncooked_corn_on_the_cob": "Uncooked Corn on the Cob",
@@ -611,5 +612,7 @@
   "advancement.hearthandharvest.pinned_down": "Pinned Down",
   "advancement.hearthandharvest.pinned_down.desc": "Get pinned in place by a thrown pitchfork",
   "advancement.hearthandharvest.fowl_flight": "Fowl Flight",
-  "advancement.hearthandharvest.fowl_flight.desc": "Glide down 10 blocks while holding a chicken over your head"
+  "advancement.hearthandharvest.fowl_flight.desc": "Glide down 10 blocks while holding a chicken over your head",
+  "advancement.hearthandharvest.disappointing": "Disappointing",
+  "advancement.hearthandharvest.disappointing.desc": "You thought it was chocolate chip..."
 }

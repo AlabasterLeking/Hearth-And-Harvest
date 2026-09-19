@@ -208,6 +208,10 @@ public class HHFoodValues {
             .nutrition(6).saturationModifier(0.3f).build();
     public static final FoodProperties PEANUT_BUTTER_COOKIE = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.3f).fast().build();
+    public static final FoodProperties MAPLE_COOKIE = new FoodProperties.Builder()
+            .nutrition(3).saturationModifier(0.3f).fast().build();
+    public static final FoodProperties RAISIN_COOKIE = new FoodProperties.Builder()
+            .nutrition(2).saturationModifier(0.2f).fast().build();
     public static final FoodProperties TRAIL_MIX = new FoodProperties.Builder()
             .nutrition(5).saturationModifier(0.5f)
             .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, MEDIUM_DURATION, 0), 1.0F)

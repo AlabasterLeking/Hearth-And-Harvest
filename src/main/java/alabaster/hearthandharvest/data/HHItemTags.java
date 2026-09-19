@@ -84,7 +84,11 @@ public class HHItemTags extends ItemTagsProvider {
         tag(HHCommonTags.FOODS_CHOCOLATE).add(HHModItems.CHOCOLATE_BAR.get());
         tag(HHCommonTags.FOODS_RAISIN).add(HHModItems.RAISINS.get());
         tag(HHCommonTags.FOODS_POPCORN).add(HHModItems.POPCORN.get());
-        tag(Tags.Items.FOODS_COOKIE).add(HHModItems.MAPLE_COOKIE.get());
+        tag(Tags.Items.FOODS_COOKIE).add(
+                        HHModItems.MAPLE_COOKIE.get(),
+                        HHModItems.PEANUT_BUTTER_COOKIE.get(),
+                        HHModItems.RAISIN_COOKIE.get()
+        );
         tag(Tags.Items.FOODS_BREAD).add(HHModItems.CORN_BREAD.get());
         tag(Tags.Items.FOODS_FOOD_POISONING).add(HHModItems.CHARRED_MARSHMALLOW_STICK.get());
 
@@ -128,21 +132,25 @@ public class HHItemTags extends ItemTagsProvider {
         tag(Tags.Items.ANIMAL_FOODS).add(HHModItems.UNIVERSAL_FEED.get());
 
         // Supplementaries jar sweets
-        tag(HHCompatibilityTags.SUPPLEMENTARIES_JAR_COOKIES)
-                .add(HHModItems.CARAMEL_APPLE.get())
-                .add(HHModItems.CIDER_DONUT.get())
-                .add(HHModItems.CANDY_CORN.get());
+        tag(HHCompatibilityTags.SUPPLEMENTARIES_JAR_COOKIES).add(
+                HHModItems.MAPLE_COOKIE.get(),
+                HHModItems.PEANUT_BUTTER_COOKIE.get(),
+                HHModItems.RAISIN_COOKIE.get(),
+                HHModItems.CARAMEL_APPLE.get(),
+                HHModItems.CIDER_DONUT.get(),
+                HHModItems.CANDY_CORN.get()
+        );
 
         // Create belts
         tag(HHCompatibilityTags.CREATE_UPRIGHT_ON_BELT)
-                .addTags(HHModTags.BOTTLES, HHModTags.JAMS,
-                        HHCommonTags.DRINKS_JUICE, HHCommonTags.DRINKS_ALCOHOL)
+                .addTags(HHModTags.BOTTLES, HHModTags.JAMS, HHCommonTags.DRINKS_JUICE, HHCommonTags.DRINKS_ALCOHOL)
                 .add(HHModItems.SYRUP_BOTTLE.get())
                 .add(HHModItems.CORN_STEW.get())
                 .add(HHModItems.MACARONI_AND_CHEESE.get())
                 .add(HHModItems.MASHED_POTATOES.get())
                 .add(HHModItems.BISCUITS_AND_GRAVY.get())
-                .add(HHModItems.GLAZED_CARROTS.get());
+                .add(HHModItems.GLAZED_CARROTS.get()
+        );
     }
 
     private void registerModTags() {

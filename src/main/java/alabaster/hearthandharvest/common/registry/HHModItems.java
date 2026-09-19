@@ -527,7 +527,7 @@ public class HHModItems {
     public static final Supplier<Item> SYRUP_BOTTLE = registerWithTab("syrup_bottle",
             () -> new Item(basicItem().craftRemainder(Items.GLASS_BOTTLE)));
     public static final Supplier<Item> MAPLE_COOKIE = registerWithTab("maple_cookie",
-            () -> new ConsumableItem(foodItem(HHFoodValues.TORTILLA)));
+            () -> new ConsumableItem(foodItem(HHFoodValues.MAPLE_COOKIE)));
 
     // Pies
     public static final Supplier<Item> BLUEBERRY_PIE = registerWithTab("blueberry_pie",
@@ -603,6 +603,8 @@ public class HHModItems {
             () -> new ConsumableItem(foodItem(HHFoodValues.TACO)));
     public static final Supplier<Item> RAISINS = registerWithTab("raisins",
             () -> new ConsumableItem(foodItem(HHFoodValues.RAISINS)));
+    public static final Supplier<Item> RAISIN_COOKIE = registerWithTab("raisin_cookie",
+            () -> new ConsumableItem(foodItem(HHFoodValues.RAISIN_COOKIE)));
     public static final Supplier<Item> SUNFLOWER_SEEDS = registerWithTab("sunflower_seeds",
             () -> new SunflowerSeedItem(foodItem(HHFoodValues.SUNFLOWER_SEEDS)));
     public static final Supplier<Item> POPCORN = registerWithTab("popcorn",

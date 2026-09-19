@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "hearthandharvest:raisins"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "hearthandharvest:raisin_cookie"
+  }
+}

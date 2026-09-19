@@ -61,6 +61,36 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "maple_cookie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:maple_cookie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "peanut_butter_cookie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:peanut_butter_cookie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raisin_cookie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raisin_cookie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "raspberry_jam": {
       "conditions": {
         "items": [
@@ -86,6 +116,15 @@
     }
   },
   "requirements": [
+    [
+      "maple_cookie"
+    ],
+    [
+      "peanut_butter_cookie"
+    ],
+    [
+      "raisin_cookie"
+    ],
     [
       "chocolate_bar"
     ],

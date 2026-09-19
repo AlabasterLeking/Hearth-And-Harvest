@@ -1,0 +1,35 @@
+{
+  "parent": "hearthandharvest:farming/grape_expectations",
+  "criteria": {
+    "disappointing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raisin_cookie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.disappointing.desc"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:raisin_cookie"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.disappointing"
+    }
+  },
+  "requirements": [
+    [
+      "disappointing"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
