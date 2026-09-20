@@ -536,6 +536,10 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.BLUEBERRY_PIE.get(), basicItem()));
     public static final Supplier<Item> BLUEBERRY_PIE_SLICE = registerWithTab("blueberry_pie_slice",
             () -> new ConsumableItem(foodItem(HHFoodValues.BLUEBERRY_PIE_SLICE)));
+    public static final Supplier<Item> CHERRY_PIE = registerWithTab("cherry_pie",
+            () -> new BlockItem(HHModBlocks.CHERRY_PIE.get(), basicItem()));
+    public static final Supplier<Item> CHERRY_PIE_SLICE = registerWithTab("cherry_pie_slice",
+            () -> new ConsumableItem(foodItem(HHFoodValues.BLUEBERRY_PIE_SLICE)));
     public static final Supplier<Item> RASPBERRY_PIE = registerWithTab("raspberry_pie",
             () -> new BlockItem(HHModBlocks.RASPBERRY_PIE.get(), basicItem()));
     public static final Supplier<Item> RASPBERRY_PIE_SLICE = registerWithTab("raspberry_pie_slice",
@@ -556,6 +560,27 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.CARROT_CAKE.get(), basicItem()));
     public static final Supplier<Item> CARROT_CAKE_SLICE = registerWithTab("carrot_cake_slice",
             () -> new ConsumableItem(foodItem(HHFoodValues.CARROT_CAKE_SLICE)));
+    
+    // Pizzas
+    public static final Supplier<Item> PIZZA = registerWithTab("pizza",
+            () -> new BlockItem(HHModBlocks.PIZZA.get(), basicItem()));
+    public static final Supplier<Item> PIZZA_SLICE = registerWithTab("pizza_slice",
+            () -> new ConsumableItem(foodItem(HHFoodValues.PIZZA_SLICE)));
+
+    public static final Supplier<Item> MEAT_PIZZA = registerWithTab("meat_pizza",
+            () -> new BlockItem(HHModBlocks.MEAT_PIZZA.get(), basicItem()));
+    public static final Supplier<Item> MEAT_PIZZA_SLICE = registerWithTab("meat_pizza_slice",
+            () -> new ConsumableItem(foodItem(HHFoodValues.MEAT_PIZZA_SLICE)));
+
+    public static final Supplier<Item> VEGGIE_PIZZA = registerWithTab("veggie_pizza",
+            () -> new BlockItem(HHModBlocks.VEGGIE_PIZZA.get(), basicItem()));
+    public static final Supplier<Item> VEGGIE_PIZZA_SLICE = registerWithTab("veggie_pizza_slice",
+            () -> new ConsumableItem(foodItem(HHFoodValues.VEGGIE_PIZZA_SLICE)));
+
+    public static final Supplier<Item> CHEESE_PIZZA = registerWithTab("cheese_pizza",
+            () -> new BlockItem(HHModBlocks.CHEESE_PIZZA.get(), basicItem()));
+    public static final Supplier<Item> CHEESE_PIZZA_SLICE = registerWithTab("cheese_pizza_slice",
+            () -> new ConsumableItem(foodItem(HHFoodValues.CHEESE_PIZZA_SLICE)));
 
     // Ingredients
     public static final Supplier<Item> COOKING_OIL = registerWithTab("cooking_oil",

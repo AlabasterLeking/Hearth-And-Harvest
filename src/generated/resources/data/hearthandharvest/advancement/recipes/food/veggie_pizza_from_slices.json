@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:veggie_pizza_from_slices"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_veggie_pizza_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:veggie_pizza_slice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_veggie_pizza_slice"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:veggie_pizza_from_slices"
+    ]
+  }
+}

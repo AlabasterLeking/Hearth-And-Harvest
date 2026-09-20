@@ -248,6 +248,8 @@ public class HHFoodValues {
             .nutrition(3).saturationModifier(0.3f).build();
     public static final FoodProperties BLUEBERRY_PIE_SLICE = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.3f).build();
+    public static final FoodProperties CHERRY_PIE_SLICE = new FoodProperties.Builder()
+            .nutrition(3).saturationModifier(0.3f).build();
     public static final FoodProperties GRAPE_PIE_SLICE = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.3f).build();
     public static final FoodProperties PEANUT_BUTTER_PIE_SLICE = new FoodProperties.Builder()
@@ -264,6 +266,16 @@ public class HHFoodValues {
             .build();
     public static final FoodProperties CORN_BREAD = new FoodProperties.Builder()
             .nutrition(6).saturationModifier(0.5f).build();
+
+    // Pizzas
+    public static final FoodProperties PIZZA_SLICE = new FoodProperties.Builder()
+            .nutrition(5).saturationModifier(0.5f).build();
+    public static final FoodProperties MEAT_PIZZA_SLICE = new FoodProperties.Builder()
+            .nutrition(6).saturationModifier(0.5f).build();
+    public static final FoodProperties VEGGIE_PIZZA_SLICE = new FoodProperties.Builder()
+            .nutrition(5).saturationModifier(0.5f).build();
+    public static final FoodProperties CHEESE_PIZZA_SLICE = new FoodProperties.Builder()
+            .nutrition(3).saturationModifier(0.5f).build();
 
     // Dairy, Meat, and Savory Dishes
     public static final FoodProperties CHEDDAR_CHEESE_SLICE = new FoodProperties.Builder()

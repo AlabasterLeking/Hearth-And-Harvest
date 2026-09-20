@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cheese_pizza": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:cheese_pizza"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:veggie_pizza_from_cheese_pizza"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cheese_pizza"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:veggie_pizza_from_cheese_pizza"
+    ]
+  }
+}

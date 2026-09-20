@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "hearthandharvest:cheese_slices"
+    },
+    "D": {
+      "item": "farmersdelight:wheat_dough"
+    },
+    "M": {
+      "tag": "c:mushrooms"
+    },
+    "T": {
+      "item": "farmersdelight:tomato_sauce"
+    },
+    "V": {
+      "tag": "c:foods/vegetable"
+    }
+  },
+  "pattern": [
+    "VMV",
+    "CCC",
+    "DTD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:veggie_pizza"
+  }
+}

@@ -96,9 +96,15 @@ public class BlockStates extends BlockStateProvider {
 
         this.pieBlock(HHModBlocks.RASPBERRY_PIE.get());
         this.pieBlock(HHModBlocks.BLUEBERRY_PIE.get());
+        this.pieBlock(HHModBlocks.CHERRY_PIE.get());
         this.pieBlock(HHModBlocks.GRAPE_PIE.get());
         this.pieBlock(HHModBlocks.PEANUT_BUTTER_PIE.get());
         this.pieBlock(HHModBlocks.CHICKEN_POT_PIE.get());
+
+        this.pizzaBlock(HHModBlocks.PIZZA.get());
+        this.pizzaBlock(HHModBlocks.MEAT_PIZZA.get());
+        this.pizzaBlock(HHModBlocks.VEGGIE_PIZZA.get());
+        this.pizzaBlock(HHModBlocks.CHEESE_PIZZA.get());
 
         this.axisBlock((RotatedPillarBlock) HHModBlocks.ROPE_COIL.get());
         this.axisBlock((RotatedPillarBlock) HHModBlocks.COTTON_BALE.get());
@@ -394,6 +400,18 @@ public class BlockStates extends BlockStateProvider {
                 .texture("south", sideTied)
                 .texture("east", side)
                 .texture("west", side));
+    }
+
+    public void pizzaBlock(Block block) {
+        getVariantBuilder(block)
+                .forAllStates(state -> {
+                    int bites = state.getValue(PieBlock.BITES);
+                    String suffix = bites > 0 ? "_slice" + bites : "";
+                    return ConfiguredModel.builder()
+                            .modelFile(existingModel(blockName(block) + suffix))
+                            .rotationY((int) state.getValue(PieBlock.FACING).toYRot() % 360)
+                            .build();
+                });
     }
 
     public void pieBlock(Block block) {

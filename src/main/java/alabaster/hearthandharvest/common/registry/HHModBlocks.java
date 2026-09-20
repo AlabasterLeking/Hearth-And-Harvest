@@ -272,6 +272,8 @@ public class HHModBlocks {
             () -> new PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.RASPBERRY_PIE_SLICE));
     public static final Supplier<Block> BLUEBERRY_PIE = BLOCKS.register("blueberry_pie",
             () -> new PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.BLUEBERRY_PIE_SLICE));
+    public static final Supplier<Block> CHERRY_PIE = BLOCKS.register("cherry_pie",
+            () -> new PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.CHERRY_PIE_SLICE));
     public static final Supplier<Block> GRAPE_PIE = BLOCKS.register("grape_pie",
             () -> new PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.GRAPE_PIE_SLICE));
     public static final Supplier<Block> PEANUT_BUTTER_PIE = BLOCKS.register("peanut_butter_pie",
@@ -280,6 +282,16 @@ public class HHModBlocks {
             () -> new PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.CHICKEN_POT_PIE_SLICE));
     public static final Supplier<Block> CARROT_CAKE = BLOCKS.register("carrot_cake",
             () -> new SliceableCakeBlock(Block.Properties.ofFullCopy(Blocks.CAKE),  HHModItems.CARROT_CAKE_SLICE));
+
+    // Pizzas
+    public static final Supplier<Block> PIZZA = BLOCKS.register("pizza",
+            () -> new PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.PIZZA_SLICE));
+    public static final Supplier<Block> MEAT_PIZZA = BLOCKS.register("meat_pizza",
+            () -> new PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.MEAT_PIZZA_SLICE));
+    public static final Supplier<Block> VEGGIE_PIZZA = BLOCKS.register("veggie_pizza",
+            () -> new PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.VEGGIE_PIZZA_SLICE));
+    public static final Supplier<Block> CHEESE_PIZZA = BLOCKS.register("cheese_pizza",
+            () -> new PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.CHEESE_PIZZA_SLICE));
 
     // Jars
     public static final Supplier<Block> EMPTY_JAR_DISPLAY = BLOCKS.register("empty_jar_display",

@@ -345,6 +345,7 @@ public class HHBlockTags extends BlockTagsProvider {
 
         tag(ModTags.Blocks.PIES).add(
                 HHModBlocks.BLUEBERRY_PIE.get(),
+                HHModBlocks.CHERRY_PIE.get(),
                 HHModBlocks.RASPBERRY_PIE.get(),
                 HHModBlocks.GRAPE_PIE.get(),
                 HHModBlocks.PEANUT_BUTTER_PIE.get(),
@@ -352,6 +353,7 @@ public class HHBlockTags extends BlockTagsProvider {
         );
         tag(ModTags.Blocks.MINEABLE_WITH_KNIFE).add(
                 HHModBlocks.BLUEBERRY_PIE.get(),
+                HHModBlocks.CHERRY_PIE.get(),
                 HHModBlocks.RASPBERRY_PIE.get(),
                 HHModBlocks.GRAPE_PIE.get(),
                 HHModBlocks.PEANUT_BUTTER_PIE.get(),
@@ -359,6 +361,7 @@ public class HHBlockTags extends BlockTagsProvider {
         );
         tag(HHCompatibilityTags.CREATE_BRITTLE).add(
                 HHModBlocks.BLUEBERRY_PIE.get(),
+                HHModBlocks.CHERRY_PIE.get(),
                 HHModBlocks.RASPBERRY_PIE.get(),
                 HHModBlocks.GRAPE_PIE.get(),
                 HHModBlocks.PEANUT_BUTTER_PIE.get(),

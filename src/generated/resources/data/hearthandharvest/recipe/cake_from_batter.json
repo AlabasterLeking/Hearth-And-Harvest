@@ -5,9 +5,6 @@
     "B": {
       "item": "hearthandharvest:batter"
     },
-    "C": {
-      "item": "minecraft:carrot"
-    },
     "E": {
       "item": "minecraft:egg"
     },
@@ -19,7 +16,7 @@
     }
   },
   "pattern": [
-    "CMC",
+    "MMM",
     "SES",
     " B "
   ],

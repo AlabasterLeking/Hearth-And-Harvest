@@ -36,6 +36,8 @@ public class CuttingRecipes {
                 .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.BLUEBERRY_PIE.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.BLUEBERRY_PIE_SLICE.get(), 4)
                 .save(output);
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CHERRY_PIE.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CHERRY_PIE_SLICE.get(), 4)
+                .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.GRAPE_PIE.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.GRAPE_PIE_SLICE.get(), 4)
                 .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.PEANUT_BUTTER_PIE.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.PEANUT_BUTTER_PIE_SLICE.get(), 4)
@@ -57,6 +59,14 @@ public class CuttingRecipes {
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CORN_KERNELS.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CORN_MEAL.get(), 1)
                 .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.WHEAT), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.FLOUR.get(), 2)
+                .save(output);
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.PIZZA.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.PIZZA_SLICE.get(), 4)
+                .save(output);
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.MEAT_PIZZA.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.MEAT_PIZZA_SLICE.get(), 4)
+                .save(output);
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.VEGGIE_PIZZA.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.VEGGIE_PIZZA_SLICE.get(), 4)
+                .save(output);
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CHEESE_PIZZA.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CHEESE_PIZZA_SLICE.get(), 4)
                 .save(output);
     }
 
