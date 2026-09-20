@@ -1,0 +1,17 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "botanypots"
+    },
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "berry_good"
+    }
+  ],
+  "type": "botanypots:block_derived_crop",
+  "block": "hearthandharvest:blueberry_bush",
+  "input": {
+    "item": "hearthandharvest:blueberry_pips"
+  }
+}
