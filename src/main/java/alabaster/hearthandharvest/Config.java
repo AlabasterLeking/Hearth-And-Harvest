@@ -53,6 +53,7 @@ public class Config {
     public static ModConfigSpec.BooleanValue DISABLE_RABBIT_LITTERS;
     public static ModConfigSpec.BooleanValue DISABLE_CHICKEN_PLUCKING;
     public static ModConfigSpec.BooleanValue CHICKEN_GLIDING;
+    public static ModConfigSpec.IntValue STOMPING_BASIN_SLOT_LIMIT;
 
     public Config() {
     }
@@ -139,6 +140,8 @@ public class Config {
         DISABLE_CHICKEN_PLUCKING = flag("breeding.disableChickenPlucking", false, "Disables shift-right-click plucking feathers from chickens");
 
         CHICKEN_GLIDING = flag("breeding.chickenGliding", true, "Whether players can pick up a chicken with an empty hand and glide while holding it overhead. Sneak to put it down");
+
+        STOMPING_BASIN_SLOT_LIMIT = range("stompingBasin.slotLimit", 64, 1, 512, "How many items fit in one stomping basin slot. A single basin has one slot, a 2x2 multiblock has four");
 
         COMMON_CONFIG = BUILDER.build();
     }

@@ -49,6 +49,7 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
     private static final float FLUID_MIN_Y = 1f / 16f + 0.01f;
     private static final float FLUID_MAX_Y = 11f / 16f;
     private static final float ITEM_Y_STEP = 0.001f;
+    private static final int MAX_RENDERED_PER_SLOT = 64;
 
     private static final ModelResourceLocation MODEL_NW = ModelResourceLocation.standalone(
             ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/big_stomping_basin_nw"));
@@ -143,7 +144,8 @@ public class StompingBasinRenderer implements BlockEntityRenderer<StompingBasinB
             ItemStack stack = source.getItemHandler().getStackInSlot(slot);
             if (stack.isEmpty()) continue;
 
-            for (int i = 0; i < stack.getCount(); i++, renderIndex++) {
+            int rendered = Math.min(stack.getCount(), MAX_RENDERED_PER_SLOT);
+            for (int i = 0; i < rendered; i++, renderIndex++) {
                 float[] pos = itemPosition(seed, renderIndex);
                 float offsetX = scatterMin + pos[0] * scatterSize;
                 float offsetZ = scatterMin + pos[1] * scatterSize;

@@ -15,12 +15,11 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.util.RecipeMatcher;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class StompingBasinRecipe implements Recipe<RecipeWrapper> {
 
@@ -36,18 +35,38 @@ public class StompingBasinRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public boolean matches(RecipeWrapper wrapper, Level level) {
-        List<ItemStack> inputs = new ArrayList<>();
-        for (int i = 0; i < StompingBasinBlockEntity.ITEM_SLOTS; i++) {
-            ItemStack stack = wrapper.getItem(i);
-            for (int j = 0; j < stack.getCount(); j++) {
-                inputs.add(stack.copyWithCount(1));
-                // Stop expanding once we have enough entries for the bijection.
-                if (inputs.size() == this.ingredients.size()) break;
-            }
-            if (inputs.size() == this.ingredients.size()) break;
+        return findSlotAssignment(wrapper) != null;
+    }
+
+    @Nullable
+    public int[] findSlotAssignment(RecipeWrapper wrapper) {
+        if (ingredients.isEmpty()) return null;
+
+        int slots = Math.min(wrapper.size(), StompingBasinBlockEntity.ITEM_SLOTS);
+        ItemStack[] stacks = new ItemStack[slots];
+        int[] remaining = new int[slots];
+        for (int slot = 0; slot < slots; slot++) {
+            stacks[slot] = wrapper.getItem(slot);
+            remaining[slot] = stacks[slot].getCount();
         }
-        return inputs.size() == this.ingredients.size()
-                && RecipeMatcher.findMatches(inputs, this.ingredients) != null;
+
+        int[] assignment = new int[ingredients.size()];
+        return assign(0, stacks, remaining, assignment) ? assignment : null;
+    }
+
+    private boolean assign(int index, ItemStack[] stacks, int[] remaining, int[] assignment) {
+        if (index >= ingredients.size()) return true;
+
+        Ingredient ingredient = ingredients.get(index);
+        for (int slot = 0; slot < stacks.length; slot++) {
+            if (remaining[slot] <= 0 || !ingredient.test(stacks[slot])) continue;
+
+            remaining[slot]--;
+            assignment[index] = slot;
+            if (assign(index + 1, stacks, remaining, assignment)) return true;
+            remaining[slot]++;
+        }
+        return false;
     }
 
     @Override

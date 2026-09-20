@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block.entity;
 
+import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
 import alabaster.hearthandharvest.common.block.MultiblockPart;
 import alabaster.hearthandharvest.common.crafting.StompingBasinRecipe;
@@ -19,7 +20,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,18 +30,17 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
 
     public static final int ITEM_SLOTS = 4;
+    public static final int SOLO_ITEM_SLOTS = 1;
 
-    public static final int SOLO_ITEM_LIMIT = 64;
-    public static final int COMBINED_ITEM_LIMIT = 256;
 
     public static final int SOLO_TANK_CAPACITY = 8000;
     public static final int COMBINED_TANK_CAPACITY = 32000;
@@ -51,7 +50,7 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
 
     private final Map<UUID, Long> stompCooldowns = new HashMap<>();
 
-    private int itemSlotLimit = SOLO_ITEM_LIMIT;
+    private int itemSlotLimit = slotLimit();
     private final VariableStackHandler itemHandler = new VariableStackHandler();
     private final ResizableFluidTank fluidTank = new ResizableFluidTank(SOLO_TANK_CAPACITY);
 
@@ -65,7 +64,12 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
 
         @Override
         public int getSlotLimit(int slot) {
-            return itemSlotLimit;
+            return slot < activeSlots() ? itemSlotLimit : 0;
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return slot < activeSlots() && super.isItemValid(slot, stack);
         }
 
         @Override
@@ -159,13 +163,13 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
             return toInsert;
         }
 
-        for (int i = 0; i < itemHandler.getSlots() && !toInsert.isEmpty(); i++) {
+        for (int i = 0; i < activeSlots() && !toInsert.isEmpty(); i++) {
             ItemStack inSlot = itemHandler.getStackInSlot(i);
             if (!inSlot.isEmpty() && ItemStack.isSameItemSameComponents(inSlot, toInsert)) {
                 toInsert = itemHandler.insertItem(i, toInsert, false);
             }
         }
-        for (int i = 0; i < itemHandler.getSlots() && !toInsert.isEmpty(); i++) {
+        for (int i = 0; i < activeSlots() && !toInsert.isEmpty(); i++) {
             if (itemHandler.getStackInSlot(i).isEmpty()) {
                 toInsert = itemHandler.insertItem(i, toInsert, false);
             }
@@ -207,6 +211,14 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
         if (!player.addItem(stack)) dropAtBasin(stack);
     }
 
+    public static int slotLimit() {
+        return Config.STOMPING_BASIN_SLOT_LIMIT.get();
+    }
+
+    public int activeSlots() {
+        return role == MultiblockPart.CONTROLLER ? ITEM_SLOTS : SOLO_ITEM_SLOTS;
+    }
+
     public void tryProcess(LivingEntity entity) {
         if (level == null || level.isClientSide) return;
 
@@ -225,16 +237,23 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
         RecipeWrapper wrapper = new RecipeWrapper(itemHandler);
         if (wrapper.isEmpty()) return;
 
-        Optional<StompingBasinRecipe> match = level.getRecipeManager()
+        StompingBasinRecipe recipe = null;
+        int[] assignment = null;
+        for (StompingBasinRecipe candidate : level.getRecipeManager()
                 .getAllRecipesFor(HHModRecipeTypes.STOMPING.get())
                 .stream()
                 .map(holder -> holder.value())
-                .filter(r -> r.matches(wrapper, level))
-                .findFirst();
+                .sorted(Comparator.comparingInt((StompingBasinRecipe r) -> r.getIngredients().size()).reversed())
+                .toList()) {
+            int[] candidateAssignment = candidate.findSlotAssignment(wrapper);
+            if (candidateAssignment != null) {
+                recipe = candidate;
+                assignment = candidateAssignment;
+                break;
+            }
+        }
 
-        if (match.isEmpty()) return;
-
-        StompingBasinRecipe recipe = match.get();
+        if (recipe == null) return;
 
         FluidStack resultFluid = recipe.getResultFluid();
         if (!resultFluid.isEmpty()) {
@@ -247,14 +266,8 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
         double soundZ = worldPosition.getZ() + (role == MultiblockPart.CONTROLLER ? 1.0 : 0.5);
         level.playSound(null, soundX, soundY, soundZ, HHModSounds.STOMPING_BASIN_STOMP.get(), SoundSource.BLOCKS, 0.6f, 0.7f);
 
-        for (Ingredient ingredient : recipe.getIngredients()) {
-            for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
-                ItemStack slotStack = itemHandler.getStackInSlot(slot);
-                if (!slotStack.isEmpty() && ingredient.test(slotStack)) {
-                    itemHandler.extractItem(slot, 1, false);
-                    break;
-                }
-            }
+        for (int slot : assignment) {
+            itemHandler.extractItem(slot, 1, false);
         }
 
         if (!resultFluid.isEmpty()) {
@@ -283,7 +296,7 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
 
     public void formAsController(StompingBasinBlockEntity ne, StompingBasinBlockEntity sw, StompingBasinBlockEntity se) {
         this.role = MultiblockPart.CONTROLLER;
-        this.itemSlotLimit = COMBINED_ITEM_LIMIT;
+        this.itemSlotLimit = slotLimit();
         fluidTank.setEffectiveCapacity(COMBINED_TANK_CAPACITY);
 
         for (StompingBasinBlockEntity member : new StompingBasinBlockEntity[]{ne, sw, se}) {
@@ -323,13 +336,19 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
     public void dissolve(List<StompingBasinBlockEntity> survivors) {
         this.role = MultiblockPart.NONE;
         this.controllerPos = null;
-        this.itemSlotLimit = SOLO_ITEM_LIMIT;
+        int limit = slotLimit();
+        this.itemSlotLimit = limit;
 
         for (int s = 0; s < itemHandler.getSlots(); s++) {
             ItemStack stack = itemHandler.getStackInSlot(s);
-            if (!stack.isEmpty() && stack.getCount() > SOLO_ITEM_LIMIT) {
-                ItemStack overflow = stack.copyWithCount(stack.getCount() - SOLO_ITEM_LIMIT);
-                itemHandler.setStackInSlot(s, stack.copyWithCount(SOLO_ITEM_LIMIT));
+            if (stack.isEmpty()) continue;
+
+            if (s >= SOLO_ITEM_SLOTS) {
+                itemHandler.setStackInSlot(s, ItemStack.EMPTY);
+                if (level != null) dropAtBasin(stack);
+            } else if (stack.getCount() > limit) {
+                ItemStack overflow = stack.copyWithCount(stack.getCount() - limit);
+                itemHandler.setStackInSlot(s, stack.copyWithCount(limit));
                 if (level != null) dropAtBasin(overflow);
             }
         }
