@@ -25,7 +25,7 @@ public class HHFoodValues {
     public static final FoodProperties GRAPES = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.3f).fast().build();
     public static final FoodProperties PEANUT = new FoodProperties.Builder()
-            .nutrition(2).saturationModifier(0.3f).build();
+            .nutrition(2).saturationModifier(0.3f).fast().build();
     public static final FoodProperties CORN = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.5f).build();
     public static final FoodProperties RAISINS = new FoodProperties.Builder()
@@ -304,7 +304,10 @@ public class HHFoodValues {
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, MEDIUM_DURATION, 1), 1.0F).build();
     public static final FoodProperties ELOTE = new FoodProperties.Builder()
             .nutrition(10).saturationModifier(0.8f)
-            .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, MEDIUM_DURATION, 1), 1.0F).build();
+            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, SHORT_DURATION, 1), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, MEDIUM_DURATION, 1), 1.0F)
+            .build();
     public static final FoodProperties TAMALE = new FoodProperties.Builder()
+            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, MEDIUM_DURATION, 1), 1.0F)
             .nutrition(7).saturationModifier(0.6f).build();
 }
