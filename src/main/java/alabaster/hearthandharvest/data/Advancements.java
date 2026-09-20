@@ -13,12 +13,14 @@ import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.critereon.BlockPredicate;
 import net.minecraft.advancements.critereon.ConsumeItemTrigger;
 import net.minecraft.advancements.critereon.EffectsChangedTrigger;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
+import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.advancements.critereon.MobEffectsPredicate;
 import net.minecraft.advancements.critereon.PlayerInteractTrigger;
 import net.minecraft.advancements.critereon.PlayerTrigger;
@@ -28,15 +30,19 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.predicates.LocationCheck;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import vectorwing.farmersdelight.common.registry.ModItems;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -186,7 +192,8 @@ public class Advancements extends AdvancementProvider {
             task(shucks, "farming/pop_goes_the_kernel", HHModItems.POPCORN.get(), has(HHModItems.POPCORN));
             goal(shucks, "farming/a_maize_ing", HHModItems.CORN_HUSK.get(), trigger(HHModTriggers.FOUND_CORN_MAZE));
 
-            AdvancementHolder mulch = task(shucks, "farming/mulch_obliged", HHModItems.MULCH.get(), placed(HHModBlocks.MULCH));
+            AdvancementHolder mulch = task(shucks, "farming/mulch_obliged", ModItems.TREE_BARK.get(), placed(HHModBlocks.MULCH));
+            goal(mulch, "farming/hellscaping", HHModItems.MULCH.get(), placedIn(HHModBlocks.MULCH, Level.NETHER));
             task(mulch, "farming/green_thumb", HHModItems.FERTILIZER_BAG.get(), trigger(HHModTriggers.FERTILIZER_GREW_CROP));
             AdvancementHolder sprinkler = task(mulch, "farming/let_it_rain", HHModItems.SPRINKLER.get(), placed(HHModBlocks.SPRINKLER));
             task(sprinkler, "farming/fire_brigade", Items.WATER_BUCKET, trigger(HHModTriggers.SPRINKLER_EXTINGUISHED));
@@ -214,6 +221,8 @@ public class Advancements extends AdvancementProvider {
             AdvancementHolder tamed = goal(scarecrow, "crows/caw_panion", HHModItems.CORN_KERNELS.get(),
                     TameAnimalTrigger.TriggerInstance.tamedAnimal(EntityPredicate.Builder.entity().of(HHModEntities.CROW.get())));
             goal(tamed, "crows/special_delivery", HHModItems.CROW_FEATHER.get(), trigger(HHModTriggers.CROW_DELIVERED_ITEM));
+
+            goal(tamed, "crows/rickmurai_jack", HHModItems.CROW_FEATHER.get(), trigger(HHModTriggers.CROW_PAIR));
         }
 
         private void brewing(AdvancementHolder root) {
@@ -348,6 +357,13 @@ public class Advancements extends AdvancementProvider {
 
         private static Criterion<ItemUsedOnLocationTrigger.TriggerInstance> placed(Supplier<Block> block) {
             return ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(block.get());
+        }
+
+        private static Criterion<ItemUsedOnLocationTrigger.TriggerInstance> placedIn(Supplier<Block> block, ResourceKey<Level> dimension) {
+            return ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(
+                    LocationCheck.checkLocation(LocationPredicate.Builder.location()
+                            .setDimension(dimension)
+                            .setBlock(BlockPredicate.Builder.block().of(block.get()))));
         }
 
         private static Criterion<EffectsChangedTrigger.TriggerInstance> effect(Holder<MobEffect> effect) {

@@ -1,0 +1,40 @@
+{
+  "parent": "hearthandharvest:farming/mulch_obliged",
+  "criteria": {
+    "hellscaping": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": "hearthandharvest:mulch"
+              },
+              "dimension": "minecraft:the_nether"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.hellscaping.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:mulch"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.hellscaping"
+    }
+  },
+  "requirements": [
+    [
+      "hellscaping"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

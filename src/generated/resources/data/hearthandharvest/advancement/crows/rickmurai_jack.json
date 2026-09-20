@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:crows/caw_panion",
+  "criteria": {
+    "rickmurai_jack": {
+      "trigger": "hearthandharvest:crow_pair"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.rickmurai_jack.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:crow_feather"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.rickmurai_jack"
+    }
+  },
+  "requirements": [
+    [
+      "rickmurai_jack"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

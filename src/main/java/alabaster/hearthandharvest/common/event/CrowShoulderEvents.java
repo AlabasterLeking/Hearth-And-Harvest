@@ -2,9 +2,11 @@ package alabaster.hearthandharvest.common.event;
 
 import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
 import alabaster.hearthandharvest.common.entity.crow.CrowEntity;
 import alabaster.hearthandharvest.common.entity.crow.goals.CrowRetrieveItemsGoal;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -27,12 +29,17 @@ public class CrowShoulderEvents {
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         if (player.tickCount % CHECK_INTERVAL != 0) return;
-        if (!Config.CROW_FETCH_ITEMS.get() || !Config.CROW_LEAVE_SHOULDER_TO_FETCH.get()) return;
         if (!player.isAlive() || player.isSpectator() || player.isSleeping()) return;
 
         boolean crowOnLeft = isCrow(player.getShoulderEntityLeft());
         boolean crowOnRight = isCrow(player.getShoulderEntityRight());
         if (!crowOnLeft && !crowOnRight) return;
+
+        if (crowOnLeft && crowOnRight) {
+            HHSimpleTrigger.trigger(HHModTriggers.CROW_PAIR.get(), player);
+        }
+
+        if (!Config.CROW_FETCH_ITEMS.get() || !Config.CROW_LEAVE_SHOULDER_TO_FETCH.get()) return;
         if (!hasItemToFetch(player)) return;
 
         if (crowOnLeft) {

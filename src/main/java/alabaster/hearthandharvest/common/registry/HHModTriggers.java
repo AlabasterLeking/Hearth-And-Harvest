@@ -43,6 +43,7 @@ public class HHModTriggers {
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> HOE_AREA_WORK = TRIGGERS.register("hoe_area_work", HHSimpleTrigger::new);
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> FILLED_BOTTLE_RACK = TRIGGERS.register("filled_bottle_rack", HHSimpleTrigger::new);
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> CHICKEN_GLIDE = TRIGGERS.register("chicken_glide", HHSimpleTrigger::new);
+    public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> CROW_PAIR = TRIGGERS.register("crow_pair", HHSimpleTrigger::new);
 
     public static Criterion<HHSimpleTrigger.TriggerInstance> criterion(DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> trigger) {
         return trigger.get().createCriterion(new HHSimpleTrigger.TriggerInstance(Optional.empty()));
