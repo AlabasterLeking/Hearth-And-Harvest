@@ -1111,6 +1111,11 @@ public class CraftingRecipes
                 .requires(Items.STICK)
                 .unlockedBy("has_cooked_sausage", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.COOKED_SAUSAGE.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "skewered_sausage"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.HOT_DOG.get(), 1)
+                .requires(HHModItems.COOKED_SAUSAGE.get())
+                .requires(Items.BREAD)
+                .unlockedBy("has_cooked_sausage", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.COOKED_SAUSAGE.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "hot_dog"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.UNCOOKED_CORN_ON_THE_COB.get(), 1)
                 .requires(HHCommonTags.VEGETABLES_CORN)

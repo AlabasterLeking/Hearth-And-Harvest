@@ -162,6 +162,7 @@ public class Advancements extends AdvancementProvider {
 
         private static final List<Supplier<Item>> PIES = List.of(
                 HHModItems.BLUEBERRY_PIE,
+                HHModItems.CHERRY_PIE,
                 HHModItems.RASPBERRY_PIE,
                 HHModItems.GRAPE_PIE,
                 HHModItems.PEANUT_BUTTER_PIE,

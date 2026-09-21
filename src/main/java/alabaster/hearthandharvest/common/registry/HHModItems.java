@@ -539,7 +539,7 @@ public class HHModItems {
     public static final Supplier<Item> CHERRY_PIE = registerWithTab("cherry_pie",
             () -> new BlockItem(HHModBlocks.CHERRY_PIE.get(), basicItem()));
     public static final Supplier<Item> CHERRY_PIE_SLICE = registerWithTab("cherry_pie_slice",
-            () -> new ConsumableItem(foodItem(HHFoodValues.BLUEBERRY_PIE_SLICE)));
+            () -> new ConsumableItem(foodItem(HHFoodValues.CHERRY_PIE_SLICE)));
     public static final Supplier<Item> RASPBERRY_PIE = registerWithTab("raspberry_pie",
             () -> new BlockItem(HHModBlocks.RASPBERRY_PIE.get(), basicItem()));
     public static final Supplier<Item> RASPBERRY_PIE_SLICE = registerWithTab("raspberry_pie_slice",
@@ -624,6 +624,8 @@ public class HHModItems {
     );
     public static final Supplier<Item> SKEWERED_SAUSAGE = registerWithTab("skewered_sausage",
             () -> new ConsumableItem(foodItem(HHFoodValues.SKEWERED_SAUSAGE).craftRemainder(Items.STICK)));
+    public static final Supplier<Item> HOT_DOG = registerWithTab("hot_dog",
+            () -> new ConsumableItem(foodItem(HHFoodValues.HOT_DOG)));
     public static final Supplier<Item> JERKY = registerWithTab("jerky",
             () -> new ConsumableItem(foodItem(HHFoodValues.JERKY)));
     public static final Supplier<Item> TACO = registerWithTab("taco",

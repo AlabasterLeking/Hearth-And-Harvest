@@ -283,13 +283,15 @@ public class HHFoodValues {
     public static final FoodProperties GOAT_CHEESE_SLICE = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.3f).build();
     public static final FoodProperties RAW_SAUSAGE = new FoodProperties.Builder()
-            .nutrition(3).saturationModifier(0.3f).build();
+            .nutrition(2).saturationModifier(0.3f).build();
     public static final FoodProperties COOKED_SAUSAGE = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.5f).build();
+            .nutrition(3).saturationModifier(0.5f).build();
     public static final FoodProperties RAW_SKEWERED_SAUSAGE = new FoodProperties.Builder()
-            .nutrition(3).saturationModifier(0.3f).build();
+            .nutrition(2).saturationModifier(0.3f).build();
     public static final FoodProperties SKEWERED_SAUSAGE = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.5f).build();
+            .nutrition(3).saturationModifier(0.5f).build();
+    public static final FoodProperties HOT_DOG = new FoodProperties.Builder()
+            .nutrition(10).saturationModifier(0.7f).build();
     public static final FoodProperties UNCOOKED_CORN_ON_THE_COB = new FoodProperties.Builder()
             .nutrition(6).saturationModifier(0.6f).build();
     public static final FoodProperties COOKED_CORN_ON_THE_COB = new FoodProperties.Builder()
@@ -301,9 +303,11 @@ public class HHFoodValues {
     public static final FoodProperties JERKY = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.3f).build();
     public static final FoodProperties MACARONI_AND_CHEESE = new FoodProperties.Builder()
-            .nutrition(11).saturationModifier(0.3f).build();
+            .nutrition(11).saturationModifier(0.5f)
+            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, SHORT_DURATION, 1), 1.0F).build();
     public static final FoodProperties MASHED_POTATOES = new FoodProperties.Builder()
-            .nutrition(8).saturationModifier(0.4f).build();
+            .nutrition(9).saturationModifier(0.5f)
+            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, SHORT_DURATION, 1), 1.0F).build();
     public static final FoodProperties PEANUT_BUTTER_AND_JELLY_SANDWICH = new FoodProperties.Builder()
             .nutrition(8).saturationModifier(0.3f).build();
     public static final FoodProperties BISCUITS_AND_GRAVY = new FoodProperties.Builder()

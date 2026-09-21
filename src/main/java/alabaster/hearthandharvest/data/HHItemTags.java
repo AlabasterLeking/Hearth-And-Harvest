@@ -731,6 +731,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.COOKED_SAUSAGE.get())
                 .add(HHModItems.RAW_SKEWERED_SAUSAGE.get())
                 .add(HHModItems.SKEWERED_SAUSAGE.get())
+                .add(HHModItems.HOT_DOG.get())
                 .add(HHModItems.JERKY.get())
                 .add(HHModItems.RAISINS.get())
                 .add(HHModItems.SUNFLOWER_SEEDS.get())

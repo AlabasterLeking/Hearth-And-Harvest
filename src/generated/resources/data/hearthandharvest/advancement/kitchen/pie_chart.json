@@ -11,6 +11,16 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "cherry_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:cherry_pie"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "chicken_pot_pie": {
       "conditions": {
         "items": [
@@ -68,6 +78,9 @@
   "requirements": [
     [
       "blueberry_pie"
+    ],
+    [
+      "cherry_pie"
     ],
     [
       "raspberry_pie"
