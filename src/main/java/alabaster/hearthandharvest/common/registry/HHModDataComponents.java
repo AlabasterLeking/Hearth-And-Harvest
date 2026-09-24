@@ -34,6 +34,18 @@ public class HHModDataComponents {
                             .networkSynchronized(ByteBufCodecs.INT)
             );
 
+    public static final Supplier<DataComponentType<Integer>> SERVINGS =
+            DATA_COMPONENTS.registerComponentType("servings", builder ->
+                    builder.persistent(Codec.INT)
+                            .networkSynchronized(ByteBufCodecs.VAR_INT)
+            );
+
+    public static final Supplier<DataComponentType<Integer>> VINTAGE =
+            DATA_COMPONENTS.registerComponentType("vintage", builder ->
+                    builder.persistent(Codec.INT)
+                            .networkSynchronized(ByteBufCodecs.VAR_INT)
+            );
+
     public static final Supplier<DataComponentType<Boolean>> SALTED =
             DATA_COMPONENTS.registerComponentType("salted", builder ->
                     builder.persistent(Codec.BOOL)

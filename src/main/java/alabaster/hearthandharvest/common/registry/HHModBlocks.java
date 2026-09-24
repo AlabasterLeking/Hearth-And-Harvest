@@ -26,6 +26,8 @@ public class HHModBlocks {
             () -> new TreeTapperBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD).randomTicks()));
     public static final Supplier<Block> CASK = BLOCKS.register("cask",
             () -> new CaskBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD).randomTicks()));
+    public static final Supplier<Block> KEG = BLOCKS.register("keg",
+            () -> new KegBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
     public static final Supplier<Block> JUG = BLOCKS.register("jug",
             () -> new JugBlock(Block.Properties.ofFullCopy(Blocks.IRON_BARS).strength(2.0F, 3.0F).sound(SoundType.METAL)));
     public static final Supplier<Block> TROUGH = BLOCKS.register("trough",
@@ -220,7 +222,7 @@ public class HHModBlocks {
             () -> new Block(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F, 3.0F).sound(SoundType.WOOD).lightLevel(state -> 10)));
     public static final Supplier<Block> SWEET_BERRY_CRATE = BLOCKS.register("sweet_berry_crate",
             () -> new Block(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
-    
+
     // Bags
     public static final Supplier<Block> SALT_BAG = BLOCKS.register("salt_bag",
             () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
@@ -238,7 +240,7 @@ public class HHModBlocks {
             () -> new ManureBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
     public static final Supplier<Block> FEATHER_BAG = BLOCKS.register("feather_bag",
             () -> new FeatherBagBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
-    
+
     // Misc Storage Blocks
     public static final Supplier<Block> COTTON_BALE = BLOCKS.register("cotton_bale",
             () -> new HayBlock(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
@@ -292,6 +294,12 @@ public class HHModBlocks {
             () -> new PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.VEGGIE_PIZZA_SLICE));
     public static final Supplier<Block> CHEESE_PIZZA = BLOCKS.register("cheese_pizza",
             () -> new PizzaBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.CHEESE_PIZZA_SLICE));
+
+    // Pancakes and Waffles
+    public static final Supplier<Block> WAFFLE = BLOCKS.register("waffle",
+            () -> new FoodStackBlock(Block.Properties.ofFullCopy(Blocks.CAKE)));
+    public static final Supplier<Block> PANCAKE = BLOCKS.register("pancake",
+            () -> new FoodStackBlock(Block.Properties.ofFullCopy(Blocks.CAKE)));
 
     // Jars
     public static final Supplier<Block> EMPTY_JAR_DISPLAY = BLOCKS.register("empty_jar_display",
@@ -350,7 +358,7 @@ public class HHModBlocks {
 
     public static final Supplier<Block> POLISHED_SALT_BLOCK = BLOCKS.register("polished_salt_block",
             () -> new Block(Block.Properties.ofFullCopy(Blocks.GRAVEL).strength(2.5F, 3.0F).sound(SoundType.POLISHED_TUFF)));
-    
+
     public static final Supplier<Block> SALT_STAIRS = BLOCKS.register("salt_stairs",
             () -> new StairBlock(HHModBlocks.SALT_BLOCK.get().defaultBlockState(), Block.Properties.ofFullCopy(HHModBlocks.SALT_BLOCK.get())));
     public static final Supplier<Block> POLISHED_SALT_STAIRS = BLOCKS.register("polished_salt_stairs",
@@ -360,7 +368,7 @@ public class HHModBlocks {
             () -> new SlabBlock(Block.Properties.ofFullCopy(HHModBlocks.SALT_BLOCK.get())));
     public static final Supplier<Block> POLISHED_SALT_SLAB = BLOCKS.register("polished_salt_slab",
             () -> new SlabBlock(Block.Properties.ofFullCopy(HHModBlocks.POLISHED_SALT_BLOCK.get())));
-    
+
     public static final Supplier<Block> SALT_WALL = BLOCKS.register("salt_wall",
             () -> new WallBlock(Block.Properties.ofFullCopy(HHModBlocks.SALT_BLOCK.get())));
     public static final Supplier<Block> POLISHED_SALT_WALL = BLOCKS.register("polished_salt_wall",

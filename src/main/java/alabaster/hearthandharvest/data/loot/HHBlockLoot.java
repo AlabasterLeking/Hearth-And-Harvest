@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.data.loot;
 
+import alabaster.hearthandharvest.common.block.FoodStackBlock;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.HolderLookup;
@@ -7,10 +8,17 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class HHBlockLoot extends BlockLootSubProvider {
     private final Set<Block> generatedLootTables = new HashSet<>();
@@ -23,6 +31,7 @@ public class HHBlockLoot extends BlockLootSubProvider {
     protected void generate() {
         dropSelf(HHModBlocks.TREE_TAPPER.get());
         dropSelf(HHModBlocks.CASK.get());
+        dropSelf(HHModBlocks.KEG.get());
         dropSelf(HHModBlocks.STOMPING_BASIN.get());
         dropSelf(HHModBlocks.JUG.get());
         dropOther(HHModBlocks.SAP_CAULDRON.get(), Items.CAULDRON);
@@ -104,6 +113,8 @@ public class HHBlockLoot extends BlockLootSubProvider {
         dropPottedContents(HHModBlocks.POTTED_PURPLE_MUM.get());
         dropPottedContents(HHModBlocks.POTTED_PINK_MUM.get());
         dropPottedContents(HHModBlocks.POTTED_WHITE_MUM.get());
+        foodStackDrops(HHModBlocks.WAFFLE.get());
+        foodStackDrops(HHModBlocks.PANCAKE.get());
         dropSelf(HHModBlocks.POLISHED_SALT_BLOCK.get());
         dropSelf(HHModBlocks.SALT_STAIRS.get());
         dropSelf(HHModBlocks.POLISHED_SALT_STAIRS.get());
@@ -134,5 +145,15 @@ public class HHBlockLoot extends BlockLootSubProvider {
     @Override
     protected Iterable<Block> getKnownBlocks() {
         return generatedLootTables;
+    }
+
+    private void foodStackDrops(Block block) {
+        add(block, LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .add(applyExplosionDecay(block, LootItem.lootTableItem(block)
+                        .apply(IntStream.rangeClosed(2, FoodStackBlock.MAX_STACK).boxed().toList(), count ->
+                                SetItemCountFunction.setCount(ConstantValue.exactly(count))
+                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FoodStackBlock.COUNT, count))))))));
     }
 }

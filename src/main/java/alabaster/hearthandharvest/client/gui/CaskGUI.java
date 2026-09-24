@@ -5,7 +5,9 @@ import alabaster.hearthandharvest.common.block.entity.container.CaskMenu;
 import alabaster.hearthandharvest.common.utilities.HHTextUtils;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -26,15 +28,24 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
 
     private static final Rectangle PROGRESS_ARROW = new Rectangle(81, 29, 0, 18);
 
-    public static final Rectangle DIM_LIGHT = new Rectangle(89, 52, 13, 16);
-    public static final Rectangle MEDIUM_LIGHT = new Rectangle(89, 52, 13, 16);
-    public static final Rectangle BRIGHT_LIGHT = new Rectangle(89, 52, 13, 16);
+    public static final Rectangle DIM_LIGHT = new Rectangle(85, 47, 13, 16);
+    public static final Rectangle MEDIUM_LIGHT = new Rectangle(85, 47, 13, 16);
+    public static final Rectangle BRIGHT_LIGHT = new Rectangle(85, 47, 13, 16);
 
     private static final Rectangle LEFT_BUBBLE = new Rectangle(108, 48, 9, 24);
     private static final Rectangle RIGHT_BUBBLE = new Rectangle(147, 48, 9, 24);
 
     private final CaskRecipeBookComponent recipeBookComponent = new CaskRecipeBookComponent();
     private boolean widthTooNarrow;
+
+    private static final Rectangle TIMER_ICON = new Rectangle(89, 14, 7, 11);
+
+    private static final int SEAL_BUTTON_X = 108;
+    private static final int SEAL_BUTTON_Y = 59;
+    private static final int SEAL_BUTTON_WIDTH = 48;
+    private static final int SEAL_BUTTON_HEIGHT = 16;
+
+    private Button sealButton;
 
     public CaskGUI(CaskMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -44,7 +55,7 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
     public void init() {
         super.init();
         this.widthTooNarrow = this.width < 379;
-        this.titleLabelX = 28;
+        this.titleLabelX = 8;
         this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
         this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.height / 2 - 49, 20, 18, RECIPE_BUTTON, (button) ->
@@ -53,6 +64,14 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
             button.setPosition(this.leftPos + 5, this.height / 2 - 49);
         }));
+        this.sealButton = this.addRenderableWidget(Button.builder(sealButtonLabel(), button -> {
+                    if (this.minecraft != null && this.minecraft.gameMode != null) {
+                        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, CaskMenu.SEAL_BUTTON_ID);
+                    }
+                })
+                .bounds(this.leftPos + SEAL_BUTTON_X, this.topPos + SEAL_BUTTON_Y, SEAL_BUTTON_WIDTH, SEAL_BUTTON_HEIGHT)
+                .build());
+        updateSealButton();
         this.addWidget(this.recipeBookComponent);
         this.setInitialFocus(this.recipeBookComponent);
     }
@@ -93,8 +112,28 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
         }
     }
 
+    private void renderProgressTooltip(GuiGraphics gui, int mouseX, int mouseY) {
+        if (!this.isHovering(TIMER_ICON.x, TIMER_ICON.y, TIMER_ICON.width, TIMER_ICON.height, mouseX, mouseY)) return;
+
+        int remaining = this.menu.getRemainingSeconds();
+        Component text = remaining <= 0
+                ? Component.translatable("container.hearthandharvest.cask.idle")
+                : Component.translatable("container.hearthandharvest.cask.remaining", formatDuration(remaining));
+        gui.renderTooltip(this.font, text, mouseX, mouseY);
+    }
+
+    private static Component formatDuration(int seconds) {
+        if (seconds >= 3600) {
+            return Component.translatable("container.hearthandharvest.cask.hours", seconds / 3600, (seconds % 3600) / 60);
+        }
+        if (seconds >= 60) {
+            return Component.translatable("container.hearthandharvest.cask.minutes", seconds / 60);
+        }
+        return Component.translatable("container.hearthandharvest.cask.seconds", seconds);
+    }
+
     private void renderLightTooltip(GuiGraphics gui, int mouseX, int mouseY) {
-        if (this.isHovering(89, 52, 13, 16, mouseX, mouseY)) {
+        if (this.isHovering(DIM_LIGHT.x, DIM_LIGHT.y, DIM_LIGHT.width, DIM_LIGHT.height, mouseX, mouseY)) {
             int light = this.menu.blockEntity.getCurrentLightLevel();
             String lightCategory = light <= 5 ? "dim" : light <= 10 ? "medium" : "bright";
             String key = switch (lightCategory) {
@@ -108,8 +147,24 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
     }
 
 
-        @Override
+    private Component sealButtonLabel() {
+        return Component.translatable(this.menu.blockEntity.isSealed()
+                ? "container.hearthandharvest.cask.unseal"
+                : "container.hearthandharvest.cask.seal");
+    }
+
+    private void updateSealButton() {
+        if (this.sealButton == null) return;
+        this.sealButton.setPosition(this.leftPos + SEAL_BUTTON_X, this.topPos + SEAL_BUTTON_Y);
+        this.sealButton.setMessage(sealButtonLabel());
+        this.sealButton.setTooltip(Tooltip.create(Component.translatable(this.menu.blockEntity.isSealed()
+                ? "container.hearthandharvest.cask.sealed.tooltip"
+                : "container.hearthandharvest.cask.seal.tooltip")));
+    }
+
+    @Override
     public void render(GuiGraphics gui, final int mouseX, final int mouseY, float partialTicks) {
+        updateSealButton();
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
             this.renderBackground(gui, mouseX, mouseY, partialTicks);
             this.recipeBookComponent.render(gui, mouseX, mouseY, partialTicks);
@@ -120,6 +175,7 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
         }
         this.renderTooltip(gui, mouseX, mouseY);
         this.renderLightTooltip(gui, mouseX, mouseY);
+        this.renderProgressTooltip(gui, mouseX, mouseY);
         this.recipeBookComponent.renderTooltip(gui, this.leftPos, this.topPos, mouseX, mouseY);
     }
 
@@ -132,6 +188,7 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
     protected void renderLabels(GuiGraphics gui, int mouseX, int mouseY) {
         super.renderLabels(gui, mouseX, mouseY);
         gui.drawString(this.font, this.playerInventoryTitle, 8, (this.imageHeight - 96 + 2), 4210752, false);
+
     }
 
     @Override

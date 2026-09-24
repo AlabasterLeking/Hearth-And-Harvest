@@ -198,6 +198,12 @@ public class CookingRecipes
                 .unlockedByItems("has_pasta", ModItems.RAW_PASTA.get())
                 .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
                 .save(output);
+        CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.PANCAKE.get(), 2, FAST_COOKING, SMALL_EXP)
+                .addIngredient(HHModItems.BATTER.get())
+                .addIngredient(HHModItems.BUTTER.get())
+                .unlockedByItems("has_batter", HHModItems.BATTER.get())
+                .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
+                .save(output);
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.WAFFLE.get(), 1, FAST_COOKING, SMALL_EXP)
                 .addIngredient(HHModItems.BATTER.get())
                 .addIngredient(HHModItems.SYRUP_BOTTLE.get())

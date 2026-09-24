@@ -39,6 +39,7 @@ public class Config {
     public static ModConfigSpec.DoubleValue SALTED_SATURATION_PENALTY;
     public static ModConfigSpec.IntValue SALT_ANIMAL_RADIUS;
     public static ModConfigSpec.IntValue SALT_LICK_INTERVAL;
+    public static ModConfigSpec.IntValue CASK_VINTAGE_AGE_TIME;
     public static ModConfigSpec.DoubleValue SALT_PLAYER_LICK_CHANCE;
     public static ModConfigSpec.BooleanValue SALT_CAVES_ENABLED;
     public static ModConfigSpec.IntValue SALT_CAVE_RARITY;
@@ -142,6 +143,8 @@ public class Config {
         CHICKEN_GLIDING = flag("breeding.chickenGliding", true, "Whether players can pick up a chicken with an empty hand and glide while holding it overhead. Sneak to put it down");
 
         STOMPING_BASIN_SLOT_LIMIT = range("stompingBasin.slotLimit", 64, 1, 512, "How many items fit in one stomping basin slot. A single basin has one slot, a 2x2 multiblock has four");
+
+        CASK_VINTAGE_AGE_TIME = range("cask.vintageAgeTime", 24000, 20, 2400000, "Ticks to age a wine or pickle from fresh to Aged in a cask. Fine takes twice this and Reserve three times. 24000 is one Minecraft day. Light still affects the speed: dark casks age twice as fast, bright ones take twice as long");
 
         COMMON_CONFIG = BUILDER.build();
     }

@@ -41,6 +41,7 @@ public class DataGenerators {
                 new LootTableProvider.SubProviderEntry(HHBlockLoot::new, LootContextParamSets.BLOCK)
         ), lookupProvider));
         BlockStates blockStates = new BlockStates(output, helper);
+        generator.addProvider(event.includeClient(), new HHSpriteSourceProvider(output, lookupProvider, helper));
         generator.addProvider(event.includeClient(), blockStates);
         generator.addProvider(event.includeClient(), new ItemModels(output, blockStates.models().existingFileHelper));
         generator.addProvider(event.includeClient(), new JarItemModelProvider(output));

@@ -650,6 +650,8 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.CORN_STEW.get());
 
         tag(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)
+                .add(HHModItems.WAFFLE.get())
+                .add(HHModItems.PANCAKE.get())
                 .add(HHModItems.BLUEBERRY_PIE.get())
                 .add(HHModItems.CHERRY_PIE.get())
                 .add(HHModItems.RASPBERRY_PIE.get())
@@ -750,6 +752,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.MASHED_POTATOES.get())
                 .add(HHModItems.PEANUT_BUTTER_AND_JELLY_SANDWICH.get())
                 .add(HHModItems.WAFFLE.get())
+                .add(HHModItems.PANCAKE.get())
                 .add(HHModItems.BISCUITS_AND_GRAVY.get())
                 .add(HHModItems.GLAZED_CARROTS.get())
                 .add(HHModItems.RASPBERRY_SCONE.get())

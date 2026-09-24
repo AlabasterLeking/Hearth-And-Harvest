@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.registry;
 
+import alabaster.hearthandharvest.common.block.entity.KegBlockEntity;
 import alabaster.hearthandharvest.common.block.entity.NestBlockEntity;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.entity.*;
@@ -28,6 +29,9 @@ public class HHModBlockEntities {
 
     public static final Supplier<BlockEntityType<JugBlockEntity>> JUG = BLOCK_ENTITY_TYPES.register("jug_tile",
             () -> BlockEntityType.Builder.of(JugBlockEntity::new, HHModBlocks.JUG.get()).build(null));
+
+    public static final Supplier<BlockEntityType<KegBlockEntity>> KEG = BLOCK_ENTITY_TYPES.register("keg_tile",
+            () -> BlockEntityType.Builder.of(KegBlockEntity::new, HHModBlocks.KEG.get()).build(null));
 
     public static final Supplier<BlockEntityType<CaskBlockEntity>> CASK = BLOCK_ENTITY_TYPES.register("cask_tile",
             () -> BlockEntityType.Builder.of(CaskBlockEntity::new, HHModBlocks.CASK.get()).build(null));

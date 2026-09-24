@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.common.registry;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 
+import alabaster.hearthandharvest.common.crafting.FermentingRecipe;
 import alabaster.hearthandharvest.common.crafting.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -17,6 +18,8 @@ public class HHModRecipeSerializers {
 
     public static final Supplier<RecipeSerializer<?>> STOMPING =
             RECIPE_SERIALIZERS.register("stomping", StompingBasinRecipe.Serializer::new);
+    public static final Supplier<RecipeSerializer<?>> FERMENTING =
+            RECIPE_SERIALIZERS.register("fermenting", FermentingRecipe.Serializer::new);
 
     public static final Supplier<RecipeSerializer<?>> BOTTLE_CRATE =
             RECIPE_SERIALIZERS.register("bottle_crate", BottleCrateRecipe.Serializer::new);

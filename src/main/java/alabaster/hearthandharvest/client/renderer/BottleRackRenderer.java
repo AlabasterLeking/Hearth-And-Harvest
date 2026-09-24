@@ -53,6 +53,10 @@ public class BottleRackRenderer implements BlockEntityRenderer<BottleRackBlockEn
             pose.translate(x, y, z);
             pose.mulPose(Axis.XP.rotationDegrees(90));
             itemRenderer.render(stack, ItemDisplayContext.FIXED, false, pose, buf, light, overlay, model);
+            BakedModel vintage = DisplayModels.vintageOverlay("bottle", stack);
+            if (vintage != null) {
+                itemRenderer.render(stack, ItemDisplayContext.FIXED, false, pose, buf, light, overlay, vintage);
+            }
             pose.popPose();
         }
         pose.popPose();

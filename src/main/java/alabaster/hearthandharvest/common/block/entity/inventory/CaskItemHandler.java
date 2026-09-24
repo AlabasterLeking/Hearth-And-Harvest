@@ -6,16 +6,19 @@ import net.neoforged.neoforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.BooleanSupplier;
 
 public class CaskItemHandler implements IItemHandler {
     private static final int SLOT_OUTPUT = 4;
     private static final int SLOTS_INPUT = 3;
     private final IItemHandler itemHandler;
     private final Direction side;
+    private final BooleanSupplier sealed;
 
-    public CaskItemHandler(IItemHandler itemHandler, @Nullable Direction side) {
+    public CaskItemHandler(IItemHandler itemHandler, @Nullable Direction side, BooleanSupplier sealed) {
         this.itemHandler = itemHandler;
         this.side = side;
+        this.sealed = sealed;
     }
 
     @Override
@@ -42,7 +45,7 @@ public class CaskItemHandler implements IItemHandler {
     @Nonnull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (side == null || side.equals(Direction.UP)) {
-            return slot < SLOTS_INPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            return slot < SLOTS_INPUT && !sealed.getAsBoolean() ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         } else {
             return slot == SLOT_OUTPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }
@@ -59,6 +62,7 @@ public class CaskItemHandler implements IItemHandler {
     }
 
     private boolean canInsert(int slot) {
+        if (sealed.getAsBoolean()) return false;
         if (side == null) return slot < SLOT_OUTPUT;
 
         return switch (side) {

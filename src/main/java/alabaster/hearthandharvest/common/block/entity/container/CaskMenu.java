@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block.entity.container;
 
+import alabaster.hearthandharvest.common.block.CaskBlock;
 import alabaster.hearthandharvest.common.block.entity.CaskBlockEntity;
 import alabaster.hearthandharvest.common.crafting.CaskRecipe;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
@@ -49,7 +50,17 @@ public class CaskMenu extends RecipeBookMenu<RecipeWrapper, CaskRecipe> {
             for (int column = 0; column < 2; ++column) {
                 this.addSlot(new SlotItemHandler(inventory, (row * 2) + column,
                         inputStartX + (column * borderSlotSize),
-                        inputStartY + (row * borderSlotSize)));
+                        inputStartY + (row * borderSlotSize)) {
+                    @Override
+                    public boolean mayPlace(ItemStack stack) {
+                        return !CaskMenu.this.blockEntity.isSealed() && super.mayPlace(stack);
+                    }
+
+                    @Override
+                    public boolean mayPickup(Player player) {
+                        return !CaskMenu.this.blockEntity.isSealed() && super.mayPickup(player);
+                    }
+                });
             }
         }
 
@@ -86,6 +97,17 @@ public class CaskMenu extends RecipeBookMenu<RecipeWrapper, CaskRecipe> {
     @Override
     public boolean stillValid(Player playerIn) {
         return stillValid(canInteractWithCallable, playerIn, HHModBlocks.CASK.get());
+    }
+
+    public static final int SEAL_BUTTON_ID = 0;
+
+    @Override
+    public boolean clickMenuButton(Player player, int id) {
+        if (id != SEAL_BUTTON_ID || blockEntity.getLevel() == null) return false;
+        if (!blockEntity.getLevel().isClientSide()) {
+            CaskBlock.toggleSealed(blockEntity.getLevel(), blockEntity.getBlockPos());
+        }
+        return true;
     }
 
     @Override
@@ -127,24 +149,18 @@ public class CaskMenu extends RecipeBookMenu<RecipeWrapper, CaskRecipe> {
     }
 
     public int getCookProgressionScaled() {
-        int currentAgeTime = this.caskData.get(0); // current progress
-        int baseCookTime = this.caskData.get(1);    // original cook time from recipe
-        if (baseCookTime == 0) return 0;
-        int lightLevel = blockEntity.getCurrentLightLevel();
-        float effectiveMultiplier;
-        if (lightLevel <= 5) {
-            effectiveMultiplier = 0.5f;
-        } else if (lightLevel <= 10) {
-            effectiveMultiplier = 1.0f;
-        } else {
-            effectiveMultiplier = 2.0f;
-        }
-        int effectiveCookTime = Math.max(1, (int)(baseCookTime * effectiveMultiplier));
-        return currentAgeTime * 24 / effectiveCookTime;
+        int progress = this.caskData.get(0);
+        int total = this.caskData.get(1);
+        if (total <= 0) return 0;
+        return Math.min(24, progress * 24 / total);
     }
 
     public float getProgression() {
-        return this.caskData.get(0);
+        return this.caskData.get(2);
+    }
+
+    public int getRemainingSeconds() {
+        return this.caskData.get(3);
     }
 
     @Override

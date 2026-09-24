@@ -173,6 +173,8 @@ public class ItemModels extends ItemModelProvider
 
         // Blocks with special item sprites
         Set<Item> spriteBlockItems = Sets.newHashSet(
+                HHModItems.WAFFLE.get(),
+                HHModItems.PANCAKE.get(),
                 HHModItems.TROUGH.get(),
                 HHModItems.TRELLIS.get(),
                 HHModItems.BAMBOO_TRELLIS.get(),

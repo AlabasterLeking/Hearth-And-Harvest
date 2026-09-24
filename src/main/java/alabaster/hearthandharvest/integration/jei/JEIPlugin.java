@@ -67,6 +67,25 @@ public class JEIPlugin implements IModPlugin
         registration.addIngredientInfo(new ItemStack(HHModItems.SPRINKLER.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.sprinkler"));
         registration.addIngredientInfo(new ItemStack(HHModItems.SALT_BLOCK.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.salt_block"));
         registration.addIngredientInfo(new ItemStack(HHModItems.JUG.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.jug"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.CASK.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.cask"));
+        registration.addIngredientInfo(List.of(
+                new ItemStack(HHModItems.RED_GRAPE_WINE.get()),
+                new ItemStack(HHModItems.GREEN_GRAPE_WINE.get()),
+                new ItemStack(HHModItems.BLUEBERRY_WINE.get()),
+                new ItemStack(HHModItems.RASPBERRY_WINE.get()),
+                new ItemStack(HHModItems.CHERRY_WINE.get()),
+                new ItemStack(HHModItems.SWEET_BERRY_WINE.get()),
+                new ItemStack(HHModItems.GLOW_BERRY_WINE.get()),
+                new ItemStack(HHModItems.MELON_WINE.get()),
+                new ItemStack(HHModItems.MEAD.get()),
+                new ItemStack(HHModItems.HARD_CIDER.get()),
+                new ItemStack(HHModItems.ROOT_BEER.get()),
+                new ItemStack(HHModItems.PICKLED_BEETROOTS.get()),
+                new ItemStack(HHModItems.PICKLED_CABBAGE.get()),
+                new ItemStack(HHModItems.PICKLED_CARROTS.get()),
+                new ItemStack(HHModItems.PICKLED_ONIONS.get()),
+                new ItemStack(HHModItems.PICKLED_POTATOES.get())
+        ), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.vintage_aging"));
         registration.addIngredientInfo(new ItemStack(Items.FEATHER), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.pluck_chickens"));
         registration.addIngredientInfo(List.of(new ItemStack(HHModItems.WILD_RED_GRAPES.get()), new ItemStack(HHModItems.RED_GRAPES.get()), new ItemStack(HHModItems.WILD_GREEN_GRAPES.get()), new ItemStack(HHModItems.GREEN_GRAPES.get())), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.wild_grapes"));
     }

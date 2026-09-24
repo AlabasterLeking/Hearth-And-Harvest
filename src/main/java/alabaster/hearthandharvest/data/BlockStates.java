@@ -101,6 +101,8 @@ public class BlockStates extends BlockStateProvider {
         this.pieBlock(HHModBlocks.PEANUT_BUTTER_PIE.get());
         this.pieBlock(HHModBlocks.CHICKEN_POT_PIE.get());
 
+        this.foodStackBlock(HHModBlocks.WAFFLE.get());
+        this.foodStackBlock(HHModBlocks.PANCAKE.get());
         this.pizzaBlock(HHModBlocks.PIZZA.get());
         this.pizzaBlock(HHModBlocks.MEAT_PIZZA.get());
         this.pizzaBlock(HHModBlocks.VEGGIE_PIZZA.get());
@@ -400,6 +402,22 @@ public class BlockStates extends BlockStateProvider {
                 .texture("south", sideTied)
                 .texture("east", side)
                 .texture("west", side));
+    }
+
+    public void foodStackBlock(Block block) {
+        String name = blockName(block);
+        getVariantBuilder(block).forAllStates(state -> {
+            int count = state.getValue(FoodStackBlock.COUNT);
+            ModelFile model = models().withExistingParent(name + "_stack" + count, resourceBlock("template_food_stack" + count))
+                    .texture("top", resourceBlock(name + "_top"))
+                    .texture("side", resourceBlock(name + "_side"))
+                    .texture("bottom", resourceBlock(name + "_bottom"))
+                    .texture("particle", resourceBlock(name + "_top"));
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(((int) state.getValue(FoodStackBlock.FACING).toYRot() + 180) % 360)
+                    .build();
+        });
     }
 
     public void pizzaBlock(Block block) {

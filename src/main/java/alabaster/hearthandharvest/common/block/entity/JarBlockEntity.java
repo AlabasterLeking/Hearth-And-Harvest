@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -37,34 +38,49 @@ public class JarBlockEntity extends BlockEntity {
     };
     private static final Mirror[] RECONCILE_MIRRORS = {Mirror.NONE, Mirror.LEFT_RIGHT};
 
-    private final Item[] slots = new Item[4];
+    private final ItemStack[] slots = emptySlots();
 
     public JarBlockEntity(BlockPos pos, BlockState state) {
         super(HHModBlockEntities.JAR.get(), pos, state);
     }
 
-    public void setSlot(int index, @Nullable Item item) {
+    private static ItemStack[] emptySlots() {
+        ItemStack[] stacks = new ItemStack[4];
+        Arrays.fill(stacks, ItemStack.EMPTY);
+        return stacks;
+    }
+
+    public void setSlot(int index, ItemStack stack) {
         if (index < 0 || index >= 4) return;
-        slots[index] = (item == Items.AIR) ? null : item;
+        slots[index] = stack.isEmpty() ? ItemStack.EMPTY : stack.copyWithCount(1);
         setChanged();
+    }
+
+    public void clearSlot(int index) {
+        setSlot(index, ItemStack.EMPTY);
     }
 
     @Nullable
     public Item getSlot(int index) {
-        if (index < 0 || index >= 4) return null;
+        if (index < 0 || index >= 4 || slots[index].isEmpty()) return null;
+        return slots[index].getItem();
+    }
+
+    public ItemStack getSlotStack(int index) {
+        if (index < 0 || index >= 4) return ItemStack.EMPTY;
         return slots[index];
     }
 
     public int getCount() {
         int count = 0;
-        for (Item slot : slots) if (slot != null) count++;
+        for (ItemStack slot : slots) if (!slot.isEmpty()) count++;
         return count;
     }
 
     public void dropAllJars(Level level, BlockPos pos) {
-        for (Item item : slots) {
-            if (item != null && item != Items.AIR) {
-                Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, new ItemStack(item));
+        for (ItemStack stack : slots) {
+            if (!stack.isEmpty()) {
+                Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack.copy());
             }
         }
     }
@@ -85,7 +101,8 @@ public class JarBlockEntity extends BlockEntity {
         int[] permutation = slotPermutation(mirror, rotation);
         for (int i = 0; i < 4; i++) {
             String key = "slot_" + i;
-            if (source.contains(key)) moved.putString("slot_" + permutation[i], source.getString(key));
+            Tag entry = source.get(key);
+            if (entry != null) moved.put("slot_" + permutation[i], entry.copy());
         }
         result.put("slots", moved);
         return result;
@@ -93,7 +110,7 @@ public class JarBlockEntity extends BlockEntity {
 
     private int storedMask() {
         int mask = 0;
-        for (int i = 0; i < 4; i++) if (slots[i] != null) mask |= 1 << i;
+        for (int i = 0; i < 4; i++) if (!slots[i].isEmpty()) mask |= 1 << i;
         return mask;
     }
 
@@ -114,10 +131,10 @@ public class JarBlockEntity extends BlockEntity {
             for (Rotation rotation : Rotation.values()) {
                 int[] permutation = slotPermutation(mirror, rotation);
                 if (permuteMask(stored, permutation) != stateMask) continue;
-                Item[] previous = slots.clone();
-                Arrays.fill(slots, null);
+                ItemStack[] previous = slots.clone();
+                Arrays.fill(slots, ItemStack.EMPTY);
                 for (int i = 0; i < 4; i++) {
-                    if (previous[i] != null) slots[permutation[i]] = previous[i];
+                    if (!previous[i].isEmpty()) slots[permutation[i]] = previous[i];
                 }
                 return;
             }
@@ -129,8 +146,8 @@ public class JarBlockEntity extends BlockEntity {
         super.saveAdditional(tag, registries);
         CompoundTag slotsTag = new CompoundTag();
         for (int i = 0; i < 4; i++) {
-            if (slots[i] != null) {
-                slotsTag.putString("slot_" + i, BuiltInRegistries.ITEM.getKey(slots[i]).toString());
+            if (!slots[i].isEmpty()) {
+                slotsTag.put("slot_" + i, slots[i].save(registries));
             }
         }
         tag.put("slots", slotsTag);
@@ -139,20 +156,22 @@ public class JarBlockEntity extends BlockEntity {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        readSlots(tag);
+        readSlots(tag, registries);
         alignSlotsToState();
     }
 
-    private void readSlots(CompoundTag tag) {
-        Arrays.fill(slots, null);
+    private void readSlots(CompoundTag tag, HolderLookup.Provider registries) {
+        Arrays.fill(slots, ItemStack.EMPTY);
         CompoundTag slotsTag = tag.getCompound("slots");
         for (int i = 0; i < 4; i++) {
             String key = "slot_" + i;
-            if (slotsTag.contains(key)) {
+            if (slotsTag.contains(key, Tag.TAG_COMPOUND)) {
+                slots[i] = ItemStack.parseOptional(registries, slotsTag.getCompound(key));
+            } else if (slotsTag.contains(key, Tag.TAG_STRING)) {
                 ResourceLocation rl = ResourceLocation.tryParse(slotsTag.getString(key));
                 if (rl == null) continue;
                 Item item = BuiltInRegistries.ITEM.get(rl);
-                if (item != Items.AIR) slots[i] = item;
+                if (item != Items.AIR) slots[i] = new ItemStack(item);
             }
         }
     }
@@ -171,12 +190,12 @@ public class JarBlockEntity extends BlockEntity {
 
     @Override
     public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider registries) {
-        readSlots(tag);
+        readSlots(tag, registries);
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider registries) {
         CompoundTag tag = pkt.getTag();
-        if (tag != null) readSlots(tag);
+        if (tag != null) readSlots(tag, registries);
     }
 }

@@ -9,7 +9,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -115,14 +114,11 @@ public class JarBlock extends BaseEntityBlock {
 
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof JarBlockEntity be) {
-                Item item = be.getSlot(slot);
-                if (item != null) {
-                    ItemStack drop = new ItemStack(item);
-                    if (!player.getInventory().add(drop)) {
-                        player.drop(drop, false);
-                    }
+                ItemStack drop = be.getSlotStack(slot).copy();
+                if (!drop.isEmpty() && !player.getInventory().add(drop)) {
+                    player.drop(drop, false);
                 }
-                be.setSlot(slot, null);
+                be.clearSlot(slot);
                 BlockState newState = state.setValue(SLOTS[slot], false);
 
                 if (slotMask(newState) == 0) {
@@ -144,7 +140,7 @@ public class JarBlock extends BaseEntityBlock {
                     : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        if (!(stack.getItem() instanceof JarBlockItem jarItem)) {
+        if (!(stack.getItem() instanceof JarBlockItem)) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
@@ -158,7 +154,7 @@ public class JarBlock extends BaseEntityBlock {
 
         if (!level.isClientSide) {
             if (level.getBlockEntity(pos) instanceof JarBlockEntity be) {
-                be.setSlot(targetSlot, jarItem);
+                be.setSlot(targetSlot, stack);
                 BlockState newState = state.setValue(SLOTS[targetSlot], true);
                 level.setBlock(pos, newState, 3);
                 level.sendBlockUpdated(pos, state, newState, 3);

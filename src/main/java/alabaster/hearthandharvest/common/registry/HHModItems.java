@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.*;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
@@ -107,6 +108,8 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.TREE_TAPPER.get(), basicItem()));
     public static final Supplier<Item> CASK = registerWithTab("cask",
             () -> new BlockItem(HHModBlocks.CASK.get(), basicItem()));
+    public static final Supplier<Item> KEG = registerWithTab("keg",
+            () -> new BlockItem(HHModBlocks.KEG.get(), basicItem()));
     public static final Supplier<Item> STOMPING_BASIN = registerWithTab("stomping_basin",
             () -> new BlockItem(HHModBlocks.STOMPING_BASIN.get(), basicItem()));
     public static final Supplier<Item> JUG = registerWithTab("jug",
@@ -405,29 +408,29 @@ public class HHModItems {
 
     // Drinks
     public static final Supplier<Item> MEAD = registerWithTab("mead",
-            () -> new WineBottleItem(HHModFluids.MEAD.source()::get, drinkItem().food(HHFoodValues.MEAD).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.MEAD.source()::get, drinkItem().food(HHFoodValues.MEAD).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> HARD_CIDER = registerWithTab("hard_cider",
-            () -> new WineBottleItem(HHModFluids.HARD_CIDER.source()::get, drinkItem().food(HHFoodValues.HARD_CIDER).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.HARD_CIDER.source()::get, drinkItem().food(HHFoodValues.HARD_CIDER).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> ROOT_BEER = registerWithTab("root_beer",
-            () -> new WineBottleItem(HHModFluids.ROOT_BEER.source()::get, drinkItem().food(HHFoodValues.ROOT_BEER).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.ROOT_BEER.source()::get, drinkItem().food(HHFoodValues.ROOT_BEER).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> BLUEBERRY_WINE = registerWithTab("blueberry_wine",
-            () -> new WineBottleItem(HHModFluids.BLUEBERRY_WINE.source()::get, drinkItem().food(HHFoodValues.BLUEBERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.BLUEBERRY_WINE.source()::get, drinkItem().food(HHFoodValues.BLUEBERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> CHERRY_WINE = registerWithTab("cherry_wine",
-            () -> new WineBottleItem(HHModFluids.CHERRY_WINE.source()::get, drinkItem().food(HHFoodValues.CHERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.CHERRY_WINE.source()::get, drinkItem().food(HHFoodValues.CHERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> RASPBERRY_WINE = registerWithTab("raspberry_wine",
-            () -> new WineBottleItem(HHModFluids.RASPBERRY_WINE.source()::get, drinkItem().food(HHFoodValues.RASPBERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.RASPBERRY_WINE.source()::get, drinkItem().food(HHFoodValues.RASPBERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> RED_GRAPE_WINE = registerWithTab("red_grape_wine",
-            () -> new WineBottleItem(HHModFluids.RED_GRAPE_WINE.source()::get, drinkItem().food(HHFoodValues.RED_GRAPE_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.RED_GRAPE_WINE.source()::get, drinkItem().food(HHFoodValues.RED_GRAPE_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> GREEN_GRAPE_WINE = registerWithTab("green_grape_wine",
-            () -> new WineBottleItem(HHModFluids.GREEN_GRAPE_WINE.source()::get, drinkItem().food(HHFoodValues.GREEN_GRAPE_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.GREEN_GRAPE_WINE.source()::get, drinkItem().food(HHFoodValues.GREEN_GRAPE_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> SWEET_BERRY_WINE = registerWithTab("sweet_berry_wine",
-            () -> new WineBottleItem(HHModFluids.SWEET_BERRY_WINE.source()::get, drinkItem().food(HHFoodValues.SWEET_BERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.SWEET_BERRY_WINE.source()::get, drinkItem().food(HHFoodValues.SWEET_BERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> GLOW_BERRY_WINE = registerWithTab("glow_berry_wine",
-            () -> new WineBottleItem(HHModFluids.GLOW_BERRY_WINE.source()::get, drinkItem().food(HHFoodValues.GLOW_BERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.GLOW_BERRY_WINE.source()::get, drinkItem().food(HHFoodValues.GLOW_BERRY_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> MELON_WINE = registerWithTab("melon_wine",
-            () -> new WineBottleItem(HHModFluids.MELON_WINE.source()::get, drinkItem().food(HHFoodValues.MELON_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.MELON_WINE.source()::get, drinkItem().food(HHFoodValues.MELON_WINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> MOONSHINE = registerWithTab("moonshine",
-            () -> new WineBottleItem(HHModFluids.MOONSHINE.source()::get, drinkItem().food(HHFoodValues.MOONSHINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false));
+            () -> new WineBottleItem(HHModFluids.MOONSHINE.source()::get, drinkItem().food(HHFoodValues.MOONSHINE).stacksTo(16).craftRemainder(Items.GLASS_BOTTLE), true, false).glasses(3).ageable());
     public static final Supplier<Item> CHOCOLATE_MILK_BOTTLE = registerWithTab("chocolate_milk_bottle",
             () -> new MilkBottleItem(drinkItem().food(HHFoodValues.CHOCOLATE_MILK_BOTTLE)));
     public static final Supplier<Item> GOAT_MILK_BOTTLE = registerWithTab("goat_milk_bottle",
@@ -453,7 +456,7 @@ public class HHModItems {
     public static final Supplier<Item> BLUEBERRY_JAM = registerWithTab("blueberry_jam",
             () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.BLUEBERRY_JAM.get(), jarItem(HHFoodValues.BLUEBERRY_JAM)));
     public static final Supplier<Item> CHERRY_JAM = registerWithTab("cherry_jam",
-            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.CHERRY_JAM.get(), jarItem(HHFoodValues.BLUEBERRY_JAM)));
+            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.CHERRY_JAM.get(), jarItem(HHFoodValues.CHERRY_JAM)));
     public static final Supplier<Item> RASPBERRY_JAM = registerWithTab("raspberry_jam",
             () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.RASPBERRY_JAM.get(), jarItem(HHFoodValues.RASPBERRY_JAM)));
     public static final Supplier<Item> GRAPE_JAM = registerWithTab("grape_jam",
@@ -469,15 +472,17 @@ public class HHModItems {
     public static final Supplier<Item> PEANUT_BUTTER = registerWithTab("peanut_butter",
             () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PEANUT_BUTTER.get(), jarItem(HHFoodValues.PEANUT_BUTTER)));
     public static final Supplier<Item> PICKLED_BEETROOTS = registerWithTab("pickled_beetroots",
-            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_BEETROOTS.get(), jarItem(HHFoodValues.PICKLED_BEETROOTS)));
+            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_BEETROOTS.get(), jarItem(HHFoodValues.PICKLED_BEETROOTS))
+                    .cures(MobEffects.HUNGER, MobEffects.CONFUSION, MobEffects.POISON)
+                    .ageable());
     public static final Supplier<Item> PICKLED_CABBAGE = registerWithTab("pickled_cabbage",
-            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_CABBAGE.get(), jarItem(HHFoodValues.PICKLED_CABBAGE)));
+            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_CABBAGE.get(), jarItem(HHFoodValues.PICKLED_CABBAGE)).ageable());
     public static final Supplier<Item> PICKLED_CARROTS = registerWithTab("pickled_carrots",
-            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_CARROTS.get(), jarItem(HHFoodValues.PICKLED_CARROTS)));
+            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_CARROTS.get(), jarItem(HHFoodValues.PICKLED_CARROTS)).ageable());
     public static final Supplier<Item> PICKLED_ONIONS = registerWithTab("pickled_onions",
-            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_ONIONS.get(), jarItem(HHFoodValues.PICKLED_ONIONS)));
+            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_ONIONS.get(), jarItem(HHFoodValues.PICKLED_ONIONS)).ageable());
     public static final Supplier<Item> PICKLED_POTATOES = registerWithTab("pickled_potatoes",
-            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_POTATOES.get(), jarItem(HHFoodValues.PICKLED_POTATOES)));
+            () -> new JarBlockItem(HHModBlocks.EMPTY_JAR_DISPLAY.get(), HHModBlocks.PICKLED_POTATOES.get(), jarItem(HHFoodValues.PICKLED_POTATOES)).ageable());
 
     // Sweets
     public static final Supplier<Item> CARAMEL = registerWithTab("caramel",
@@ -560,7 +565,7 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.CARROT_CAKE.get(), basicItem()));
     public static final Supplier<Item> CARROT_CAKE_SLICE = registerWithTab("carrot_cake_slice",
             () -> new ConsumableItem(foodItem(HHFoodValues.CARROT_CAKE_SLICE)));
-    
+
     // Pizzas
     public static final Supplier<Item> PIZZA = registerWithTab("pizza",
             () -> new BlockItem(HHModBlocks.PIZZA.get(), basicItem()));
@@ -674,7 +679,9 @@ public class HHModItems {
     public static final Supplier<Item> PEANUT_BUTTER_AND_JELLY_SANDWICH = registerWithTab("peanut_butter_and_jelly_sandwich",
             () -> new ConsumableItem(foodItem(HHFoodValues.PEANUT_BUTTER_AND_JELLY_SANDWICH)));
     public static final Supplier<Item> WAFFLE = registerWithTab("waffle",
-            () -> new ConsumableItem(foodItem(HHFoodValues.WAFFLE)));
+            () -> new BlockItem(HHModBlocks.WAFFLE.get(), foodItem(HHFoodValues.WAFFLE)));
+    public static final Supplier<Item> PANCAKE = registerWithTab("pancake",
+            () -> new BlockItem(HHModBlocks.PANCAKE.get(), foodItem(HHFoodValues.PANCAKE)));
     public static final Supplier<Item> BISCUITS_AND_GRAVY = registerWithTab("biscuits_and_gravy",
             () -> new ConsumableItem(bowlFoodItem(HHFoodValues.BISCUITS_AND_GRAVY)));
     public static final Supplier<Item> GLAZED_CARROTS = registerWithTab("glazed_carrots",

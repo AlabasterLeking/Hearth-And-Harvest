@@ -2,12 +2,14 @@ package alabaster.hearthandharvest.client.renderer;
 
 import alabaster.hearthandharvest.common.block.JarBlock;
 import alabaster.hearthandharvest.common.block.entity.JarBlockEntity;
+import alabaster.hearthandharvest.common.item.JarBlockItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import alabaster.hearthandharvest.common.item.JarBlockItem;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.Item;
 
 public class JarRenderer implements BlockEntityRenderer<JarBlockEntity> {
@@ -44,6 +46,12 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity> {
                     packedLight,
                     packedOverlay
             );
+
+            BakedModel vintage = DisplayModels.vintageOverlay("jar", be.getSlotStack(i));
+            if (vintage != null) {
+                blockRenderer.getModelRenderer().renderModel(poseStack.last(), bufferSource.getBuffer(RenderType.cutout()),
+                        null, vintage, 1.0F, 1.0F, 1.0F, packedLight, packedOverlay);
+            }
 
             poseStack.popPose();
         }

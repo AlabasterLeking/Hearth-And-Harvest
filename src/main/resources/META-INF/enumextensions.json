@@ -41,6 +41,48 @@
         "class": "alabaster/hearthandharvest/common/EnumParameters",
         "field": "PROXY_AGING_MISC"
       }
+    },
+    {
+      "enum": "net/minecraft/world/inventory/RecipeBookType",
+      "name": "HEARTHANDHARVEST_FERMENTING",
+      "constructor": "()V",
+      "parameters": []
+    },
+    {
+      "enum": "net/minecraft/client/RecipeBookCategories",
+      "name": "HEARTHANDHARVEST_FERMENTING_SEARCH",
+      "constructor": "(Ljava/util/function/Supplier;)V",
+      "parameters": {
+        "class": "alabaster/hearthandharvest/common/EnumParameters",
+        "field": "PROXY_FERMENTING_SEARCH"
+      }
+    },
+    {
+      "enum": "net/minecraft/client/RecipeBookCategories",
+      "name": "HEARTHANDHARVEST_FERMENTING_MEALS",
+      "constructor": "(Ljava/util/function/Supplier;)V",
+      "parameters": {
+        "class": "alabaster/hearthandharvest/common/EnumParameters",
+        "field": "PROXY_FERMENTING_MEALS"
+      }
+    },
+    {
+      "enum": "net/minecraft/client/RecipeBookCategories",
+      "name": "HEARTHANDHARVEST_FERMENTING_DRINKS",
+      "constructor": "(Ljava/util/function/Supplier;)V",
+      "parameters": {
+        "class": "alabaster/hearthandharvest/common/EnumParameters",
+        "field": "PROXY_FERMENTING_DRINKS"
+      }
+    },
+    {
+      "enum": "net/minecraft/client/RecipeBookCategories",
+      "name": "HEARTHANDHARVEST_FERMENTING_MISC",
+      "constructor": "(Ljava/util/function/Supplier;)V",
+      "parameters": {
+        "class": "alabaster/hearthandharvest/common/EnumParameters",
+        "field": "PROXY_FERMENTING_MISC"
+      }
     }
   ]
 }

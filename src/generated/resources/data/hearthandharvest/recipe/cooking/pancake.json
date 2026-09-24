@@ -1,0 +1,18 @@
+{
+  "type": "farmersdelight:cooking",
+  "cookingtime": 100,
+  "experience": 0.35,
+  "ingredients": [
+    {
+      "item": "hearthandharvest:batter"
+    },
+    {
+      "item": "hearthandharvest:butter"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "count": 2,
+    "id": "hearthandharvest:pancake"
+  }
+}

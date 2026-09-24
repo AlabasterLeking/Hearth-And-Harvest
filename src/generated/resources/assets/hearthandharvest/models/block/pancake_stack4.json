@@ -1,0 +1,9 @@
+{
+  "parent": "hearthandharvest:block/template_food_stack4",
+  "textures": {
+    "bottom": "hearthandharvest:block/pancake_bottom",
+    "particle": "hearthandharvest:block/pancake_top",
+    "side": "hearthandharvest:block/pancake_side",
+    "top": "hearthandharvest:block/pancake_top"
+  }
+}

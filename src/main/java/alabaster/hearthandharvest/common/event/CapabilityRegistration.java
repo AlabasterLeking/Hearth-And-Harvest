@@ -100,6 +100,12 @@ public class CapabilityRegistration {
                 CapabilityRegistration::bottleHandler,
                 bottleCandidates()
         );
+
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> new EmptyBottleFluidHandler(stack),
+                Items.GLASS_BOTTLE
+        );
     }
 
     private static Item[] bottleCandidates() {
@@ -119,6 +125,62 @@ public class CapabilityRegistration {
         return new BottleFluidHandler(stack, fluid);
     }
 
+    private static class EmptyBottleFluidHandler implements IFluidHandlerItem {
+        private ItemStack container;
+
+        EmptyBottleFluidHandler(ItemStack stack) {
+            this.container = stack;
+        }
+
+        @Override
+        public int getTanks() {
+            return 1;
+        }
+
+        @Override
+        public FluidStack getFluidInTank(int tank) {
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public int getTankCapacity(int tank) {
+            return HHDataMaps.BOTTLE_VOLUME;
+        }
+
+        @Override
+        public boolean isFluidValid(int tank, FluidStack stack) {
+            return HHDataMaps.getBottleForFluid(stack.getFluid()) != null;
+        }
+
+        @Override
+        public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
+            if (container.getCount() != 1 || resource.getAmount() < HHDataMaps.BOTTLE_VOLUME) return 0;
+
+            Item bottle = HHDataMaps.getBottleForFluid(resource.getFluid());
+            if (bottle == null) return 0;
+
+            if (action.execute()) {
+                container = new ItemStack(bottle);
+            }
+            return HHDataMaps.BOTTLE_VOLUME;
+        }
+
+        @Override
+        public FluidStack drain(FluidStack resource, IFluidHandler.FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) {
+            return FluidStack.EMPTY;
+        }
+
+        @Override
+        public ItemStack getContainer() {
+            return container;
+        }
+    }
+
     private static class BottleFluidHandler implements IFluidHandlerItem {
         private final Item bottleItem;
         private final Fluid containedFluid;
@@ -131,7 +193,9 @@ public class CapabilityRegistration {
         }
 
         private boolean isFullBottle() {
-            return container.getCount() == 1 && container.getItem() == bottleItem;
+            return container.getCount() == 1
+                    && container.getItem() == bottleItem
+                    && !container.has(HHModDataComponents.SERVINGS.get());
         }
 
         @Override

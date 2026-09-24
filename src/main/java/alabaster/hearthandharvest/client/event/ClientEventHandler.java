@@ -2,17 +2,21 @@ package alabaster.hearthandharvest.client.event;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.client.gui.CaskGUI;
+import alabaster.hearthandharvest.client.gui.KegGUI;
 import alabaster.hearthandharvest.client.particle.DrippingSapParticle;
 import alabaster.hearthandharvest.client.particle.FeatherParticle;
 import alabaster.hearthandharvest.client.particle.FliesParticle;
 import alabaster.hearthandharvest.client.recipebook.RecipeCategories;
 import alabaster.hearthandharvest.client.renderer.*;
-import alabaster.hearthandharvest.common.entity.crow.CrowModel;
-import alabaster.hearthandharvest.common.entity.crow.CrowRenderer;
 import alabaster.hearthandharvest.common.block.trellis.TrellisBlock;
 import alabaster.hearthandharvest.common.block.trellis.TrellisPlant;
+import alabaster.hearthandharvest.common.entity.crow.CrowModel;
 import alabaster.hearthandharvest.common.entity.crow.CrowOnShoulderLayer;
+import alabaster.hearthandharvest.common.entity.crow.CrowRenderer;
 import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchforkModel;
+import alabaster.hearthandharvest.common.item.AgeableItem;
+import alabaster.hearthandharvest.common.item.JarBlockItem;
+import alabaster.hearthandharvest.common.item.VintageHelper;
 import alabaster.hearthandharvest.common.item.component.SeedPouchContents;
 import alabaster.hearthandharvest.common.network.PlayerPoopPacket;
 import alabaster.hearthandharvest.common.registry.*;
@@ -27,6 +31,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
@@ -61,7 +66,7 @@ public class ClientEventHandler {
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
         // Bottle Racks
         ResourceManager rm = Minecraft.getInstance().getResourceManager();
-        rm.listResources("models/display", path -> path.getPath().endsWith(".json"))
+        rm.listResources("models/display", path -> path.getPath().endsWith(".json") && !path.getPath().contains("/template_"))
                 .keySet()
                 .forEach(resourceLocation -> {
                     String path = resourceLocation.getPath();
@@ -220,6 +225,23 @@ public class ClientEventHandler {
             pose.popPose();
             return true;
         });
+
+        BuiltInRegistries.ITEM.stream()
+                .filter(item -> item instanceof AgeableItem)
+                .forEach(item -> {
+                    String kind = item instanceof JarBlockItem ? "jar" : "bottle";
+                    event.register(item, (guiGraphics, font, stack, xOffset, yOffset) -> {
+                        ResourceLocation texture = VintageHelper.overlayTexture(kind, stack);
+                        if (texture == null) return false;
+
+                        PoseStack pose = guiGraphics.pose();
+                        pose.pushPose();
+                        pose.translate(0, 0, 200);
+                        guiGraphics.blit(texture, xOffset, yOffset, 0, 0, 16, 16, 16, 16);
+                        pose.popPose();
+                        return true;
+                    });
+                });
     }
 
     private static int cooldownTicks = 0;
@@ -282,6 +304,7 @@ public class ClientEventHandler {
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(HHModMenuTypes.CASK_MENU.get(), CaskGUI::new);
+        event.register(HHModMenuTypes.KEG_MENU.get(), KegGUI::new);
     }
 
     @SubscribeEvent

@@ -1,0 +1,24 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "hearthandharvest:block/keg_side",
+    "side": "hearthandharvest:block/keg_side",
+    "front": "hearthandharvest:block/keg_front",
+    "top": "hearthandharvest:block/keg_top",
+    "bottom": "hearthandharvest:block/keg_bottom"
+  },
+  "elements": [
+    {
+      "from": [1, 0, 1],
+      "to": [15, 16, 15],
+      "faces": {
+        "north": {"uv": [1, 0, 15, 16], "texture": "#front"},
+        "east": {"uv": [1, 0, 15, 16], "texture": "#side"},
+        "south": {"uv": [1, 0, 15, 16], "texture": "#side"},
+        "west": {"uv": [1, 0, 15, 16], "texture": "#side"},
+        "up": {"uv": [1, 1, 15, 15], "texture": "#top"},
+        "down": {"uv": [1, 1, 15, 15], "texture": "#bottom", "cullface": "down"}
+      }
+    }
+  ]
+}

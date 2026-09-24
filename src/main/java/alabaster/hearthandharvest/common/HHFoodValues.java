@@ -1,6 +1,8 @@
 package alabaster.hearthandharvest.common;
 
 import alabaster.hearthandharvest.common.registry.HHModEffects;
+import net.minecraft.core.Holder;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -74,6 +76,7 @@ public class HHFoodValues {
 
     // --- Light Drinks ---
     public static final FoodProperties ROOT_BEER = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, SHORT_DURATION, 0), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.NIGHT_VISION, BRIEF_DURATION, 0), 1.0F)
@@ -81,6 +84,7 @@ public class HHFoodValues {
             .build();
 
     public static final FoodProperties HARD_CIDER = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, SHORT_DURATION, 0), 0.5F)
             .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, SHORT_DURATION, 0), 1.0F)
@@ -89,6 +93,7 @@ public class HHFoodValues {
 
     // --- Medium Drinks (Wines & Mead) ---
     public static final FoodProperties MEAD = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
             .effect(() -> new MobEffectInstance(MobEffects.SLOW_FALLING, SHORT_DURATION, 0), 1.0F)
@@ -96,13 +101,15 @@ public class HHFoodValues {
             .build();
 
     public static final FoodProperties BLUEBERRY_WINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
-            .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, SHORT_DURATION, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 300, 0), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.LUCK, BRIEF_DURATION, 1), 0.75F)
             .build();
 
     public static final FoodProperties CHERRY_WINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
             .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, BRIEF_DURATION, 1), 1.0F)
@@ -110,6 +117,7 @@ public class HHFoodValues {
             .build();
 
     public static final FoodProperties GREEN_GRAPE_WINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
             .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, SHORT_DURATION, 0), 1.0F)
@@ -117,6 +125,7 @@ public class HHFoodValues {
             .build();
 
     public static final FoodProperties RASPBERRY_WINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
             .effect(() -> new MobEffectInstance(HHModEffects.PRICKLY, SHORT_DURATION, 0), 1.0F)
@@ -124,6 +133,7 @@ public class HHFoodValues {
             .build();
 
     public static final FoodProperties RED_GRAPE_WINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
             .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, BRIEF_DURATION, 1), 1.0F)
@@ -131,6 +141,7 @@ public class HHFoodValues {
             .build();
 
     public static final FoodProperties SWEET_BERRY_WINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
             .effect(() -> new MobEffectInstance(MobEffects.HEAL, 0, 0), 1.0F)
@@ -138,6 +149,7 @@ public class HHFoodValues {
             .build();
 
     public static final FoodProperties GLOW_BERRY_WINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
             .effect(() -> new MobEffectInstance(HHModEffects.CLARITY, SHORT_DURATION, 0), 1.0F)
@@ -145,14 +157,16 @@ public class HHFoodValues {
             .build();
 
     public static final FoodProperties MELON_WINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
-            .effect(() -> new MobEffectInstance(MobEffects.HEAL, 0, 1), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, SHORT_DURATION, 0), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, SHORT_DURATION, 0), 1.0F)
             .build();
 
     // --- Strong Drinks ---
     public static final FoodProperties MOONSHINE = new FoodProperties.Builder()
+            .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
             .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 1), 1.0F) // Starts at Drunk II
             .effect(() -> new MobEffectInstance(MobEffects.SATURATION, MEDIUM_DURATION, 1), 1.0F)
@@ -160,40 +174,29 @@ public class HHFoodValues {
             .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, SHORT_DURATION, 1), 1.0F) // Penalty baked in
             .build();
 
-    // Jams & Spreads
-    public static final FoodProperties RASPBERRY_JAM = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f).build();
-    public static final FoodProperties BLUEBERRY_JAM = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f).build();
-    public static final FoodProperties GRAPE_JAM = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f).build();
-    public static final FoodProperties APPLE_JAM = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f).build();
-    public static final FoodProperties SWEET_BERRY_JAM = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f).build();
-    public static final FoodProperties GLOW_BERRY_JAM = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f).build();
-    public static final FoodProperties MELON_JAM = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f).build();
+    // Jams & Spreads (per serving)
+    public static final FoodProperties RASPBERRY_JAM = jam(MobEffects.MOVEMENT_SPEED, BRIEF_DURATION);
+    public static final FoodProperties BLUEBERRY_JAM = jam(MobEffects.DIG_SPEED, BRIEF_DURATION);
+    public static final FoodProperties CHERRY_JAM = jam(MobEffects.REGENERATION, 160);
+    public static final FoodProperties GRAPE_JAM = jam(MobEffects.DAMAGE_RESISTANCE, BRIEF_DURATION);
+    public static final FoodProperties APPLE_JAM = jam(MobEffects.ABSORPTION, BRIEF_DURATION);
+    public static final FoodProperties SWEET_BERRY_JAM = jam(MobEffects.JUMP, BRIEF_DURATION);
+    public static final FoodProperties GLOW_BERRY_JAM = jam(MobEffects.NIGHT_VISION, SHORT_DURATION);
+    public static final FoodProperties MELON_JAM = jam(MobEffects.SATURATION, 1);
     public static final FoodProperties PEANUT_BUTTER = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f).build();
+            .nutrition(4).saturationModifier(0.5f).fast()
+            .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, BRIEF_DURATION, 0), 1.0F).build();
 
-    // Pickled Foods
-    public static final FoodProperties PICKLED_BEETROOTS = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f)
+    // Pickled Foods (per serving)
+    public static final FoodProperties PICKLED_BEETROOTS = pickle().build();
+    public static final FoodProperties PICKLED_CABBAGE = pickle()
+            .effect(() -> new MobEffectInstance(ModEffects.COMFORT, SHORT_DURATION, 0), 1.0F).build();
+    public static final FoodProperties PICKLED_CARROTS = pickle()
+            .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, SHORT_DURATION, 0), 1.0F).build();
+    public static final FoodProperties PICKLED_ONIONS = pickle()
             .effect(() -> new MobEffectInstance(HHModEffects.PUNGENT, MEDIUM_DURATION, 0), 1.0F).build();
-    public static final FoodProperties PICKLED_CABBAGE = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f)
-            .effect(() -> new MobEffectInstance(HHModEffects.PUNGENT, MEDIUM_DURATION, 0), 1.0F).build();
-    public static final FoodProperties PICKLED_CARROTS = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f)
-            .effect(() -> new MobEffectInstance(HHModEffects.PUNGENT, MEDIUM_DURATION, 0), 1.0F).build();
-    public static final FoodProperties PICKLED_ONIONS = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f)
-            .effect(() -> new MobEffectInstance(HHModEffects.PUNGENT, MEDIUM_DURATION, 0), 1.0F).build();
-    public static final FoodProperties PICKLED_POTATOES = new FoodProperties.Builder()
-            .nutrition(5).saturationModifier(0.3f)
-            .effect(() -> new MobEffectInstance(HHModEffects.PUNGENT, MEDIUM_DURATION, 0), 1.0F).build();
+    public static final FoodProperties PICKLED_POTATOES = pickle()
+            .effect(() -> new MobEffectInstance(MobEffects.HEALTH_BOOST, SHORT_DURATION, 0), 1.0F).build();
 
     // Sweets & Snacks
     public static final FoodProperties CARAMEL = new FoodProperties.Builder()
@@ -260,6 +263,8 @@ public class HHFoodValues {
             .nutrition(4).saturationModifier(0.3f).build();
     public static final FoodProperties WAFFLE = new FoodProperties.Builder()
             .nutrition(6).saturationModifier(0.3f).build();
+    public static final FoodProperties PANCAKE = new FoodProperties.Builder()
+            .nutrition(5).saturationModifier(0.4f).build();
     public static final FoodProperties CIDER_DONUT = new FoodProperties.Builder()
             .nutrition(5).saturationModifier(0.5f)
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, 200, 0), 1.0F)
@@ -326,4 +331,14 @@ public class HHFoodValues {
     public static final FoodProperties TAMALE = new FoodProperties.Builder()
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, MEDIUM_DURATION, 1), 1.0F)
             .nutrition(7).saturationModifier(0.6f).build();
+
+    private static FoodProperties jam(Holder<MobEffect> effect, int duration) {
+        return new FoodProperties.Builder()
+                .nutrition(3).saturationModifier(0.3f).fast()
+                .effect(() -> new MobEffectInstance(effect, duration, 0), 1.0F).build();
+    }
+
+    private static FoodProperties.Builder pickle() {
+        return new FoodProperties.Builder().nutrition(4).saturationModifier(0.5f);
+    }
 }

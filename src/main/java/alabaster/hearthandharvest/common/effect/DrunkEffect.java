@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.effect;
 
+import alabaster.hearthandharvest.HearthAndHarvest;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
@@ -7,17 +9,25 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
 public class DrunkEffect extends MobEffect {
 
     public DrunkEffect() {
         super(MobEffectCategory.HARMFUL, 0x7d4b2c);
+        this.addAttributeModifier(Attributes.ATTACK_DAMAGE,
+                ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "effect.drunk_courage_damage"),
+                0.5D, AttributeModifier.Operation.ADD_VALUE);
+        this.addAttributeModifier(Attributes.KNOCKBACK_RESISTANCE,
+                ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "effect.drunk_courage_knockback"),
+                0.05D, AttributeModifier.Operation.ADD_VALUE);
     }
 
     /*
      * Amplifier levels:
-     * 0 (Drunk I)   - No effect
+     * 0 (Drunk I)   - Slight attack damage and knockback resistance (scales with level)
      * 1 (Drunk II)  - Very mild saturation drain
      * 2 (Drunk III) - + Slowness I, Mild saturation drain
      * 3 (Drunk IV)  - + Slowness II, Weakness I, Stumbling, Moderate saturation drain
