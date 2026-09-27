@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.common.block.entity.CaskBlockEntity;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
+import alabaster.hearthandharvest.common.registry.HHModSounds;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,7 +13,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import java.util.List;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -43,14 +43,13 @@ public class CaskBlock extends BaseEntityBlock {
     public static final MapCodec<CaskBlock> CODEC = simpleCodec(CaskBlock::new);
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final BooleanProperty SEALED = BooleanProperty.create("sealed");
 
     protected static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 13.0D, 13.0D);
 
     public CaskBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(OPEN, false).setValue(SEALED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(SEALED, false));
     }
 
     @Override
@@ -100,7 +99,7 @@ public class CaskBlock extends BaseEntityBlock {
 
         boolean sealed = !cask.isSealed();
         cask.setSealed(sealed);
-        level.playSound(null, pos, sealed ? SoundEvents.HONEYCOMB_WAX_ON : SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
+        level.playSound(null, pos, sealed ? HHModSounds.CASK_SEAL.get() : HHModSounds.CASK_UNSEAL.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
         return sealed;
     }
 
@@ -127,7 +126,7 @@ public class CaskBlock extends BaseEntityBlock {
         }
         if (random.nextInt(160) == 0) {
             level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
-                    SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 0.3F, 0.7F + random.nextFloat() * 0.3F, false);
+                    HHModSounds.CASK_AGING.get(), SoundSource.BLOCKS, 0.3F, 0.7F + random.nextFloat() * 0.3F, false);
         }
     }
 
@@ -168,7 +167,7 @@ public class CaskBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, OPEN, SEALED);
+        builder.add(FACING, SEALED);
     }
 
     @Nullable

@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.client.gui;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.entity.KegBlockEntity;
+import alabaster.hearthandharvest.common.registry.HHModSounds;
 import alabaster.hearthandharvest.common.block.entity.container.KegMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,7 +17,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
@@ -99,7 +99,7 @@ public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUp
         this.setInitialFocus(this.recipeBookComponent);
 
         if (this.minecraft != null) {
-            this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.BARREL_OPEN, 0.8F, 0.5F));
+            this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(HHModSounds.KEG_OPEN.get(), 0.8F, 0.5F));
         }
     }
 
@@ -151,10 +151,8 @@ public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUp
 
     private static Component slotLabel(int slotIndex) {
         return switch (slotIndex) {
-            case 0, 1 -> Component.translatable("gui.hearthandharvest.keg.ingredient_slot");
             case 2 -> Component.translatable("gui.hearthandharvest.keg.container_slot");
             case 3 -> Component.translatable("gui.hearthandharvest.keg.container_output_slot");
-            case 4, 5 -> Component.translatable("gui.hearthandharvest.keg.output_slot");
             default -> null;
         };
     }

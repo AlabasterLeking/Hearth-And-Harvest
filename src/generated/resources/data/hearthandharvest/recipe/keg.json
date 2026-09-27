@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "PCP",
+    "C C",
+    "PCP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:keg"
+  }
+}

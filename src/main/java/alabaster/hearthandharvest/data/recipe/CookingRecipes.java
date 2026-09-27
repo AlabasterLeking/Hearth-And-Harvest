@@ -164,22 +164,6 @@ public class CookingRecipes
                 .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
                 .save(output, "salt_from_bottle");
 
-        CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.UNRIPE_CHEDDAR_CHEESE_WHEEL.get(), 1, SLOW_COOKING, LARGE_EXP)
-                .addIngredient(ModItems.MILK_BOTTLE.get())
-                .addIngredient(ModItems.MILK_BOTTLE.get())
-                .addIngredient(HHCommonTags.DUSTS_SALT)
-                .addIngredient(HHCommonTags.DUSTS_SALT)
-                .unlockedByItems("has_milk_bottle", ModItems.MILK_BOTTLE.get())
-                .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
-                .save(output);
-        CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.UNRIPE_GOAT_CHEESE_WHEEL.get(), 1, SLOW_COOKING, LARGE_EXP)
-                .addIngredient(HHModItems.GOAT_MILK_BOTTLE.get())
-                .addIngredient(HHModItems.GOAT_MILK_BOTTLE.get())
-                .addIngredient(HHCommonTags.DUSTS_SALT)
-                .addIngredient(HHCommonTags.DUSTS_SALT)
-                .unlockedByItems("has_goat_milk_bottle", HHModItems.GOAT_MILK_BOTTLE.get())
-                .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
-                .save(output);
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.MASHED_POTATOES.get(), 1, NORMAL_COOKING, MEDIUM_EXP, Items.BOWL)
                 .addIngredient(Items.POTATO)
                 .addIngredient(Items.POTATO)

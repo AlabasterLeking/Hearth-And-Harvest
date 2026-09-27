@@ -198,11 +198,12 @@ public class ClientEventHandler {
         registerFluidTextures(event, "sweet_berry_wine", HHModFluids.SWEET_BERRY_WINE.type().get());
         registerFluidTextures(event, "glow_berry_wine", HHModFluids.GLOW_BERRY_WINE.type().get());
         registerFluidTextures(event, "melon_wine", HHModFluids.MELON_WINE.type().get());
+        registerFluidTextures(event, "goat_milk", HHModFluids.GOAT_MILK.type().get());
     }
 
     private static void registerFluidTextures(RegisterClientExtensionsEvent event, String name, FluidType type) {
-        ResourceLocation still   = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/" + name + "_still");
-        ResourceLocation flowing = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/" + name + "_flow");
+        ResourceLocation still   = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/fluid/" + name + "_still");
+        ResourceLocation flowing = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "block/fluid/" + name + "_flow");
 
         event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override public ResourceLocation getStillTexture()   { return still; }

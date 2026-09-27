@@ -8,6 +8,7 @@
     "hearthandharvest:cooking_oil": "hearthandharvest:cooking_oil",
     "hearthandharvest:glow_berry_juice": "hearthandharvest:glow_berry_juice",
     "hearthandharvest:glow_berry_wine": "hearthandharvest:glow_berry_wine",
+    "hearthandharvest:goat_milk": "hearthandharvest:goat_milk_bottle",
     "hearthandharvest:green_grape_juice": "hearthandharvest:green_grape_juice",
     "hearthandharvest:green_grape_wine": "hearthandharvest:green_grape_wine",
     "hearthandharvest:hard_cider": "hearthandharvest:hard_cider",
@@ -22,6 +23,7 @@
     "hearthandharvest:root_beer": "hearthandharvest:root_beer",
     "hearthandharvest:sweet_berry_juice": "hearthandharvest:sweet_berry_juice",
     "hearthandharvest:sweet_berry_wine": "hearthandharvest:sweet_berry_wine",
-    "hearthandharvest:syrup": "hearthandharvest:syrup_bottle"
+    "hearthandharvest:syrup": "hearthandharvest:syrup_bottle",
+    "minecraft:milk": "farmersdelight:milk_bottle"
   }
 }

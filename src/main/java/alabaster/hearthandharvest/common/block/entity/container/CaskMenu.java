@@ -29,7 +29,7 @@ public class CaskMenu extends RecipeBookMenu<RecipeWrapper, CaskRecipe> {
     protected final Level level;
 
     public CaskMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-        this(windowId, playerInventory, getTileEntity(playerInventory, data), new SimpleContainerData(4));
+        this(windowId, playerInventory, getTileEntity(playerInventory, data), new SimpleContainerData(6));
     }
 
     public CaskMenu(final int windowId, final Inventory playerInventory, final CaskBlockEntity blockEntity, ContainerData caskDataIn) {

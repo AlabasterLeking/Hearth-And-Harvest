@@ -25,12 +25,38 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.Shapes;
 
 import javax.annotation.Nullable;
 
 public class KegBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+    private static final VoxelShape BODY = Shapes.or(
+            Block.box(1.0D, 1.0D, 0.0D, 15.0D, 15.0D, 16.0D),
+            Block.box(0.0D, 0.0D, 2.0D, 16.0D, 1.0D, 6.0D),
+            Block.box(0.0D, 0.0D, 10.0D, 16.0D, 1.0D, 14.0D),
+            Block.box(0.0D, 1.0D, 2.0D, 1.0D, 5.0D, 6.0D),
+            Block.box(0.0D, 1.0D, 10.0D, 1.0D, 5.0D, 14.0D),
+            Block.box(15.0D, 1.0D, 2.0D, 16.0D, 5.0D, 6.0D),
+            Block.box(15.0D, 1.0D, 10.0D, 16.0D, 5.0D, 14.0D));
+
+    private static final VoxelShape NORTH_SHAPE = BODY;
+    private static final VoxelShape EAST_SHAPE = rotate(BODY, 1);
+    private static final VoxelShape SOUTH_SHAPE = rotate(BODY, 2);
+    private static final VoxelShape WEST_SHAPE = rotate(BODY, 3);
+
+    private static VoxelShape rotate(VoxelShape shape, int quarterTurns) {
+        VoxelShape result = shape;
+        for (int turn = 0; turn < quarterTurns; ++turn) {
+            VoxelShape turned = Shapes.empty();
+            for (AABB box : result.toAabbs()) {
+                turned = Shapes.or(turned, Shapes.box(1.0D - box.maxZ, box.minY, box.minX, 1.0D - box.minZ, box.maxY, box.maxX));
+            }
+            result = turned;
+        }
+        return result;
+    }
 
     public static final MapCodec<KegBlock> CODEC = simpleCodec(KegBlock::new);
 
@@ -57,7 +83,12 @@ public class KegBlock extends BaseEntityBlock {
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE;
+        return switch (state.getValue(FACING)) {
+            case SOUTH -> SOUTH_SHAPE;
+            case WEST -> WEST_SHAPE;
+            case EAST -> EAST_SHAPE;
+            default -> NORTH_SHAPE;
+        };
     }
 
     @Override

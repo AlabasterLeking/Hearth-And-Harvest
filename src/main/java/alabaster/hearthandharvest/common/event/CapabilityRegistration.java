@@ -115,6 +115,7 @@ public class CapabilityRegistration {
         }
         items.add(ModItems.APPLE_CIDER.get());
         items.add(ModItems.MELON_JUICE.get());
+        items.add(ModItems.MILK_BOTTLE.get());
         return items.toArray(new Item[0]);
     }
 

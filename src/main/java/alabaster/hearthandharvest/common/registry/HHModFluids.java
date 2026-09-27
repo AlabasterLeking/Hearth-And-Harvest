@@ -23,6 +23,10 @@ public class HHModFluids {
         return FluidType.Properties.create().viscosity(2000).density(1400);
     }
 
+    private static FluidType.Properties dairyProps() {
+        return FluidType.Properties.create().viscosity(3000).density(1600);
+    }
+
     private static FluidEntry registerFluid(String name, FluidType.Properties typeProps) {
         Supplier<FluidType> type = FLUID_TYPES.register(name, () -> new FluidType(typeProps));
         Supplier<HHFluidType>[] holders = new Supplier[2];
@@ -83,4 +87,5 @@ public class HHModFluids {
     public static final FluidEntry SWEET_BERRY_WINE = registerFluid("sweet_berry_wine");
     public static final FluidEntry GLOW_BERRY_WINE = registerFluid("glow_berry_wine");
     public static final FluidEntry MELON_WINE = registerFluid("melon_wine");
+    public static final FluidEntry GOAT_MILK = registerFluid("goat_milk", dairyProps());
 }

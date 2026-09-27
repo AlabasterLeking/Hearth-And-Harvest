@@ -53,6 +53,10 @@
 
   "block.hearthandharvest.stomping_basin": "Stomping Basin",
   "hearthandharvest.subtitles.stomping_basin.stomp": "Items stomped",
+  "hearthandharvest.subtitles.cask.seal": "Cask seals",
+  "hearthandharvest.subtitles.cask.unseal": "Cask opens",
+  "hearthandharvest.subtitles.cask.aging": "Cask bubbles",
+  "hearthandharvest.subtitles.keg.open": "Keg opens",
 
   "block.hearthandharvest.empty_jar_display": "Jars",
 
@@ -503,9 +507,10 @@
   "hearthandharvest.jei.info.salt_block": "Will keep animals near, who will lick it. Will degrade over time, but can get repaired by adding more salt to it",
   "hearthandharvest.jei.info.jug": "Can be used like a bucket to pickup and move fluids. Holds 8 buckets at a time. Can be placed, extracted from, fill other containers, and be picked up with a shift-click",
   "hearthandharvest.jei.info.cask": "Ages juices into wine and pickles vegetables. Aging is faster in the dark and slower in bright light. Seal the cask to lock its ingredients so they cannot be disturbed while they age",
-  "hearthandharvest.jei.info.keg": "Ferments juices into wine, milk into cheese curds, and vegetables into pickles. Put containers in the middle slot to fill or empty the tanks, using the button to switch mode",
-  "hearthandharvest.jei.info.vintage_aging": "Put a finished bottle or pickle jar back into a cask to age it further. Each stage (Aged, Fine, Reserve) lengthens its effects and makes wine less likely to leave you drunk",
+  "hearthandharvest.jei.info.keg": "Ferments juices into wine, milk into cheese, and vegetables into pickles. Put containers in the middle slot to fill or empty the tanks, using the button to switch mode",
+  "hearthandharvest.jei.info.vintage_aging": "Put a finished item back into a cask to age it further. Each stage (Aged, Fine, Reserve) lengthens its effects and makes alcohol less likely to leave you drunk",
 
+  "fluid_type.hearthandharvest.goat_milk": "Goat Milk",
   "fluid_type.hearthandharvest.cooking_oil": "Cooking Oil",
   "fluid_type.hearthandharvest.sap": "Sap",
   "fluid_type.hearthandharvest.syrup": "Syrup",

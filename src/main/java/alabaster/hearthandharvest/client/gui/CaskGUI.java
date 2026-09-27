@@ -31,8 +31,11 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
     public static final Rectangle MEDIUM_LIGHT = new Rectangle(72, 13, 13, 16);
     public static final Rectangle BRIGHT_LIGHT = new Rectangle(72, 13, 13, 16);
 
-    private static final Rectangle LEFT_BUBBLE = new Rectangle(10, 56, 9, 24);
-    private static final Rectangle RIGHT_BUBBLE = new Rectangle(58, 56, 9, 24);
+    private static final Rectangle LEFT_BUBBLE = new Rectangle(10, 55, 9, 24);
+    private static final Rectangle RIGHT_BUBBLE = new Rectangle(58, 54, 9, 24);
+    private static final int LEFT_BUBBLE_U = 176;
+    private static final int RIGHT_BUBBLE_U = 186;
+    private static final int BUBBLE_V_BOTTOM = 111;
 
     private final CaskRecipeBookComponent recipeBookComponent = new CaskRecipeBookComponent();
     private boolean widthTooNarrow;
@@ -104,8 +107,8 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
         // Render bubbles
         if (menu.getProgression() != 0) {
             int bubScale = (int) ((((this.menu.getProgression() / 80)) * LEFT_BUBBLE.height) % (LEFT_BUBBLE.height + 1));
-            gui.blit(BACKGROUND_TEXTURE, this.leftPos + LEFT_BUBBLE.x, this.topPos + LEFT_BUBBLE.y - bubScale, 176, 111 - bubScale, LEFT_BUBBLE.width, bubScale + 1);
-            gui.blit(BACKGROUND_TEXTURE, this.leftPos + RIGHT_BUBBLE.x, this.topPos + RIGHT_BUBBLE.y - bubScale, 186, 111 - bubScale, RIGHT_BUBBLE.width, bubScale + 1);
+            gui.blit(BACKGROUND_TEXTURE, this.leftPos + LEFT_BUBBLE.x, this.topPos + LEFT_BUBBLE.y - bubScale, LEFT_BUBBLE_U, BUBBLE_V_BOTTOM - bubScale, LEFT_BUBBLE.width, bubScale + 1);
+            gui.blit(BACKGROUND_TEXTURE, this.leftPos + RIGHT_BUBBLE.x, this.topPos + RIGHT_BUBBLE.y - bubScale, RIGHT_BUBBLE_U, BUBBLE_V_BOTTOM - bubScale, RIGHT_BUBBLE.width, bubScale + 1);
         }
 
         // Render light indicator

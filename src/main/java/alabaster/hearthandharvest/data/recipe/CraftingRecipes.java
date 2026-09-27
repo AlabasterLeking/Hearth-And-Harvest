@@ -56,6 +56,14 @@ public class CraftingRecipes
                 .define('S', ItemTags.WOODEN_SLABS)
                 .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
                 .save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HHModItems.KEG.get(), 1)
+                .pattern("PCP")
+                .pattern("C C")
+                .pattern("PCP")
+                .define('C', Items.COPPER_INGOT)
+                .define('P', ItemTags.PLANKS)
+                .unlockedBy("has_copper", InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, HHModItems.STOMPING_BASIN.get(), 1)
                 .pattern("C C")
                 .pattern("PSP")

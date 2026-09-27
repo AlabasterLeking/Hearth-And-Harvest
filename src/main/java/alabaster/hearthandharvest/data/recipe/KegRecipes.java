@@ -6,6 +6,9 @@ import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.data.builder.KegRecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.minecraft.world.item.Items;
+import alabaster.hearthandharvest.common.tag.HHCommonTags;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 public class KegRecipes {
@@ -13,7 +16,16 @@ public class KegRecipes {
     private static final int WINE_TIME = 1200;
     private static final float WINE_EXP = 0.35F;
 
+    private static final int BUCKET = 1000;
+    private static final int CHEESE_TIME = 2400;
+    private static final float CHEESE_EXP = 1.0F;
+
     public static void register(RecipeOutput output) {
+        cheese(output, "unripe_cheddar_cheese_wheel", new FluidStack(NeoForgeMod.MILK.value(), BUCKET),
+                HHModItems.UNRIPE_CHEDDAR_CHEESE_WHEEL.get(), Items.MILK_BUCKET);
+        cheese(output, "unripe_goat_cheese_wheel", new FluidStack(HHModFluids.GOAT_MILK.source().get(), BUCKET),
+                HHModItems.UNRIPE_GOAT_CHEESE_WHEEL.get(), HHModItems.GOAT_MILK_BOTTLE.get());
+
         wine(output, "red_grape_wine", HHModFluids.RED_GRAPE_JUICE, HHModFluids.RED_GRAPE_WINE, HHModItems.RED_GRAPE_JUICE.get());
         wine(output, "green_grape_wine", HHModFluids.GREEN_GRAPE_JUICE, HHModFluids.GREEN_GRAPE_WINE, HHModItems.GREEN_GRAPE_JUICE.get());
         wine(output, "blueberry_wine", HHModFluids.BLUEBERRY_JUICE, HHModFluids.BLUEBERRY_WINE, HHModItems.BLUEBERRY_JUICE.get());
@@ -30,6 +42,16 @@ public class KegRecipes {
                 .resultFluid(new FluidStack(wine.source().get(), BOTTLE))
                 .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
                 .unlockedByItems("has_juice", unlock)
+                .build(output, name);
+    }
+
+    private static void cheese(RecipeOutput output, String name, FluidStack milk, Item wheel, Item unlock) {
+        new KegRecipeBuilder(CHEESE_TIME, CHEESE_EXP)
+                .inputFluid(milk)
+                .addIngredient(HHCommonTags.DUSTS_SALT)
+                .resultItem(wheel, 1)
+                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
+                .unlockedByItems("has_milk", unlock)
                 .build(output, name);
     }
 }

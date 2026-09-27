@@ -5,6 +5,7 @@ import alabaster.hearthandharvest.common.registry.HHModFluids;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.data.DataMapProvider;
 import java.util.function.Supplier;
 import java.util.List;
@@ -78,6 +79,8 @@ public class DataMaps extends DataMapProvider
         ;
 
         builder(HHDataMaps.FLUID_BOTTLE)
+                .add(HHModFluids.GOAT_MILK.source().get().builtInRegistryHolder(), HHModItems.GOAT_MILK_BOTTLE.get().asItem(), false)
+                .add(NeoForgeMod.MILK.value().builtInRegistryHolder(), ModItems.MILK_BOTTLE.get().asItem(), false)
                 .add(HHModFluids.COOKING_OIL.source().get().builtInRegistryHolder(), HHModItems.COOKING_OIL.get().asItem(), false)
                 .add(HHModFluids.SYRUP.source().get().builtInRegistryHolder(), HHModItems.SYRUP_BOTTLE.get().asItem(), false)
                 .add(HHModFluids.APPLE_CIDER.source().get().builtInRegistryHolder(), ModItems.APPLE_CIDER.get().asItem(), false)

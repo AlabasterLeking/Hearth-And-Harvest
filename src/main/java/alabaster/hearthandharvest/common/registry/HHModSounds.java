@@ -38,6 +38,19 @@ public class HHModSounds {
     public static final Supplier<SoundEvent> STOMPING_BASIN_STOMP = SOUNDS.register("blocks.stomping_basin.stomp",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.stomping_basin.stomp")));
 
+    // Cask & Keg
+    public static final Supplier<SoundEvent> CASK_SEAL = SOUNDS.register("blocks.cask.seal",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.cask.seal")));
+
+    public static final Supplier<SoundEvent> CASK_UNSEAL = SOUNDS.register("blocks.cask.unseal",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.cask.unseal")));
+
+    public static final Supplier<SoundEvent> CASK_AGING = SOUNDS.register("blocks.cask.aging",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.cask.aging")));
+
+    public static final Supplier<SoundEvent> KEG_OPEN = SOUNDS.register("blocks.keg.open",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.keg.open")));
+
     // Manure
     public static final Supplier<SoundEvent> MANURE_THROW = SOUNDS.register("items.manure.throw",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.manure.throw")));

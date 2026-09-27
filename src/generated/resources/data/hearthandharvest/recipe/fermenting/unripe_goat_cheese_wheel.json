@@ -1,0 +1,19 @@
+{
+  "type": "hearthandharvest:fermenting",
+  "experience": 1.0,
+  "ferment_time": 2400,
+  "ingredients": [
+    {
+      "tag": "c:dusts/salt"
+    }
+  ],
+  "input_fluid": {
+    "amount": 1000,
+    "id": "hearthandharvest:goat_milk"
+  },
+  "recipe_book_tab": "meals",
+  "result_item": {
+    "count": 1,
+    "id": "hearthandharvest:unripe_goat_cheese_wheel"
+  }
+}

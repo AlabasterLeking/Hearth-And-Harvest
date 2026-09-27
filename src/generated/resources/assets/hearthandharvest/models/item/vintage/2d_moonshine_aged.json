@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "hearthandharvest:item/moonshine",
-    "layer1": "hearthandharvest:item/vintage/bottle_aged"
-  }
-}

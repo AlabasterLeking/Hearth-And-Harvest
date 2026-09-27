@@ -6,14 +6,12 @@
       "hearthandharvest:entities/crow/crow_squawking_2"
     ]
   },
-
   "entities.crow.hurt": {
     "subtitle": "hearthandharvest.subtitles.crow.hurt",
     "sounds": [
       "hearthandharvest:entities/crow/crow_hurt_1"
     ]
   },
-
   "entities.crow.eat": {
     "subtitle": "hearthandharvest.subtitles.crow.eat",
     "sounds": [
@@ -23,7 +21,6 @@
       }
     ]
   },
-
   "entities.crow.step": {
     "subtitle": "hearthandharvest.subtitles.crow.step",
     "sounds": [
@@ -33,7 +30,6 @@
       }
     ]
   },
-
   "items.wine.drink": {
     "subtitle": "hearthandharvest.subtitles.wine.drink",
     "sounds": [
@@ -43,7 +39,6 @@
       }
     ]
   },
-
   "blocks.bottle.insert": {
     "subtitle": "hearthandharvest.subtitles.bottle.insert",
     "sounds": [
@@ -53,7 +48,6 @@
       }
     ]
   },
-
   "blocks.bottle.remove": {
     "subtitle": "hearthandharvest.subtitles.bottle.remove",
     "sounds": [
@@ -63,7 +57,6 @@
       }
     ]
   },
-
   "blocks.stomping_basin.stomp": {
     "subtitle": "hearthandharvest.subtitles.stomping_basin.stomp",
     "sounds": [
@@ -73,7 +66,6 @@
       }
     ]
   },
-
   "blocks.salt_lamp.switch": {
     "subtitle": "hearthandharvest.subtitles.salt_lamp.switch",
     "sounds": [
@@ -83,7 +75,6 @@
       }
     ]
   },
-
   "items.manure.throw": {
     "subtitle": "hearthandharvest.subtitles.manure.throw",
     "sounds": [
@@ -93,7 +84,6 @@
       }
     ]
   },
-
   "items.manure.hit": {
     "subtitle": "hearthandharvest.subtitles.manure.hit",
     "sounds": [
@@ -103,21 +93,18 @@
       }
     ]
   },
-
   "entities.fart": {
     "subtitle": "hearthandharvest.subtitles.entity.fart",
     "sounds": [
       "hearthandharvest:entities/fart/fart"
     ]
   },
-
   "entities.lick": {
     "subtitle": "hearthandharvest.subtitles.entity.lick",
     "sounds": [
       "hearthandharvest:entities/lick/lick"
     ]
   },
-
   "items.pitchfork.throw": {
     "subtitle": "hearthandharvest.subtitles.pitchfork.throw",
     "sounds": [
@@ -127,7 +114,6 @@
       }
     ]
   },
-
   "items.pitchfork.hit": {
     "subtitle": "hearthandharvest.subtitles.pitchfork.hit",
     "sounds": [
@@ -137,7 +123,6 @@
       }
     ]
   },
-
   "items.cleaver.throw": {
     "subtitle": "hearthandharvest.subtitles.cleaver.throw",
     "sounds": [
@@ -147,7 +132,6 @@
       }
     ]
   },
-
   "items.cleaver.hit": {
     "subtitle": "hearthandharvest.subtitles.cleaver.hit",
     "sounds": [
@@ -157,7 +141,6 @@
       }
     ]
   },
-
   "items.horseshoe.throw": {
     "subtitle": "hearthandharvest.subtitles.horseshoe.throw",
     "sounds": [
@@ -167,12 +150,47 @@
       }
     ]
   },
-
   "items.horseshoe.hit": {
     "subtitle": "hearthandharvest.subtitles.horseshoe.hit",
     "sounds": [
       {
         "name": "block.anvil.land",
+        "type": "event"
+      }
+    ]
+  },
+  "blocks.cask.seal": {
+    "subtitle": "hearthandharvest.subtitles.cask.seal",
+    "sounds": [
+      {
+        "name": "block.barrel.close",
+        "type": "event"
+      }
+    ]
+  },
+  "blocks.cask.unseal": {
+    "subtitle": "hearthandharvest.subtitles.cask.unseal",
+    "sounds": [
+      {
+        "name": "block.barrel.open",
+        "type": "event"
+      }
+    ]
+  },
+  "blocks.cask.aging": {
+    "subtitle": "hearthandharvest.subtitles.cask.aging",
+    "sounds": [
+      {
+        "name": "block.brewing_stand.brew",
+        "type": "event"
+      }
+    ]
+  },
+  "blocks.keg.open": {
+    "subtitle": "hearthandharvest.subtitles.keg.open",
+    "sounds": [
+      {
+        "name": "block.barrel.open",
         "type": "event"
       }
     ]

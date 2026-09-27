@@ -1,41 +1,6 @@
 {
   "parent": "minecraft:item/generated",
-  "base": {
-    "parent": "hearthandharvest:block/moonshine_bottle"
-  },
-  "loader": "neoforge:separate_transforms",
-  "overrides": [
-    {
-      "model": "hearthandharvest:item/vintage/moonshine_aged",
-      "predicate": {
-        "hearthandharvest:vintage": 1
-      }
-    },
-    {
-      "model": "hearthandharvest:item/vintage/moonshine_fine",
-      "predicate": {
-        "hearthandharvest:vintage": 2
-      }
-    },
-    {
-      "model": "hearthandharvest:item/vintage/moonshine_reserve",
-      "predicate": {
-        "hearthandharvest:vintage": 3
-      }
-    }
-  ],
-  "perspectives": {
-    "fixed": {
-      "parent": "hearthandharvest:item/2d_moonshine"
-    },
-    "ground": {
-      "parent": "hearthandharvest:item/2d_moonshine"
-    },
-    "gui": {
-      "parent": "hearthandharvest:item/2d_moonshine"
-    }
-  },
   "textures": {
-    "particle": "hearthandharvest:item/moonshine"
+    "layer0": "hearthandharvest:item/moonshine"
   }
 }
