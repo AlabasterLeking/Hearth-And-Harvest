@@ -20,30 +20,39 @@ import net.minecraft.world.inventory.Slot;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.util.function.BooleanSupplier;
 
 public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements RecipeUpdateListener {
     private static final ResourceLocation BACKGROUND_TEXTURE = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "textures/gui/cask_gui.png");
 
-    private static final WidgetSprites RECIPE_BUTTON = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/button"), ResourceLocation.withDefaultNamespace("recipe_book/button"));
+    private static final WidgetSprites RECIPE_BUTTON = new WidgetSprites(ResourceLocation.withDefaultNamespace("recipe_book/button"), ResourceLocation.withDefaultNamespace("recipe_book/button_highlighted"));
 
-    private static final Rectangle PROGRESS_ARROW = new Rectangle(81, 29, 0, 18);
+    public static final Rectangle DIM_LIGHT = new Rectangle(72, 13, 13, 16);
+    public static final Rectangle MEDIUM_LIGHT = new Rectangle(72, 13, 13, 16);
+    public static final Rectangle BRIGHT_LIGHT = new Rectangle(72, 13, 13, 16);
 
-    public static final Rectangle DIM_LIGHT = new Rectangle(85, 47, 13, 16);
-    public static final Rectangle MEDIUM_LIGHT = new Rectangle(85, 47, 13, 16);
-    public static final Rectangle BRIGHT_LIGHT = new Rectangle(85, 47, 13, 16);
-
-    private static final Rectangle LEFT_BUBBLE = new Rectangle(108, 48, 9, 24);
-    private static final Rectangle RIGHT_BUBBLE = new Rectangle(147, 48, 9, 24);
+    private static final Rectangle LEFT_BUBBLE = new Rectangle(10, 56, 9, 24);
+    private static final Rectangle RIGHT_BUBBLE = new Rectangle(58, 56, 9, 24);
 
     private final CaskRecipeBookComponent recipeBookComponent = new CaskRecipeBookComponent();
     private boolean widthTooNarrow;
 
-    private static final Rectangle TIMER_ICON = new Rectangle(89, 14, 7, 11);
+    private static final Rectangle TIMER_ICON = new Rectangle(94, 16, 8, 11);
 
-    private static final int SEAL_BUTTON_X = 108;
-    private static final int SEAL_BUTTON_Y = 59;
-    private static final int SEAL_BUTTON_WIDTH = 48;
+    private static final int SEAL_BUTTON_X = 66;
+    private static final int SEAL_BUTTON_Y = 56;
+    private static final int SEAL_BUTTON_WIDTH = 44;
     private static final int SEAL_BUTTON_HEIGHT = 16;
+
+    private static final int RECIPE_BUTTON_X = 78;
+    private static final int RECIPE_BUTTON_Y = 33;
+
+    private static final int LOCKED_AREA_SIZE = 36;
+    private static final int LOCKED_SLOT_COLOR = 0x80C6C6C6;
+    private static final int INPUT_AREA_X = 20;
+    private static final int INPUT_AREA_Y = 25;
+    private static final int OUTPUT_AREA_X = 118;
+    private static final int OUTPUT_AREA_Y = 25;
 
     private Button sealButton;
 
@@ -58,11 +67,12 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
         this.titleLabelX = 8;
         this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-        this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.height / 2 - 49, 20, 18, RECIPE_BUTTON, (button) ->
+        this.addRenderableWidget(new RecipeBookToggle(this.leftPos + RECIPE_BUTTON_X, this.topPos + RECIPE_BUTTON_Y, this.recipeBookComponent::isVisible, (button) ->
         {
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-            button.setPosition(this.leftPos + 5, this.height / 2 - 49);
+            button.setPosition(this.leftPos + RECIPE_BUTTON_X, this.topPos + RECIPE_BUTTON_Y);
+            updateSealButton();
         }));
         this.sealButton = this.addRenderableWidget(Button.builder(sealButtonLabel(), button -> {
                     if (this.minecraft != null && this.minecraft.gameMode != null) {
@@ -91,10 +101,6 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
 
         gui.blit(BACKGROUND_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
-        // Render progress arrow
-        int l = this.menu.getCookProgressionScaled();
-        gui.blit(BACKGROUND_TEXTURE, this.leftPos + PROGRESS_ARROW.x, this.topPos + PROGRESS_ARROW.y, 176, 4, l + 1, PROGRESS_ARROW.height);
-
         // Render bubbles
         if (menu.getProgression() != 0) {
             int bubScale = (int) ((((this.menu.getProgression() / 80)) * LEFT_BUBBLE.height) % (LEFT_BUBBLE.height + 1));
@@ -110,6 +116,24 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
             case "medium" -> gui.blit(BACKGROUND_TEXTURE, this.leftPos + MEDIUM_LIGHT.x, this.topPos + MEDIUM_LIGHT.y, 176, 48, MEDIUM_LIGHT.width, MEDIUM_LIGHT.height);
             case "bright" -> gui.blit(BACKGROUND_TEXTURE, this.leftPos + BRIGHT_LIGHT.x, this.topPos + BRIGHT_LIGHT.y, 176, 32, BRIGHT_LIGHT.width, BRIGHT_LIGHT.height);
         }
+    }
+
+    private void renderLockedSlots(GuiGraphics gui) {
+        if (!this.menu.blockEntity.isSealed()) return;
+        if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) return;
+
+        gui.pose().pushPose();
+        gui.pose().translate(0.0F, 0.0F, 300.0F);
+
+        int inputX = this.leftPos + INPUT_AREA_X;
+        int inputY = this.topPos + INPUT_AREA_Y;
+        gui.fill(inputX, inputY, inputX + LOCKED_AREA_SIZE, inputY + LOCKED_AREA_SIZE, LOCKED_SLOT_COLOR);
+
+        int outputX = this.leftPos + OUTPUT_AREA_X;
+        int outputY = this.topPos + OUTPUT_AREA_Y;
+        gui.fill(outputX, outputY, outputX + LOCKED_AREA_SIZE, outputY + LOCKED_AREA_SIZE, LOCKED_SLOT_COLOR);
+
+        gui.pose().popPose();
     }
 
     private void renderProgressTooltip(GuiGraphics gui, int mouseX, int mouseY) {
@@ -173,6 +197,7 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
             this.recipeBookComponent.render(gui, mouseX, mouseY, partialTicks);
             this.recipeBookComponent.renderGhostRecipe(gui, this.leftPos, this.topPos, false, partialTicks);
         }
+        this.renderLockedSlots(gui);
         this.renderTooltip(gui, mouseX, mouseY);
         this.renderLightTooltip(gui, mouseX, mouseY);
         this.renderProgressTooltip(gui, mouseX, mouseY);
@@ -221,5 +246,22 @@ public class CaskGUI extends AbstractContainerScreen<CaskMenu> implements Recipe
     @Nonnull
     public RecipeBookComponent getRecipeBookComponent() {
         return this.recipeBookComponent;
+    }
+
+    private static class RecipeBookToggle extends ImageButton {
+        private static final ResourceLocation CLOSED = ResourceLocation.withDefaultNamespace("recipe_book/button");
+        private static final ResourceLocation OPEN = ResourceLocation.withDefaultNamespace("recipe_book/button_highlighted");
+
+        private final BooleanSupplier bookOpen;
+
+        RecipeBookToggle(int x, int y, BooleanSupplier bookOpen, OnPress onPress) {
+            super(x, y, 20, 18, RECIPE_BUTTON, onPress);
+            this.bookOpen = bookOpen;
+        }
+
+        @Override
+        public void renderWidget(GuiGraphics gui, int mouseX, int mouseY, float partialTick) {
+            gui.blitSprite(this.bookOpen.getAsBoolean() ? OPEN : CLOSED, this.getX(), this.getY(), this.width, this.height);
+        }
     }
 }

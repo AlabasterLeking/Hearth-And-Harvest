@@ -45,6 +45,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), blockStates);
         generator.addProvider(event.includeClient(), new ItemModels(output, blockStates.models().existingFileHelper));
         generator.addProvider(event.includeClient(), new JarItemModelProvider(output));
+        generator.addProvider(event.includeClient(), new VintageItemModelProvider(output));
         generator.addProvider(event.includeServer(), new DatapackProvider(output, lookupProvider));
         generator.addProvider(event.includeServer(), new DataMaps(output, lookupProvider));
         generator.addProvider(event.includeClient(), new SoundDefinitions(output, helper));

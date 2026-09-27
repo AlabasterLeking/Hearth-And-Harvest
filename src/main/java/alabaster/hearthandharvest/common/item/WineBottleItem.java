@@ -37,7 +37,6 @@ public class WineBottleItem extends Item implements AgeableItem {
     private final boolean hasCustomTooltip;
     private final Supplier<Fluid> fluid;
     private int glasses = 1;
-    private boolean ageable;
 
     public WineBottleItem(Supplier<Fluid> fluid, Properties properties, boolean hasFoodEffectTooltip, boolean hasCustomTooltip) {
         super(properties);
@@ -48,11 +47,6 @@ public class WineBottleItem extends Item implements AgeableItem {
 
     public WineBottleItem glasses(int glasses) {
         this.glasses = Math.max(1, glasses);
-        return this;
-    }
-
-    public WineBottleItem ageable() {
-        this.ageable = true;
         return this;
     }
 
@@ -69,13 +63,8 @@ public class WineBottleItem extends Item implements AgeableItem {
     }
 
     @Override
-    public boolean isAgeable() {
-        return ageable;
-    }
-
-    @Override
     public boolean canAgeFurther(ItemStack stack) {
-        return ageable && !isOpened(stack) && VintageHelper.getVintage(stack) < VintageHelper.MAX_VINTAGE;
+        return !isOpened(stack) && VintageHelper.canAgeFurther(stack);
     }
 
     public boolean isOpened(ItemStack stack) {

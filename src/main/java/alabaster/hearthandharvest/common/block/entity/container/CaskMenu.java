@@ -43,8 +43,8 @@ public class CaskMenu extends RecipeBookMenu<RecipeWrapper, CaskRecipe> {
         // Ingredient Slots - 2 Rows x 2 Columns
         int startX = 8;
         int startY = 18;
-        int inputStartX = 39;
-        int inputStartY = 20;
+        int inputStartX = 21;
+        int inputStartY = 26;
         int borderSlotSize = 18;
         for (int row = 0; row < 2; ++row) {
             for (int column = 0; column < 2; ++column) {
@@ -65,7 +65,16 @@ public class CaskMenu extends RecipeBookMenu<RecipeWrapper, CaskRecipe> {
         }
 
         // Output
-        this.addSlot(new CaskResultSlot(playerInventory.player, blockEntity, inventory,  4, 124, 29));
+        int outputStartX = 119;
+        int outputStartY = 26;
+        for (int row = 0; row < 2; ++row) {
+            for (int column = 0; column < 2; ++column) {
+                this.addSlot(new CaskResultSlot(playerInventory.player, blockEntity, inventory,
+                        CaskBlockEntity.FIRST_OUTPUT_SLOT + (row * 2) + column,
+                        outputStartX + (column * borderSlotSize),
+                        outputStartY + (row * borderSlotSize)));
+            }
+        }
 
         // Main Player Inventory
         int startPlayerInvY = startY * 4 + 12;
@@ -112,21 +121,21 @@ public class CaskMenu extends RecipeBookMenu<RecipeWrapper, CaskRecipe> {
 
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
-        int indexMealDisplay = 4;
-        int indexOutput = 4;
-        int startPlayerInv = indexOutput + 1;
+        int indexInputs = CaskBlockEntity.INPUT_SLOTS;
+        int indexOutput = CaskBlockEntity.FIRST_OUTPUT_SLOT;
+        int startPlayerInv = CaskBlockEntity.INVENTORY_SIZE;
         int endPlayerInv = startPlayerInv + 36;
         ItemStack slotStackCopy = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot.hasItem()) {
             ItemStack slotStack = slot.getItem();
             slotStackCopy = slotStack.copy();
-            if (index == indexOutput) {
+            if (index >= indexOutput && index < startPlayerInv) {
                 if (!this.moveItemStackTo(slotStack, startPlayerInv, endPlayerInv, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index > indexOutput) {
-                if (!this.moveItemStackTo(slotStack, 0, indexMealDisplay, false)) {
+            } else if (index >= startPlayerInv) {
+                if (!this.moveItemStackTo(slotStack, 0, indexInputs, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(slotStack, startPlayerInv, endPlayerInv, false)) {
@@ -146,13 +155,6 @@ public class CaskMenu extends RecipeBookMenu<RecipeWrapper, CaskRecipe> {
             slot.onTake(playerIn, slotStack);
         }
         return slotStackCopy;
-    }
-
-    public int getCookProgressionScaled() {
-        int progress = this.caskData.get(0);
-        int total = this.caskData.get(1);
-        if (total <= 0) return 0;
-        return Math.min(24, progress * 24 / total);
     }
 
     public float getProgression() {

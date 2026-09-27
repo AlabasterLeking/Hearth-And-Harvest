@@ -1,6 +1,6 @@
 package alabaster.hearthandharvest.client.recipebook;
 
-import alabaster.hearthandharvest.common.crafting.FermentingRecipe;
+import alabaster.hearthandharvest.common.crafting.KegRecipe;
 import alabaster.hearthandharvest.common.crafting.CaskRecipe;
 import alabaster.hearthandharvest.common.registry.HHModRecipeTypes;
 import com.google.common.collect.ImmutableList;
@@ -25,8 +25,8 @@ public class RecipeCategories
         event.registerAggregateCategory(FERMENTING_SEARCH, ImmutableList.of(FERMENTING_MEALS, FERMENTING_DRINKS, FERMENTING_MISC));
         event.registerRecipeCategoryFinder(HHModRecipeTypes.FERMENTING.get(), recipe ->
         {
-            if (recipe.value() instanceof FermentingRecipe fermentingRecipe) {
-                CaskRecipeBookTab tab = fermentingRecipe.getRecipeBookTab();
+            if (recipe.value() instanceof KegRecipe kegRecipe) {
+                CaskRecipeBookTab tab = kegRecipe.getRecipeBookTab();
                 if (tab != null) {
                     return switch (tab) {
                         case MEALS -> FERMENTING_MEALS;

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hard_cider": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:hard_cider"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:aging/hard_cider_aged"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hard_cider"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:aging/hard_cider_aged"
+    ]
+  }
+}

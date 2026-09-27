@@ -27,13 +27,14 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
+import java.util.function.BooleanSupplier;
 
 public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUpdateListener {
     private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "textures/gui/keg_gui.png");
 
     private static final int INPUT_TANK_X = 8;
     private static final int OUTPUT_TANK_X = 152;
-    private static final int TANK_Y = 22;
+    private static final int TANK_Y = 20;
     private static final int TANK_WIDTH = 16;
     private static final int TANK_HEIGHT = 63;
     private static final int FLUID_INSET = 0;
@@ -45,22 +46,22 @@ public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUp
 
     private static final int LEFT_BUBBLES_X = 54;
     private static final int RIGHT_BUBBLES_X = 114;
-    private static final int BUBBLES_Y = 30;
+    private static final int BUBBLES_Y = 28;
     private static final int BUBBLES_WIDTH = 8;
     private static final int BUBBLES_HEIGHT = 47;
     private static final int BUBBLES_U = 176;
     private static final int BUBBLES_V = 3;
 
     private static final int MODE_BUTTON_X = 71;
-    private static final int MODE_BUTTON_Y = 46;
+    private static final int MODE_BUTTON_Y = 44;
     private static final int MODE_BUTTON_WIDTH = 34;
     private static final int MODE_BUTTON_HEIGHT = 18;
 
     private static final int RECIPE_BUTTON_X = 78;
-    private static final int RECIPE_BUTTON_Y = 68;
+    private static final int RECIPE_BUTTON_Y = 66;
     private static final WidgetSprites RECIPE_BUTTON = new WidgetSprites(
             ResourceLocation.withDefaultNamespace("recipe_book/button"),
-            ResourceLocation.withDefaultNamespace("recipe_book/button"));
+            ResourceLocation.withDefaultNamespace("recipe_book/button_highlighted"));
 
     private final KegRecipeBookComponent recipeBookComponent = new KegRecipeBookComponent();
     private boolean widthTooNarrow;
@@ -79,7 +80,7 @@ public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUp
         this.widthTooNarrow = this.width < 379;
         this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-        this.addRenderableWidget(new ImageButton(this.leftPos + RECIPE_BUTTON_X, this.topPos + RECIPE_BUTTON_Y, 20, 18, RECIPE_BUTTON, button -> {
+        this.addRenderableWidget(new RecipeBookToggle(this.leftPos + RECIPE_BUTTON_X, this.topPos + RECIPE_BUTTON_Y, this.recipeBookComponent::isVisible, button -> {
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
             button.setPosition(this.leftPos + RECIPE_BUTTON_X, this.topPos + RECIPE_BUTTON_Y);
@@ -303,5 +304,22 @@ public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUp
     protected void renderLabels(GuiGraphics gui, int mouseX, int mouseY) {
         gui.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 0x404040, false);
         gui.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 0x404040, false);
+    }
+
+    private static class RecipeBookToggle extends ImageButton {
+        private static final ResourceLocation CLOSED = ResourceLocation.withDefaultNamespace("recipe_book/button");
+        private static final ResourceLocation OPEN = ResourceLocation.withDefaultNamespace("recipe_book/button_highlighted");
+
+        private final BooleanSupplier bookOpen;
+
+        RecipeBookToggle(int x, int y, BooleanSupplier bookOpen, OnPress onPress) {
+            super(x, y, 20, 18, RECIPE_BUTTON, onPress);
+            this.bookOpen = bookOpen;
+        }
+
+        @Override
+        public void renderWidget(GuiGraphics gui, int mouseX, int mouseY, float partialTick) {
+            gui.blitSprite(this.bookOpen.getAsBoolean() ? OPEN : CLOSED, this.getX(), this.getY(), this.width, this.height);
+        }
     }
 }

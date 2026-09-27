@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:item/generated",
+  "base": {
+    "children": {
+      "base": {
+        "parent": "hearthandharvest:block/pickled_potatoes"
+      },
+      "seal": {
+        "parent": "hearthandharvest:display/vintage/jar_reserve"
+      }
+    },
+    "loader": "neoforge:composite"
+  },
+  "loader": "neoforge:separate_transforms",
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/vintage/2d_pickled_potatoes_reserve"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/vintage/2d_pickled_potatoes_reserve"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/vintage/2d_pickled_potatoes_reserve"
+    }
+  },
+  "textures": {
+    "particle": "hearthandharvest:item/pickled_potatoes"
+  }
+}

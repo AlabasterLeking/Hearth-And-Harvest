@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pickled_cabbage": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pickled_cabbage"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:aging/pickled_cabbage_fine"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pickled_cabbage"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:aging/pickled_cabbage_fine"
+    ]
+  }
+}

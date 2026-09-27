@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_juice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:sweet_berry_juice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:fermenting/sweet_berry_wine"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_juice"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:fermenting/sweet_berry_wine"
+    ]
+  }
+}

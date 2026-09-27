@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.common.block.entity.KegBlockEntity;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -9,6 +10,7 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -30,7 +32,7 @@ public class KegBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
 
-    public static final com.mojang.serialization.MapCodec<KegBlock> CODEC = simpleCodec(KegBlock::new);
+    public static final MapCodec<KegBlock> CODEC = simpleCodec(KegBlock::new);
 
     public KegBlock(Properties properties) {
         super(properties);
@@ -38,7 +40,7 @@ public class KegBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected com.mojang.serialization.MapCodec<? extends BaseEntityBlock> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
 
@@ -54,7 +56,7 @@ public class KegBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected VoxelShape getShape(BlockState state, net.minecraft.world.level.BlockGetter level, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 

@@ -6,6 +6,10 @@ import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.DataMapProvider;
+import java.util.function.Supplier;
+import java.util.List;
+import net.minecraft.world.item.Item;
+import alabaster.hearthandharvest.common.data.VintageStyle;
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import vectorwing.farmersdelight.common.registry.ModItems;
@@ -98,5 +102,22 @@ public class DataMaps extends DataMapProvider
                 .add(HHModFluids.GLOW_BERRY_WINE.source().get().builtInRegistryHolder(), HHModItems.GLOW_BERRY_WINE.get().asItem(), false)
                 .add(HHModFluids.MELON_WINE.source().get().builtInRegistryHolder(), HHModItems.MELON_WINE.get().asItem(), false)
         ;
+
+        VintageStyle bottle = new VintageStyle(true, false, "bottle", true);
+        VintageStyle jar = new VintageStyle(true, true, "jar", true);
+
+        var vintage = builder(HHDataMaps.VINTAGE_STYLE);
+        for (Supplier<Item> item : List.of(
+                HHModItems.MEAD, HHModItems.HARD_CIDER, HHModItems.ROOT_BEER, HHModItems.MOONSHINE,
+                HHModItems.BLUEBERRY_WINE, HHModItems.CHERRY_WINE, HHModItems.RASPBERRY_WINE,
+                HHModItems.RED_GRAPE_WINE, HHModItems.GREEN_GRAPE_WINE, HHModItems.SWEET_BERRY_WINE,
+                HHModItems.GLOW_BERRY_WINE, HHModItems.MELON_WINE)) {
+            vintage.add(item.get().asItem().builtInRegistryHolder(), bottle, false);
+        }
+        for (Supplier<Item> item : List.of(
+                HHModItems.PICKLED_BEETROOTS, HHModItems.PICKLED_CABBAGE, HHModItems.PICKLED_CARROTS,
+                HHModItems.PICKLED_ONIONS, HHModItems.PICKLED_POTATOES)) {
+            vintage.add(item.get().asItem().builtInRegistryHolder(), jar, false);
+        }
     }
 }

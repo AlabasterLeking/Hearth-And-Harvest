@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_juice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:cask"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:fermenting/hard_cider"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_juice"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:fermenting/hard_cider"
+    ]
+  }
+}

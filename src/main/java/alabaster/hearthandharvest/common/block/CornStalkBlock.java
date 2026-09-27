@@ -2,8 +2,11 @@ package alabaster.hearthandharvest.common.block;
 
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModItems;
+import alabaster.hearthandharvest.common.tag.HHCommonTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -30,7 +33,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.*;
 import net.neoforged.neoforge.common.util.TriState;
 import org.jetbrains.annotations.NotNull;
@@ -128,23 +136,34 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
     }
 
     protected ItemLike getBaseSeedId() {
-        return HHModItems.CORN_KERNELS.get();
+        return BuiltInRegistries.ITEM.getTag(HHCommonTags.SEEDS_CORN)
+                .flatMap(tag -> tag.size() == 0 ? java.util.Optional.empty() : java.util.Optional.of(tag.get(0).value()))
+                .orElse(HHModItems.CORN_KERNELS.get());
+    }
+
+    private static void dropFromTable(Level level, BlockPos pos, BlockState state, ResourceKey<LootTable> table, ItemStack tool, Player player) {
+        if (!(level instanceof ServerLevel serverLevel)) return;
+
+        LootParams.Builder params = new LootParams.Builder(serverLevel)
+                .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
+                .withParameter(LootContextParams.BLOCK_STATE, state)
+                .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
+                .withOptionalParameter(LootContextParams.TOOL, tool == null ? ItemStack.EMPTY : tool);
+
+        serverLevel.getServer().reloadableRegistries().getLootTable(table)
+                .getRandomItems(params.create(LootContextParamSets.BLOCK))
+                .forEach(drop -> popResource(level, pos, drop));
     }
 
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
-        // If the block below changes or is removed, verify survival
         if (direction == Direction.DOWN || direction == Direction.UP) {
             if (!this.canSurvive(state, world, pos)) {
                 if (world instanceof Level level && !level.isClientSide()) {
-                    // Drop items when middle or top pieces die from instability
-                    ItemStack drop = switch (state.getValue(SECTION)) {
-                        case MIDDLE, TOP -> new ItemStack(HHModItems.CORN.get());
-                        default -> ItemStack.EMPTY;
-                    };
-
-                    if (!drop.isEmpty()) {
-                        Block.popResource(level, pos, drop);
+                    switch (state.getValue(SECTION)) {
+                        case MIDDLE, TOP -> dropFromTable(level, pos, state, this.getLootTable(), ItemStack.EMPTY, null);
+                        default -> {
+                        }
                     }
                 }
                 return Blocks.AIR.defaultBlockState();
@@ -392,10 +411,8 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
 
     @Override
     public void harvestBlock(BlockState state, Level level, BlockPos pos, Player player, ItemStack tool) {
-        int age = state.getValue(AGE);
-        int count = (age == 5) ? 2 : 1;
+        dropFromTable(level, pos, state, this.getLootTable(), tool, player);
         level.setBlock(pos, state.setValue(AGE, 3), 3);
-        popResource(level, pos, new ItemStack(HHModItems.CORN.get(), count));
         level.playSound(null, pos, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 

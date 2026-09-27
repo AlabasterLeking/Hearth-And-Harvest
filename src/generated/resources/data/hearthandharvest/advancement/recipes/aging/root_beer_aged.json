@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_root_beer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:root_beer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:aging/root_beer_aged"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_root_beer"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:aging/root_beer_aged"
+    ]
+  }
+}

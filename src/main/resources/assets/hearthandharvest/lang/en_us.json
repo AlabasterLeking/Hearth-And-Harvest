@@ -39,15 +39,13 @@
 
   "block.hearthandharvest.keg": "Keg",
   "container.hearthandharvest.keg": "Keg",
-  "hearthandharvest.container.recipe_book.fermentable": "Show Fermentable",
+  "hearthandharvest.container.recipe_book.fermentable": "Showing Fermentables",
   "container.hearthandharvest.keg.fill": "Fill",
   "container.hearthandharvest.keg.drain": "Drain",
   "container.hearthandharvest.keg.fill.tooltip": "Containers in the left slot are filled from the output tank",
   "container.hearthandharvest.keg.drain.tooltip": "Containers in the left slot are emptied into the input tank",
-  "gui.hearthandharvest.keg.ingredient_slot": "Ingredients",
   "gui.hearthandharvest.keg.container_slot": "Bottle or bucket to fill or empty",
   "gui.hearthandharvest.keg.container_output_slot": "Filled or emptied containers",
-  "gui.hearthandharvest.keg.output_slot": "Results",
   "container.hearthandharvest.keg.empty": "Empty",
   "container.hearthandharvest.keg.amount": "%s / %s mB",
   "container.hearthandharvest.keg.idle": "Not fermenting",
@@ -488,6 +486,7 @@
   "effect.hearthandharvest.pinned.0.desc": "Keeps you stuck in place",
 
   "hearthandharvest.jei.aging": "Aging",
+  "hearthandharvest.jei.fermenting": "Fermenting",
   "hearthandharvest.jei.stomping": "Stomping",
   "hearthandharvest.jei.stomping.tooltip": "Jump in the Stomping Basin to process!",
 
@@ -504,6 +503,7 @@
   "hearthandharvest.jei.info.salt_block": "Will keep animals near, who will lick it. Will degrade over time, but can get repaired by adding more salt to it",
   "hearthandharvest.jei.info.jug": "Can be used like a bucket to pickup and move fluids. Holds 8 buckets at a time. Can be placed, extracted from, fill other containers, and be picked up with a shift-click",
   "hearthandharvest.jei.info.cask": "Ages juices into wine and pickles vegetables. Aging is faster in the dark and slower in bright light. Seal the cask to lock its ingredients so they cannot be disturbed while they age",
+  "hearthandharvest.jei.info.keg": "Ferments juices into wine, milk into cheese curds, and vegetables into pickles. Put containers in the middle slot to fill or empty the tanks, using the button to switch mode",
   "hearthandharvest.jei.info.vintage_aging": "Put a finished bottle or pickle jar back into a cask to age it further. Each stage (Aged, Fine, Reserve) lengthens its effects and makes wine less likely to leave you drunk",
 
   "fluid_type.hearthandharvest.cooking_oil": "Cooking Oil",

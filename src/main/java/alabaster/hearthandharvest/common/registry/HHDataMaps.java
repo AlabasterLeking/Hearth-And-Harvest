@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.registry;
 
+import alabaster.hearthandharvest.common.data.VintageStyle;
+
 import alabaster.hearthandharvest.HearthAndHarvest;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -30,11 +32,24 @@ public class HHDataMaps {
             BuiltInRegistries.ITEM.byNameCodec()
     ).build();
 
+    public static final DataMapType<Item, VintageStyle> VINTAGE_STYLE = DataMapType.builder(
+            ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "vintage_style"),
+            Registries.ITEM,
+            VintageStyle.CODEC
+    ).build();
+
     private static volatile Map<Item, Fluid> BOTTLE_TO_FLUID = Map.of();
 
     @SubscribeEvent
     public static void registerDataMaps(RegisterDataMapTypesEvent event) {
         event.register(FLUID_BOTTLE);
+        event.register(VINTAGE_STYLE);
+    }
+
+    @Nullable
+    public static VintageStyle getVintageStyle(Item item) {
+        if (item == null || item == Items.AIR) return null;
+        return BuiltInRegistries.ITEM.wrapAsHolder(item).getData(VINTAGE_STYLE);
     }
 
     @Nullable

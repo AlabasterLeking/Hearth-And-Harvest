@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.integration.jei;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.crafting.KegRecipe;
 import alabaster.hearthandharvest.common.crafting.CaskRecipe;
 import alabaster.hearthandharvest.common.crafting.StompingBasinRecipe;
 import alabaster.hearthandharvest.common.registry.HHModItems;
@@ -40,5 +41,9 @@ public class HHRecipes
 
     public List<RecipeHolder<StompingBasinRecipe>> getStompingRecipes() {
         return recipeManager.getAllRecipesFor(HHModRecipeTypes.STOMPING.get());
+    }
+
+    public List<RecipeHolder<KegRecipe>> getKegRecipes() {
+        return recipeManager.getAllRecipesFor(HHModRecipeTypes.FERMENTING.get());
     }
 }

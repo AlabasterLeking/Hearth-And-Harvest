@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.block.entity.inventory;
 
+import alabaster.hearthandharvest.common.block.entity.CaskBlockEntity;
+
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -9,8 +11,8 @@ import javax.annotation.Nullable;
 import java.util.function.BooleanSupplier;
 
 public class CaskItemHandler implements IItemHandler {
-    private static final int SLOT_OUTPUT = 4;
-    private static final int SLOTS_INPUT = 3;
+    private static final int SLOT_OUTPUT = CaskBlockEntity.FIRST_OUTPUT_SLOT;
+    private static final int SLOTS_INPUT = CaskBlockEntity.INPUT_SLOTS;
     private final IItemHandler itemHandler;
     private final Direction side;
     private final BooleanSupplier sealed;
@@ -47,7 +49,7 @@ public class CaskItemHandler implements IItemHandler {
         if (side == null || side.equals(Direction.UP)) {
             return slot < SLOTS_INPUT && !sealed.getAsBoolean() ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         } else {
-            return slot == SLOT_OUTPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            return slot >= SLOT_OUTPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }
     }
 

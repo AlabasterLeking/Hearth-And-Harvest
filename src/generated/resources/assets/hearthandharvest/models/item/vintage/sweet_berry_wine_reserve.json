@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:item/generated",
+  "base": {
+    "children": {
+      "base": {
+        "parent": "hearthandharvest:block/sweet_berry_wine_bottle"
+      },
+      "seal": {
+        "parent": "hearthandharvest:display/vintage/bottle_reserve"
+      }
+    },
+    "loader": "neoforge:composite"
+  },
+  "loader": "neoforge:separate_transforms",
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/vintage/2d_sweet_berry_wine_reserve"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/vintage/2d_sweet_berry_wine_reserve"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/vintage/2d_sweet_berry_wine_reserve"
+    }
+  },
+  "textures": {
+    "particle": "hearthandharvest:item/sweet_berry_wine"
+  }
+}

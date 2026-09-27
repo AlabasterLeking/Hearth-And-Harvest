@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pickled_potatoes": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pickled_potatoes"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:aging/pickled_potatoes_reserve"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pickled_potatoes"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:aging/pickled_potatoes_reserve"
+    ]
+  }
+}

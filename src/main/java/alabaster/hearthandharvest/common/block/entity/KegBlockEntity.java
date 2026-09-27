@@ -2,7 +2,7 @@ package alabaster.hearthandharvest.common.block.entity;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.entity.container.KegMenu;
-import alabaster.hearthandharvest.common.crafting.FermentingRecipe;
+import alabaster.hearthandharvest.common.crafting.KegRecipe;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import alabaster.hearthandharvest.common.registry.HHModRecipeTypes;
 import net.minecraft.core.BlockPos;
@@ -114,6 +114,12 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         return fillMode;
     }
 
+    public void setFillMode(boolean fillMode) {
+        if (this.fillMode == fillMode) return;
+        this.fillMode = fillMode;
+        inventoryChanged();
+    }
+
     public void toggleFillMode() {
         fillMode = !fillMode;
         inventoryChanged();
@@ -134,7 +140,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         keg.handleContainerSlot();
 
         boolean wasFermenting = keg.fermenting;
-        RecipeHolder<FermentingRecipe> match = keg.findRecipe();
+        RecipeHolder<KegRecipe> match = keg.findRecipe();
 
         if (match != null && keg.canOutput(match.value())) {
             keg.fermentTimeTotal = match.value().getFermentTime();
@@ -194,7 +200,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
     }
 
     @Nullable
-    private RecipeHolder<FermentingRecipe> findRecipe() {
+    private RecipeHolder<KegRecipe> findRecipe() {
         if (level == null) return null;
 
         List<ItemStack> inputs = List.of(
@@ -202,8 +208,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
                 inventory.getStackInSlot(INPUT_SLOT_TWO)
         );
 
-        for (RecipeHolder<FermentingRecipe> holder : level.getRecipeManager().getAllRecipesFor(HHModRecipeTypes.FERMENTING.get())) {
-            FermentingRecipe recipe = holder.value();
+        for (RecipeHolder<KegRecipe> holder : level.getRecipeManager().getAllRecipesFor(HHModRecipeTypes.FERMENTING.get())) {
+            KegRecipe recipe = holder.value();
             if (recipe.matchesFluid(inputTank.getFluid()) && recipe.matchesItems(inputs)) {
                 return holder;
             }
@@ -211,7 +217,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         return null;
     }
 
-    private boolean canOutput(FermentingRecipe recipe) {
+    private boolean canOutput(KegRecipe recipe) {
         FluidStack resultFluid = recipe.getResultFluid();
         if (!resultFluid.isEmpty() && outputTank.fill(resultFluid, IFluidHandler.FluidAction.SIMULATE) < resultFluid.getAmount()) {
             return false;
@@ -251,7 +257,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         return false;
     }
 
-    private void craft(FermentingRecipe recipe) {
+    private void craft(KegRecipe recipe) {
         FluidStack inputFluid = recipe.getInputFluid();
         if (!inputFluid.isEmpty()) {
             inputTank.drain(inputFluid.getAmount(), IFluidHandler.FluidAction.EXECUTE);

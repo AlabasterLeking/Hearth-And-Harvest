@@ -43,6 +43,10 @@ public class JarItemModelProvider implements DataProvider {
         List<CompletableFuture<?>> futures = new ArrayList<>();
 
         for (String name : JAR_NAMES) {
+            if (VintageItemModelProvider.JARS.contains(name)) {
+                continue;
+            }
+
             JsonObject twoD = new JsonObject();
             twoD.addProperty("parent", "minecraft:item/generated");
             JsonObject twoDTextures = new JsonObject();

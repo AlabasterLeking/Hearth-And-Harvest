@@ -19,15 +19,23 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import java.util.function.Predicate;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.FluidUtil;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
-import alabaster.hearthandharvest.common.crafting.FermentingRecipe;
+import alabaster.hearthandharvest.common.crafting.KegRecipe;
 
 import java.util.List;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class KegMenu extends RecipeBookMenu<RecipeWrapper, FermentingRecipe> {
+public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
     public static final int MODE_BUTTON_ID = 0;
     public static final ResourceLocation BOTTLE_SLOT_ICON = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "gui/bottle_slot");
 
@@ -45,17 +53,17 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, FermentingRecipe> {
         this.kegData = kegData;
         this.access = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
 
-        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), KegBlockEntity.INPUT_SLOT_ONE, 32, 32));
-        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), KegBlockEntity.INPUT_SLOT_TWO, 32, 59));
-        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), KegBlockEntity.CONTAINER_INPUT_SLOT, 69, 25) {
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), KegBlockEntity.INPUT_SLOT_ONE, 32, 30));
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), KegBlockEntity.INPUT_SLOT_TWO, 32, 57));
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), KegBlockEntity.CONTAINER_INPUT_SLOT, 69, 23) {
             @Override
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
                 return Pair.of(TextureAtlas.LOCATION_BLOCKS, BOTTLE_SLOT_ICON);
             }
         });
-        this.addSlot(new KegResultSlot(blockEntity, KegBlockEntity.CONTAINER_OUTPUT_SLOT, 91, 25));
-        this.addSlot(new KegResultSlot(blockEntity, KegBlockEntity.OUTPUT_SLOT_ONE, 128, 32));
-        this.addSlot(new KegResultSlot(blockEntity, KegBlockEntity.OUTPUT_SLOT_TWO, 128, 59));
+        this.addSlot(new KegResultSlot(blockEntity, KegBlockEntity.CONTAINER_OUTPUT_SLOT, 91, 23));
+        this.addSlot(new KegResultSlot(blockEntity, KegBlockEntity.OUTPUT_SLOT_ONE, 128, 30));
+        this.addSlot(new KegResultSlot(blockEntity, KegBlockEntity.OUTPUT_SLOT_TWO, 128, 57));
 
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
@@ -98,6 +106,74 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, FermentingRecipe> {
     }
 
     @Override
+    public void handlePlacement(boolean placeAll, RecipeHolder<?> recipe, ServerPlayer player) {
+        if (!(recipe.value() instanceof KegRecipe kegRecipe)) return;
+
+        placeIngredients(kegRecipe, player, placeAll);
+        placeFluidContainers(kegRecipe, player, placeAll);
+        this.blockEntity.setChanged();
+        this.broadcastChanges();
+    }
+
+    private void placeIngredients(KegRecipe recipe, ServerPlayer player, boolean placeAll) {
+        NonNullList<Ingredient> ingredients = recipe.getIngredients();
+        for (int index = 0; index < ingredients.size() && index < 2; ++index) {
+            Ingredient ingredient = ingredients.get(index);
+            int slot = index == 0 ? KegBlockEntity.INPUT_SLOT_ONE : KegBlockEntity.INPUT_SLOT_TWO;
+            moveFromInventory(player, slot, placeAll, ingredient::test);
+        }
+    }
+
+    private void placeFluidContainers(KegRecipe recipe, ServerPlayer player, boolean placeAll) {
+        FluidStack required = recipe.getInputFluid();
+        if (required.isEmpty()) return;
+
+        FluidTank tank = this.blockEntity.getInputTank();
+        if (!tank.isEmpty() && !FluidStack.isSameFluidSameComponents(tank.getFluid(), required)) return;
+
+        boolean moved = moveFromInventory(player, KegBlockEntity.CONTAINER_INPUT_SLOT, placeAll, stack -> {
+            FluidStack contained = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
+            return !contained.isEmpty() && FluidStack.isSameFluidSameComponents(contained, required);
+        });
+
+        if (moved) {
+            this.blockEntity.setFillMode(false);
+        }
+    }
+
+    private boolean moveFromInventory(ServerPlayer player, int targetSlot, boolean placeAll, Predicate<ItemStack> matches) {
+        ItemStackHandler inventory = this.blockEntity.getInventory();
+        ItemStack stored = inventory.getStackInSlot(targetSlot);
+        if (!stored.isEmpty() && !matches.test(stored)) return false;
+
+        Inventory playerInventory = player.getInventory();
+        boolean moved = false;
+
+        for (int index = 0; index < playerInventory.getContainerSize(); ++index) {
+            ItemStack candidate = playerInventory.getItem(index);
+            if (candidate.isEmpty() || !matches.test(candidate)) continue;
+
+            stored = inventory.getStackInSlot(targetSlot);
+            if (!stored.isEmpty() && !ItemStack.isSameItemSameComponents(stored, candidate)) continue;
+
+            int space = Math.min(inventory.getSlotLimit(targetSlot), candidate.getMaxStackSize()) - stored.getCount();
+            if (space <= 0) return moved;
+
+            int amount = placeAll ? Math.min(space, candidate.getCount()) : 1;
+            ItemStack taken = candidate.split(amount);
+            if (stored.isEmpty()) {
+                inventory.setStackInSlot(targetSlot, taken);
+            } else {
+                stored.grow(taken.getCount());
+            }
+            moved = true;
+
+            if (!placeAll) return true;
+        }
+        return moved;
+    }
+
+    @Override
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack result = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
@@ -135,7 +211,7 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, FermentingRecipe> {
     }
 
     @Override
-    public boolean recipeMatches(RecipeHolder<FermentingRecipe> recipe) {
+    public boolean recipeMatches(RecipeHolder<KegRecipe> recipe) {
         return recipe.value().matchesItems(List.of(
                 blockEntity.getInventory().getStackInSlot(KegBlockEntity.INPUT_SLOT_ONE),
                 blockEntity.getInventory().getStackInSlot(KegBlockEntity.INPUT_SLOT_TWO)));

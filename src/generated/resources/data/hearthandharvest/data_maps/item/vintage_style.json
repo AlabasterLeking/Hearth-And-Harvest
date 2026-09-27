@@ -1,0 +1,60 @@
+{
+  "values": {
+    "hearthandharvest:blueberry_wine": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:cherry_wine": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:glow_berry_wine": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:green_grape_wine": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:hard_cider": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:mead": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:melon_wine": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:moonshine": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:pickled_beetroots": {
+      "overlay": "jar",
+      "show_fresh": true
+    },
+    "hearthandharvest:pickled_cabbage": {
+      "overlay": "jar",
+      "show_fresh": true
+    },
+    "hearthandharvest:pickled_carrots": {
+      "overlay": "jar",
+      "show_fresh": true
+    },
+    "hearthandharvest:pickled_onions": {
+      "overlay": "jar",
+      "show_fresh": true
+    },
+    "hearthandharvest:pickled_potatoes": {
+      "overlay": "jar",
+      "show_fresh": true
+    },
+    "hearthandharvest:raspberry_wine": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:red_grape_wine": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:root_beer": {
+      "overlay": "bottle"
+    },
+    "hearthandharvest:sweet_berry_wine": {
+      "overlay": "bottle"
+    }
+  }
+}

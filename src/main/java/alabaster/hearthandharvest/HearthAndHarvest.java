@@ -66,6 +66,7 @@ public class HearthAndHarvest {
         HHModCreativeTabs.CREATIVE_TABS.register(modEventBus);
         HHModDataComponents.DATA_COMPONENTS.register(modEventBus);
         HHModMenuTypes.MENUS.register(modEventBus);
+        HHModIngredients.INGREDIENT_TYPES.register(modEventBus);
         HHModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         HHModRecipeTypes.RECIPE_TYPES.register(modEventBus);
         HHModStructurePieces.STRUCTURE_PIECES.register(modEventBus);

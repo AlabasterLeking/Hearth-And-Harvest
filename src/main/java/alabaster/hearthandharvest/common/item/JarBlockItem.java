@@ -38,7 +38,6 @@ public class JarBlockItem extends BlockItem implements AgeableItem {
     private final Block displayBlock;
     private List<Holder<MobEffect>> cures = List.of();
     private int maxServings = DEFAULT_SERVINGS;
-    private boolean ageable;
     private static final float SATURATION_BONUS_PER_VINTAGE = 0.1F;
 
     public JarBlockItem(Block placedBlock, Block displayBlock, Properties properties) {
@@ -52,19 +51,9 @@ public class JarBlockItem extends BlockItem implements AgeableItem {
         return this;
     }
 
-    public JarBlockItem ageable() {
-        this.ageable = true;
-        return this;
-    }
-
-    @Override
-    public boolean isAgeable() {
-        return ageable;
-    }
-
     @Override
     public boolean canAgeFurther(ItemStack stack) {
-        return ageable && !isOpened(stack) && VintageHelper.getVintage(stack) < VintageHelper.MAX_VINTAGE;
+        return !isOpened(stack) && VintageHelper.canAgeFurther(stack);
     }
 
     public JarBlockItem servings(int servings) {

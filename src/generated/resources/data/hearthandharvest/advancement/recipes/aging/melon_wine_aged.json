@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_melon_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:melon_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:aging/melon_wine_aged"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_melon_wine"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:aging/melon_wine_aged"
+    ]
+  }
+}

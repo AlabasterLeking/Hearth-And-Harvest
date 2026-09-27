@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:item/generated",
+  "base": {
+    "parent": "hearthandharvest:block/blueberry_wine_bottle"
+  },
+  "loader": "neoforge:separate_transforms",
+  "overrides": [
+    {
+      "model": "hearthandharvest:item/vintage/blueberry_wine_aged",
+      "predicate": {
+        "hearthandharvest:vintage": 1
+      }
+    },
+    {
+      "model": "hearthandharvest:item/vintage/blueberry_wine_fine",
+      "predicate": {
+        "hearthandharvest:vintage": 2
+      }
+    },
+    {
+      "model": "hearthandharvest:item/vintage/blueberry_wine_reserve",
+      "predicate": {
+        "hearthandharvest:vintage": 3
+      }
+    }
+  ],
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_blueberry_wine"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_blueberry_wine"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/2d_blueberry_wine"
+    }
+  },
+  "textures": {
+    "particle": "hearthandharvest:item/blueberry_wine"
+  }
+}

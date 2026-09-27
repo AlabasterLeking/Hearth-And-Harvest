@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "hearthandharvest:item/pickled_carrots",
+    "layer1": "hearthandharvest:item/vintage/jar_fine"
+  }
+}

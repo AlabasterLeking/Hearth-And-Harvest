@@ -28,6 +28,22 @@ public class CaskRecipeBookComponent extends RecipeBookComponent
         this.filterButton.initTextureValues(RECIPE_BOOK_BUTTONS);
     }
 
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (this.filterButton == null) {
+            return super.mouseClicked(mouseX, mouseY, button);
+        }
+
+        boolean stateBefore = this.filterButton.isStateTriggered();
+        boolean clickedFilter = this.filterButton.visible && this.filterButton.isMouseOver(mouseX, mouseY);
+        boolean handled = super.mouseClicked(mouseX, mouseY, button);
+
+        if (clickedFilter && this.filterButton != null && this.filterButton.isStateTriggered() == stateBefore) {
+            this.filterButton.setStateTriggered(!stateBefore);
+        }
+        return handled;
+    }
+
     public void hide() {
         this.setVisible(false);
     }

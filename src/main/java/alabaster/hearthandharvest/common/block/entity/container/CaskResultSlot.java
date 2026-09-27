@@ -30,6 +30,11 @@ public class CaskResultSlot extends SlotItemHandler
     }
 
     @Override
+    public boolean mayPickup(Player playerIn) {
+        return !this.tileEntity.isSealed() && super.mayPickup(playerIn);
+    }
+
+    @Override
     @Nonnull
     public ItemStack remove(int amount) {
         if (this.hasItem()) {

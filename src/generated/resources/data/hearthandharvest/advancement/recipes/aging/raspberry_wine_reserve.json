@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raspberry_wine": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:raspberry_wine"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:aging/raspberry_wine_reserve"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raspberry_wine"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:aging/raspberry_wine_reserve"
+    ]
+  }
+}

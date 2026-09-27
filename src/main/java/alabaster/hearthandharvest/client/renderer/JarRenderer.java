@@ -47,7 +47,7 @@ public class JarRenderer implements BlockEntityRenderer<JarBlockEntity> {
                     packedOverlay
             );
 
-            BakedModel vintage = DisplayModels.vintageOverlay("jar", be.getSlotStack(i));
+            BakedModel vintage = DisplayModels.vintageOverlay(be.getSlotStack(i));
             if (vintage != null) {
                 blockRenderer.getModelRenderer().renderModel(poseStack.last(), bufferSource.getBuffer(RenderType.cutout()),
                         null, vintage, 1.0F, 1.0F, 1.0F, packedLight, packedOverlay);

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pickled_carrots": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:pickled_carrots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:aging/pickled_carrots_fine"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pickled_carrots"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:aging/pickled_carrots_fine"
+    ]
+  }
+}

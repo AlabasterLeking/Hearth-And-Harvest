@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "hearthandharvest:block/keg",
+      "y": 0
+    },
+    "facing=south": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    }
+  }
+}

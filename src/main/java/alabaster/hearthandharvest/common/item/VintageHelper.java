@@ -1,6 +1,8 @@
 package alabaster.hearthandharvest.common.item;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.registry.HHDataMaps;
+import alabaster.hearthandharvest.common.data.VintageStyle;
 import alabaster.hearthandharvest.common.registry.HHModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
@@ -18,6 +20,7 @@ import java.util.List;
 
 public final class VintageHelper {
     public static final int MAX_VINTAGE = 3;
+    public static final String[] STAGE_NAMES = {"aged", "fine", "reserve"};
 
     private static final float DURATION_BONUS_PER_VINTAGE = 0.5F;
 
@@ -39,27 +42,43 @@ public final class VintageHelper {
 
     @Nullable
     public static String stageName(ItemStack stack) {
-        return switch (getVintage(stack)) {
-            case 1 -> "aged";
-            case 2 -> "fine";
-            case 3 -> "reserve";
-            default -> null;
-        };
+        int vintage = getVintage(stack);
+        return vintage >= 1 && vintage <= MAX_VINTAGE ? STAGE_NAMES[vintage - 1] : null;
     }
 
     @Nullable
-    public static String overlayStage(String kind, ItemStack stack) {
+    public static VintageStyle getStyle(ItemStack stack) {
+        return HHDataMaps.getVintageStyle(stack.getItem());
+    }
+
+    public static boolean isAgeable(ItemStack stack) {
+        VintageStyle style = getStyle(stack);
+        return style != null && style.ageable();
+    }
+
+    public static boolean canAgeFurther(ItemStack stack) {
+        return isAgeable(stack) && getVintage(stack) < MAX_VINTAGE;
+    }
+
+    @Nullable
+    public static String overlayStage(ItemStack stack) {
+        VintageStyle style = getStyle(stack);
+        if (style == null || !style.hasOverlay()) return null;
+
         String stage = stageName(stack);
-        if (stage == null && kind.equals("jar") && stack.getItem() instanceof AgeableItem ageable && ageable.isAgeable()) {
+        if (stage == null && style.showFresh() && style.ageable()) {
             return "fresh";
         }
         return stage;
     }
 
     @Nullable
-    public static ResourceLocation overlayTexture(String kind, ItemStack stack) {
-        String stage = overlayStage(kind, stack);
-        return stage == null ? null : ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "textures/item/vintage/" + kind + "_" + stage + ".png");
+    public static ResourceLocation overlayModel(ItemStack stack) {
+        VintageStyle style = getStyle(stack);
+        if (style == null || !style.drawModel()) return null;
+
+        String stage = overlayStage(stack);
+        return stage == null ? null : style.modelFor(stage);
     }
 
     public static float durationFactor(ItemStack stack) {

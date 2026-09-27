@@ -5,6 +5,13 @@ import alabaster.hearthandharvest.client.recipebook.CaskRecipeBookTab;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.common.tag.HHCommonTags;
 import alabaster.hearthandharvest.data.builder.CaskRecipeBuilder;
+import java.util.function.Supplier;
+import java.util.List;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.core.registries.BuiltInRegistries;
+import alabaster.hearthandharvest.common.crafting.VintageIngredient;
+import alabaster.hearthandharvest.common.item.VintageHelper;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +22,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import vectorwing.farmersdelight.common.registry.ModItems;
-import vectorwing.farmersdelight.common.tag.CommonTags;
 
 public class AgingRecipes {
     public static final int FAST_AGING = 300;      // 1.25 minutes
@@ -31,6 +37,7 @@ public class AgingRecipes {
 
 
     public static void register(RecipeOutput output) {
+        vintageRecipes(output);
         ageCheese(output);
         ageDrinks(output);
         agePickles(output);
@@ -223,5 +230,34 @@ public class AgingRecipes {
                 .unlockedByAnyIngredient()
                 .setRecipeBookTab(CaskRecipeBookTab.MISC)
                 .build(output,"fertilizer_bag_from_straw");
+    }
+
+    private static final int[] VINTAGE_TIMES = {24000, 48000, 72000};
+
+    private static void vintageRecipes(RecipeOutput output) {
+        List<Supplier<Item>> ageables = List.of(
+                HHModItems.BLUEBERRY_WINE, HHModItems.CHERRY_WINE, HHModItems.GLOW_BERRY_WINE,
+                HHModItems.GREEN_GRAPE_WINE, HHModItems.HARD_CIDER, HHModItems.MEAD,
+                HHModItems.MELON_WINE, HHModItems.RASPBERRY_WINE, HHModItems.RED_GRAPE_WINE,
+                HHModItems.ROOT_BEER, HHModItems.SWEET_BERRY_WINE,
+                HHModItems.PICKLED_BEETROOTS, HHModItems.PICKLED_CABBAGE, HHModItems.PICKLED_CARROTS,
+                HHModItems.PICKLED_ONIONS, HHModItems.PICKLED_POTATOES
+        );
+
+        for (Supplier<Item> supplier : ageables) {
+            Item item = supplier.get();
+            String name = BuiltInRegistries.ITEM.getKey(item).getPath();
+
+            for (int vintage = 1; vintage <= VintageHelper.MAX_VINTAGE; vintage++) {
+                ItemStack result = VintageHelper.withVintage(new ItemStack(item), vintage);
+                String stage = VintageHelper.STAGE_NAMES[vintage - 1];
+
+                new CaskRecipeBuilder(result, VINTAGE_TIMES[vintage - 1], MEDIUM_EXP)
+                        .addIngredient(new VintageIngredient(item, vintage - 1).toVanilla())
+                        .unlockedByItems("has_" + name, item)
+                        .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
+                        .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, name + "_" + stage));
+            }
+        }
     }
 }

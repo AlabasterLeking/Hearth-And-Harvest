@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:item/generated",
+  "base": {
+    "parent": "hearthandharvest:block/hard_cider_bottle"
+  },
+  "loader": "neoforge:separate_transforms",
+  "overrides": [
+    {
+      "model": "hearthandharvest:item/vintage/hard_cider_aged",
+      "predicate": {
+        "hearthandharvest:vintage": 1
+      }
+    },
+    {
+      "model": "hearthandharvest:item/vintage/hard_cider_fine",
+      "predicate": {
+        "hearthandharvest:vintage": 2
+      }
+    },
+    {
+      "model": "hearthandharvest:item/vintage/hard_cider_reserve",
+      "predicate": {
+        "hearthandharvest:vintage": 3
+      }
+    }
+  ],
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_hard_cider"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_hard_cider"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/2d_hard_cider"
+    }
+  },
+  "textures": {
+    "particle": "hearthandharvest:item/hard_cider"
+  }
+}

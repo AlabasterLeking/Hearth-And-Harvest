@@ -4,6 +4,26 @@
     "parent": "hearthandharvest:block/pickled_beetroots"
   },
   "loader": "neoforge:separate_transforms",
+  "overrides": [
+    {
+      "model": "hearthandharvest:item/vintage/pickled_beetroots_aged",
+      "predicate": {
+        "hearthandharvest:vintage": 1
+      }
+    },
+    {
+      "model": "hearthandharvest:item/vintage/pickled_beetroots_fine",
+      "predicate": {
+        "hearthandharvest:vintage": 2
+      }
+    },
+    {
+      "model": "hearthandharvest:item/vintage/pickled_beetroots_reserve",
+      "predicate": {
+        "hearthandharvest:vintage": 3
+      }
+    }
+  ],
   "perspectives": {
     "fixed": {
       "parent": "hearthandharvest:item/2d_pickled_beetroots"
@@ -16,7 +36,6 @@
     }
   },
   "textures": {
-    "layer0": "hearthandharvest:item/pickled_beetroots",
     "particle": "hearthandharvest:item/pickled_beetroots"
   }
 }

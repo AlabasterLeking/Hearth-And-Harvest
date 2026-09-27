@@ -14,9 +14,8 @@ import alabaster.hearthandharvest.common.entity.crow.CrowModel;
 import alabaster.hearthandharvest.common.entity.crow.CrowOnShoulderLayer;
 import alabaster.hearthandharvest.common.entity.crow.CrowRenderer;
 import alabaster.hearthandharvest.common.entity.pitchfork.ThrownPitchforkModel;
-import alabaster.hearthandharvest.common.item.AgeableItem;
-import alabaster.hearthandharvest.common.item.JarBlockItem;
 import alabaster.hearthandharvest.common.item.VintageHelper;
+import net.minecraft.client.renderer.item.ItemProperties;
 import alabaster.hearthandharvest.common.item.component.SeedPouchContents;
 import alabaster.hearthandharvest.common.network.PlayerPoopPacket;
 import alabaster.hearthandharvest.common.registry.*;
@@ -226,22 +225,9 @@ public class ClientEventHandler {
             return true;
         });
 
-        BuiltInRegistries.ITEM.stream()
-                .filter(item -> item instanceof AgeableItem)
-                .forEach(item -> {
-                    String kind = item instanceof JarBlockItem ? "jar" : "bottle";
-                    event.register(item, (guiGraphics, font, stack, xOffset, yOffset) -> {
-                        ResourceLocation texture = VintageHelper.overlayTexture(kind, stack);
-                        if (texture == null) return false;
-
-                        PoseStack pose = guiGraphics.pose();
-                        pose.pushPose();
-                        pose.translate(0, 0, 200);
-                        guiGraphics.blit(texture, xOffset, yOffset, 0, 0, 16, 16, 16, 16);
-                        pose.popPose();
-                        return true;
-                    });
-                });
+        ItemProperties.registerGeneric(
+                ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "vintage"),
+                (stack, level, entity, seed) -> VintageHelper.getVintage(stack));
     }
 
     private static int cooldownTicks = 0;

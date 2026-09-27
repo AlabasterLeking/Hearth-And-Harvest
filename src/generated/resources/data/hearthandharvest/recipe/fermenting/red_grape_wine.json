@@ -1,0 +1,14 @@
+{
+  "type": "hearthandharvest:fermenting",
+  "experience": 0.35,
+  "ferment_time": 1200,
+  "input_fluid": {
+    "amount": 250,
+    "id": "hearthandharvest:red_grape_juice"
+  },
+  "recipe_book_tab": "drinks",
+  "result_fluid": {
+    "amount": 250,
+    "id": "hearthandharvest:red_grape_wine"
+  }
+}

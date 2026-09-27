@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.integration.jei;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.client.gui.CaskGUI;
+import alabaster.hearthandharvest.integration.jei.category.KegRecipeCategory;
 import alabaster.hearthandharvest.common.block.entity.container.CaskMenu;
 import alabaster.hearthandharvest.common.crafting.BottleCrateRecipe;
 import alabaster.hearthandharvest.common.registry.HHModItems;
@@ -35,11 +36,11 @@ import java.util.List;
 public class JEIPlugin implements IModPlugin
 {
     private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "jei_plugin");
-
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         registry.addRecipeCategories(new AgingRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
         registry.addRecipeCategories(new StompingRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new KegRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -47,6 +48,7 @@ public class JEIPlugin implements IModPlugin
         HHRecipes modRecipes = new HHRecipes();
         registration.addRecipes(HHRecipeTypes.AGING, modRecipes.getCaskRecipes());
         registration.addRecipes(HHRecipeTypes.STOMPING, modRecipes.getStompingRecipes());
+        registration.addRecipes(HHRecipeTypes.FERMENTING, modRecipes.getKegRecipes());
 
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null) return;
@@ -68,6 +70,7 @@ public class JEIPlugin implements IModPlugin
         registration.addIngredientInfo(new ItemStack(HHModItems.SALT_BLOCK.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.salt_block"));
         registration.addIngredientInfo(new ItemStack(HHModItems.JUG.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.jug"));
         registration.addIngredientInfo(new ItemStack(HHModItems.CASK.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.cask"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.KEG.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.keg"));
         registration.addIngredientInfo(List.of(
                 new ItemStack(HHModItems.RED_GRAPE_WINE.get()),
                 new ItemStack(HHModItems.GREEN_GRAPE_WINE.get()),
@@ -94,11 +97,13 @@ public class JEIPlugin implements IModPlugin
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(HHModItems.CASK.get()), HHRecipeTypes.AGING);
         registration.addRecipeCatalyst(new ItemStack(HHModItems.STOMPING_BASIN.get()), HHRecipeTypes.STOMPING);
+        registration.addRecipeCatalyst(new ItemStack(HHModItems.KEG.get()), HHRecipeTypes.FERMENTING);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(CaskGUI.class, 89, 25, 24, 17, HHRecipeTypes.AGING);
+        registration.addRecipeClickArea(CaskGUI.class, 10, 32, 9, 24, HHRecipeTypes.AGING);
+        registration.addRecipeClickArea(CaskGUI.class, 58, 32, 9, 24, HHRecipeTypes.AGING);
     }
 
     @Override

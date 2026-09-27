@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:item/generated",
+  "base": {
+    "children": {
+      "base": {
+        "parent": "hearthandharvest:block/raspberry_wine_bottle"
+      },
+      "seal": {
+        "parent": "hearthandharvest:display/vintage/bottle_aged"
+      }
+    },
+    "loader": "neoforge:composite"
+  },
+  "loader": "neoforge:separate_transforms",
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/vintage/2d_raspberry_wine_aged"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/vintage/2d_raspberry_wine_aged"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/vintage/2d_raspberry_wine_aged"
+    }
+  },
+  "textures": {
+    "particle": "hearthandharvest:item/raspberry_wine"
+  }
+}

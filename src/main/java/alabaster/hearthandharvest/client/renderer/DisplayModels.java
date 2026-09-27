@@ -25,10 +25,9 @@ public final class DisplayModels {
     }
 
     @Nullable
-    public static BakedModel vintageOverlay(String kind, ItemStack stack) {
-        String stage = VintageHelper.overlayStage(kind, stack);
-        if (stage == null) return null;
-        return get(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, FOLDER + "/vintage/" + kind + "_" + stage));
+    public static BakedModel vintageOverlay(ItemStack stack) {
+        ResourceLocation model = VintageHelper.overlayModel(stack);
+        return model == null ? null : get(model);
     }
 
     @Nullable

@@ -27,6 +27,7 @@ public class Recipes extends RecipeProvider
         CookingRecipes.register(output);
         CuttingRecipes.register(output);
         AgingRecipes.register(output);
+        KegRecipes.register(output);
         StompingRecipes.register(output);
     }
 }
