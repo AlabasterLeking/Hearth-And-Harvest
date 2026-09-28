@@ -357,7 +357,9 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.RASPBERRY_PIE.get(),
                 HHModBlocks.GRAPE_PIE.get(),
                 HHModBlocks.PEANUT_BUTTER_PIE.get(),
-                HHModBlocks.CHICKEN_POT_PIE.get()
+                HHModBlocks.CHICKEN_POT_PIE.get(),
+                HHModBlocks.CARROT_CAKE.get(),
+                HHModBlocks.CHOCOLATE_CAKE.get()
         );
         tag(HHCompatibilityTags.CREATE_BRITTLE).add(
                 HHModBlocks.BLUEBERRY_PIE.get(),
@@ -365,7 +367,9 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.RASPBERRY_PIE.get(),
                 HHModBlocks.GRAPE_PIE.get(),
                 HHModBlocks.PEANUT_BUTTER_PIE.get(),
-                HHModBlocks.CHICKEN_POT_PIE.get()
+                HHModBlocks.CHICKEN_POT_PIE.get(),
+                HHModBlocks.CARROT_CAKE.get(),
+                HHModBlocks.CHOCOLATE_CAKE.get()
         );
 
         tag(HHCommonTags.STORAGE_BLOCKS_SALT).add(HHModBlocks.SALT_BAG.get());

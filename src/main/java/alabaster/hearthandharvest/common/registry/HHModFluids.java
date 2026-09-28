@@ -63,6 +63,7 @@ public class HHModFluids {
             Supplier<HHFluidType> flowing
     ) {}
 
+    public static final FluidEntry GOAT_MILK = registerFluidWithBucket("goat_milk", dairyProps(), HHModItems.GOAT_MILK_BUCKET);
     public static final FluidEntry COOKING_OIL = registerFluid("cooking_oil");
     public static final FluidEntry SAP = registerFluidWithBucket("sap", defaultProps(), HHModItems.SAP_BUCKET);
     public static final FluidEntry SYRUP = registerFluid("syrup");
@@ -87,5 +88,4 @@ public class HHModFluids {
     public static final FluidEntry SWEET_BERRY_WINE = registerFluid("sweet_berry_wine");
     public static final FluidEntry GLOW_BERRY_WINE = registerFluid("glow_berry_wine");
     public static final FluidEntry MELON_WINE = registerFluid("melon_wine");
-    public static final FluidEntry GOAT_MILK = registerFluid("goat_milk", dairyProps());
 }

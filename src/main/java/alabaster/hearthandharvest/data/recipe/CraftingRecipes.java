@@ -1044,6 +1044,30 @@ public class CraftingRecipes
                 .unlockedBy("has_carrot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CARROT))
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "carrot_cake_from_batter"));
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HHModItems.CHOCOLATE_CAKE.get())
+                .pattern("CMC")
+                .pattern("SES")
+                .pattern("WWW")
+                .define('C', HHModItems.CHOCOLATE_CAKE.get())
+                .define('S', Items.SUGAR)
+                .define('W', Items.WHEAT)
+                .define('E', Items.EGG)
+                .define('M', Tags.Items.DRINKS_MILK)
+                .unlockedBy("has_chocolate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHOCOLATE_CAKE.get()))
+                .save(output);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HHModItems.CHOCOLATE_CAKE.get())
+                .pattern("CMC")
+                .pattern("SES")
+                .pattern(" B ")
+                .define('C', HHModItems.CHOCOLATE_CAKE.get())
+                .define('S', Items.SUGAR)
+                .define('B', HHModItems.BATTER.get())
+                .define('E', Items.EGG)
+                .define('M', Tags.Items.DRINKS_MILK)
+                .unlockedBy("has_chocolate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHOCOLATE_CAKE.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "chocolate_cake_from_batter"));
+
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Items.CAKE)
                 .pattern("MMM")
                 .pattern("SES")
@@ -1076,6 +1100,18 @@ public class CraftingRecipes
                 .unlockedBy("has_carrot_cake_slice", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CARROT_CAKE_SLICE.get()))
                 .group("carrot_cake")
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "carrot_cake_from_slices"));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.CHOCOLATE_CAKE.get())
+                .requires(HHModItems.CHOCOLATE_CAKE_SLICE.get())
+                .requires(HHModItems.CHOCOLATE_CAKE_SLICE.get())
+                .requires(HHModItems.CHOCOLATE_CAKE_SLICE.get())
+                .requires(HHModItems.CHOCOLATE_CAKE_SLICE.get())
+                .requires(HHModItems.CHOCOLATE_CAKE_SLICE.get())
+                .requires(HHModItems.CHOCOLATE_CAKE_SLICE.get())
+                .requires(HHModItems.CHOCOLATE_CAKE_SLICE.get())
+                .unlockedBy("has_chocolate_cake_slice", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHOCOLATE_CAKE_SLICE.get()))
+                .group("chocolate_cake")
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "chocolate_cake_from_slices"));
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.CHOCOLATE_MILK_BOTTLE.get(),1)
                 .requires(Tags.Items.DRINKS_MILK)

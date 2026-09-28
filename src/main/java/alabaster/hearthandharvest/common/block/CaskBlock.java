@@ -6,7 +6,6 @@ import alabaster.hearthandharvest.common.registry.HHModSounds;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -86,7 +85,7 @@ public class CaskBlock extends BaseEntityBlock {
         if (!pLevel.isClientSide()) {
             BlockEntity entity = pLevel.getBlockEntity(pos);
             if(entity instanceof CaskBlockEntity caskBlockEntity) {
-                (player).openMenu(new SimpleMenuProvider(caskBlockEntity, Component.literal("Cask")), pos);
+                (player).openMenu(new SimpleMenuProvider(caskBlockEntity, caskBlockEntity.getDisplayName()), pos);
             } else {
                 throw new IllegalStateException("Our Container provider is missing!");
             }
@@ -117,13 +116,6 @@ public class CaskBlock extends BaseEntityBlock {
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (!(level.getBlockEntity(pos) instanceof CaskBlockEntity cask) || !cask.isAging()) return;
 
-        if (random.nextInt(8) == 0) {
-            level.addParticle(ParticleTypes.BUBBLE_POP,
-                    pos.getX() + 0.3D + random.nextDouble() * 0.4D,
-                    pos.getY() + 0.7D + random.nextDouble() * 0.2D,
-                    pos.getZ() + 0.3D + random.nextDouble() * 0.4D,
-                    0.0D, 0.01D, 0.0D);
-        }
         if (random.nextInt(160) == 0) {
             level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D,
                     HHModSounds.CASK_AGING.get(), SoundSource.BLOCKS, 0.3F, 0.7F + random.nextFloat() * 0.3F, false);

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "hearthandharvest:chocolate_cake"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "M": {
+      "tag": "c:drinks/milk"
+    },
+    "S": {
+      "item": "minecraft:sugar"
+    },
+    "W": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "pattern": [
+    "CMC",
+    "SES",
+    "WWW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:chocolate_cake"
+  }
+}

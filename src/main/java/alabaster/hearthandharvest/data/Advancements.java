@@ -5,6 +5,9 @@ import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
 import alabaster.hearthandharvest.common.registry.HHModEffects;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
+import alabaster.hearthandharvest.common.item.VintageHelper;
+import alabaster.hearthandharvest.common.registry.HHModDataComponents;
+import net.minecraft.core.component.DataComponentPredicate;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import net.minecraft.advancements.Advancement;
@@ -115,6 +118,14 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.MELON_WINE
         );
 
+        private static final List<Supplier<Item>> RESERVE_ITEMS = List.of(
+                HHModItems.RED_GRAPE_WINE, HHModItems.GREEN_GRAPE_WINE, HHModItems.BLUEBERRY_WINE,
+                HHModItems.RASPBERRY_WINE, HHModItems.CHERRY_WINE, HHModItems.SWEET_BERRY_WINE,
+                HHModItems.GLOW_BERRY_WINE, HHModItems.MELON_WINE, HHModItems.MEAD,
+                HHModItems.HARD_CIDER, HHModItems.ROOT_BEER, HHModItems.MOONSHINE,
+                HHModItems.PICKLED_BEETROOTS, HHModItems.PICKLED_CABBAGE, HHModItems.PICKLED_CARROTS,
+                HHModItems.PICKLED_ONIONS, HHModItems.PICKLED_POTATOES);
+
         private static final List<Supplier<Item>> SPIRITS = List.of(
                 HHModItems.MEAD,
                 HHModItems.HARD_CIDER,
@@ -153,11 +164,13 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.RAISIN_COOKIE,
                 HHModItems.CHOCOLATE_BAR,
                 HHModItems.BLUEBERRY_MUFFIN,
-                HHModItems.RASPBERRY_JAM,
+                HHModItems.RASPBERRY_SCONE,
                 HHModItems.CARAMEL,
                 HHModItems.COTTON_CANDY,
                 HHModItems.CANDY_CORN,
-                HHModItems.CARAMEL_APPLE
+                HHModItems.CARAMEL_APPLE,
+                HHModItems.CARROT_CAKE_SLICE,
+                HHModItems.CHOCOLATE_CAKE_SLICE
         );
 
         private static final List<Supplier<Item>> PIES = List.of(
@@ -244,6 +257,15 @@ public class Advancements extends AdvancementProvider {
             task(wine, "kitchen/well_stocked", HHModItems.OAK_BOTTLE_RACK.get(), trigger(HHModTriggers.FILLED_BOTTLE_RACK));
             challenge(wine, "kitchen/sommelier", HHModItems.GREEN_GRAPE_WINE.get(), WINES);
             challenge(wine, "kitchen/master_distiller", HHModItems.MEAD.get(), SPIRITS);
+
+            AdvancementHolder ferment = task(wine, "kitchen/first_ferment", HHModItems.KEG.get(),
+                    placed(HHModBlocks.KEG));
+            goal(ferment, "kitchen/reserve", HHModItems.RED_GRAPE_WINE.get(),
+                    InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
+                            .of(RESERVE_ITEMS.stream().map(Supplier::get).toArray(Item[]::new))
+                            .hasComponents(DataComponentPredicate.builder()
+                                    .expect(HHModDataComponents.VINTAGE.get(), VintageHelper.MAX_VINTAGE)
+                                    .build())));
         }
 
         private void animals(AdvancementHolder root) {

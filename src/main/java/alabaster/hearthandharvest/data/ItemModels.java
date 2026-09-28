@@ -201,7 +201,8 @@ public class ItemModels extends ItemModelProvider
                 HHModItems.CHEDDAR_CHEESE_WHEEL.get(),
                 HHModItems.UNRIPE_GOAT_CHEESE_WHEEL.get(),
                 HHModItems.GOAT_CHEESE_WHEEL.get(),
-                HHModItems.CARROT_CAKE.get()
+                HHModItems.CARROT_CAKE.get(),
+                HHModItems.CHOCOLATE_CAKE.get()
         );
         takeAll(items, spriteBlockItems.toArray(new Item[0])).forEach(item -> withExistingParent(itemName(item), GENERATED).texture("layer0", resourceItem(itemName(item))));
 

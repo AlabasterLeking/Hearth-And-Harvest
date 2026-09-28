@@ -25,9 +25,9 @@ public class HHModBlocks {
     public static final Supplier<Block> TREE_TAPPER = BLOCKS.register("tree_tapper",
             () -> new TreeTapperBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD).randomTicks()));
     public static final Supplier<Block> CASK = BLOCKS.register("cask",
-            () -> new CaskBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD).randomTicks()));
+            () -> new CaskBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD)));
     public static final Supplier<Block> KEG = BLOCKS.register("keg",
-            () -> new KegBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
+            () -> new KegBlock(Block.Properties.ofFullCopy(Blocks.OAK_PLANKS).strength(2.0F).sound(SoundType.WOOD)));
     public static final Supplier<Block> JUG = BLOCKS.register("jug",
             () -> new JugBlock(Block.Properties.ofFullCopy(Blocks.IRON_BARS).strength(2.0F, 3.0F).sound(SoundType.METAL)));
     public static final Supplier<Block> TROUGH = BLOCKS.register("trough",
@@ -284,6 +284,8 @@ public class HHModBlocks {
             () -> new PieBlock(Block.Properties.ofFullCopy(Blocks.CAKE), HHModItems.CHICKEN_POT_PIE_SLICE));
     public static final Supplier<Block> CARROT_CAKE = BLOCKS.register("carrot_cake",
             () -> new SliceableCakeBlock(Block.Properties.ofFullCopy(Blocks.CAKE),  HHModItems.CARROT_CAKE_SLICE));
+    public static final Supplier<Block> CHOCOLATE_CAKE = BLOCKS.register("chocolate_cake",
+            () -> new SliceableCakeBlock(Block.Properties.ofFullCopy(Blocks.CAKE),  HHModItems.CHOCOLATE_CAKE_SLICE));
 
     // Pizzas
     public static final Supplier<Block> PIZZA = BLOCKS.register("pizza",

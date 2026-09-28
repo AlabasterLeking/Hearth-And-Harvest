@@ -50,7 +50,6 @@ import vectorwing.farmersdelight.common.block.entity.SyncedBlockEntity;
 import vectorwing.farmersdelight.common.item.component.ItemStackWrapper;
 import vectorwing.farmersdelight.common.registry.ModDataComponents;
 import vectorwing.farmersdelight.common.utility.ItemUtils;
-import vectorwing.farmersdelight.common.utility.TextUtils;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
@@ -399,7 +398,7 @@ public class CaskBlockEntity extends SyncedBlockEntity implements MenuProvider, 
 
     @Override
     public Component getName() {
-        return customName != null ? customName : TextUtils.getTranslation("container.cask");
+        return customName != null ? customName : Component.translatable("container.hearthandharvest.cask");
     }
 
     @Override

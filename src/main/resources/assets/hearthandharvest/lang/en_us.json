@@ -13,6 +13,7 @@
   "hearthandharvest.subtitles.crow.step": "Crow flutters",
 
   "block.hearthandharvest.cask": "Cask",
+  "container.hearthandharvest.cask": "Cask",
   "hearthandharvest.container.cask.dim": "Surrounding light is dim, speed is 2x",
   "hearthandharvest.container.cask.medium": "Surrounding light is well lit, speed is 1x",
   "hearthandharvest.container.cask.bright": "Surrounding light is bright, speed is 0.5x",
@@ -57,6 +58,7 @@
   "hearthandharvest.subtitles.cask.unseal": "Cask opens",
   "hearthandharvest.subtitles.cask.aging": "Cask bubbles",
   "hearthandharvest.subtitles.keg.open": "Keg opens",
+  "hearthandharvest.subtitles.keg.fermenting": "Keg bubbles",
 
   "block.hearthandharvest.empty_jar_display": "Jars",
 
@@ -190,6 +192,10 @@
   "block.hearthandharvest.wild_cotton": "Wild Cotton",
   "block.hearthandharvest.wild_peanuts": "Wild Peanuts",
   "block.hearthandharvest.corn_stalk": "Corn Stalk",
+  "block.hearthandharvest.blueberry_bush": "Blueberry Bush",
+  "block.hearthandharvest.raspberry_bush": "Raspberry Bush",
+  "block.hearthandharvest.peanuts": "Peanuts",
+  "block.hearthandharvest.sap_cauldron": "Sap Cauldron",
 
   "block.hearthandharvest.yellow_mum": "Yellow Mum",
   "block.hearthandharvest.orange_mum": "Orange Mum",
@@ -260,6 +266,8 @@
   "item.hearthandharvest.chocolate_milk_bottle": "Chocolate Milk Bottle",
   "tooltip.farmersdelight.chocolate_milk_bottle": "Clears 1 Effect",
   "item.hearthandharvest.goat_milk_bottle": "Goat Milk Bottle",
+  "item.hearthandharvest.goat_milk_bucket": "Goat Milk Bucket",
+  "tooltip.hearthandharvest.goat_milk_bucket": "Clears All Effects",
   "tooltip.farmersdelight.goat_milk_bottle": "Clears 1 Effect",
   "item.hearthandharvest.cherry_juice": "Cherry Juice",
   "item.hearthandharvest.raspberry_juice": "Raspberry Juice",
@@ -327,6 +335,8 @@
   "item.hearthandharvest.chicken_pot_pie_slice": "Chicken Pot Pie Slice",
   "block.hearthandharvest.carrot_cake": "Carrot Cake",
   "item.hearthandharvest.carrot_cake_slice": "Carrot Cake Slice",
+  "block.hearthandharvest.chocolate_cake": "Chocolate Cake",
+  "item.hearthandharvest.chocolate_cake_slice": "Chocolate Cake Slice",
 
   "block.hearthandharvest.pizza": "Pizza",
   "item.hearthandharvest.pizza_slice": "Pizza Slice",
@@ -580,6 +590,10 @@
   "advancement.hearthandharvest.stomp_the_yard.desc": "Stomp ingredients in a stomping basin",
   "advancement.hearthandharvest.aged_to_perfection": "Aged to Perfection",
   "advancement.hearthandharvest.aged_to_perfection.desc": "Obtain a bottle of fruit wine",
+  "advancement.hearthandharvest.first_ferment": "Bottoms Up",
+  "advancement.hearthandharvest.first_ferment.desc": "Place a keg and start fermenting",
+  "advancement.hearthandharvest.reserve": "Reserve",
+  "advancement.hearthandharvest.reserve.desc": "Age something all the way to Reserve",
   "advancement.hearthandharvest.one_too_many": "One Too Many",
   "advancement.hearthandharvest.one_too_many.desc": "Drink until you're drunk",
   "advancement.hearthandharvest.sommelier": "Sommelier",

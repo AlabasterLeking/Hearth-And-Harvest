@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "chocolate_cake",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:chocolate_cake_slice"
+    },
+    {
+      "item": "hearthandharvest:chocolate_cake_slice"
+    },
+    {
+      "item": "hearthandharvest:chocolate_cake_slice"
+    },
+    {
+      "item": "hearthandharvest:chocolate_cake_slice"
+    },
+    {
+      "item": "hearthandharvest:chocolate_cake_slice"
+    },
+    {
+      "item": "hearthandharvest:chocolate_cake_slice"
+    },
+    {
+      "item": "hearthandharvest:chocolate_cake_slice"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:chocolate_cake"
+  }
+}

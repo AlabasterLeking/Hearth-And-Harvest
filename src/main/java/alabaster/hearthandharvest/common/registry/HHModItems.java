@@ -3,6 +3,7 @@ package alabaster.hearthandharvest.common.registry;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.HHFoodValues;
 import alabaster.hearthandharvest.common.block.trellis.TrellisMaterial;
+import alabaster.hearthandharvest.common.item.GoatMilkBucketItem;
 import alabaster.hearthandharvest.common.item.*;
 import com.google.common.collect.Sets;
 import net.minecraft.ChatFormatting;
@@ -435,6 +436,8 @@ public class HHModItems {
             () -> new MilkBottleItem(drinkItem().food(HHFoodValues.CHOCOLATE_MILK_BOTTLE)));
     public static final Supplier<Item> GOAT_MILK_BOTTLE = registerWithTab("goat_milk_bottle",
             () -> new MilkBottleItem(drinkItem().food(HHFoodValues.GOAT_MILK_BOTTLE)));
+    public static final Supplier<Item> GOAT_MILK_BUCKET = registerWithTab("goat_milk_bucket",
+            () -> new GoatMilkBucketItem(() -> HHModFluids.GOAT_MILK.source().get(), basicItem().craftRemainder(Items.BUCKET).stacksTo(1)));
     public static final Supplier<Item> BLUEBERRY_JUICE = registerWithTab("blueberry_juice",
             () -> new DrinkableItem(drinkItem().food(HHFoodValues.BLUEBERRY_JUICE), true, false));
     public static final Supplier<Item> CHERRY_JUICE = registerWithTab("cherry_juice",
@@ -565,6 +568,10 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.CARROT_CAKE.get(), basicItem()));
     public static final Supplier<Item> CARROT_CAKE_SLICE = registerWithTab("carrot_cake_slice",
             () -> new ConsumableItem(foodItem(HHFoodValues.CARROT_CAKE_SLICE)));
+    public static final Supplier<Item> CHOCOLATE_CAKE = registerWithTab("chocolate_cake",
+            () -> new BlockItem(HHModBlocks.CHOCOLATE_CAKE.get(), basicItem()));
+    public static final Supplier<Item> CHOCOLATE_CAKE_SLICE = registerWithTab("chocolate_cake_slice",
+            () -> new ConsumableItem(foodItem(HHFoodValues.CHOCOLATE_CAKE_SLICE)));
 
     // Pizzas
     public static final Supplier<Item> PIZZA = registerWithTab("pizza",

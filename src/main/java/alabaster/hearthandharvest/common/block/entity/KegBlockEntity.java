@@ -29,10 +29,14 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import alabaster.hearthandharvest.common.block.entity.inventory.KegItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import vectorwing.farmersdelight.common.block.entity.SyncedBlockEntity;
 
 import javax.annotation.Nullable;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.List;
 
 @EventBusSubscriber(modid = HearthAndHarvest.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -49,6 +53,8 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
     public static final int PROGRESS_SCALE = 1000;
 
     private final ItemStackHandler inventory = createHandler();
+    private final Map<Direction, IItemHandler> sidedInventory = new EnumMap<>(Direction.class);
+    private final IItemHandler defaultInventory = new KegItemHandler(inventory, null);
     private final FluidTank inputTank = createTank();
     private final FluidTank outputTank = createTank();
     private final ContainerData kegData = createData();
@@ -60,11 +66,15 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
 
     public KegBlockEntity(BlockPos pos, BlockState state) {
         super(HHModBlockEntities.KEG.get(), pos, state);
+        for (Direction direction : Direction.values()) {
+            sidedInventory.put(direction, new KegItemHandler(inventory, direction));
+        }
     }
 
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HHModBlockEntities.KEG.get(), (be, side) -> be.inventory);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HHModBlockEntities.KEG.get(),
+                (be, side) -> side == null ? be.defaultInventory : be.sidedInventory.get(side));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, HHModBlockEntities.KEG.get(),
                 (be, side) -> side == Direction.DOWN ? be.outputTank : be.inputTank);
     }

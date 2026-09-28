@@ -51,6 +51,9 @@ public class HHModSounds {
     public static final Supplier<SoundEvent> KEG_OPEN = SOUNDS.register("blocks.keg.open",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.keg.open")));
 
+    public static final Supplier<SoundEvent> KEG_FERMENTING = SOUNDS.register("blocks.keg.fermenting",
+            () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "blocks.keg.fermenting")));
+
     // Manure
     public static final Supplier<SoundEvent> MANURE_THROW = SOUNDS.register("items.manure.throw",
             () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "items.manure.throw")));

@@ -1,0 +1,55 @@
+{
+  "parent": "hearthandharvest:kitchen/first_ferment",
+  "criteria": {
+    "reserve": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "hearthandharvest:vintage": 3
+            },
+            "items": [
+              "hearthandharvest:red_grape_wine",
+              "hearthandharvest:green_grape_wine",
+              "hearthandharvest:blueberry_wine",
+              "hearthandharvest:raspberry_wine",
+              "hearthandharvest:cherry_wine",
+              "hearthandharvest:sweet_berry_wine",
+              "hearthandharvest:glow_berry_wine",
+              "hearthandharvest:melon_wine",
+              "hearthandharvest:mead",
+              "hearthandharvest:hard_cider",
+              "hearthandharvest:root_beer",
+              "hearthandharvest:moonshine",
+              "hearthandharvest:pickled_beetroots",
+              "hearthandharvest:pickled_cabbage",
+              "hearthandharvest:pickled_carrots",
+              "hearthandharvest:pickled_onions",
+              "hearthandharvest:pickled_potatoes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.hearthandharvest.reserve.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:red_grape_wine"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.reserve"
+    }
+  },
+  "requirements": [
+    [
+      "reserve"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

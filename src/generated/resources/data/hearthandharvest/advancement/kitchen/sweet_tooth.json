@@ -41,11 +41,31 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "carrot_cake_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:carrot_cake_slice"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "chocolate_bar": {
       "conditions": {
         "items": [
           {
             "items": "hearthandharvest:chocolate_bar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "chocolate_cake_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:chocolate_cake_slice"
           }
         ]
       },
@@ -91,11 +111,11 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "raspberry_jam": {
+    "raspberry_scone": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:raspberry_jam"
+            "items": "hearthandharvest:raspberry_scone"
           }
         ]
       },
@@ -132,7 +152,7 @@
       "blueberry_muffin"
     ],
     [
-      "raspberry_jam"
+      "raspberry_scone"
     ],
     [
       "caramel"
@@ -145,6 +165,12 @@
     ],
     [
       "caramel_apple"
+    ],
+    [
+      "carrot_cake_slice"
+    ],
+    [
+      "chocolate_cake_slice"
     ]
   ],
   "sends_telemetry_event": true

@@ -261,6 +261,8 @@ public class HHFoodValues {
             .nutrition(5).saturationModifier(0.3f).build();
     public static final FoodProperties CARROT_CAKE_SLICE = new FoodProperties.Builder()
             .nutrition(4).saturationModifier(0.3f).build();
+    public static final FoodProperties CHOCOLATE_CAKE_SLICE = new FoodProperties.Builder()
+            .nutrition(6).saturationModifier(0.3f).build();
     public static final FoodProperties WAFFLE = new FoodProperties.Builder()
             .nutrition(6).saturationModifier(0.3f).build();
     public static final FoodProperties PANCAKE = new FoodProperties.Builder()

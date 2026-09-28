@@ -48,6 +48,8 @@ public class CuttingRecipes {
                 .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CARROT_CAKE.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CARROT_CAKE_SLICE.get(), 7)
                 .save(output);
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CHOCOLATE_CAKE.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CHOCOLATE_CAKE_SLICE.get(), 7)
+                .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CHICKEN_POT_PIE.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CHICKEN_POT_PIE_SLICE.get(), 4)
                 .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(Items.SUNFLOWER), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.SUNFLOWER_SEEDS.get(), 2)

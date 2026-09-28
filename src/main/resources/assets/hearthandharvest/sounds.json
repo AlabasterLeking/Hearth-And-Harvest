@@ -194,5 +194,14 @@
         "type": "event"
       }
     ]
+  },
+  "blocks.keg.fermenting": {
+    "subtitle": "hearthandharvest.subtitles.keg.fermenting",
+    "sounds": [
+      {
+        "name": "block.brewing_stand.brew",
+        "type": "event"
+      }
+    ]
   }
 }
