@@ -338,10 +338,10 @@ public class HHModBlocks {
             () -> new Block(Block.Properties.ofFullCopy(Blocks.GLASS).strength(0.5F, 2.0F).sound(SoundType.GLASS).noOcclusion()));
 
     // Cheese
-    public static final Supplier<Block> UNRIPE_CHEDDAR_CHEESE_WHEEL = BLOCKS.register("unripe_cheddar_cheese_wheel",
-            () -> new UnripeCheeseWheelBlock(HHModBlocks.CHEDDAR_CHEESE_WHEEL, Block.Properties.ofFullCopy(Blocks.CAKE)));
-    public static final Supplier<Block> CHEDDAR_CHEESE_WHEEL = BLOCKS.register("cheddar_cheese_wheel",
-            () -> new CheeseWheelBlock(HHModItems.CHEDDAR_CHEESE_SLICE, Block.Properties.ofFullCopy(Blocks.CAKE)));
+    public static final Supplier<Block> UNRIPE_CHEESE_WHEEL = BLOCKS.register("unripe_cheese_wheel",
+            () -> new UnripeCheeseWheelBlock(HHModBlocks.CHEESE_WHEEL, Block.Properties.ofFullCopy(Blocks.CAKE)));
+    public static final Supplier<Block> CHEESE_WHEEL = BLOCKS.register("cheese_wheel",
+            () -> new CheeseWheelBlock(HHModItems.CHEESE_SLICE, Block.Properties.ofFullCopy(Blocks.CAKE)));
 
     public static final Supplier<Block> UNRIPE_GOAT_CHEESE_WHEEL = BLOCKS.register("unripe_goat_cheese_wheel",
             () -> new UnripeCheeseWheelBlock(HHModBlocks.GOAT_CHEESE_WHEEL, Block.Properties.ofFullCopy(Blocks.CAKE)));

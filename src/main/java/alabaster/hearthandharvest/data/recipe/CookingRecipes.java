@@ -242,7 +242,7 @@ public class CookingRecipes
                 .unlockedByItems("has_corn_husk", HHModItems.CORN_HUSK.get())
                 .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
                 .save(output);
-        CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.ELOTE.get(), 1, FAST_COOKING, SMALL_EXP)
+        CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.STREET_CORN.get(), 1, FAST_COOKING, SMALL_EXP)
                 .addIngredient(HHModItems.COOKED_CORN_ON_THE_COB.get())
                 .addIngredient(Items.BLAZE_POWDER)
                 .addIngredient(HHModTags.CHEESE_SLICES)

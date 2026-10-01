@@ -610,12 +610,12 @@ public class HHModItems {
     public static final Supplier<Item> TORTILLA = registerWithTab("tortilla",
             () -> new ConsumableItem(foodItem(HHFoodValues.TORTILLA)));
 
-    public static final Supplier<Item> UNRIPE_CHEDDAR_CHEESE_WHEEL = registerWithTab("unripe_cheddar_cheese_wheel",
-            () -> new BlockItem(HHModBlocks.UNRIPE_CHEDDAR_CHEESE_WHEEL.get(), basicItem()));
-    public static final Supplier<Item> CHEDDAR_CHEESE_WHEEL = registerWithTab("cheddar_cheese_wheel",
-            () -> new BlockItem(HHModBlocks.CHEDDAR_CHEESE_WHEEL.get(), basicItem()));
-    public static final Supplier<Item> CHEDDAR_CHEESE_SLICE = registerWithTab("cheddar_cheese_slice",
-            () -> new ConsumableItem(foodItem(HHFoodValues.CHEDDAR_CHEESE_SLICE)));
+    public static final Supplier<Item> UNRIPE_CHEESE_WHEEL = registerWithTab("unripe_cheese_wheel",
+            () -> new BlockItem(HHModBlocks.UNRIPE_CHEESE_WHEEL.get(), basicItem()));
+    public static final Supplier<Item> CHEESE_WHEEL = registerWithTab("cheese_wheel",
+            () -> new BlockItem(HHModBlocks.CHEESE_WHEEL.get(), basicItem()));
+    public static final Supplier<Item> CHEESE_SLICE = registerWithTab("cheese_slice",
+            () -> new ConsumableItem(foodItem(HHFoodValues.CHEESE_SLICE)));
     public static final Supplier<Item> UNRIPE_GOAT_CHEESE_WHEEL = registerWithTab("unripe_goat_cheese_wheel",
             () -> new BlockItem(HHModBlocks.UNRIPE_GOAT_CHEESE_WHEEL.get(), basicItem()));
     public static final Supplier<Item> GOAT_CHEESE_WHEEL = registerWithTab("goat_cheese_wheel",
@@ -675,8 +675,8 @@ public class HHModItems {
             () -> new ConsumableItem(bowlFoodItem(HHFoodValues.CORN_STEW)));
     public static final Supplier<Item> TAMALE = registerWithTab("tamale",
             () -> new ConsumableItem(foodItem(HHFoodValues.TAMALE)));
-    public static final Supplier<Item> ELOTE = registerWithTab("elote",
-            () -> new ConsumableItem(foodItem(HHFoodValues.ELOTE).stacksTo(1).craftRemainder(Items.STICK)));
+    public static final Supplier<Item> STREET_CORN = registerWithTab("street_corn",
+            () -> new ConsumableItem(foodItem(HHFoodValues.STREET_CORN).stacksTo(1).craftRemainder(Items.STICK)));
 
     // Meals
     public static final Supplier<Item> MACARONI_AND_CHEESE = registerWithTab("macaroni_and_cheese",

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_any_ingredient": {
+    "has_corn_on_the_cob": {
       "conditions": {
         "items": [
           {
-            "items": "hearthandharvest:unripe_cheddar_cheese_wheel"
+            "items": "hearthandharvest:cooked_corn_on_the_cob"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:aging/cheddar_cheese_wheel"
+        "recipe": "hearthandharvest:cooking/street_corn"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_any_ingredient"
+      "has_corn_on_the_cob"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:aging/cheddar_cheese_wheel"
+      "hearthandharvest:cooking/street_corn"
     ]
   }
 }

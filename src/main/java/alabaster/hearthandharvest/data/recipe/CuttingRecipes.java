@@ -44,7 +44,7 @@ public class CuttingRecipes {
                 .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.GOAT_CHEESE_WHEEL.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.GOAT_CHEESE_SLICE.get(), 4)
                 .save(output);
-        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CHEDDAR_CHEESE_WHEEL.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CHEDDAR_CHEESE_SLICE.get(), 4)
+        CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CHEESE_WHEEL.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CHEESE_SLICE.get(), 4)
                 .save(output);
         CuttingBoardRecipeBuilder.cuttingRecipe(Ingredient.of(HHModItems.CARROT_CAKE.get()), Ingredient.of(CommonTags.Items.TOOLS_KNIFE), HHModItems.CARROT_CAKE_SLICE.get(), 7)
                 .save(output);

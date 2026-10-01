@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block.entity.container;
 
+import net.minecraft.util.Mth;
 import alabaster.hearthandharvest.common.block.entity.KegBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -44,7 +45,7 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
     private final ContainerLevelAccess access;
 
     public KegMenu(int windowId, Inventory playerInventory, FriendlyByteBuf buf) {
-        this(windowId, playerInventory, getBlockEntity(playerInventory, buf), new SimpleContainerData(4));
+        this(windowId, playerInventory, getBlockEntity(playerInventory, buf), new SimpleContainerData(5));
     }
 
     public KegMenu(int windowId, Inventory playerInventory, KegBlockEntity blockEntity, ContainerData kegData) {
@@ -98,10 +99,14 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
         return kegData.get(3) != 0;
     }
 
+    public int getMode() {
+        return Mth.clamp(kegData.get(4), 0, KegBlockEntity.MODE_NAMES.length - 1);
+    }
+
     @Override
     public boolean clickMenuButton(Player player, int id) {
         if (id != MODE_BUTTON_ID) return false;
-        blockEntity.toggleFillMode();
+        blockEntity.cycleMode();
         return true;
     }
 
@@ -137,7 +142,7 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
         });
 
         if (moved) {
-            this.blockEntity.setFillMode(false);
+            this.blockEntity.setMode(KegBlockEntity.MODE_DRAIN);
         }
     }
 

@@ -52,9 +52,9 @@ public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUp
     private static final int BUBBLES_U = 176;
     private static final int BUBBLES_V = 3;
 
-    private static final int MODE_BUTTON_X = 71;
+    private static final int MODE_BUTTON_X = 69;
     private static final int MODE_BUTTON_Y = 44;
-    private static final int MODE_BUTTON_WIDTH = 34;
+    private static final int MODE_BUTTON_WIDTH = 38;
     private static final int MODE_BUTTON_HEIGHT = 18;
 
     private static final int RECIPE_BUTTON_X = 78;
@@ -104,15 +104,11 @@ public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUp
     }
 
     private Component modeTooltip() {
-        return Component.translatable(this.menu.blockEntity.isFillMode()
-                ? "container.hearthandharvest.keg.fill.tooltip"
-                : "container.hearthandharvest.keg.drain.tooltip");
+        return Component.translatable("container.hearthandharvest.keg." + KegBlockEntity.MODE_NAMES[this.menu.getMode()] + ".tooltip");
     }
 
     private Component modeLabel() {
-        return Component.translatable(this.menu.blockEntity.isFillMode()
-                ? "container.hearthandharvest.keg.fill"
-                : "container.hearthandharvest.keg.drain");
+        return Component.translatable("container.hearthandharvest.keg." + KegBlockEntity.MODE_NAMES[this.menu.getMode()]);
     }
 
     @Override

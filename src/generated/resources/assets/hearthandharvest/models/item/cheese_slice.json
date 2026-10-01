@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "hearthandharvest:item/cheddar_cheese_slice"
+    "layer0": "hearthandharvest:item/cheese_slice"
   }
 }

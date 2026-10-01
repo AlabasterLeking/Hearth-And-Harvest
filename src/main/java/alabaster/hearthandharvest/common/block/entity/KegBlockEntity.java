@@ -1,6 +1,8 @@
 package alabaster.hearthandharvest.common.block.entity;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.block.MultiblockPart;
+import net.minecraft.world.Containers;
 import alabaster.hearthandharvest.common.block.entity.container.KegMenu;
 import alabaster.hearthandharvest.common.crafting.KegRecipe;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -50,18 +53,25 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
     public static final int INVENTORY_SIZE = 6;
 
     public static final int TANK_CAPACITY = 1000;
+    public static final int MULTIBLOCK_SIZE = 8;
+    public static final int MODE_DRAIN = 0;
+    public static final int MODE_FILL = 1;
+    public static final int MODE_EMPTY = 2;
+    public static final String[] MODE_NAMES = {"drain", "fill", "drain_tank"};
     public static final int PROGRESS_SCALE = 1000;
 
     private final ItemStackHandler inventory = createHandler();
     private final Map<Direction, IItemHandler> sidedInventory = new EnumMap<>(Direction.class);
     private final IItemHandler defaultInventory = new KegItemHandler(inventory, null);
-    private final FluidTank inputTank = createTank();
-    private final FluidTank outputTank = createTank();
+    private final ResizableFluidTank inputTank = createTank();
+    private final ResizableFluidTank outputTank = createTank();
     private final ContainerData kegData = createData();
 
+    private MultiblockPart role = MultiblockPart.NONE;
+    private BlockPos controllerPos;
     private int fermentTime;
     private int fermentTimeTotal;
-    private boolean fillMode;
+    private int mode = MODE_DRAIN;
     private boolean fermenting;
 
     public KegBlockEntity(BlockPos pos, BlockState state) {
@@ -73,10 +83,16 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
 
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HHModBlockEntities.KEG.get(),
-                (be, side) -> side == null ? be.defaultInventory : be.sidedInventory.get(side));
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, HHModBlockEntities.KEG.get(),
-                (be, side) -> side == Direction.DOWN ? be.outputTank : be.inputTank);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, HHModBlockEntities.KEG.get(), (be, side) -> {
+            KegBlockEntity keg = be.controller();
+            if (keg == null) return null;
+            return side == null ? keg.defaultInventory : keg.sidedInventory.get(side);
+        });
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, HHModBlockEntities.KEG.get(), (be, side) -> {
+            KegBlockEntity keg = be.controller();
+            if (keg == null) return null;
+            return side == Direction.DOWN ? keg.outputTank : keg.inputTank;
+        });
     }
 
     private ItemStackHandler createHandler() {
@@ -95,13 +111,108 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         };
     }
 
-    private FluidTank createTank() {
-        return new FluidTank(TANK_CAPACITY) {
-            @Override
-            protected void onContentsChanged() {
-                inventoryChanged();
-            }
-        };
+    private ResizableFluidTank createTank() {
+        return new ResizableFluidTank(TANK_CAPACITY);
+    }
+
+    private class ResizableFluidTank extends FluidTank {
+        ResizableFluidTank(int capacity) {
+            super(capacity);
+        }
+
+        @Override
+        protected void onContentsChanged() {
+            inventoryChanged();
+        }
+
+        void setEffectiveCapacity(int value) {
+            this.capacity = value;
+        }
+    }
+
+    public MultiblockPart getRole() {
+        return role;
+    }
+
+    public boolean isMember() {
+        return role == MultiblockPart.MEMBER;
+    }
+
+    public int batchSize() {
+        return role == MultiblockPart.CONTROLLER ? MULTIBLOCK_SIZE : 1;
+    }
+
+    @Nullable
+    public KegBlockEntity controller() {
+        if (role != MultiblockPart.MEMBER || level == null || controllerPos == null) return this;
+        return level.getBlockEntity(controllerPos) instanceof KegBlockEntity keg ? keg : null;
+    }
+
+    public void formAsController(List<KegBlockEntity> members) {
+        this.role = MultiblockPart.CONTROLLER;
+        this.controllerPos = null;
+        inputTank.setEffectiveCapacity(TANK_CAPACITY * MULTIBLOCK_SIZE);
+        outputTank.setEffectiveCapacity(TANK_CAPACITY * MULTIBLOCK_SIZE);
+
+        for (KegBlockEntity member : members) {
+            member.moveContentsInto(this);
+        }
+
+        inventoryChanged();
+    }
+
+    public void formAsMember(BlockPos controllerPos) {
+        this.role = MultiblockPart.MEMBER;
+        this.controllerPos = controllerPos;
+        this.fermentTime = 0;
+        this.fermenting = false;
+        inventoryChanged();
+    }
+
+    public void dissolve() {
+        this.role = MultiblockPart.NONE;
+        this.controllerPos = null;
+        this.fermentTime = 0;
+        this.fermenting = false;
+
+        trimTank(inputTank);
+        trimTank(outputTank);
+        inventoryChanged();
+    }
+
+    private void trimTank(ResizableFluidTank tank) {
+        tank.setEffectiveCapacity(TANK_CAPACITY);
+        if (tank.getFluidAmount() > TANK_CAPACITY) {
+            tank.setFluid(tank.getFluid().copyWithAmount(TANK_CAPACITY));
+        }
+    }
+
+    private void moveContentsInto(KegBlockEntity target) {
+        for (int slot = 0; slot < INVENTORY_SIZE; ++slot) {
+            ItemStack stack = inventory.getStackInSlot(slot);
+            if (stack.isEmpty()) continue;
+
+            ItemStack remainder = target.inventory.insertItem(slot, stack.copy(), false);
+            inventory.setStackInSlot(slot, ItemStack.EMPTY);
+            if (!remainder.isEmpty()) dropAtKeg(remainder);
+        }
+
+        moveFluidInto(inputTank, target.inputTank);
+        moveFluidInto(outputTank, target.outputTank);
+        inventoryChanged();
+    }
+
+    private void moveFluidInto(ResizableFluidTank from, ResizableFluidTank to) {
+        FluidStack fluid = from.getFluid().copy();
+        if (fluid.isEmpty()) return;
+
+        int accepted = to.fill(fluid, IFluidHandler.FluidAction.EXECUTE);
+        from.setFluid(accepted >= fluid.getAmount() ? FluidStack.EMPTY : fluid.copyWithAmount(fluid.getAmount() - accepted));
+    }
+
+    private void dropAtKeg(ItemStack stack) {
+        if (level == null || stack.isEmpty()) return;
+        Containers.dropItemStack(level, worldPosition.getX() + 0.5D, worldPosition.getY() + 0.5D, worldPosition.getZ() + 0.5D, stack);
     }
 
     public ItemStackHandler getInventory() {
@@ -120,18 +231,18 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         return kegData;
     }
 
-    public boolean isFillMode() {
-        return fillMode;
+    public int getMode() {
+        return mode;
     }
 
-    public void setFillMode(boolean fillMode) {
-        if (this.fillMode == fillMode) return;
-        this.fillMode = fillMode;
+    public void setMode(int mode) {
+        if (this.mode == mode) return;
+        this.mode = mode;
         inventoryChanged();
     }
 
-    public void toggleFillMode() {
-        fillMode = !fillMode;
+    public void cycleMode() {
+        mode = (mode + 1) % MODE_NAMES.length;
         inventoryChanged();
     }
 
@@ -145,7 +256,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
     }
 
     public static void fermentingTick(Level level, BlockPos pos, BlockState state, KegBlockEntity keg) {
-        if (level.isClientSide) return;
+        if (level.isClientSide || keg.isMember()) return;
 
         keg.handleContainerSlot();
 
@@ -176,19 +287,23 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         if (container.isEmpty()) return;
 
         ItemStack single = container.copyWithCount(1);
-        FluidActionResult simulated = fillMode
-                ? FluidUtil.tryFillContainer(single, outputTank, TANK_CAPACITY, null, false)
-                : FluidUtil.tryEmptyContainer(single, inputTank, TANK_CAPACITY, null, false);
+        FluidActionResult simulated = transfer(single, false);
         if (!simulated.isSuccess() || !canStoreContainer(simulated.getResult())) return;
 
-        FluidActionResult executed = fillMode
-                ? FluidUtil.tryFillContainer(single, outputTank, TANK_CAPACITY, null, true)
-                : FluidUtil.tryEmptyContainer(single, inputTank, TANK_CAPACITY, null, true);
+        FluidActionResult executed = transfer(single, true);
         if (!executed.isSuccess()) return;
 
         storeContainer(executed.getResult());
         container.shrink(1);
         inventory.setStackInSlot(CONTAINER_INPUT_SLOT, container);
+    }
+
+    private FluidActionResult transfer(ItemStack container, boolean execute) {
+        return switch (mode) {
+            case MODE_FILL -> FluidUtil.tryFillContainer(container, outputTank, TANK_CAPACITY, null, execute);
+            case MODE_EMPTY -> FluidUtil.tryFillContainer(container, inputTank, TANK_CAPACITY, null, execute);
+            default -> FluidUtil.tryEmptyContainer(container, inputTank, TANK_CAPACITY, null, execute);
+        };
     }
 
     private boolean canStoreContainer(ItemStack stack) {
@@ -305,8 +420,14 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         outputTank.readFromNBT(registries, tag.getCompound("OutputTank"));
         fermentTime = tag.getInt("FermentTime");
         fermentTimeTotal = tag.getInt("FermentTimeTotal");
-        fillMode = tag.getBoolean("FillMode");
+        mode = Mth.clamp(tag.getInt("Mode"), 0, MODE_NAMES.length - 1);
         fermenting = tag.getBoolean("Fermenting");
+        role = MultiblockPart.byName(tag.getString("MultiblockRole"));
+        controllerPos = tag.contains("ControllerPos") ? BlockPos.of(tag.getLong("ControllerPos")) : null;
+
+        int capacity = role == MultiblockPart.CONTROLLER ? TANK_CAPACITY * MULTIBLOCK_SIZE : TANK_CAPACITY;
+        inputTank.setEffectiveCapacity(capacity);
+        outputTank.setEffectiveCapacity(capacity);
     }
 
     @Override
@@ -321,8 +442,10 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         tag.put("Inventory", inventory.serializeNBT(registries));
         tag.put("InputTank", inputTank.writeToNBT(registries, new CompoundTag()));
         tag.put("OutputTank", outputTank.writeToNBT(registries, new CompoundTag()));
-        tag.putBoolean("FillMode", fillMode);
+        tag.putInt("Mode", mode);
         tag.putBoolean("Fermenting", fermenting);
+        tag.putString("MultiblockRole", role.getSerializedName());
+        if (controllerPos != null) tag.putLong("ControllerPos", controllerPos.asLong());
         return tag;
     }
 
@@ -341,6 +464,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
                     case 1 -> total <= 0 ? 0 : PROGRESS_SCALE;
                     case 2 -> KegBlockEntity.this.getRemainingSeconds();
                     case 3 -> KegBlockEntity.this.fermenting ? 1 : 0;
+                    case 4 -> KegBlockEntity.this.mode;
                     default -> 0;
                 };
             }
@@ -355,7 +479,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
         };
     }

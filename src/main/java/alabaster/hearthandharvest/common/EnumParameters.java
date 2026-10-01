@@ -21,14 +21,14 @@ public class EnumParameters
             RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(HHModItems.RED_GRAPE_WINE.get()))
     );
     public static final EnumProxy<RecipeBookCategories> PROXY_FERMENTING_MISC = new EnumProxy<>(
-            RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(HHModItems.CHEDDAR_CHEESE_WHEEL.get()))
+            RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(HHModItems.CHEESE_WHEEL.get()))
     );
 
     public static final EnumProxy<RecipeBookCategories> PROXY_AGING_SEARCH = new EnumProxy<>(
             RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(Items.COMPASS))
     );
     public static final EnumProxy<RecipeBookCategories> PROXY_AGING_MEALS = new EnumProxy<>(
-            RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(HHModItems.CHEDDAR_CHEESE_WHEEL.get()))
+            RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(HHModItems.CHEESE_WHEEL.get()))
     );
     public static final EnumProxy<RecipeBookCategories> PROXY_AGING_DRINKS = new EnumProxy<>(
             RecipeBookCategories.class, (Supplier<List<ItemStack>>) () -> List.of(new ItemStack(HHModItems.RED_GRAPE_WINE.get()))

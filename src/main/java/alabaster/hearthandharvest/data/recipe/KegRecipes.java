@@ -21,8 +21,8 @@ public class KegRecipes {
     private static final float CHEESE_EXP = 1.0F;
 
     public static void register(RecipeOutput output) {
-        cheese(output, "unripe_cheddar_cheese_wheel", new FluidStack(NeoForgeMod.MILK.value(), BUCKET),
-                HHModItems.UNRIPE_CHEDDAR_CHEESE_WHEEL.get(), Items.MILK_BUCKET);
+        cheese(output, "unripe_cheese_wheel", new FluidStack(NeoForgeMod.MILK.value(), BUCKET),
+                HHModItems.UNRIPE_CHEESE_WHEEL.get(), Items.MILK_BUCKET);
         cheese(output, "unripe_goat_cheese_wheel", new FluidStack(HHModFluids.GOAT_MILK.source().get(), BUCKET),
                 HHModItems.UNRIPE_GOAT_CHEESE_WHEEL.get(), HHModItems.GOAT_MILK_BOTTLE.get());
 

@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "hearthandharvest:cheddar_cheese_wheel",
+              "hearthandharvest:cheese_wheel",
               "hearthandharvest:goat_cheese_wheel"
             ]
           }
@@ -22,7 +22,7 @@
     },
     "icon": {
       "count": 1,
-      "id": "hearthandharvest:cheddar_cheese_wheel"
+      "id": "hearthandharvest:cheese_wheel"
     },
     "title": {
       "translate": "advancement.hearthandharvest.say_cheese"

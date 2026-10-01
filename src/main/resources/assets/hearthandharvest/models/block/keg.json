@@ -113,7 +113,7 @@
 				"up": {"uv": [1, 2, 4, 4], "rotation": 90, "texture": "#3"},
 				"down": {"uv": [1, 8, 4, 10], "rotation": 90, "texture": "#3"}
 			},
-			"shade": false
+			"neoforge_data": { "ambient_occlusion": false }
 		},
 		{
 			"from": [6.5, 3, -3.5],
@@ -127,7 +127,7 @@
 				"up": {"uv": [5, 3, 8, 6], "texture": "#3"},
 				"down": {"uv": [5, 7, 8, 10], "texture": "#3"}
 			},
-			"shade": false
+			"neoforge_data": { "ambient_occlusion": false }
 		}
 	],
 	"display": {

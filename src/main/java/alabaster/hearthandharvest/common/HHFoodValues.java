@@ -285,7 +285,7 @@ public class HHFoodValues {
             .nutrition(3).saturationModifier(0.5f).build();
 
     // Dairy, Meat, and Savory Dishes
-    public static final FoodProperties CHEDDAR_CHEESE_SLICE = new FoodProperties.Builder()
+    public static final FoodProperties CHEESE_SLICE = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.3f).build();
     public static final FoodProperties GOAT_CHEESE_SLICE = new FoodProperties.Builder()
             .nutrition(3).saturationModifier(0.3f).build();
@@ -325,7 +325,7 @@ public class HHFoodValues {
     public static final FoodProperties CORN_STEW = new FoodProperties.Builder()
             .nutrition(8).saturationModifier(0.6f)
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, MEDIUM_DURATION, 1), 1.0F).build();
-    public static final FoodProperties ELOTE = new FoodProperties.Builder()
+    public static final FoodProperties STREET_CORN = new FoodProperties.Builder()
             .nutrition(10).saturationModifier(0.8f)
             .effect(() -> new MobEffectInstance(ModEffects.NOURISHMENT, SHORT_DURATION, 1), 1.0F)
             .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, MEDIUM_DURATION, 1), 1.0F)

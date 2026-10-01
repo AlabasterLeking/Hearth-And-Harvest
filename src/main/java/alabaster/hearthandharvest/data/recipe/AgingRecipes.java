@@ -45,9 +45,9 @@ public class AgingRecipes {
     }
 
     private static void ageCheese(RecipeOutput output) {
-        CaskRecipeBuilder.caskRecipe(HHModItems.CHEDDAR_CHEESE_WHEEL.get(), 1, SLOW_AGING, MEDIUM_EXP)
-                .addIngredient(HHModItems.UNRIPE_CHEDDAR_CHEESE_WHEEL.get())
-                .unlockedByAnyIngredient(HHModItems.UNRIPE_CHEDDAR_CHEESE_WHEEL.get())
+        CaskRecipeBuilder.caskRecipe(HHModItems.CHEESE_WHEEL.get(), 1, SLOW_AGING, MEDIUM_EXP)
+                .addIngredient(HHModItems.UNRIPE_CHEESE_WHEEL.get())
+                .unlockedByAnyIngredient(HHModItems.UNRIPE_CHEESE_WHEEL.get())
                 .setRecipeBookTab(CaskRecipeBookTab.MEALS)
                 .build(output);
 

@@ -2,14 +2,14 @@
   "type": "farmersdelight:cutting",
   "ingredients": [
     {
-      "item": "hearthandharvest:cheddar_cheese_wheel"
+      "item": "hearthandharvest:cheese_wheel"
     }
   ],
   "result": [
     {
       "item": {
         "count": 4,
-        "id": "hearthandharvest:cheddar_cheese_slice"
+        "id": "hearthandharvest:cheese_slice"
       }
     }
   ],

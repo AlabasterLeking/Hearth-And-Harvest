@@ -57,6 +57,7 @@ public class HearthAndHarvest {
         modEventBus.addListener(HearthAndHarvest::registerSpawnPlacements);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
+        HHRegistryAliases.register();
         HHModBlocks.BLOCKS.register(modEventBus);
         HHModItems.ITEMS.register(modEventBus);
         HHModEffects.EFFECTS.register(modEventBus);

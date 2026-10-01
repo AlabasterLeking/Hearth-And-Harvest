@@ -626,7 +626,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.MELON_JAM.get());
 
         tag(HHModTags.CHEESE_SLICES)
-                .add(HHModItems.CHEDDAR_CHEESE_SLICE.get())
+                .add(HHModItems.CHEESE_SLICE.get())
                 .add(HHModItems.GOAT_CHEESE_SLICE.get());
 
         tag(Tags.Items.FOODS_BERRY)
@@ -730,7 +730,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.VEGGIE_PIZZA_SLICE.get())
                 .add(HHModItems.CHEESE_PIZZA.get())
                 .add(HHModItems.CHEESE_PIZZA_SLICE.get())
-                .add(HHModItems.CHEDDAR_CHEESE_SLICE.get())
+                .add(HHModItems.CHEESE_SLICE.get())
                 .add(HHModItems.GOAT_CHEESE_SLICE.get())
                 .add(HHModItems.RAW_SAUSAGE.get())
                 .add(HHModItems.COOKED_SAUSAGE.get())
@@ -750,7 +750,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.CORN_BREAD.get())
                 .add(HHModItems.CORN_STEW.get())
                 .add(HHModItems.TAMALE.get())
-                .add(HHModItems.ELOTE.get())
+                .add(HHModItems.STREET_CORN.get())
                 .add(HHModItems.MACARONI_AND_CHEESE.get())
                 .add(HHModItems.MASHED_POTATOES.get())
                 .add(HHModItems.PEANUT_BUTTER_AND_JELLY_SANDWICH.get())

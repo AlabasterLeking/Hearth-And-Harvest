@@ -4,12 +4,12 @@
   "experience": 1.0,
   "ingredients": [
     {
-      "item": "hearthandharvest:unripe_cheddar_cheese_wheel"
+      "item": "hearthandharvest:unripe_cheese_wheel"
     }
   ],
   "recipe_book_tab": "meals",
   "result": {
     "count": 1,
-    "id": "hearthandharvest:cheddar_cheese_wheel"
+    "id": "hearthandharvest:cheese_wheel"
   }
 }

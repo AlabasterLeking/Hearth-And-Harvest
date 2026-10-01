@@ -43,8 +43,10 @@
   "hearthandharvest.container.recipe_book.fermentable": "Showing Fermentables",
   "container.hearthandharvest.keg.fill": "Fill",
   "container.hearthandharvest.keg.drain": "Drain",
+  "container.hearthandharvest.keg.drain_tank": "Empty",
   "container.hearthandharvest.keg.fill.tooltip": "Containers in the left slot are filled from the output tank",
   "container.hearthandharvest.keg.drain.tooltip": "Containers in the left slot are emptied into the input tank",
+  "container.hearthandharvest.keg.drain_tank.tooltip": "Containers in the left slot are filled from the input tank",
   "gui.hearthandharvest.keg.container_slot": "Bottle or bucket to fill or empty",
   "gui.hearthandharvest.keg.container_output_slot": "Filled or emptied containers",
   "container.hearthandharvest.keg.empty": "Empty",
@@ -396,9 +398,9 @@
 
   "item.hearthandharvest.cooking_oil": "Cooking Oil",
 
-  "block.hearthandharvest.unripe_cheddar_cheese_wheel": "Unripe Cheddar Cheese Wheel",
-  "block.hearthandharvest.cheddar_cheese_wheel": "Cheddar Cheese Wheel",
-  "item.hearthandharvest.cheddar_cheese_slice": "Cheddar Cheese Slice",
+  "block.hearthandharvest.unripe_cheese_wheel": "Unripe Cheese Wheel",
+  "block.hearthandharvest.cheese_wheel": "Cheese Wheel",
+  "item.hearthandharvest.cheese_slice": "Cheese Slice",
   "block.hearthandharvest.unripe_goat_cheese_wheel": "Unripe Goat Cheese Wheel",
   "block.hearthandharvest.goat_cheese_wheel": "Goat Cheese Wheel",
   "item.hearthandharvest.goat_cheese_slice": "Goat Cheese Slice",
@@ -421,7 +423,7 @@
   "item.hearthandharvest.corn_bread": "Corn Bread",
   "item.hearthandharvest.corn_stew": "Corn Stew",
   "item.hearthandharvest.tamale": "Tamale",
-  "item.hearthandharvest.elote": "Elote",
+  "item.hearthandharvest.street_corn": "Street Corn",
   "item.hearthandharvest.tortilla": "Tortilla",
   "item.hearthandharvest.taco": "Taco",
 

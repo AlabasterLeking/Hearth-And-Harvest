@@ -134,7 +134,7 @@ public class Advancements extends AdvancementProvider {
         );
 
         private static final List<Supplier<Item>> CHEESE_WHEELS = List.of(
-                HHModItems.CHEDDAR_CHEESE_WHEEL,
+                HHModItems.CHEESE_WHEEL,
                 HHModItems.GOAT_CHEESE_WHEEL
         );
 
@@ -244,7 +244,7 @@ public class Advancements extends AdvancementProvider {
             goal(stomp, "kitchen/big_stomper", HHModItems.STOMPING_BASIN.get(), trigger(HHModTriggers.BIG_STOMP));
 
             AdvancementHolder cask = task(stomp, "kitchen/patience_is_a_virtue", HHModItems.CASK.get(), trigger(HHModTriggers.CASK_AGED));
-            task(cask, "kitchen/say_cheese", HHModItems.CHEDDAR_CHEESE_WHEEL.get(), has(CHEESE_WHEELS));
+            task(cask, "kitchen/say_cheese", HHModItems.CHEESE_WHEEL.get(), has(CHEESE_WHEELS));
 
             AdvancementHolder juice = task(stomp, "kitchen/fresh_squeezed", HHModItems.RED_GRAPE_JUICE.get(), has(JUICES));
             challenge(juice, "kitchen/juice_bar", HHModItems.GREEN_GRAPE_JUICE.get(), JUICES);
