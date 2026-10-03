@@ -74,10 +74,16 @@ public class CapabilityRegistration {
                 (be, side) -> be.tank
         );
 
+        // Sprinkler block entity
         event.registerBlockEntity(
                 Capabilities.FluidHandler.BLOCK,
                 HHModBlockEntities.SPRINKLER.get(),
                 (be, side) -> be.tank
+        );
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                HHModBlockEntities.SPRINKLER.get(),
+                (be, side) -> be.getFertilizerHandler()
         );
 
         // Jug block entity
@@ -95,6 +101,7 @@ public class CapabilityRegistration {
                 HHModItems.JUG.get()
         );
 
+        // Bottles into fluid handlers
         event.registerItem(
                 Capabilities.FluidHandler.ITEM,
                 CapabilityRegistration::bottleHandler,

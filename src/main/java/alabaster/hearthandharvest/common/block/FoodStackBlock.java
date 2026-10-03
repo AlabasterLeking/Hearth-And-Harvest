@@ -34,10 +34,10 @@ public class FoodStackBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     private static final VoxelShape[] SHAPES = {
-            Block.box(3.0D, 0.0D, 3.0D, 13.0D, 2.0D, 13.0D),
-            Block.box(3.0D, 0.0D, 3.0D, 13.0D, 4.0D, 13.0D),
-            Block.box(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D),
-            Block.box(3.0D, 0.0D, 3.0D, 13.0D, 8.0D, 13.0D)
+            Block.box(2.0D, 0.0D, 2.0D, 14.0D, 2.0D, 14.0D),
+            Block.box(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D),
+            Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D),
+            Block.box(2.0D, 0.0D, 2.0D, 14.0D, 8.0D, 14.0D)
     };
 
     public FoodStackBlock(Properties properties) {

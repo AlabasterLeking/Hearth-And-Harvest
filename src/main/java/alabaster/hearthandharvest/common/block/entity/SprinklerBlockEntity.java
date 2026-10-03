@@ -17,6 +17,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.items.IItemHandler;
+import alabaster.hearthandharvest.common.block.entity.inventory.SprinklerItemHandler;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.sounds.SoundEvents;
@@ -42,6 +45,10 @@ public class SprinklerBlockEntity extends HHSyncedBlockEntity {
     private static final int BONEMEAL_INTERVAL = 100;
     private static final int WATER_PER_CYCLE = 10;
     private static final int WATER_PER_FIRE = 100;
+    private static final int RAIN_INTERVAL = 20;
+    private static final int RAIN_PER_CYCLE = 20;
+    private static final int DRAW_INTERVAL = 40;
+    private static final int DRAW_PER_CYCLE = 100;
 
     public final FluidTank tank = new FluidTank(CAPACITY) {
         @Override
@@ -60,14 +67,24 @@ public class SprinklerBlockEntity extends HHSyncedBlockEntity {
     };
 
     private final NonNullList<ItemStack> fertilizerSlot = NonNullList.withSize(1, ItemStack.EMPTY);
+    private final IItemHandler fertilizerHandler = new SprinklerItemHandler(this);
     private int hydrateTimer;
     private int bonemealTimer;
+    private int refillTimer;
 
     public SprinklerBlockEntity(BlockPos pos, BlockState state) {
         super(HHModBlockEntities.SPRINKLER.get(), pos, state);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, SprinklerBlockEntity be) {
+        be.refill(level, pos);
+
+        if (level.hasNeighborSignal(pos)) {
+            be.hydrateTimer = 0;
+            be.bonemealTimer = 0;
+            return;
+        }
+
         if (++be.hydrateTimer >= HYDRATE_INTERVAL) {
             be.hydrateTimer = 0;
             if (be.tank.getFluidAmount() >= WATER_PER_CYCLE)
@@ -80,6 +97,48 @@ public class SprinklerBlockEntity extends HHSyncedBlockEntity {
             if (!be.fertilizerSlot.get(0).isEmpty())
                 be.tryApplyFertilizer((ServerLevel) level, pos);
         }
+    }
+
+    private void refill(Level level, BlockPos pos) {
+        if (tank.getSpace() <= 0) return;
+        if (++refillTimer < RAIN_INTERVAL) return;
+        refillTimer = 0;
+
+        if (level.isRainingAt(pos.above())) {
+            tank.fill(new FluidStack(Fluids.WATER, RAIN_PER_CYCLE), IFluidHandler.FluidAction.EXECUTE);
+            return;
+        }
+
+        if (level.getGameTime() % DRAW_INTERVAL != 0) return;
+
+        for (Direction direction : Direction.values()) {
+            if (direction == Direction.UP) continue;
+
+            BlockState neighbour = level.getBlockState(pos.relative(direction));
+            if (!neighbour.getFluidState().isSource() || !neighbour.getFluidState().is(Fluids.WATER)) continue;
+
+            tank.fill(new FluidStack(Fluids.WATER, DRAW_PER_CYCLE), IFluidHandler.FluidAction.EXECUTE);
+            return;
+        }
+    }
+
+    public IItemHandler getFertilizerHandler() {
+        return fertilizerHandler;
+    }
+
+    public NonNullList<ItemStack> getFertilizerSlot() {
+        return fertilizerSlot;
+    }
+
+    private boolean hasFertilizableCrop(ServerLevel level, BlockPos center) {
+        for (BlockPos scan : BlockPos.betweenClosed(
+                center.offset(-HYDRATE_RADIUS, 0, -HYDRATE_RADIUS),
+                center.offset(HYDRATE_RADIUS, 2, HYDRATE_RADIUS))) {
+            BlockState state = level.getBlockState(scan);
+            if (!isCrop(state) || !(state.getBlock() instanceof BonemealableBlock bonemealable)) continue;
+            if (bonemealable.isValidBonemealTarget(level, scan, state)) return true;
+        }
+        return false;
     }
 
     private boolean hydrateFarmland(ServerLevel level, BlockPos center) {
@@ -123,6 +182,8 @@ public class SprinklerBlockEntity extends HHSyncedBlockEntity {
     }
 
     private void tryApplyFertilizer(ServerLevel level, BlockPos center) {
+        if (!hasFertilizableCrop(level, center)) return;
+
         int r = HYDRATE_RADIUS;
         for (int attempt = 0; attempt < 3; attempt++) {
             int x = center.getX() + level.random.nextInt(r * 2 + 1) - r;
