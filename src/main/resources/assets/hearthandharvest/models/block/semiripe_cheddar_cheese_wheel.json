@@ -1,9 +1,9 @@
 {
   "parent": "hearthandharvest:block/cheese_wheel_template",
   "textures": {
-    "top": "hearthandharvest:block/semiripe_cheddar_cheese_wheel_top",
-    "side": "hearthandharvest:block/semiripe_cheddar_cheese_wheel_side",
-    "bottom": "hearthandharvest:block/semiripe_cheddar_cheese_wheel_bottom",
-    "particle": "hearthandharvest:block/semiripe_cheddar_cheese_wheel_top"
+    "top": "hearthandharvest:block/semiripe_cheese_wheel_top",
+    "side": "hearthandharvest:block/semiripe_cheese_wheel_side",
+    "bottom": "hearthandharvest:block/semiripe_cheese_wheel_bottom",
+    "particle": "hearthandharvest:block/semiripe_cheese_wheel_top"
   }
 }

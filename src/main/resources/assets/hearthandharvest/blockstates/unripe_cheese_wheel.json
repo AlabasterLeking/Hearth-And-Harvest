@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "hearthandharvest:block/unripe_cheese_wheel"
+    },
+    "age=1": {
+      "model": "hearthandharvest:block/semiripe_cheese_wheel"
+    }
+  }
+}
