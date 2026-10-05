@@ -56,11 +56,20 @@
 
   "block.hearthandharvest.stomping_basin": "Stomping Basin",
   "hearthandharvest.subtitles.stomping_basin.stomp": "Items stomped",
+
   "hearthandharvest.subtitles.cask.seal": "Cask seals",
   "hearthandharvest.subtitles.cask.unseal": "Cask opens",
   "hearthandharvest.subtitles.cask.aging": "Cask bubbles",
   "hearthandharvest.subtitles.keg.open": "Keg opens",
   "hearthandharvest.subtitles.keg.fermenting": "Keg bubbles",
+
+  "tooltip.hearthandharvest.cask.sealed": "Sealed",
+  "tooltip.hearthandharvest.cask.remaining": "%ss of aging left",
+  "tooltip.hearthandharvest.keg.input": "In: %s (%s mB)",
+  "tooltip.hearthandharvest.keg.output": "Out: %s (%s mB)",
+  "tooltip.hearthandharvest.keg.remaining": "%ss of fermenting left",
+  "tooltip.hearthandharvest.contents.entry": "%s x%s",
+  "tooltip.hearthandharvest.contents.more": "and %s more",
 
   "block.hearthandharvest.empty_jar_display": "Jars",
 
