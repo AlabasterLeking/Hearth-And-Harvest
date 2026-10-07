@@ -414,7 +414,7 @@ public class HHItemTags extends ItemTagsProvider {
         tag(HHCommonTags.CROPS_HOPS)
                 .add(HHModItems.HOPS.get());
 
-        tag(Tags.Items.FOODS_VEGETABLE)
+        tag(CommonTags.Items.FOODS_LEAFY_GREEN)
                 .add(HHModItems.HOPS.get());
 
         tag(HHCommonTags.CROPS_COTTON)
