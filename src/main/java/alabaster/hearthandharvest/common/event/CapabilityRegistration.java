@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.common.event;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.entity.StompingBasinBlockEntity;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import alabaster.hearthandharvest.common.item.JugBlockItem;
 import alabaster.hearthandharvest.common.registry.HHDataMaps;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -113,6 +115,12 @@ public class CapabilityRegistration {
                 (stack, ctx) -> new EmptyBottleFluidHandler(stack),
                 Items.GLASS_BOTTLE
         );
+
+        event.registerItem(
+                Capabilities.FluidHandler.ITEM,
+                (stack, ctx) -> HHFluidHandling.isWaterBottle(stack) ? new BottleFluidHandler(stack, Fluids.WATER) : null,
+                Items.POTION
+        );
     }
 
     private static Item[] bottleCandidates() {
@@ -157,18 +165,24 @@ public class CapabilityRegistration {
 
         @Override
         public boolean isFluidValid(int tank, FluidStack stack) {
-            return HHDataMaps.getBottleForFluid(stack.getFluid()) != null;
+            return stack.getFluid().isSame(Fluids.WATER) || HHDataMaps.getBottleForFluid(stack.getFluid()) != null;
         }
 
         @Override
         public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
             if (container.getCount() != 1 || resource.getAmount() < HHDataMaps.BOTTLE_VOLUME) return 0;
 
-            Item bottle = HHDataMaps.getBottleForFluid(resource.getFluid());
-            if (bottle == null) return 0;
+            ItemStack filled;
+            if (resource.getFluid().isSame(Fluids.WATER)) {
+                filled = HHFluidHandling.waterBottle();
+            } else {
+                Item bottle = HHDataMaps.getBottleForFluid(resource.getFluid());
+                if (bottle == null) return 0;
+                filled = new ItemStack(bottle);
+            }
 
             if (action.execute()) {
-                container = new ItemStack(bottle);
+                container = filled;
             }
             return HHDataMaps.BOTTLE_VOLUME;
         }
@@ -203,7 +217,8 @@ public class CapabilityRegistration {
         private boolean isFullBottle() {
             return container.getCount() == 1
                     && container.getItem() == bottleItem
-                    && !container.has(HHModDataComponents.SERVINGS.get());
+                    && !container.has(HHModDataComponents.SERVINGS.get())
+                    && (bottleItem != Items.POTION || HHFluidHandling.isWaterBottle(container));
         }
 
         @Override

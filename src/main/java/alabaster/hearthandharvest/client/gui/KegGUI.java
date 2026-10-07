@@ -13,6 +13,7 @@ import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -269,6 +270,21 @@ public class KegGUI extends AbstractContainerScreen<KegMenu> implements RecipeUp
         }
 
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    public FluidStack getHoveredFluid(double mouseX, double mouseY) {
+        if (this.isHovering(INPUT_TANK_X, TANK_Y, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY)) {
+            return this.menu.blockEntity.getInputTank().getFluid();
+        }
+        if (this.isHovering(OUTPUT_TANK_X, TANK_Y, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY)) {
+            return this.menu.blockEntity.getOutputTank().getFluid();
+        }
+        return FluidStack.EMPTY;
+    }
+
+    public Rect2i getHoveredTankArea(double mouseX, double mouseY) {
+        int x = this.isHovering(INPUT_TANK_X, TANK_Y, TANK_WIDTH, TANK_HEIGHT, mouseX, mouseY) ? INPUT_TANK_X : OUTPUT_TANK_X;
+        return new Rect2i(this.leftPos + x, this.topPos + TANK_Y, TANK_WIDTH, TANK_HEIGHT);
     }
 
     private void renderTankTooltip(GuiGraphics gui, int mouseX, int mouseY, int x, FluidTank tank) {

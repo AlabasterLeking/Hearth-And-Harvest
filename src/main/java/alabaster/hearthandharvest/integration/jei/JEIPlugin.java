@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.integration.jei;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.client.gui.CaskGUI;
+import alabaster.hearthandharvest.client.gui.KegGUI;
 import alabaster.hearthandharvest.integration.jei.category.KegRecipeCategory;
 import alabaster.hearthandharvest.common.block.entity.container.CaskMenu;
 import alabaster.hearthandharvest.common.crafting.BottleCrateRecipe;
@@ -15,19 +16,27 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.handlers.IGuiContainerHandler;
+import mezz.jei.api.ingredients.ITypedIngredient;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.registration.*;
+import mezz.jei.api.runtime.IClickableIngredient;
+import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Optional;
 
 @JeiPlugin
 @ParametersAreNonnullByDefault
@@ -108,6 +117,28 @@ public class JEIPlugin implements IModPlugin
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addRecipeClickArea(CaskGUI.class, 10, 32, 9, 24, HHRecipeTypes.AGING);
         registration.addRecipeClickArea(CaskGUI.class, 58, 32, 9, 24, HHRecipeTypes.AGING);
+
+        IIngredientManager ingredientManager = registration.getJeiHelpers().getIngredientManager();
+        registration.addGuiContainerHandler(KegGUI.class, new IGuiContainerHandler<KegGUI>() {
+            @Override
+            public Optional<IClickableIngredient<?>> getClickableIngredientUnderMouse(KegGUI screen, double mouseX, double mouseY) {
+                FluidStack fluid = screen.getHoveredFluid(mouseX, mouseY);
+                if (fluid.isEmpty()) return Optional.empty();
+                Rect2i area = screen.getHoveredTankArea(mouseX, mouseY);
+                return ingredientManager.createTypedIngredient(NeoForgeTypes.FLUID_STACK, fluid.copy())
+                        .<IClickableIngredient<?>>map(typed -> new IClickableIngredient<FluidStack>() {
+                            @Override
+                            public ITypedIngredient<FluidStack> getTypedIngredient() {
+                                return typed;
+                            }
+
+                            @Override
+                            public Rect2i getArea() {
+                                return area;
+                            }
+                        });
+            }
+        });
     }
 
     @Override
