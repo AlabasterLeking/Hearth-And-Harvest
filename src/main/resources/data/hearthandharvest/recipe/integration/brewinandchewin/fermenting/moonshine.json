@@ -16,10 +16,10 @@
   "experience": 1.0,
   "ingredients": [
     {
-      "item": "hearthandharvest:corn_meal"
+      "tag": "c:flours/corn"
     },
     {
-      "item": "hearthandharvest:corn_meal"
+      "tag": "c:flours/corn"
     },
     {
       "item": "minecraft:sugar"

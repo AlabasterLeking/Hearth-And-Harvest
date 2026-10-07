@@ -130,7 +130,6 @@ public class BlockStates extends BlockStateProvider {
         this.wildCropBlock(HHModBlocks.WILD_RED_GRAPES.get());
         this.wildCropBlock(HHModBlocks.WILD_HOPS.get());
         this.wildCropBlock(HHModBlocks.WILD_GREEN_GRAPES.get());
-        this.wildCropBlock(HHModBlocks.WILD_COTTON.get());
         this.wildCropBlock(HHModBlocks.WILD_PEANUTS.get());
 
         this.wildCropBlock(HHModBlocks.YELLOW_MUM.get());
@@ -168,7 +167,7 @@ public class BlockStates extends BlockStateProvider {
         this.jarBlock(HHModBlocks.PICKLED_POTATOES.get(), "pickled_potatoes");
 
         this.trellisBlock();
-        this.grapeTrellisBlock();
+        this.cropTrellisBlock();
 
         this.simpleBlock(HHModBlocks.SALT_BLOCK.get());
         this.simpleBlock(HHModBlocks.LIGHTLY_LICKED_SALT_BLOCK.get());
@@ -262,7 +261,7 @@ public class BlockStates extends BlockStateProvider {
         addAllPlantOverlays(b, TrellisPlant.ROSE, "rose_vine");
     }
 
-    private void grapeTrellisBlock() {
+    private void cropTrellisBlock() {
         MultiPartBlockStateBuilder b = getMultipartBuilder(HHModBlocks.CROP_TRELLIS.get());
         addTrellisStructureParts(b);
         for (TrellisPlant plant : new TrellisPlant[]{TrellisPlant.RED_GRAPE, TrellisPlant.GREEN_GRAPE, TrellisPlant.HOPS}) {

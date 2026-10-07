@@ -4,13 +4,13 @@
   "ferment_time": 1200,
   "ingredients": [
     {
-      "item": "minecraft:wheat"
+      "tag": "c:crops/wheat"
     },
     {
-      "item": "minecraft:wheat"
+      "tag": "c:crops/wheat"
     },
     {
-      "item": "hearthandharvest:hops"
+      "tag": "c:crops/hops"
     }
   ],
   "input_fluid": {

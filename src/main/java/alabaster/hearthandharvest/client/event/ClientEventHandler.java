@@ -34,7 +34,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.GrassColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -59,6 +61,20 @@ public class ClientEventHandler {
             }
             return FoliageColor.getDefaultColor();
         }, HHModBlocks.TRELLIS.get());
+
+        event.register((state, level, pos, tintIndex) -> {
+            if (tintIndex != 0) return -1;
+            if (level != null && pos != null) {
+                return BiomeColors.getAverageGrassColor(level, pos);
+            }
+            return GrassColor.getDefaultColor();
+        }, HHModBlocks.WILD_COTTON.get());
+    }
+
+    @SubscribeEvent
+    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        event.register((stack, tintIndex) -> tintIndex == 0 ? FastColor.ARGB32.opaque(GrassColor.getDefaultColor()) : -1,
+                HHModItems.WILD_COTTON.get());
     }
 
     @SubscribeEvent

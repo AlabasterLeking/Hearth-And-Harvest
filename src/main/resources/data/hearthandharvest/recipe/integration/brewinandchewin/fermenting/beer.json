@@ -19,7 +19,7 @@
       "item": "minecraft:wheat"
     },
     {
-      "item": "minecraft:wheat"
+      "tag": "c:crops/hops"
     },
     {
       "item": "hearthandharvest:hops"

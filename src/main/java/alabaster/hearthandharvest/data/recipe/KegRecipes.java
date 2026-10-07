@@ -83,8 +83,8 @@ public class KegRecipes {
 
         new KegRecipeBuilder(BREW_TIME, BREW_EXP)
                 .inputFluid(new FluidStack(Fluids.WATER, BOTTLE))
-                .addIngredient(Items.WHEAT, 2)
-                .addIngredient(HHModItems.HOPS.get())
+                .addIngredient(Tags.Items.CROPS_WHEAT, 2)
+                .addIngredient(HHCommonTags.CROPS_HOPS)
                 .resultFluid(new FluidStack(HHModFluids.BEER.source().get(), BOTTLE))
                 .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
                 .unlockedByItems("has_hops", HHModItems.HOPS.get())
@@ -92,7 +92,7 @@ public class KegRecipes {
 
         new KegRecipeBuilder(BREW_TIME, BREW_EXP)
                 .inputFluid(new FluidStack(Fluids.WATER, BOTTLE))
-                .addIngredient(HHModItems.CORN_MEAL.get(), 2)
+                .addIngredient(HHCommonTags.FLOURS_CORN, 2)
                 .addIngredient(Items.SUGAR)
                 .resultFluid(new FluidStack(HHModFluids.MOONSHINE.source().get(), BOTTLE))
                 .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
@@ -147,4 +147,4 @@ public class KegRecipes {
                 .unlockedByItems("has_milk", unlock)
                 .build(output, name);
     }
-}
+}

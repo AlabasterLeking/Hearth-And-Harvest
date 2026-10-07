@@ -8,16 +8,16 @@
   "type": "create:compacting",
   "ingredients": [
     {
-      "item": "hearthandharvest:raspberry"
+      "tag": "c:fruits/raspberry"
     },
     {
-      "item": "hearthandharvest:raspberry"
+      "tag": "c:fruits/raspberry"
     },
     {
-      "item": "hearthandharvest:raspberry"
+      "tag": "c:fruits/raspberry"
     },
     {
-      "item": "hearthandharvest:raspberry"
+      "tag": "c:fruits/raspberry"
     }
   ],
   "results": [

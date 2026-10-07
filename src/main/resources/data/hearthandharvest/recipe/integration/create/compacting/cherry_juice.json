@@ -8,16 +8,16 @@
   "type": "create:compacting",
   "ingredients": [
     {
-      "item": "hearthandharvest:cherry"
+      "tag": "c:fruits/cherry"
     },
     {
-      "item": "hearthandharvest:cherry"
+      "tag": "c:fruits/cherry"
     },
     {
-      "item": "hearthandharvest:cherry"
+      "tag": "c:fruits/cherry"
     },
     {
-      "item": "hearthandharvest:cherry"
+      "tag": "c:fruits/cherry"
     }
   ],
   "results": [

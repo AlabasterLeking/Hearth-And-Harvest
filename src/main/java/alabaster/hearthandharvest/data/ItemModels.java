@@ -208,11 +208,15 @@ public class ItemModels extends ItemModelProvider
         );
         takeAll(items, spriteBlockItems.toArray(new Item[0])).forEach(item -> withExistingParent(itemName(item), GENERATED).texture("layer0", resourceItem(itemName(item))));
 
+        items.remove(HHModItems.WILD_COTTON.get());
+        withExistingParent(itemName(HHModItems.WILD_COTTON.get()), GENERATED)
+                .texture("layer0", resourceBlock("wild_cotton_grass"))
+                .texture("layer1", resourceBlock("wild_cotton"));
+
         // Blocks with flat block textures for their items
         Set<Item> flatBlockItems = Sets.newHashSet(
                 HHModItems.WILD_RED_GRAPES.get(),
                 HHModItems.WILD_GREEN_GRAPES.get(),
-                HHModItems.WILD_COTTON.get(),
                 HHModItems.WILD_PEANUTS.get(),
                 HHModItems.WILD_HOPS.get(),
                 HHModItems.YELLOW_MUM.get(),

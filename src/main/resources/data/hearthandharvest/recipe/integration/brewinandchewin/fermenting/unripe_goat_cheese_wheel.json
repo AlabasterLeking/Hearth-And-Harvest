@@ -16,7 +16,7 @@
       "item": "hearthandharvest:goat_milk_bottle"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "c:dusts/salt"
     },
     []
   ],

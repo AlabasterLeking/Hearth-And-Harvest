@@ -4,10 +4,10 @@
   "ferment_time": 1200,
   "ingredients": [
     {
-      "item": "hearthandharvest:corn_meal"
+      "tag": "c:flours/corn"
     },
     {
-      "item": "hearthandharvest:corn_meal"
+      "tag": "c:flours/corn"
     },
     {
       "item": "minecraft:sugar"

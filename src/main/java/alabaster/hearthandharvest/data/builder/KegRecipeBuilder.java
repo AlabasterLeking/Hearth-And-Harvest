@@ -76,6 +76,10 @@ public class KegRecipeBuilder implements RecipeBuilder {
         return addIngredient(Ingredient.of(tag));
     }
 
+    public KegRecipeBuilder addIngredient(TagKey<Item> tag, int quantity) {
+        return addIngredient(Ingredient.of(tag), quantity);
+    }
+
     public KegRecipeBuilder addIngredient(ItemLike item) {
         return addIngredient(Ingredient.of(item), 1);
     }
@@ -143,4 +147,4 @@ public class KegRecipeBuilder implements RecipeBuilder {
         KegRecipe recipe = new KegRecipe(tab, ingredients, inputFluid, resultFluid, resultItem, fermentTime, experience);
         output.accept(recipeId, recipe, advancement.build(ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "recipes/fermenting/" + id.getPath())));
     }
-}
+}

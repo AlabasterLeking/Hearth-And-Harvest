@@ -16,7 +16,7 @@
       "item": "farmersdelight:milk_bottle"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "c:dusts/salt"
     },
     []
   ],

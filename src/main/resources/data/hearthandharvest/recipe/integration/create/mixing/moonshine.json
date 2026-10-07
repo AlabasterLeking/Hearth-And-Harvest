@@ -9,10 +9,10 @@
   "heat_requirement": "heated",
   "ingredients": [
     {
-      "item": "hearthandharvest:corn_meal"
+      "tag": "c:flours/corn"
     },
     {
-      "item": "hearthandharvest:corn_meal"
+      "tag": "c:flours/corn"
     },
     {
       "item": "minecraft:sugar"

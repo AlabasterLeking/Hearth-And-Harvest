@@ -6,27 +6,20 @@
     }
   ],
   "type": "create:mixing",
-  "heat_requirement": "heated",
   "ingredients": [
     {
-      "item": "minecraft:wheat"
-    },
-    {
-      "item": "minecraft:wheat"
-    },
-    {
-      "tag": "c:crops/hops"
+      "tag": "c:dusts/salt"
     },
     {
       "type": "fluid_tag",
-      "amount": 250,
+      "amount": 1000,
       "fluid_tag": "c:water"
     }
   ],
   "results": [
     {
-      "amount": 250,
-      "id": "hearthandharvest:beer"
+      "amount": 1000,
+      "id": "hearthandharvest:brine"
     }
   ]
 }

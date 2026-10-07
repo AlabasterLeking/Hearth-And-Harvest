@@ -16,13 +16,13 @@
   },
   "ingredients": [
     {
-      "item": "hearthandharvest:cherry"
+      "tag": "c:fruits/blueberry"
     },
     {
-      "item": "hearthandharvest:cherry"
+      "tag": "c:fruits/cherry"
     },
     {
-      "item": "hearthandharvest:cherry"
+      "tag": "c:fruits/cherry"
     },
     []
   ],
