@@ -44,6 +44,7 @@ public class VillagerEvents
             trades.get(2).add(emeraldForItemsTrade(HHModItems.CORN.get(), 24, 16, 5));
             trades.get(2).add(emeraldForItemsTrade(HHModItems.RED_GRAPES.get(), 24, 16, 5));
             trades.get(2).add(emeraldForItemsTrade(HHModItems.GREEN_GRAPES.get(), 24, 16, 5));
+            trades.get(2).add(emeraldForItemsTrade(HHModItems.HOPS.get(), 24, 16, 5));
             trades.get(3).add(itemForEmeraldTrade(8, HHModItems.SCARECROW.get(), 8, 24));
             trades.get(3).add(itemForEmeraldTrade(3, HHModItems.NEST.get(), 32, 20));
             trades.get(3).add(itemForEmeraldTrade(4, HHModItems.SPRINKLER.get(), 10, 24));
@@ -62,6 +63,7 @@ public class VillagerEvents
             List<VillagerTrades.ItemListing> trades = event.getGenericTrades();
             trades.add(itemForEmeraldTrade(1, HHModItems.RED_GRAPES.get(), 1, 12));
             trades.add(itemForEmeraldTrade(1, HHModItems.GREEN_GRAPES.get(), 1, 12));
+            trades.add(itemForEmeraldTrade(1, HHModItems.HOPS.get(), 1, 12));
             trades.add(itemForEmeraldTrade(1, HHModItems.BLUEBERRIES.get(), 1, 12));
             trades.add(itemForEmeraldTrade(1, HHModItems.RASPBERRY.get(), 1, 12));
             trades.add(itemForEmeraldTrade(1, HHModItems.PEANUT.get(), 1, 12));

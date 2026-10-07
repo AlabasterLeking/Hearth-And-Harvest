@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:fermenting/pickled_cabbage"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_vegetable": {
+      "conditions": {
+        "items": [
+          {
+            "items": "farmersdelight:cabbage"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_vegetable"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:fermenting/pickled_cabbage"
+    ]
+  }
+}

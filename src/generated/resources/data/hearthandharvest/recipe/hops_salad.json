@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:hops"
+    },
+    {
+      "item": "hearthandharvest:hops"
+    },
+    {
+      "item": "hearthandharvest:cooking_oil"
+    },
+    {
+      "tag": "c:dusts/salt"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:hops_salad"
+  }
+}

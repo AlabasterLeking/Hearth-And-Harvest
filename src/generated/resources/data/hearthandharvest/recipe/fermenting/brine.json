@@ -1,0 +1,18 @@
+{
+  "type": "hearthandharvest:fermenting",
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "tag": "c:dusts/salt"
+    }
+  ],
+  "input_fluid": {
+    "amount": 1000,
+    "fluid": "minecraft:water"
+  },
+  "recipe_book_tab": "misc",
+  "result_fluid": {
+    "amount": 1000,
+    "id": "hearthandharvest:brine"
+  }
+}

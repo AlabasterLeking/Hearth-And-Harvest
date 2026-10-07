@@ -137,7 +137,7 @@ public class JarBlockItem extends BlockItem implements AgeableItem {
             return super.finishUsingItem(stack, level, entity);
         }
 
-        entity.eat(level, stack.copyWithCount(1), VintageHelper.scale(food, VintageHelper.getVintage(stack), SATURATION_BONUS_PER_VINTAGE, null));
+        entity.eat(level, stack.copyWithCount(1), food);
         if (!level.isClientSide) {
             for (Holder<MobEffect> effect : cures) {
                 entity.removeEffect(effect);
@@ -157,6 +157,18 @@ public class JarBlockItem extends BlockItem implements AgeableItem {
             player.drop(leftover, false);
         }
         return stack;
+    }
+
+    @Override
+    public FoodProperties getFoodProperties(ItemStack stack, @Nullable LivingEntity entity) {
+        FoodProperties food = super.getFoodProperties(stack, entity);
+        int vintage = VintageHelper.getVintage(stack);
+        return food == null || vintage <= 0 ? food : VintageHelper.scaleFood(food, vintage, SATURATION_BONUS_PER_VINTAGE);
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        return VintageHelper.vintageName(stack, super.getName(stack));
     }
 
     @Override

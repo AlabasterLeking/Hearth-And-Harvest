@@ -23,6 +23,7 @@ public class HHModTriggers {
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> MILKED_GOAT = TRIGGERS.register("milked_goat", HHSimpleTrigger::new);
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> FOUND_CORN_MAZE = TRIGGERS.register("found_corn_maze", HHSimpleTrigger::new);
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> BOTTLED_SYRUP = TRIGGERS.register("bottled_syrup", HHSimpleTrigger::new);
+    public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> SYRUPED_STACK = TRIGGERS.register("syruped_stack", HHSimpleTrigger::new);
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> LICKED_SALT_AWAY = TRIGGERS.register("licked_salt_away", HHSimpleTrigger::new);
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> FED_SUGAR_CUBES = TRIGGERS.register("fed_sugar_cubes", HHSimpleTrigger::new);
     public static final DeferredHolder<CriterionTrigger<?>, HHSimpleTrigger> HORSESHOE_RINGER = TRIGGERS.register("horseshoe_ringer", HHSimpleTrigger::new);

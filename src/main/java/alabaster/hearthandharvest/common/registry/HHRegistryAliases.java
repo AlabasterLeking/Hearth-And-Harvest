@@ -11,7 +11,8 @@ public class HHRegistryAliases {
             "elote", "street_corn",
             "cheddar_cheese_wheel", "cheese_wheel",
             "unripe_cheddar_cheese_wheel", "unripe_cheese_wheel",
-            "cheddar_cheese_slice", "cheese_slice"
+            "cheddar_cheese_slice", "cheese_slice",
+            "grape_trellis", "crop_trellis"
     );
 
     public static void register() {

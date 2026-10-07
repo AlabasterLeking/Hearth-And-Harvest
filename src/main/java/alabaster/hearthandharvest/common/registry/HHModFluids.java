@@ -65,11 +65,13 @@ public class HHModFluids {
 
     public static final FluidEntry GOAT_MILK = registerFluidWithBucket("goat_milk", dairyProps(), HHModItems.GOAT_MILK_BUCKET);
     public static final FluidEntry COOKING_OIL = registerFluid("cooking_oil");
+    public static final FluidEntry BRINE = registerFluidWithBucket("brine", defaultProps(), HHModItems.BRINE_BUCKET);
     public static final FluidEntry SAP = registerFluidWithBucket("sap", defaultProps(), HHModItems.SAP_BUCKET);
     public static final FluidEntry SYRUP = registerFluid("syrup");
     public static final FluidEntry APPLE_CIDER = registerFluid("apple_cider");
     public static final FluidEntry HARD_CIDER = registerFluid("hard_cider");
     public static final FluidEntry ROOT_BEER = registerFluid("root_beer");
+    public static final FluidEntry BEER = registerFluid("beer");
     public static final FluidEntry MEAD = registerFluid("mead");
     public static final FluidEntry MOONSHINE = registerFluid("moonshine");
     public static final FluidEntry BLUEBERRY_JUICE = registerFluid("blueberry_juice");

@@ -5,7 +5,7 @@ import alabaster.hearthandharvest.common.block.*;
 import alabaster.hearthandharvest.common.block.trellis.TrellisBlock;
 import alabaster.hearthandharvest.common.block.trellis.TrellisMaterial;
 import alabaster.hearthandharvest.common.block.trellis.TrellisPlant;
-import alabaster.hearthandharvest.common.block.trellis.GrapeTrellisBlock;
+import alabaster.hearthandharvest.common.block.trellis.CropTrellisBlock;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.loaders.CompositeModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -119,6 +120,7 @@ public class BlockStates extends BlockStateProvider {
         this.bagBlockSimple(HHModBlocks.COCOA_BEAN_BAG.get());
         this.bagBlockSimple(HHModBlocks.GUNPOWDER_BAG.get());
         this.bagBlockSimple(HHModBlocks.CORN_KERNEL_BAG.get());
+        this.bagBlockSimple(HHModBlocks.HOPS_BAG.get());
         this.bagBlockSimple(HHModBlocks.FLOUR_BAG.get());
         this.bagBlockCustom(HHModBlocks.MANURE_BAG.get());
         this.bagBlockSimple(HHModBlocks.FEATHER_BAG.get());
@@ -126,6 +128,7 @@ public class BlockStates extends BlockStateProvider {
         this.simpleBlock(HHModBlocks.CHARCOAL_BLOCK.get());
 
         this.wildCropBlock(HHModBlocks.WILD_RED_GRAPES.get());
+        this.wildCropBlock(HHModBlocks.WILD_HOPS.get());
         this.wildCropBlock(HHModBlocks.WILD_GREEN_GRAPES.get());
         this.wildCropBlock(HHModBlocks.WILD_COTTON.get());
         this.wildCropBlock(HHModBlocks.WILD_PEANUTS.get());
@@ -260,12 +263,12 @@ public class BlockStates extends BlockStateProvider {
     }
 
     private void grapeTrellisBlock() {
-        MultiPartBlockStateBuilder b = getMultipartBuilder(HHModBlocks.GRAPE_TRELLIS.get());
+        MultiPartBlockStateBuilder b = getMultipartBuilder(HHModBlocks.CROP_TRELLIS.get());
         addTrellisStructureParts(b);
-        for (TrellisPlant grape : new TrellisPlant[]{TrellisPlant.RED_GRAPE, TrellisPlant.GREEN_GRAPE}) {
-            addGrapeStageOverlays(b, grape, "grape_vine", 0);
+        for (TrellisPlant plant : new TrellisPlant[]{TrellisPlant.RED_GRAPE, TrellisPlant.GREEN_GRAPE, TrellisPlant.HOPS}) {
+            addGrapeStageOverlays(b, plant, plant.isGrape() ? "grape_vine" : plant.getSerializedName() + "_vine", 0);
             for (int age = 1; age <= 4; age++) {
-                addGrapeStageOverlays(b, grape, grape.getSerializedName() + "_vine_stage" + (age - 1), age);
+                addGrapeStageOverlays(b, plant, plant.getSerializedName() + "_vine_stage" + (age - 1), age);
             }
         }
     }
@@ -287,22 +290,22 @@ public class BlockStates extends BlockStateProvider {
 
     private void addGrapeStageOverlays(MultiPartBlockStateBuilder b, TrellisPlant grape, String textureId, int age) {
         b.part().modelFile(plantOverlay(textureId, "middle_ew")).addModel()
-                .condition(GrapeTrellisBlock.PLANT, grape).condition(TrellisBlock.MIDDLE_EW, true)
-                .condition(GrapeTrellisBlock.AGE, age).end();
+                .condition(CropTrellisBlock.PLANT, grape).condition(TrellisBlock.MIDDLE_EW, true)
+                .condition(CropTrellisBlock.AGE, age).end();
         b.part().modelFile(plantOverlay(textureId, "middle_ns")).addModel()
-                .condition(GrapeTrellisBlock.PLANT, grape).condition(TrellisBlock.MIDDLE_NS, true)
-                .condition(GrapeTrellisBlock.AGE, age).end();
+                .condition(CropTrellisBlock.PLANT, grape).condition(TrellisBlock.MIDDLE_NS, true)
+                .condition(CropTrellisBlock.AGE, age).end();
         for (int i = 0; i < SIDE_PROPS.length; i++) {
             b.part().modelFile(plantOverlay(textureId, "side")).rotationY(SIDE_ROTS[i]).addModel()
-                    .condition(GrapeTrellisBlock.PLANT, grape).condition(SIDE_PROPS[i], true)
-                    .condition(GrapeTrellisBlock.AGE, age).end();
+                    .condition(CropTrellisBlock.PLANT, grape).condition(SIDE_PROPS[i], true)
+                    .condition(CropTrellisBlock.AGE, age).end();
         }
         b.part().modelFile(plantOverlay(textureId, "flat")).addModel()
-                .condition(GrapeTrellisBlock.PLANT, grape).condition(TrellisBlock.HAS_FLAT, true)
-                .condition(GrapeTrellisBlock.AGE, age).end();
+                .condition(CropTrellisBlock.PLANT, grape).condition(TrellisBlock.HAS_FLAT, true)
+                .condition(CropTrellisBlock.AGE, age).end();
         b.part().modelFile(plantOverlay(textureId, "top")).addModel()
-                .condition(GrapeTrellisBlock.PLANT, grape).condition(TrellisBlock.HAS_TOP, true)
-                .condition(GrapeTrellisBlock.AGE, age).end();
+                .condition(CropTrellisBlock.PLANT, grape).condition(TrellisBlock.HAS_TOP, true)
+                .condition(CropTrellisBlock.AGE, age).end();
     }
 
     public void customStageBlock(Block block, @Nullable ResourceLocation parent, String textureKey, IntegerProperty ageProperty, List<Integer> suffixes, Property<?>... ignored) {
@@ -408,11 +411,30 @@ public class BlockStates extends BlockStateProvider {
         String name = blockName(block);
         getVariantBuilder(block).forAllStates(state -> {
             int count = state.getValue(FoodStackBlock.COUNT);
-            ModelFile model = models().withExistingParent(name + "_stack" + count, resourceBlock("template_food_stack" + count))
-                    .texture("top", resourceBlock(name + "_top"))
-                    .texture("side", resourceBlock(name + "_side"))
-                    .texture("bottom", resourceBlock(name + "_bottom"))
-                    .texture("particle", resourceBlock(name + "_top"));
+            ModelFile model;
+            if (state.getValue(FoodStackBlock.SYRUP)) {
+                model = models().getBuilder(name + "_stack" + count + "_syrup")
+                        .texture("particle", resourceBlock(name + "_top"))
+                        .customLoader(CompositeModelBuilder::begin)
+                        .child("stack", models().nested()
+                                .parent(models().getExistingFile(resourceBlock("template_food_stack" + count)))
+                                .texture("top", resourceBlock(name + "_top"))
+                                .texture("side", resourceBlock(name + "_side"))
+                                .texture("bottom", resourceBlock(name + "_bottom"))
+                                .renderType("solid"))
+                        .child("syrup", models().nested()
+                                .parent(models().getExistingFile(resourceBlock("template_food_syrup" + count)))
+                                .texture("syrup_top", resourceBlock("syrup_drizzle_top"))
+                                .texture("syrup_side", resourceBlock("syrup_drizzle_side"))
+                                .renderType("translucent"))
+                        .end();
+            } else {
+                model = models().withExistingParent(name + "_stack" + count, resourceBlock("template_food_stack" + count))
+                        .texture("top", resourceBlock(name + "_top"))
+                        .texture("side", resourceBlock(name + "_side"))
+                        .texture("bottom", resourceBlock(name + "_bottom"))
+                        .texture("particle", resourceBlock(name + "_top"));
+            }
             return ConfiguredModel.builder()
                     .modelFile(model)
                     .rotationY(((int) state.getValue(FoodStackBlock.FACING).toYRot() + 180) % 360)

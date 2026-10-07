@@ -19,6 +19,7 @@ public class HHModTags {
     public static final TagKey<Block> TAPPABLE = modBlockTag("tappable");
 
     public static final TagKey<Item> CLEAVERS = modItemTag("cleavers");
+    public static final TagKey<Item> CORN_THINNING_TOOLS = modItemTag("corn_thinning_tools");
     public static final TagKey<Item> JAMS = modItemTag("jelly");
     public static final TagKey<Item> BOTTLES = modItemTag("bottles");
     public static final TagKey<Item> TALL_BOTTLES = modItemTag("tall_bottles");

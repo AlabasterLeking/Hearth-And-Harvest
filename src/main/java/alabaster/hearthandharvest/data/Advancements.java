@@ -122,7 +122,7 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.RED_GRAPE_WINE, HHModItems.GREEN_GRAPE_WINE, HHModItems.BLUEBERRY_WINE,
                 HHModItems.RASPBERRY_WINE, HHModItems.CHERRY_WINE, HHModItems.SWEET_BERRY_WINE,
                 HHModItems.GLOW_BERRY_WINE, HHModItems.MELON_WINE, HHModItems.MEAD,
-                HHModItems.HARD_CIDER, HHModItems.ROOT_BEER, HHModItems.MOONSHINE,
+                HHModItems.HARD_CIDER, HHModItems.ROOT_BEER, HHModItems.BEER, HHModItems.MOONSHINE,
                 HHModItems.PICKLED_BEETROOTS, HHModItems.PICKLED_CABBAGE, HHModItems.PICKLED_CARROTS,
                 HHModItems.PICKLED_ONIONS, HHModItems.PICKLED_POTATOES);
 
@@ -130,6 +130,7 @@ public class Advancements extends AdvancementProvider {
                 HHModItems.MEAD,
                 HHModItems.HARD_CIDER,
                 HHModItems.ROOT_BEER,
+                HHModItems.BEER,
                 HHModItems.MOONSHINE
         );
 
@@ -302,6 +303,7 @@ public class Advancements extends AdvancementProvider {
             AdvancementHolder tapper = task(root, "kitchen/sap_happens", HHModItems.TREE_TAPPER.get(), placed(HHModBlocks.TREE_TAPPER));
 
             AdvancementHolder syrup = goal(tapper, "kitchen/sugaring_off", HHModItems.SYRUP_BOTTLE.get(), trigger(HHModTriggers.BOTTLED_SYRUP));
+            task(syrup, "kitchen/sticky_situation", HHModItems.PANCAKE.get(), trigger(HHModTriggers.SYRUPED_STACK));
             collection(syrup, "kitchen/sweet_tooth", HHModItems.COTTON_CANDY.get(), AdvancementType.GOAL, SWEETS);
             challenge(syrup, "kitchen/pie_chart", HHModItems.BLUEBERRY_PIE.get(), PIES);
 

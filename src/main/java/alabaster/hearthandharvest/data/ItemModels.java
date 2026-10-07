@@ -128,6 +128,7 @@ public class ItemModels extends ItemModelProvider
         items.remove(HHModItems.MEAD.get());
         items.remove(HHModItems.HARD_CIDER.get());
         items.remove(HHModItems.ROOT_BEER.get());
+        items.remove(HHModItems.BEER.get());
 
         // Watering Can
         items.remove(HHModItems.WATERING_CAN.get());
@@ -184,6 +185,7 @@ public class ItemModels extends ItemModelProvider
                 HHModItems.BLUEBERRIES.get(),
                 HHModItems.RED_GRAPES.get(),
                 HHModItems.GREEN_GRAPES.get(),
+                HHModItems.HOPS.get(),
                 HHModItems.PEANUT.get(),
                 HHModItems.COTTON_SEEDS.get(),
                 HHModItems.CORN_KERNELS.get(),
@@ -212,6 +214,7 @@ public class ItemModels extends ItemModelProvider
                 HHModItems.WILD_GREEN_GRAPES.get(),
                 HHModItems.WILD_COTTON.get(),
                 HHModItems.WILD_PEANUTS.get(),
+                HHModItems.WILD_HOPS.get(),
                 HHModItems.YELLOW_MUM.get(),
                 HHModItems.ORANGE_MUM.get(),
                 HHModItems.RED_MUM.get(),

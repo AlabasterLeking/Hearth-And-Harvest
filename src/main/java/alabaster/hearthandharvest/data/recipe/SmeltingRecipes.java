@@ -20,7 +20,6 @@ public class SmeltingRecipes
         foodSmeltingRecipes("raisins_from_red_grapes", HHModItems.RED_GRAPES.get(), HHModItems.RAISINS.get(), 0.35F, output);
         foodSmeltingRecipes("raisins_from_green_grapes", HHModItems.GREEN_GRAPES.get(), HHModItems.RAISINS.get(), 0.35F, output);
         foodSmeltingRecipes("roasted_peanuts", HHModItems.PEANUT.get(), HHModItems.ROASTED_PEANUTS.get(), 0.35F, output);
-        foodSmeltingRecipes("popcorn", HHModItems.CORN_KERNELS.get(), HHModItems.POPCORN.get(), 0.35F, output);
         foodSmeltingRecipes("baked_apple", Items.APPLE, HHModItems.BAKED_APPLE.get(), 0.35F, output);
         foodSmeltingRecipes("hot_chocolate", HHModItems.CHOCOLATE_MILK_BOTTLE.get(), ModItems.HOT_COCOA.get(), 0.35F, output);
 

@@ -83,14 +83,18 @@ public class JEIPlugin implements IModPlugin
                 new ItemStack(HHModItems.MEAD.get()),
                 new ItemStack(HHModItems.HARD_CIDER.get()),
                 new ItemStack(HHModItems.ROOT_BEER.get()),
+                new ItemStack(HHModItems.BEER.get()),
                 new ItemStack(HHModItems.PICKLED_BEETROOTS.get()),
                 new ItemStack(HHModItems.PICKLED_CABBAGE.get()),
                 new ItemStack(HHModItems.PICKLED_CARROTS.get()),
                 new ItemStack(HHModItems.PICKLED_ONIONS.get()),
-                new ItemStack(HHModItems.PICKLED_POTATOES.get())
+                new ItemStack(HHModItems.PICKLED_POTATOES.get()),
+                new ItemStack(HHModItems.CHEESE_WHEEL.get()),
+                new ItemStack(HHModItems.GOAT_CHEESE_WHEEL.get())
         ), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.vintage_aging"));
         registration.addIngredientInfo(new ItemStack(Items.FEATHER), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.pluck_chickens"));
         registration.addIngredientInfo(List.of(new ItemStack(HHModItems.WILD_RED_GRAPES.get()), new ItemStack(HHModItems.RED_GRAPES.get()), new ItemStack(HHModItems.WILD_GREEN_GRAPES.get()), new ItemStack(HHModItems.GREEN_GRAPES.get())), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.wild_grapes"));
+        registration.addIngredientInfo(List.of(new ItemStack(HHModItems.WILD_HOPS.get()), new ItemStack(HHModItems.HOPS.get())), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.wild_hops"));
     }
 
     @Override

@@ -1,0 +1,7 @@
+{
+  "type": "farmersdelight:add_features_by_filter",
+  "allowed_biomes": "#minecraft:is_forest",
+  "denied_biomes": ["minecraft:lush_caves", "minecraft:mushroom_fields"],
+  "features": "hearthandharvest:patch_wild_hops",
+  "step": "vegetal_decoration"
+}

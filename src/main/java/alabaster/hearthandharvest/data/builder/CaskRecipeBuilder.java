@@ -113,10 +113,11 @@ public class CaskRecipeBuilder implements RecipeBuilder
 
     public void build(RecipeOutput outputIn, String save) {
         ResourceLocation resourcelocation = BuiltInRegistries.ITEM.getKey(result);
-        if ((ResourceLocation.parse(save)).equals(resourcelocation)) {
+        ResourceLocation id = save.indexOf(':') >= 0 ? ResourceLocation.parse(save) : ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, save);
+        if (id.equals(resourcelocation)) {
             throw new IllegalStateException("Aging Recipe " + save + " should remove its 'save' argument");
         } else {
-            save(outputIn, ResourceLocation.parse(save));
+            save(outputIn, id);
         }
     }
 

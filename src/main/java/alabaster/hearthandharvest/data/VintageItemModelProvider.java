@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class VintageItemModelProvider implements DataProvider {
     public static final List<String> BOTTLES = List.of(
-            "mead", "hard_cider", "root_beer",
+            "mead", "hard_cider", "root_beer", "beer",
             "blueberry_wine", "cherry_wine", "raspberry_wine", "red_grape_wine",
             "green_grape_wine", "sweet_berry_wine", "glow_berry_wine", "melon_wine"
     );

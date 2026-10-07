@@ -1,0 +1,27 @@
+{
+  "parent": "hearthandharvest:kitchen/sugaring_off",
+  "criteria": {
+    "sticky_situation": {
+      "trigger": "hearthandharvest:syruped_stack"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.sticky_situation.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hearthandharvest:pancake"
+    },
+    "title": {
+      "translate": "advancement.hearthandharvest.sticky_situation"
+    }
+  },
+  "requirements": [
+    [
+      "sticky_situation"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

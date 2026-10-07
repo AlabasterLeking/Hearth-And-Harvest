@@ -1,11 +1,12 @@
 package alabaster.hearthandharvest.data.recipe;
 
+import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.common.tag.HHCommonTags;
-import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
@@ -157,12 +158,12 @@ public class CookingRecipes
                 .addIngredient(Items.WATER_BUCKET)
                 .unlockedByItems("has_water_bucket", Items.WATER_BUCKET)
                 .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
-                .save(output, "salt_from_bucket");
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "cooking/salt_from_bucket"));
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.SALT.get(), 2, FAST_COOKING, SMALL_EXP)
                 .addIngredient(WATER_BOTTLE)
                 .unlockedBy("has_water_bottle", InventoryChangeTrigger.TriggerInstance.hasItems(Items.POTION))
                 .setRecipeBookTab(CookingPotRecipeBookTab.MISC)
-                .save(output, "salt_from_bottle");
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "cooking/salt_from_bottle"));
 
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.MASHED_POTATOES.get(), 1, NORMAL_COOKING, MEDIUM_EXP, Items.BOWL)
                 .addIngredient(Items.POTATO)
@@ -178,7 +179,7 @@ public class CookingRecipes
                 .addIngredient(HHCommonTags.DUSTS_SALT)
                 .addIngredient(Tags.Items.DRINKS_MILK)
                 .addIngredient(HHModItems.BUTTER.get())
-                .addIngredient(HHModTags.CHEESE_SLICES)
+                .addIngredient(HHCommonTags.FOODS_CHEESE)
                 .unlockedByItems("has_pasta", ModItems.RAW_PASTA.get())
                 .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
                 .save(output);
@@ -194,6 +195,12 @@ public class CookingRecipes
                 .unlockedByItems("has_batter", HHModItems.BATTER.get())
                 .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
                 .save(output);
+        CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.CROISSANT.get(), 1, NORMAL_COOKING, SMALL_EXP)
+                .addIngredient(ModItems.WHEAT_DOUGH.get())
+                .addIngredient(HHModItems.BUTTER.get())
+                .unlockedByItems("has_butter", HHModItems.BUTTER.get())
+                .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
+                .save(output);
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.BISCUITS_AND_GRAVY.get(), 1, NORMAL_COOKING, MEDIUM_EXP, Items.BOWL)
                 .addIngredient(HHModItems.COOKED_SAUSAGE.get())
                 .addIngredient(HHCommonTags.DUSTS_SALT)
@@ -204,10 +211,18 @@ public class CookingRecipes
                 .save(output);
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.CIDER_DONUT.get(), 2, SLOW_COOKING, MEDIUM_EXP)
                 .addIngredient(ModItems.APPLE_CIDER.get())
+                .addIngredient(HHModItems.COOKING_OIL.get())
                 .addIngredient(HHCommonTags.DUSTS_SALT)
                 .addIngredient(Items.EGG)
                 .addIngredient(Items.SUGAR)
                 .unlockedByItems("has_apple_cider", ModItems.APPLE_CIDER.get())
+                .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
+                .save(output);
+        CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.POPCORN.get(), 4, FAST_COOKING, SMALL_EXP)
+                .addIngredient(HHModItems.CORN_KERNELS.get(), 2)
+                .addIngredient(HHModItems.COOKING_OIL.get())
+                .addIngredient(HHCommonTags.DUSTS_SALT)
+                .unlockedByItems("has_corn_kernels", HHModItems.CORN_KERNELS.get())
                 .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
                 .save(output);
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.CANDY_CORN.get(), 4, FAST_COOKING, SMALL_EXP)
@@ -238,14 +253,14 @@ public class CookingRecipes
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.TAMALE.get(), 1, NORMAL_COOKING, MEDIUM_EXP, HHModItems.CORN_HUSK.get())
                 .addIngredient(Tags.Items.FOODS_COOKED_MEAT)
                 .addIngredient(Tags.Items.FOODS_VEGETABLE)
-                .addIngredient(HHModTags.CHEESE_SLICES)
+                .addIngredient(HHCommonTags.FOODS_CHEESE)
                 .unlockedByItems("has_corn_husk", HHModItems.CORN_HUSK.get())
                 .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
                 .save(output);
         CookingPotRecipeBuilder.cookingPotRecipe(HHModItems.STREET_CORN.get(), 1, FAST_COOKING, SMALL_EXP)
                 .addIngredient(HHModItems.COOKED_CORN_ON_THE_COB.get())
                 .addIngredient(Items.BLAZE_POWDER)
-                .addIngredient(HHModTags.CHEESE_SLICES)
+                .addIngredient(HHCommonTags.FOODS_CHEESE)
                 .unlockedByItems("has_corn_on_the_cob", HHModItems.COOKED_CORN_ON_THE_COB.get())
                 .setRecipeBookTab(CookingPotRecipeBookTab.MEALS)
                 .save(output);

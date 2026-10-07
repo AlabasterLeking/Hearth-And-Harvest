@@ -78,6 +78,7 @@ public class HHBlockLoot extends BlockLootSubProvider {
         dropSelf(HHModBlocks.APPLE_CRATE.get());
         dropSelf(HHModBlocks.GOLDEN_APPLE_CRATE.get());
         dropSelf(HHModBlocks.GOLDEN_CARROT_CRATE.get());
+        dropSelf(HHModBlocks.GLISTERING_MELON_CRATE.get());
         dropSelf(HHModBlocks.POISONOUS_POTATO_CRATE.get());
         dropSelf(HHModBlocks.ROTTEN_TOMATO_CRATE.get());
         dropSelf(HHModBlocks.GLOW_BERRY_CRATE.get());
@@ -87,6 +88,7 @@ public class HHBlockLoot extends BlockLootSubProvider {
         dropSelf(HHModBlocks.COCOA_BEAN_BAG.get());
         dropSelf(HHModBlocks.GUNPOWDER_BAG.get());
         dropSelf(HHModBlocks.CORN_KERNEL_BAG.get());
+        dropSelf(HHModBlocks.HOPS_BAG.get());
         dropSelf(HHModBlocks.MANURE_BAG.get());
         dropSelf(HHModBlocks.FEATHER_BAG.get());
         dropSelf(HHModBlocks.FLOUR_BAG.get());

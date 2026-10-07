@@ -2,7 +2,7 @@ package alabaster.hearthandharvest.common.registry;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.*;
-import alabaster.hearthandharvest.common.block.trellis.GrapeTrellisBlock;
+import alabaster.hearthandharvest.common.block.trellis.CropTrellisBlock;
 import alabaster.hearthandharvest.common.block.trellis.TrellisBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffects;
@@ -60,15 +60,15 @@ public class HHModBlocks {
     // Trellises
     public static final Supplier<TrellisBlock> TRELLIS = BLOCKS.register("trellis",
             () -> new TrellisBlock(Block.Properties.of().strength(2.0F).sound(SoundType.WOOD).noOcclusion().forceSolidOff(),
-                    HHModBlocks::getGrapeTrellis));
+                    HHModBlocks::getCropTrellis));
 
-    public static final Supplier<GrapeTrellisBlock> GRAPE_TRELLIS = BLOCKS.register("grape_trellis",
-            () -> new GrapeTrellisBlock(Block.Properties.of().strength(2.0F).sound(SoundType.WOOD).noOcclusion().forceSolidOff(),
+    public static final Supplier<CropTrellisBlock> CROP_TRELLIS = BLOCKS.register("crop_trellis",
+            () -> new CropTrellisBlock(Block.Properties.of().strength(2.0F).sound(SoundType.WOOD).noOcclusion().forceSolidOff(),
                     HHModBlocks::getTrellis));
 
-    // This portion is needed to map transforming from trellis/grape trellises
+    // This portion is needed to map transforming from trellis/crop trellises
     private static Block getTrellis() { return TRELLIS.get(); }
-    private static Block getGrapeTrellis() { return GRAPE_TRELLIS.get(); }
+    private static Block getCropTrellis() { return CROP_TRELLIS.get(); }
 
     // Half-Cabinets
     public static final Supplier<Block> OAK_HALF_CABINET = BLOCKS.register("oak_half_cabinet",
@@ -141,6 +141,8 @@ public class HHModBlocks {
     public static final Supplier<Block> WILD_COTTON = BLOCKS.register("wild_cotton",
             () -> new WildCropBlock(MobEffects.MOVEMENT_SPEED, 10, Block.Properties.ofFullCopy(Blocks.TALL_GRASS)));
     public static final Supplier<Block> WILD_PEANUTS = BLOCKS.register("wild_peanuts",
+            () -> new WildCropBlock(MobEffects.MOVEMENT_SPEED, 10, Block.Properties.ofFullCopy(Blocks.TALL_GRASS)));
+    public static final Supplier<Block> WILD_HOPS = BLOCKS.register("wild_hops",
             () -> new WildCropBlock(MobEffects.MOVEMENT_SPEED, 10, Block.Properties.ofFullCopy(Blocks.TALL_GRASS)));
 
     // Flowers
@@ -233,6 +235,8 @@ public class HHModBlocks {
     public static final Supplier<Block> GUNPOWDER_BAG = BLOCKS.register("gunpowder_bag",
             () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
     public static final Supplier<Block> CORN_KERNEL_BAG = BLOCKS.register("corn_kernel_bag",
+            () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
+    public static final Supplier<Block> HOPS_BAG = BLOCKS.register("hops_bag",
             () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));
     public static final Supplier<Block> FLOUR_BAG = BLOCKS.register("flour_bag",
             () -> new Block(Block.Properties.ofFullCopy(Blocks.WHITE_WOOL)));

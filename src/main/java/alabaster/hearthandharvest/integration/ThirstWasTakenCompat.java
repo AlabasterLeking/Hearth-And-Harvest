@@ -18,6 +18,7 @@ public class ThirstWasTakenCompat {
         event.addDrink(HHModItems.MELON_WINE.get(), 10, 14);
         event.addDrink(HHModItems.MEAD.get(), 12, 18);
         event.addDrink(HHModItems.ROOT_BEER.get(), 12, 18);
+        event.addDrink(HHModItems.BEER.get(), 12, 18);
         event.addDrink(HHModItems.HARD_CIDER.get(), 12, 18);
         event.addDrink(HHModItems.MOONSHINE.get(), 12, 18);
         event.addDrink(HHModItems.BLUEBERRY_JUICE.get(), 8, 12);

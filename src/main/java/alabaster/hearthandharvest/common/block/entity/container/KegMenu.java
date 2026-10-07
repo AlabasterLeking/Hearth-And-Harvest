@@ -25,9 +25,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.FluidStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 import alabaster.hearthandharvest.common.crafting.KegRecipe;
@@ -121,32 +119,29 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
     }
 
     private void placeIngredients(KegRecipe recipe, ServerPlayer player, boolean placeAll) {
-        NonNullList<Ingredient> ingredients = recipe.getIngredients();
+        List<KegRecipe.SlotIngredient> ingredients = recipe.getSlotIngredients();
         for (int index = 0; index < ingredients.size() && index < 2; ++index) {
-            Ingredient ingredient = ingredients.get(index);
+            KegRecipe.SlotIngredient ingredient = ingredients.get(index);
             int slot = index == 0 ? KegBlockEntity.INPUT_SLOT_ONE : KegBlockEntity.INPUT_SLOT_TWO;
-            moveFromInventory(player, slot, placeAll, ingredient::test);
+            moveFromInventory(player, slot, placeAll, ingredient.count(), ingredient.ingredient()::test);
         }
     }
 
     private void placeFluidContainers(KegRecipe recipe, ServerPlayer player, boolean placeAll) {
-        FluidStack required = recipe.getInputFluid();
-        if (required.isEmpty()) return;
+        if (recipe.getInputFluid() == null) return;
 
         FluidTank tank = this.blockEntity.getInputTank();
-        if (!tank.isEmpty() && !FluidStack.isSameFluidSameComponents(tank.getFluid(), required)) return;
+        if (!tank.isEmpty() && !recipe.acceptsFluid(tank.getFluid())) return;
 
-        boolean moved = moveFromInventory(player, KegBlockEntity.CONTAINER_INPUT_SLOT, placeAll, stack -> {
-            FluidStack contained = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
-            return !contained.isEmpty() && FluidStack.isSameFluidSameComponents(contained, required);
-        });
+        boolean moved = moveFromInventory(player, KegBlockEntity.CONTAINER_INPUT_SLOT, placeAll, 1, stack ->
+                recipe.acceptsFluid(FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY)));
 
         if (moved) {
             this.blockEntity.setMode(KegBlockEntity.MODE_DRAIN);
         }
     }
 
-    private boolean moveFromInventory(ServerPlayer player, int targetSlot, boolean placeAll, Predicate<ItemStack> matches) {
+    private boolean moveFromInventory(ServerPlayer player, int targetSlot, boolean placeAll, int count, Predicate<ItemStack> matches) {
         ItemStackHandler inventory = this.blockEntity.getInventory();
         ItemStack stored = inventory.getStackInSlot(targetSlot);
         if (!stored.isEmpty() && !matches.test(stored)) return false;
@@ -164,7 +159,7 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
             int space = Math.min(inventory.getSlotLimit(targetSlot), candidate.getMaxStackSize()) - stored.getCount();
             if (space <= 0) return moved;
 
-            int amount = placeAll ? Math.min(space, candidate.getCount()) : 1;
+            int amount = Math.min(space, placeAll ? candidate.getCount() : count);
             ItemStack taken = candidate.split(amount);
             if (stored.isEmpty()) {
                 inventory.setStackInSlot(targetSlot, taken);
@@ -172,8 +167,9 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
                 stored.grow(taken.getCount());
             }
             moved = true;
+            count -= taken.getCount();
 
-            if (!placeAll) return true;
+            if (!placeAll && count <= 0) return true;
         }
         return moved;
     }
@@ -188,6 +184,11 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
             if (index < KegBlockEntity.INVENTORY_SIZE) {
                 if (!this.moveItemStackTo(stack, KegBlockEntity.INVENTORY_SIZE, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
+                }
+            } else if (FluidUtil.getFluidContained(stack).filter(fluid -> !fluid.isEmpty()).isPresent()
+                    && this.moveItemStackTo(stack, 2, 3, false)) {
+                if (!player.level().isClientSide) {
+                    this.blockEntity.setMode(KegBlockEntity.MODE_DRAIN);
                 }
             } else if (!this.moveItemStackTo(stack, 0, 3, false)) {
                 return ItemStack.EMPTY;

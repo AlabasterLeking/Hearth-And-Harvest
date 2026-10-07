@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.client.gui;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.crafting.KegRecipe;
 import alabaster.hearthandharvest.common.utilities.HHTextUtils;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import javax.annotation.Nonnull;
+import java.util.Iterator;
 import java.util.List;
 
 public class KegRecipeBookComponent extends RecipeBookComponent {
@@ -62,6 +64,9 @@ public class KegRecipeBookComponent extends RecipeBookComponent {
             this.ghostRecipe.addIngredient(Ingredient.of(resultStack), resultSlot.x, resultSlot.y);
         }
 
-        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, recipe.value().getIngredients().iterator(), 0);
+        Iterator<Ingredient> ingredients = recipe.value() instanceof KegRecipe kegRecipe
+                ? kegRecipe.getSlotIngredients().stream().map(KegRecipe.SlotIngredient::ingredient).iterator()
+                : recipe.value().getIngredients().iterator();
+        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, ingredients, 0);
     }
 }

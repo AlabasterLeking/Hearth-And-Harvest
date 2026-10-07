@@ -1,6 +1,16 @@
 {
   "parent": "hearthandharvest:kitchen/aged_to_perfection",
   "criteria": {
+    "beer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:beer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "hard_cider": {
       "conditions": {
         "items": [
@@ -64,6 +74,9 @@
     ],
     [
       "root_beer"
+    ],
+    [
+      "beer"
     ],
     [
       "moonshine"

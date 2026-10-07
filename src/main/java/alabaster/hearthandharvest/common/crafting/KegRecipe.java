@@ -18,24 +18,29 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import com.mojang.serialization.Codec;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class KegRecipe implements Recipe<RecipeWrapper> {
     public static final int DEFAULT_TIME = 600;
 
     private final CaskRecipeBookTab tab;
     private final NonNullList<Ingredient> ingredients;
-    private final FluidStack inputFluid;
+    @Nullable
+    private final SizedFluidIngredient inputFluid;
     private final FluidStack resultFluid;
     private final ItemStack resultItem;
     private final int fermentTime;
     private final float experience;
 
-    public KegRecipe(CaskRecipeBookTab tab, NonNullList<Ingredient> ingredients, FluidStack inputFluid, FluidStack resultFluid, ItemStack resultItem, int fermentTime, float experience) {
+    public KegRecipe(CaskRecipeBookTab tab, NonNullList<Ingredient> ingredients, @Nullable SizedFluidIngredient inputFluid, FluidStack resultFluid, ItemStack resultItem, int fermentTime, float experience) {
         this.tab = tab;
         this.ingredients = ingredients;
         this.inputFluid = inputFluid;
@@ -50,8 +55,40 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
         return tab;
     }
 
-    public FluidStack getInputFluid() {
+    @Nullable
+    public SizedFluidIngredient getInputFluid() {
         return inputFluid;
+    }
+
+    public int getInputAmount() {
+        return inputFluid == null ? 0 : inputFluid.amount();
+    }
+
+    public List<FluidStack> getInputFluidStacks() {
+        return inputFluid == null ? List.of() : List.of(inputFluid.getFluids());
+    }
+
+    public boolean acceptsFluid(FluidStack stack) {
+        return inputFluid != null && !stack.isEmpty() && inputFluid.ingredient().test(stack);
+    }
+
+    public List<SlotIngredient> getSlotIngredients() {
+        List<SlotIngredient> grouped = new ArrayList<>();
+        for (Ingredient ingredient : ingredients) {
+            int index = -1;
+            for (int i = 0; i < grouped.size(); i++) {
+                if (grouped.get(i).ingredient().equals(ingredient)) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index < 0) {
+                grouped.add(new SlotIngredient(ingredient, 1));
+            } else {
+                grouped.set(index, new SlotIngredient(ingredient, grouped.get(index).count() + 1));
+            }
+        }
+        return grouped;
     }
 
     public FluidStack getResultFluid() {
@@ -71,18 +108,27 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
     }
 
     public boolean matchesFluid(FluidStack available) {
-        if (inputFluid.isEmpty()) return true;
-        return FluidStack.isSameFluidSameComponents(available, inputFluid) && available.getAmount() >= inputFluid.getAmount();
+        if (inputFluid == null) return true;
+        return inputFluid.test(available);
     }
 
     public boolean matchesItems(List<ItemStack> available) {
-        if (ingredients.isEmpty()) return true;
+        return getItemUsage(available) != null;
+    }
 
+    @Nullable
+    public int[] getItemUsage(List<ItemStack> available) {
         int[] remaining = new int[available.size()];
         for (int i = 0; i < available.size(); i++) {
             remaining[i] = available.get(i).getCount();
         }
-        return assign(0, available, remaining);
+        if (!assign(0, available, remaining)) return null;
+
+        int[] used = new int[available.size()];
+        for (int i = 0; i < available.size(); i++) {
+            used[i] = available.get(i).getCount() - remaining[i];
+        }
+        return used;
     }
 
     private boolean assign(int index, List<ItemStack> available, int[] remaining) {
@@ -125,11 +171,11 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
     }
 
     public ItemStack getDisplayResult() {
-        if (!resultItem.isEmpty()) return resultItem;
-        if (resultFluid.isEmpty()) return ItemStack.EMPTY;
-
-        Item bottle = HHDataMaps.getBottleForFluid(resultFluid.getFluid());
-        return bottle == null ? ItemStack.EMPTY : new ItemStack(bottle);
+        if (!resultFluid.isEmpty()) {
+            Item bottle = HHDataMaps.getBottleForFluid(resultFluid.getFluid());
+            if (bottle != null) return new ItemStack(bottle);
+        }
+        return resultItem;
     }
 
     @Override
@@ -147,7 +193,14 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
         return HHModRecipeTypes.FERMENTING.get();
     }
 
+    public record SlotIngredient(Ingredient ingredient, int count) {
+    }
+
     public static class Serializer implements RecipeSerializer<KegRecipe> {
+
+        private static final Codec<SizedFluidIngredient> INPUT_FLUID_CODEC = Codec.withAlternative(
+                SizedFluidIngredient.FLAT_CODEC,
+                FluidStack.CODEC.xmap(SizedFluidIngredient::of, ingredient -> ingredient.getFluids()[0]));
 
         private static final MapCodec<KegRecipe> CODEC = RecordCodecBuilder.mapCodec(instance ->
                 instance.group(
@@ -163,9 +216,9 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
                                     return nnList;
                                 }, nnList -> nnList)
                                 .forGetter(KegRecipe::getIngredients),
-                        FluidStack.CODEC
-                                .optionalFieldOf("input_fluid", FluidStack.EMPTY)
-                                .forGetter(KegRecipe::getInputFluid),
+                        INPUT_FLUID_CODEC
+                                .optionalFieldOf("input_fluid")
+                                .forGetter(recipe -> Optional.ofNullable(recipe.getInputFluid())),
                         FluidStack.CODEC
                                 .optionalFieldOf("result_fluid", FluidStack.EMPTY)
                                 .forGetter(KegRecipe::getResultFluid),
@@ -178,7 +231,8 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
                         com.mojang.serialization.Codec.FLOAT
                                 .optionalFieldOf("experience", 0.0F)
                                 .forGetter(KegRecipe::getExperience)
-                ).apply(instance, KegRecipe::new)
+                ).apply(instance, (tab, ingredients, input, resultFluid, resultItem, time, experience) ->
+                        new KegRecipe(tab, ingredients, input.orElse(null), resultFluid, resultItem, time, experience))
         );
 
         public static final StreamCodec<RegistryFriendlyByteBuf, KegRecipe> STREAM_CODEC =
@@ -200,7 +254,7 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
             NonNullList<Ingredient> ingredients = NonNullList.withSize(count, Ingredient.EMPTY);
             ingredients.replaceAll(ignored -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
 
-            FluidStack inputFluid = FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
+            SizedFluidIngredient inputFluid = buf.readBoolean() ? SizedFluidIngredient.STREAM_CODEC.decode(buf) : null;
             FluidStack resultFluid = FluidStack.OPTIONAL_STREAM_CODEC.decode(buf);
             ItemStack resultItem = ItemStack.OPTIONAL_STREAM_CODEC.decode(buf);
             int time = ByteBufCodecs.VAR_INT.decode(buf);
@@ -214,7 +268,10 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
             for (Ingredient ingredient : recipe.ingredients) {
                 Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ingredient);
             }
-            FluidStack.OPTIONAL_STREAM_CODEC.encode(buf, recipe.inputFluid);
+            buf.writeBoolean(recipe.inputFluid != null);
+            if (recipe.inputFluid != null) {
+                SizedFluidIngredient.STREAM_CODEC.encode(buf, recipe.inputFluid);
+            }
             FluidStack.OPTIONAL_STREAM_CODEC.encode(buf, recipe.resultFluid);
             ItemStack.OPTIONAL_STREAM_CODEC.encode(buf, recipe.resultItem);
             ByteBufCodecs.VAR_INT.encode(buf, recipe.fermentTime);

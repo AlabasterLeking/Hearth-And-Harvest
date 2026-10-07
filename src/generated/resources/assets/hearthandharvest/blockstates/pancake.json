@@ -1,63 +1,123 @@
 {
   "variants": {
-    "count=1,facing=east": {
+    "count=1,facing=east,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack1",
       "y": 90
     },
-    "count=1,facing=north": {
+    "count=1,facing=east,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack1_syrup",
+      "y": 90
+    },
+    "count=1,facing=north,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack1"
     },
-    "count=1,facing=south": {
+    "count=1,facing=north,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack1_syrup"
+    },
+    "count=1,facing=south,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack1",
       "y": 180
     },
-    "count=1,facing=west": {
+    "count=1,facing=south,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack1_syrup",
+      "y": 180
+    },
+    "count=1,facing=west,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack1",
       "y": 270
     },
-    "count=2,facing=east": {
+    "count=1,facing=west,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack1_syrup",
+      "y": 270
+    },
+    "count=2,facing=east,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack2",
       "y": 90
     },
-    "count=2,facing=north": {
+    "count=2,facing=east,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack2_syrup",
+      "y": 90
+    },
+    "count=2,facing=north,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack2"
     },
-    "count=2,facing=south": {
+    "count=2,facing=north,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack2_syrup"
+    },
+    "count=2,facing=south,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack2",
       "y": 180
     },
-    "count=2,facing=west": {
+    "count=2,facing=south,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack2_syrup",
+      "y": 180
+    },
+    "count=2,facing=west,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack2",
       "y": 270
     },
-    "count=3,facing=east": {
+    "count=2,facing=west,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack2_syrup",
+      "y": 270
+    },
+    "count=3,facing=east,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack3",
       "y": 90
     },
-    "count=3,facing=north": {
+    "count=3,facing=east,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack3_syrup",
+      "y": 90
+    },
+    "count=3,facing=north,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack3"
     },
-    "count=3,facing=south": {
+    "count=3,facing=north,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack3_syrup"
+    },
+    "count=3,facing=south,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack3",
       "y": 180
     },
-    "count=3,facing=west": {
+    "count=3,facing=south,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack3_syrup",
+      "y": 180
+    },
+    "count=3,facing=west,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack3",
       "y": 270
     },
-    "count=4,facing=east": {
+    "count=3,facing=west,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack3_syrup",
+      "y": 270
+    },
+    "count=4,facing=east,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack4",
       "y": 90
     },
-    "count=4,facing=north": {
+    "count=4,facing=east,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack4_syrup",
+      "y": 90
+    },
+    "count=4,facing=north,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack4"
     },
-    "count=4,facing=south": {
+    "count=4,facing=north,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack4_syrup"
+    },
+    "count=4,facing=south,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack4",
       "y": 180
     },
-    "count=4,facing=west": {
+    "count=4,facing=south,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack4_syrup",
+      "y": 180
+    },
+    "count=4,facing=west,syrup=false": {
       "model": "hearthandharvest:block/pancake_stack4",
+      "y": 270
+    },
+    "count=4,facing=west,syrup=true": {
+      "model": "hearthandharvest:block/pancake_stack4_syrup",
       "y": 270
     }
   }

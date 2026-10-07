@@ -175,11 +175,13 @@ public class ClientEventHandler {
         );
 
         registerFluidTextures(event, "cooking_oil", HHModFluids.COOKING_OIL.type().get());
+        registerFluidTextures(event, "brine", HHModFluids.BRINE.type().get());
         registerFluidTextures(event, "sap", HHModFluids.SAP.type().get());
         registerFluidTextures(event, "syrup", HHModFluids.SYRUP.type().get());
         registerFluidTextures(event, "apple_cider", HHModFluids.APPLE_CIDER.type().get());
         registerFluidTextures(event, "hard_cider", HHModFluids.HARD_CIDER.type().get());
         registerFluidTextures(event, "root_beer", HHModFluids.ROOT_BEER.type().get());
+        registerFluidTextures(event, "beer", HHModFluids.BEER.type().get());
         registerFluidTextures(event, "mead", HHModFluids.MEAD.type().get());
         registerFluidTextures(event, "moonshine", HHModFluids.MOONSHINE.type().get());
         registerFluidTextures(event, "blueberry_juice", HHModFluids.BLUEBERRY_JUICE.type().get());

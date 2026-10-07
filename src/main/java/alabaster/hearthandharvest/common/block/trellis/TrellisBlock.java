@@ -237,7 +237,7 @@ public class TrellisBlock extends Block implements BonemealableBlock {
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
 
-        if (stack.is(Items.SHEARS) && !currentPlant.isGrape() && currentPlant != TrellisPlant.NONE) {
+        if (stack.is(Items.SHEARS) && !currentPlant.isFruiting() && currentPlant != TrellisPlant.NONE) {
             if (!level.isClientSide()) {
                 ItemStack drop = switch (currentPlant) {
                     case VINE -> new ItemStack(Items.VINE);
@@ -269,10 +269,8 @@ public class TrellisBlock extends Block implements BonemealableBlock {
             return applyPlant(stack, state, level, pos, player, TrellisPlant.ROSE);
         }
 
-        if ((stack.is(HHModItems.RED_GRAPES.get()) || stack.is(HHModItems.GREEN_GRAPES.get()))
-                && currentPlant == TrellisPlant.NONE && grapeVariant != null) {
-            TrellisPlant plant = stack.is(HHModItems.RED_GRAPES.get())
-                    ? TrellisPlant.RED_GRAPE : TrellisPlant.GREEN_GRAPE;
+        TrellisPlant plant = TrellisPlant.fruitingFrom(stack);
+        if (plant != null && currentPlant == TrellisPlant.NONE && grapeVariant != null) {
             if (!level.isClientSide()) {
                 TrellisBlock targetBlock = (TrellisBlock) grapeVariant.get();
                 BlockState converted = targetBlock.applyPlantToState(copyStructure(state, targetBlock), plant);

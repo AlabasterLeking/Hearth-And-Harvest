@@ -9,7 +9,7 @@
   ],
   "input_fluid": {
     "amount": 1000,
-    "id": "hearthandharvest:goat_milk"
+    "fluid": "hearthandharvest:goat_milk"
   },
   "recipe_book_tab": "meals",
   "result_item": {

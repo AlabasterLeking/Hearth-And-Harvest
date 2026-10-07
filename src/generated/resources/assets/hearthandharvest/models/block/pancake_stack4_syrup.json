@@ -1,0 +1,29 @@
+{
+  "children": {
+    "stack": {
+      "parent": "hearthandharvest:block/template_food_stack4",
+      "render_type": "minecraft:solid",
+      "textures": {
+        "bottom": "hearthandharvest:block/pancake_bottom",
+        "side": "hearthandharvest:block/pancake_side",
+        "top": "hearthandharvest:block/pancake_top"
+      }
+    },
+    "syrup": {
+      "parent": "hearthandharvest:block/template_food_syrup4",
+      "render_type": "minecraft:translucent",
+      "textures": {
+        "syrup_side": "hearthandharvest:block/syrup_drizzle_side",
+        "syrup_top": "hearthandharvest:block/syrup_drizzle_top"
+      }
+    }
+  },
+  "item_render_order": [
+    "stack",
+    "syrup"
+  ],
+  "loader": "neoforge:composite",
+  "textures": {
+    "particle": "hearthandharvest:block/pancake_top"
+  }
+}

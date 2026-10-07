@@ -2,7 +2,11 @@
   "type": "farmersdelight:cutting",
   "ingredients": [
     {
-      "item": "hearthandharvest:cheese_wheel"
+      "type": "hearthandharvest:vintage",
+      "base": {
+        "item": "hearthandharvest:cheese_wheel"
+      },
+      "vintage": 0
     }
   ],
   "result": [

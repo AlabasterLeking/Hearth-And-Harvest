@@ -31,6 +31,7 @@ public class Config {
     public static ModConfigSpec.BooleanValue CROW_EAT_CROPS;
     public static ModConfigSpec.BooleanValue STACK_WATER_BOTTLES;
     public static ModConfigSpec.BooleanValue GENERATE_CORN_MAZES;
+    public static ModConfigSpec.BooleanValue CORN_COLLISION;
     public static ModConfigSpec.BooleanValue GENERATE_LILLIPUT_LANE;
     public static ModConfigSpec.BooleanValue DISABLE_BOTTLE_MILKING;
     public static ModConfigSpec.BooleanValue TRELLIS_PLACEMENT_PREVIEW;
@@ -70,6 +71,8 @@ public class Config {
         DISABLE_BOTTLE_MILKING = flag("disableBottleMilking", false, "Disables milking cows and goats with glass bottles. \n" + "Be aware that setting this can cause goat milk bottles to be unobtainable unless handled otherwise");
 
         GENERATE_CORN_MAZES = flag("generateCornMazes", true, "Whether corn mazes should spawn in the world");
+
+        CORN_COLLISION = flag("cornCollision", true, "Whether grown corn stalks block movement. Set to false to let players and mobs walk through all corn.\n" + "Individual stalks can also be made passable by using a pitchfork on them. Keep this the same on the server and every client");
 
         GENERATE_LILLIPUT_LANE = flag("generateLilliputLane", true, "Whether Lilliput Lane should spawn in the world");
 

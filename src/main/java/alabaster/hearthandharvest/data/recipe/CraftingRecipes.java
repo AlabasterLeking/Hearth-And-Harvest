@@ -461,6 +461,7 @@ public class CraftingRecipes
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SPOOL.get(), Items.STRING);
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.ROPE_COIL.get(), ModItems.ROPE.get());
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CORN_KERNEL_BAG.get(), HHModItems.CORN_KERNELS.get());
+        pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.HOPS_BAG.get(), HHModItems.HOPS.get());
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.CORN_HUSK_BUNDLE.get(), HHModItems.CORN_HUSK.get());
         packTag(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SALT_BAG.get(), HHCommonTags.DUSTS_SALT, HHModItems.SALT.get());
         pack(output, RecipeCategory.BUILDING_BLOCKS, HHModItems.SUGAR_BAG.get(), Items.SUGAR);
@@ -640,6 +641,12 @@ public class CraftingRecipes
     }
 
     private static void recipesTools(RecipeOutput output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, HHModItems.FERTILIZER_BAG.get(), 1)
+                .requires(Items.BONE_MEAL)
+                .requires(HHModItems.MANURE.get())
+                .requires(Ingredient.of(ModItems.TREE_BARK.get(), HHModItems.CORN_HUSK.get(), ModItems.STRAW.get()))
+                .unlockedBy("has_manure", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.MANURE.get()))
+                .save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, HHModItems.FLINT_CLEAVER.get(), 1)
                 .pattern("  #")
                 .pattern(" # ")
@@ -725,6 +732,7 @@ public class CraftingRecipes
         unpack(output, RecipeCategory.MISC, Items.STRING, HHModItems.SPOOL.get(), "string_from_spool");
         unpack(output, RecipeCategory.MISC, ModItems.ROPE.get(), HHModItems.ROPE_COIL.get(), "rope_from_coil");
         unpack(output, RecipeCategory.FOOD, HHModItems.CORN_KERNELS.get(), HHModItems.CORN_KERNEL_BAG.get(), "corn_kernel_from_bag");
+        unpack(output, RecipeCategory.FOOD, HHModItems.HOPS.get(), HHModItems.HOPS_BAG.get(), "hops_from_bag");
         unpack(output, RecipeCategory.FOOD, HHModItems.FLOUR.get(), HHModItems.FLOUR_BAG.get(), "flour_from_bag");
         unpack(output, RecipeCategory.MISC, HHModItems.CORN_HUSK.get(), HHModItems.CORN_HUSK_BUNDLE.get(), "corn_husk_from_bundle");
         unpack(output, RecipeCategory.FOOD, HHModItems.SALT.get(), HHModItems.SALT_BAG.get(), "salt_from_bag");
@@ -761,6 +769,14 @@ public class CraftingRecipes
     }
 
     private static void recipesFoodstuffs(RecipeOutput output) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.HOPS_SALAD.get(), 1)
+                .requires(HHModItems.HOPS.get(), 2)
+                .requires(HHModItems.COOKING_OIL.get())
+                .requires(HHCommonTags.DUSTS_SALT)
+                .requires(Items.BOWL)
+                .unlockedBy("has_hops", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.HOPS.get()))
+                .save(output);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HHModItems.MARSHMALLOW_STICK.get(), 1)
                 .pattern(" #")
                 .pattern("S ")
@@ -929,7 +945,7 @@ public class CraftingRecipes
                 .define('S', Tags.Items.FOODS_RAW_MEAT)
                 .define('V', Tags.Items.FOODS_VEGETABLE)
                 .define('M', Tags.Items.MUSHROOMS)
-                .define('C', HHModTags.CHEESE_SLICES)
+                .define('C', HHCommonTags.FOODS_CHEESE)
                 .define('T', ModItems.TOMATO_SAUCE.get())
                 .define('D', ModItems.WHEAT_DOUGH.get())
                 .unlockedBy("has_tomato_sauce", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TOMATO_SAUCE.get()))
@@ -956,7 +972,7 @@ public class CraftingRecipes
                 .pattern("CCC")
                 .pattern("DTD")
                 .define('M', Tags.Items.FOODS_RAW_MEAT)
-                .define('C', HHModTags.CHEESE_SLICES)
+                .define('C', HHCommonTags.FOODS_CHEESE)
                 .define('T', ModItems.TOMATO_SAUCE.get())
                 .define('D', ModItems.WHEAT_DOUGH.get())
                 .unlockedBy("has_tomato_sauce", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TOMATO_SAUCE.get()))
@@ -982,7 +998,7 @@ public class CraftingRecipes
                 .pattern("DTD")
                 .define('V', Tags.Items.FOODS_VEGETABLE)
                 .define('M', Tags.Items.MUSHROOMS)
-                .define('C', HHModTags.CHEESE_SLICES)
+                .define('C', HHCommonTags.FOODS_CHEESE)
                 .define('T', ModItems.TOMATO_SAUCE.get())
                 .define('D', ModItems.WHEAT_DOUGH.get())
                 .unlockedBy("has_tomato_sauce", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TOMATO_SAUCE.get()))
@@ -1006,7 +1022,7 @@ public class CraftingRecipes
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HHModItems.CHEESE_PIZZA.get(), 1)
                 .pattern("CCC")
                 .pattern("DTD")
-                .define('C', HHModTags.CHEESE_SLICES)
+                .define('C', HHCommonTags.FOODS_CHEESE)
                 .define('T', ModItems.TOMATO_SAUCE.get())
                 .define('D', ModItems.WHEAT_DOUGH.get())
                 .unlockedBy("has_tomato_sauce", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.TOMATO_SAUCE.get()))
@@ -1048,24 +1064,24 @@ public class CraftingRecipes
                 .pattern("CMC")
                 .pattern("SES")
                 .pattern("WWW")
-                .define('C', HHModItems.CHOCOLATE_CAKE.get())
+                .define('C', HHModItems.CHOCOLATE_BAR.get())
                 .define('S', Items.SUGAR)
                 .define('W', Items.WHEAT)
                 .define('E', Items.EGG)
                 .define('M', Tags.Items.DRINKS_MILK)
-                .unlockedBy("has_chocolate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHOCOLATE_CAKE.get()))
+                .unlockedBy("has_chocolate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHOCOLATE_BAR.get()))
                 .save(output);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, HHModItems.CHOCOLATE_CAKE.get())
                 .pattern("CMC")
                 .pattern("SES")
                 .pattern(" B ")
-                .define('C', HHModItems.CHOCOLATE_CAKE.get())
+                .define('C', HHModItems.CHOCOLATE_BAR.get())
                 .define('S', Items.SUGAR)
                 .define('B', HHModItems.BATTER.get())
                 .define('E', Items.EGG)
                 .define('M', Tags.Items.DRINKS_MILK)
-                .unlockedBy("has_chocolate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHOCOLATE_CAKE.get()))
+                .unlockedBy("has_chocolate", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.CHOCOLATE_BAR.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "chocolate_cake_from_batter"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.FOOD, Items.CAKE)
@@ -1244,7 +1260,7 @@ public class CraftingRecipes
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.TACO.get(), 1)
                 .requires(HHModItems.TORTILLA.get())
                 .requires(ModItems.BEEF_PATTY.get())
-                .requires(HHModTags.CHEESE_SLICES)
+                .requires(HHCommonTags.FOODS_CHEESE)
                 .requires(ModItems.TOMATO.get())
                 .requires(ModItems.CABBAGE_LEAF.get())
                 .unlockedBy("has_tortilla", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.TORTILLA.get()))

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "C": {
-      "tag": "hearthandharvest:cheese_slices"
+      "tag": "c:foods/cheese"
     },
     "D": {
       "item": "farmersdelight:wheat_dough"

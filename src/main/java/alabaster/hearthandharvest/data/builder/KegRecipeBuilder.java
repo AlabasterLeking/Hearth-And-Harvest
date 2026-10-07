@@ -20,7 +20,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
@@ -29,7 +31,7 @@ import java.util.Map;
 public class KegRecipeBuilder implements RecipeBuilder {
     private final NonNullList<Ingredient> ingredients = NonNullList.create();
     private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
-    private FluidStack inputFluid = FluidStack.EMPTY;
+    private SizedFluidIngredient inputFluid;
     private FluidStack resultFluid = FluidStack.EMPTY;
     private ItemStack resultItem = ItemStack.EMPTY;
     private CaskRecipeBookTab tab;
@@ -46,7 +48,12 @@ public class KegRecipeBuilder implements RecipeBuilder {
     }
 
     public KegRecipeBuilder inputFluid(FluidStack fluid) {
-        this.inputFluid = fluid;
+        this.inputFluid = SizedFluidIngredient.of(fluid);
+        return this;
+    }
+
+    public KegRecipeBuilder inputFluid(TagKey<Fluid> tag, int amount) {
+        this.inputFluid = SizedFluidIngredient.of(tag, amount);
         return this;
     }
 

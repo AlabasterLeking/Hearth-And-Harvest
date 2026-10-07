@@ -3,6 +3,7 @@ package alabaster.hearthandharvest.integration.jei.category;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.block.entity.KegBlockEntity;
 import alabaster.hearthandharvest.common.crafting.KegRecipe;
+import alabaster.hearthandharvest.common.registry.HHDataMaps;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.common.utilities.HHTextUtils;
 import alabaster.hearthandharvest.integration.jei.HHRecipeTypes;
@@ -19,11 +20,10 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.neoforge.NeoForgeTypes;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
 import vectorwing.farmersdelight.common.utility.ClientRenderUtils;
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -94,17 +95,23 @@ public class KegRecipeCategory implements IRecipeCategory<RecipeHolder<KegRecipe
     public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<KegRecipe> holder, IFocusGroup focusGroup) {
         KegRecipe recipe = holder.value();
 
-        FluidStack inputFluid = recipe.getInputFluid();
-        if (!inputFluid.isEmpty()) {
+        List<FluidStack> inputFluids = recipe.getInputFluidStacks();
+        if (!inputFluids.isEmpty()) {
             builder.addSlot(RecipeIngredientRole.INPUT, INPUT_TANK_X, TANK_Y)
                     .setFluidRenderer(KegBlockEntity.TANK_CAPACITY, false, TANK_WIDTH, TANK_HEIGHT)
-                    .addIngredient(NeoForgeTypes.FLUID_STACK, inputFluid);
+                    .addIngredients(NeoForgeTypes.FLUID_STACK, inputFluids);
         }
 
-        NonNullList<Ingredient> ingredients = recipe.getIngredients();
+        List<ItemStack> inputBottles = inputFluids.stream().map(stack -> HHDataMaps.getBottleForFluid(stack.getFluid())).filter(Objects::nonNull).distinct().map(ItemStack::new).toList();
+        if (!inputBottles.isEmpty()) {
+            builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(inputBottles);
+        }
+
+        List<KegRecipe.SlotIngredient> ingredients = recipe.getSlotIngredients();
         for (int index = 0; index < ingredients.size() && index < 2; ++index) {
+            KegRecipe.SlotIngredient ingredient = ingredients.get(index);
             builder.addSlot(RecipeIngredientRole.INPUT, INPUT_SLOT_X, index == 0 ? SLOT_TOP_Y : SLOT_BOTTOM_Y)
-                    .addItemStacks(Arrays.asList(ingredients.get(index).getItems()));
+                    .addItemStacks(Arrays.stream(ingredient.ingredient().getItems()).map(stack -> stack.copyWithCount(ingredient.count())).toList());
         }
 
         ItemStack resultItem = recipe.getResultItem();
@@ -117,6 +124,11 @@ public class KegRecipeCategory implements IRecipeCategory<RecipeHolder<KegRecipe
             builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_TANK_X, TANK_Y)
                     .setFluidRenderer(KegBlockEntity.TANK_CAPACITY, false, TANK_WIDTH, TANK_HEIGHT)
                     .addIngredient(NeoForgeTypes.FLUID_STACK, resultFluid);
+        }
+
+        Item resultBottle = resultFluid.isEmpty() ? null : HHDataMaps.getBottleForFluid(resultFluid.getFluid());
+        if (resultBottle != null) {
+            builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT).addItemStack(new ItemStack(resultBottle));
         }
     }
 

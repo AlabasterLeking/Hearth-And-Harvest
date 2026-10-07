@@ -1,13 +1,22 @@
 {
   "values": {
+    "hearthandharvest:beer": {
+      "overlay": "bottle"
+    },
     "hearthandharvest:blueberry_wine": {
       "overlay": "bottle"
+    },
+    "hearthandharvest:cheese_wheel": {
+      "draw_model": false
     },
     "hearthandharvest:cherry_wine": {
       "overlay": "bottle"
     },
     "hearthandharvest:glow_berry_wine": {
       "overlay": "bottle"
+    },
+    "hearthandharvest:goat_cheese_wheel": {
+      "draw_model": false
     },
     "hearthandharvest:green_grape_wine": {
       "overlay": "bottle"

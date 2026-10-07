@@ -182,6 +182,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.ROPE_COIL.get())
                 .add(HHModItems.CORN_HUSK_BUNDLE.get())
                 .add(HHModItems.CORN_KERNEL_BAG.get())
+                .add(HHModItems.HOPS_BAG.get())
                 .add(HHModItems.CHARCOAL_BLOCK.get())
                 .add(HHModItems.STICK_BRUSH.get())
                 .add(HHModItems.SUGAR_CANE_BUNDLE.get());
@@ -191,6 +192,9 @@ public class HHItemTags extends ItemTagsProvider {
 
         tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CORN_KERNEL)
                 .add(HHModItems.CORN_KERNEL_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_HOPS)
+                .add(HHModItems.HOPS_BAG.get());
 
         tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CORN_HUSK)
                 .add(HHModItems.CORN_HUSK_BUNDLE.get());
@@ -302,7 +306,8 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.WILD_COTTON.get())
                 .add(HHModItems.WILD_PEANUTS.get())
                 .add(HHModItems.WILD_GREEN_GRAPES.get())
-                .add(HHModItems.WILD_RED_GRAPES.get());
+                .add(HHModItems.WILD_RED_GRAPES.get())
+                .add(HHModItems.WILD_HOPS.get());
 
         tag(HHCommonTags.FIBERS)
                 .add(HHModItems.CORN_HUSK.get());
@@ -357,21 +362,27 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.RASPBERRY.get())
                 .add(HHModItems.RED_GRAPES.get())
                 .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.HOPS.get())
                 .add(HHModItems.PEANUT.get())
                 .add(HHModItems.COTTON.get())
                 .add(HHModItems.CORN.get());
+
+        tag(HHModTags.CORN_THINNING_TOOLS)
+                .add(HHModItems.PITCHFORK.get());
 
         tag(HHModTags.TRELLIS_PLANTABLE)
                 .add(Items.ROSE_BUSH)
                 .add(Items.VINE)
                 .add(HHModItems.RED_GRAPES.get())
-                .add(HHModItems.GREEN_GRAPES.get());
+                .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.HOPS.get());
 
         tag(ItemTags.SMALL_FLOWERS)
                 .add(HHModItems.WILD_PEANUTS.get())
                 .add(HHModItems.WILD_COTTON.get())
                 .add(HHModItems.WILD_GREEN_GRAPES.get())
                 .add(HHModItems.WILD_RED_GRAPES.get())
+                .add(HHModItems.WILD_HOPS.get())
                 .add(HHModItems.YELLOW_MUM.get())
                 .add(HHModItems.ORANGE_MUM.get())
                 .add(HHModItems.RED_MUM.get())
@@ -399,6 +410,12 @@ public class HHItemTags extends ItemTagsProvider {
 
         tag(HHCommonTags.CROPS_PEANUT)
                 .add(HHModItems.PEANUT.get());
+
+        tag(HHCommonTags.CROPS_HOPS)
+                .add(HHModItems.HOPS.get());
+
+        tag(Tags.Items.FOODS_VEGETABLE)
+                .add(HHModItems.HOPS.get());
 
         tag(HHCommonTags.CROPS_COTTON)
                 .add(HHModItems.COTTON.get());
@@ -430,13 +447,16 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.CORN_KERNELS.get());
 
         tag(ItemTags.COW_FOOD)
-                .add(HHModItems.CORN.get());
+                .add(HHModItems.CORN.get())
+                .add(HHModItems.HOPS.get());
 
         tag(ItemTags.GOAT_FOOD)
-                .add(HHModItems.CORN.get());
+                .add(HHModItems.CORN.get())
+                .add(HHModItems.HOPS.get());
 
         tag(ItemTags.HORSE_FOOD)
-                .add(HHModItems.CORN.get());
+                .add(HHModItems.CORN.get())
+                .add(HHModItems.HOPS.get());
 
         tag(ItemTags.LLAMA_FOOD)
                 .add(HHModItems.CORN.get());
@@ -502,6 +522,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.GREEN_GRAPE_WINE.get())
                 .add(HHModItems.MEAD.get())
                 .add(HHModItems.ROOT_BEER.get())
+                .add(HHModItems.BEER.get())
                 .add(HHModItems.HARD_CIDER.get())
                 .add(HHModItems.RASPBERRY_WINE.get())
                 .add(HHModItems.RED_GRAPE_WINE.get())
@@ -541,6 +562,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.MELON_WINE.get())
                 .add(HHModItems.MEAD.get())
                 .add(HHModItems.ROOT_BEER.get())
+                .add(HHModItems.BEER.get())
                 .add(HHModItems.HARD_CIDER.get())
                 .add(HHModItems.MOONSHINE.get());
 
@@ -579,9 +601,6 @@ public class HHItemTags extends ItemTagsProvider {
         tag(Tags.Items.FOODS_FOOD_POISONING)
                 .add(HHModItems.CHARRED_MARSHMALLOW_STICK.get());
 
-        tag(HHCommonTags.NUTS)
-                .add(HHModItems.PEANUT.get());
-
         tag(HHCommonTags.FOODS_NUT)
                 .add(HHModItems.PEANUT.get());
 
@@ -602,7 +621,8 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.JERKY.get());
 
         tag(Tags.Items.BUCKETS)
-                .add(HHModItems.SAP_BUCKET.get());
+                .add(HHModItems.SAP_BUCKET.get())
+                .add(HHModItems.BRINE_BUCKET.get());
 
         tag(HHCommonTags.BUCKETS_SAP)
                 .add(HHModItems.SAP_BUCKET.get());
@@ -626,6 +646,10 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.MELON_JAM.get());
 
         tag(HHModTags.CHEESE_SLICES)
+                .add(HHModItems.CHEESE_SLICE.get())
+                .add(HHModItems.GOAT_CHEESE_SLICE.get());
+
+        tag(HHCommonTags.FOODS_CHEESE)
                 .add(HHModItems.CHEESE_SLICE.get())
                 .add(HHModItems.GOAT_CHEESE_SLICE.get());
 
@@ -796,6 +820,7 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.RASPBERRY.get())
                 .add(HHModItems.RED_GRAPES.get())
                 .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.HOPS.get())
                 .add(HHModItems.COTTON_SEEDS.get())
                 .add(HHModItems.PEANUT.get())
                 .add(HHModItems.CORN_KERNELS.get());
@@ -803,6 +828,7 @@ public class HHItemTags extends ItemTagsProvider {
         tag(CompatibilityTags.SERENE_SEASONS_AUTUMN_CROPS)
                 .add(HHModItems.RED_GRAPES.get())
                 .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.HOPS.get())
                 .add(HHModItems.COTTON_SEEDS.get())
                 .add(HHModItems.CORN_KERNELS.get());
 

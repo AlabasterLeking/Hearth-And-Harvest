@@ -23,6 +23,7 @@ public final class VintageHelper {
     public static final String[] STAGE_NAMES = {"aged", "fine", "reserve"};
 
     private static final float DURATION_BONUS_PER_VINTAGE = 0.5F;
+    private static final int[] NUTRITION_BONUS = {0, 1, 2, 4};
 
     private VintageHelper() {
     }
@@ -104,6 +105,20 @@ public final class VintageHelper {
         }
         float saturation = food.saturation() + food.nutrition() * 2.0F * saturationBonusPerVintage * vintage;
         return new FoodProperties(food.nutrition(), saturation, food.canAlwaysEat(), food.eatSeconds(), food.usingConvertsTo(), effects);
+    }
+
+    public static int nutritionBonus(int vintage) {
+        return NUTRITION_BONUS[Mth.clamp(vintage, 0, MAX_VINTAGE)];
+    }
+
+    public static FoodProperties scaleFood(FoodProperties food, int vintage, float saturationBonusPerVintage) {
+        FoodProperties scaled = scale(food, vintage, saturationBonusPerVintage, null);
+        return new FoodProperties(scaled.nutrition() + nutritionBonus(vintage), scaled.saturation(), scaled.canAlwaysEat(), scaled.eatSeconds(), scaled.usingConvertsTo(), scaled.effects());
+    }
+
+    public static Component vintageName(ItemStack stack, Component name) {
+        int vintage = getVintage(stack);
+        return vintage > 0 ? Component.translatable("item.hearthandharvest.vintage_name." + vintage, name) : name;
     }
 
     public static void appendTooltip(ItemStack stack, List<Component> tooltip) {

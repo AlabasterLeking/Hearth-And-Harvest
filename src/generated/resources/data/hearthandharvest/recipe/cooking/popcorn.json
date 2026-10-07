@@ -1,0 +1,24 @@
+{
+  "type": "farmersdelight:cooking",
+  "cookingtime": 100,
+  "experience": 0.35,
+  "ingredients": [
+    {
+      "item": "hearthandharvest:corn_kernels"
+    },
+    {
+      "item": "hearthandharvest:corn_kernels"
+    },
+    {
+      "item": "hearthandharvest:cooking_oil"
+    },
+    {
+      "tag": "c:dusts/salt"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "count": 4,
+    "id": "hearthandharvest:popcorn"
+  }
+}

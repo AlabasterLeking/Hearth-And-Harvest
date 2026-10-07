@@ -13,7 +13,7 @@
       "tag": "c:foods/vegetable"
     },
     {
-      "tag": "hearthandharvest:cheese_slices"
+      "tag": "c:foods/cheese"
     }
   ],
   "recipe_book_tab": "meals",

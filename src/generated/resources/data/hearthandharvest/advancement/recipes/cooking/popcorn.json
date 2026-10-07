@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_corn_kernels": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:corn_kernels"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:cooking/popcorn"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_corn_kernels"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:cooking/popcorn"
+    ]
+  }
+}

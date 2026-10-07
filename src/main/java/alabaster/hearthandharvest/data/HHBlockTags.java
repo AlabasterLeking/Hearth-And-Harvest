@@ -55,7 +55,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 ModBlocks.BUDDING_TOMATO_CROP.get(),
                 HHModBlocks.BLUEBERRY_BUSH.get(),
                 HHModBlocks.RASPBERRY_BUSH.get(),
-                HHModBlocks.GRAPE_TRELLIS.get(),
+                HHModBlocks.CROP_TRELLIS.get(),
                 HHModBlocks.PEANUT_CROP.get(),
                 HHModBlocks.CORN_STALK.get()
         );
@@ -80,7 +80,7 @@ public class HHBlockTags extends BlockTagsProvider {
 
     protected void registerMinecraftTags() {
         tag(BlockTags.CROPS).add(
-                HHModBlocks.GRAPE_TRELLIS.get(),
+                HHModBlocks.CROP_TRELLIS.get(),
                 HHModBlocks.COTTON_CROP.get(),
                 HHModBlocks.PEANUT_CROP.get(),
                 HHModBlocks.CORN_STALK.get()
@@ -91,12 +91,12 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.PEANUT_CROP.get(),
                 HHModBlocks.CORN_STALK.get(),
                 HHModBlocks.TRELLIS.get(),
-                HHModBlocks.GRAPE_TRELLIS.get()
+                HHModBlocks.CROP_TRELLIS.get()
         );
 
         tag(BlockTags.CLIMBABLE).add(
                 HHModBlocks.TRELLIS.get(),
-                HHModBlocks.GRAPE_TRELLIS.get()
+                HHModBlocks.CROP_TRELLIS.get()
         );
 
         tag(BlockTags.FLOWERS).add(
@@ -115,6 +115,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.WILD_PEANUTS.get(),
                 HHModBlocks.WILD_GREEN_GRAPES.get(),
                 HHModBlocks.WILD_RED_GRAPES.get(),
+                HHModBlocks.WILD_HOPS.get(),
                 HHModBlocks.YELLOW_MUM.get(),
                 HHModBlocks.ORANGE_MUM.get(),
                 HHModBlocks.RED_MUM.get(),
@@ -271,6 +272,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.ROPE_COIL.get(),
                 HHModBlocks.CORN_HUSK_BUNDLE.get(),
                 HHModBlocks.CORN_KERNEL_BAG.get(),
+                HHModBlocks.HOPS_BAG.get(),
                 HHModBlocks.CHARCOAL_BLOCK.get(),
                 HHModBlocks.STICK_BRUSH.get()
         );
@@ -281,7 +283,8 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.WILD_RED_GRAPES.get(),
                 HHModBlocks.WILD_GREEN_GRAPES.get(),
                 HHModBlocks.WILD_COTTON.get(),
-                HHModBlocks.WILD_PEANUTS.get()
+                HHModBlocks.WILD_PEANUTS.get(),
+                HHModBlocks.WILD_HOPS.get()
         );
 
         tag(ModTags.Blocks.COMPOST_ACTIVATORS).add(
@@ -319,7 +322,7 @@ public class HHBlockTags extends BlockTagsProvider {
         );
         tag(HHModTags.TRELLISES).add(
                 HHModBlocks.TRELLIS.get(),
-                HHModBlocks.GRAPE_TRELLIS.get()
+                HHModBlocks.CROP_TRELLIS.get()
         );
 
         tag(ModTags.Blocks.CABINETS_WOODEN).add(
@@ -374,6 +377,7 @@ public class HHBlockTags extends BlockTagsProvider {
 
         tag(HHCommonTags.STORAGE_BLOCKS_SALT).add(HHModBlocks.SALT_BAG.get());
         tag(HHCommonTags.STORAGE_BLOCKS_CORN_KERNEL).add(HHModBlocks.CORN_KERNEL_BAG.get());
+        tag(HHCommonTags.STORAGE_BLOCKS_HOPS).add(HHModBlocks.HOPS_BAG.get());
         tag(HHCommonTags.STORAGE_BLOCKS_CORN_HUSK).add(HHModBlocks.CORN_HUSK_BUNDLE.get());
         tag(HHCommonTags.STORAGE_BLOCKS_ROPE).add(HHModBlocks.ROPE_COIL.get());
     }
@@ -382,21 +386,21 @@ public class HHBlockTags extends BlockTagsProvider {
         tag(CompatibilityTags.SERENE_SEASONS_SPRING_CROPS_BLOCK).add(
                 HHModBlocks.BLUEBERRY_BUSH.get(),
                 HHModBlocks.RASPBERRY_BUSH.get(),
-                HHModBlocks.GRAPE_TRELLIS.get(),
+                HHModBlocks.CROP_TRELLIS.get(),
                 HHModBlocks.PEANUT_CROP.get()
         );
 
         tag(CompatibilityTags.SERENE_SEASONS_SUMMER_CROPS_BLOCK).add(
                 HHModBlocks.BLUEBERRY_BUSH.get(),
                 HHModBlocks.RASPBERRY_BUSH.get(),
-                HHModBlocks.GRAPE_TRELLIS.get(),
+                HHModBlocks.CROP_TRELLIS.get(),
                 HHModBlocks.COTTON_CROP.get(),
                 HHModBlocks.PEANUT_CROP.get(),
                 HHModBlocks.CORN_STALK.get()
         );
 
         tag(CompatibilityTags.SERENE_SEASONS_AUTUMN_CROPS_BLOCK).add(
-                HHModBlocks.GRAPE_TRELLIS.get(),
+                HHModBlocks.CROP_TRELLIS.get(),
                 HHModBlocks.COTTON_CROP.get(),
                 HHModBlocks.CORN_STALK.get()
         );
@@ -417,7 +421,7 @@ public class HHBlockTags extends BlockTagsProvider {
                         HHModBlocks.CRATE.get(),
                         HHModBlocks.SPRINKLER.get(),
                         HHModBlocks.TRELLIS.get(),
-                        HHModBlocks.GRAPE_TRELLIS.get(),
+                        HHModBlocks.CROP_TRELLIS.get(),
                         HHModBlocks.OAK_HALF_CABINET.get(),
                         HHModBlocks.BIRCH_HALF_CABINET.get(),
                         HHModBlocks.SPRUCE_HALF_CABINET.get(),
@@ -514,6 +518,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.SUGAR_BAG.get(),
                 HHModBlocks.COCOA_BEAN_BAG.get(),
                 HHModBlocks.CORN_KERNEL_BAG.get(),
+                HHModBlocks.HOPS_BAG.get(),
                 HHModBlocks.FLOUR_BAG.get(),
                 HHModBlocks.GUNPOWDER_BAG.get(),
                 HHModBlocks.MANURE_BAG.get(),

@@ -383,16 +383,20 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
     }
 
     private void craft(KegRecipe recipe) {
-        FluidStack inputFluid = recipe.getInputFluid();
-        if (!inputFluid.isEmpty()) {
-            inputTank.drain(inputFluid.getAmount(), IFluidHandler.FluidAction.EXECUTE);
+        int[] inputSlots = {INPUT_SLOT_ONE, INPUT_SLOT_TWO};
+        List<ItemStack> inputs = List.of(inventory.getStackInSlot(INPUT_SLOT_ONE), inventory.getStackInSlot(INPUT_SLOT_TWO));
+        int[] usage = recipe.getItemUsage(inputs);
+        if (usage == null) return;
+
+        if (recipe.getInputAmount() > 0) {
+            inputTank.drain(recipe.getInputAmount(), IFluidHandler.FluidAction.EXECUTE);
         }
 
-        for (int slot : new int[]{INPUT_SLOT_ONE, INPUT_SLOT_TWO}) {
-            ItemStack stored = inventory.getStackInSlot(slot);
-            if (!stored.isEmpty()) {
-                stored.shrink(1);
-            }
+        for (int i = 0; i < inputSlots.length; i++) {
+            if (usage[i] <= 0) continue;
+            ItemStack stored = inventory.getStackInSlot(inputSlots[i]).copy();
+            stored.shrink(usage[i]);
+            inventory.setStackInSlot(inputSlots[i], stored);
         }
 
         FluidStack resultFluid = recipe.getResultFluid();

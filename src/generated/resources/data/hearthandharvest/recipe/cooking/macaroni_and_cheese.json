@@ -19,7 +19,7 @@
       "item": "hearthandharvest:butter"
     },
     {
-      "tag": "hearthandharvest:cheese_slices"
+      "tag": "c:foods/cheese"
     }
   ],
   "recipe_book_tab": "meals",

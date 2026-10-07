@@ -1,6 +1,7 @@
 {
   "values": {
     "hearthandharvest:apple_cider": "farmersdelight:apple_cider",
+    "hearthandharvest:beer": "hearthandharvest:beer",
     "hearthandharvest:blueberry_juice": "hearthandharvest:blueberry_juice",
     "hearthandharvest:blueberry_wine": "hearthandharvest:blueberry_wine",
     "hearthandharvest:cherry_juice": "hearthandharvest:cherry_juice",

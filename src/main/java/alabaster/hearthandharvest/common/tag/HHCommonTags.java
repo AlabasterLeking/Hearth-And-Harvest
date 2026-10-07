@@ -15,6 +15,7 @@ public class HHCommonTags {
     public static final TagKey<Item> FRUITS_CHERRY = commonItemTag("fruits/cherry");
     public static final TagKey<Item> FRUITS_GRAPE = commonItemTag("fruits/grape");
     public static final TagKey<Item> CROPS_PEANUT = commonItemTag("crops/peanut");
+    public static final TagKey<Item> CROPS_HOPS = commonItemTag("crops/hops");
     public static final TagKey<Item> CROPS_COTTON = commonItemTag("crops/cotton");
     public static final TagKey<Item> VEGETABLES_CORN = commonItemTag("vegetables/corn");
     public static final TagKey<Item> CROPS_CORN = commonItemTag("crops/corn");
@@ -111,7 +112,6 @@ public class HHCommonTags {
     public static final TagKey<Item> FIBERS = commonItemTag("fibers");
     public static final TagKey<Item> MANURE = commonItemTag("manure");
     public static final TagKey<Item> BUTTER = commonItemTag("butter");
-    public static final TagKey<Item> NUTS = commonItemTag("nuts");
 
     public static final TagKey<Item> SEEDS_COTTON = commonItemTag("seeds/cotton");
     public static final TagKey<Item> SEEDS_BLUEBERRY = commonItemTag("seeds/blueberry");
@@ -120,6 +120,7 @@ public class HHCommonTags {
     public static final TagKey<Item> BUCKETS_SAP = commonItemTag("buckets/sap");
 
     public static final TagKey<Item> FOODS_NUT = commonItemTag("foods/nut");
+    public static final TagKey<Item> FOODS_CHEESE = commonItemTag("foods/cheese");
     public static final TagKey<Item> FOODS_CARAMEL = commonItemTag("foods/caramel");
     public static final TagKey<Item> FOODS_COTTON_CANDY = commonItemTag("foods/cotton_candy");
     public static final TagKey<Item> FOODS_CHOCOLATE = commonItemTag("foods/chocolate");
@@ -128,6 +129,8 @@ public class HHCommonTags {
 
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SALT = commonItemTag("storage_blocks/salt");
     public static final TagKey<Block> STORAGE_BLOCKS_SALT = commonBlockTag("storage_blocks/salt");
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_HOPS = commonItemTag("storage_blocks/hops");
+    public static final TagKey<Block> STORAGE_BLOCKS_HOPS = commonBlockTag("storage_blocks/hops");
 
     public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CORN_KERNEL = commonItemTag("storage_blocks/corn_kernel");
     public static final TagKey<Block> STORAGE_BLOCKS_CORN_KERNEL = commonBlockTag("storage_blocks/corn_kernel");

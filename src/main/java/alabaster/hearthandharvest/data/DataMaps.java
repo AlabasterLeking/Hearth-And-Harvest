@@ -55,8 +55,10 @@ public class DataMaps extends DataMapProvider
                 .add(HHModItems.WILD_PEANUTS.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
                 .add(HHModItems.WILD_GREEN_GRAPES.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
                 .add(HHModItems.WILD_RED_GRAPES.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
+                .add(HHModItems.WILD_HOPS.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
                 .add(HHModItems.GREEN_GRAPES.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
                 .add(HHModItems.RED_GRAPES.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
+                .add(HHModItems.HOPS.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
                 .add(HHModItems.COTTON.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
                 .add(HHModItems.PEANUT.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
                 .add(HHModItems.CHERRY.get().asItem().builtInRegistryHolder(), new Compostable(0.65F), false)
@@ -68,6 +70,8 @@ public class DataMaps extends DataMapProvider
                 .add(HHModItems.PEANUT_BUTTER_PIE_SLICE.get().asItem().builtInRegistryHolder(), new Compostable(0.85F), false)
                 .add(HHModItems.CHICKEN_POT_PIE_SLICE.get().asItem().builtInRegistryHolder(), new Compostable(0.85F), false)
                 .add(HHModItems.CARROT_CAKE_SLICE.get().asItem().builtInRegistryHolder(), new Compostable(0.85F), false)
+                .add(HHModItems.CHERRY_PIE_SLICE.get().asItem().builtInRegistryHolder(), new Compostable(0.85F), false)
+                .add(HHModItems.CHOCOLATE_CAKE_SLICE.get().asItem().builtInRegistryHolder(), new Compostable(0.85F), false)
 
                 // 100% chance
                 .add(HHModItems.BLUEBERRY_PIE.get().asItem().builtInRegistryHolder(), new Compostable(1.0F), false)
@@ -76,6 +80,8 @@ public class DataMaps extends DataMapProvider
                 .add(HHModItems.PEANUT_BUTTER_PIE.get().asItem().builtInRegistryHolder(), new Compostable(1.0F), false)
                 .add(HHModItems.CHICKEN_POT_PIE.get().asItem().builtInRegistryHolder(), new Compostable(1.0F), false)
                 .add(HHModItems.CARROT_CAKE.get().asItem().builtInRegistryHolder(), new Compostable(1.0F), false)
+                .add(HHModItems.CHERRY_PIE.get().asItem().builtInRegistryHolder(), new Compostable(1.0F), false)
+                .add(HHModItems.CHOCOLATE_CAKE.get().asItem().builtInRegistryHolder(), new Compostable(1.0F), false)
         ;
 
         builder(HHDataMaps.FLUID_BOTTLE)
@@ -86,6 +92,7 @@ public class DataMaps extends DataMapProvider
                 .add(HHModFluids.APPLE_CIDER.source().get().builtInRegistryHolder(), ModItems.APPLE_CIDER.get().asItem(), false)
                 .add(HHModFluids.HARD_CIDER.source().get().builtInRegistryHolder(), HHModItems.HARD_CIDER.get().asItem(), false)
                 .add(HHModFluids.ROOT_BEER.source().get().builtInRegistryHolder(), HHModItems.ROOT_BEER.get().asItem(), false)
+                .add(HHModFluids.BEER.source().get().builtInRegistryHolder(), HHModItems.BEER.get().asItem(), false)
                 .add(HHModFluids.MEAD.source().get().builtInRegistryHolder(), HHModItems.MEAD.get().asItem(), false)
                 .add(HHModFluids.MOONSHINE.source().get().builtInRegistryHolder(), HHModItems.MOONSHINE.get().asItem(), false)
                 .add(HHModFluids.BLUEBERRY_JUICE.source().get().builtInRegistryHolder(), HHModItems.BLUEBERRY_JUICE.get().asItem(), false)
@@ -108,10 +115,11 @@ public class DataMaps extends DataMapProvider
 
         VintageStyle bottle = new VintageStyle(true, false, "bottle", true);
         VintageStyle jar = new VintageStyle(true, true, "jar", true);
+        VintageStyle cheese = new VintageStyle(true, false, VintageStyle.NO_OVERLAY, false);
 
         var vintage = builder(HHDataMaps.VINTAGE_STYLE);
         for (Supplier<Item> item : List.of(
-                HHModItems.MEAD, HHModItems.HARD_CIDER, HHModItems.ROOT_BEER, HHModItems.MOONSHINE,
+                HHModItems.MEAD, HHModItems.HARD_CIDER, HHModItems.ROOT_BEER, HHModItems.BEER, HHModItems.MOONSHINE,
                 HHModItems.BLUEBERRY_WINE, HHModItems.CHERRY_WINE, HHModItems.RASPBERRY_WINE,
                 HHModItems.RED_GRAPE_WINE, HHModItems.GREEN_GRAPE_WINE, HHModItems.SWEET_BERRY_WINE,
                 HHModItems.GLOW_BERRY_WINE, HHModItems.MELON_WINE)) {
@@ -121,6 +129,9 @@ public class DataMaps extends DataMapProvider
                 HHModItems.PICKLED_BEETROOTS, HHModItems.PICKLED_CABBAGE, HHModItems.PICKLED_CARROTS,
                 HHModItems.PICKLED_ONIONS, HHModItems.PICKLED_POTATOES)) {
             vintage.add(item.get().asItem().builtInRegistryHolder(), jar, false);
+        }
+        for (Supplier<Item> item : List.of(HHModItems.CHEESE_WHEEL, HHModItems.GOAT_CHEESE_WHEEL)) {
+            vintage.add(item.get().asItem().builtInRegistryHolder(), cheese, false);
         }
     }
 }

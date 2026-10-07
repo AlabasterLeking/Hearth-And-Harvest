@@ -1,0 +1,25 @@
+{
+  "type": "hearthandharvest:fermenting",
+  "experience": 0.35,
+  "ferment_time": 1200,
+  "ingredients": [
+    {
+      "item": "minecraft:hanging_roots"
+    },
+    {
+      "item": "minecraft:hanging_roots"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "input_fluid": {
+    "amount": 250,
+    "fluid": "minecraft:water"
+  },
+  "recipe_book_tab": "drinks",
+  "result_fluid": {
+    "amount": 250,
+    "id": "hearthandharvest:root_beer"
+  }
+}

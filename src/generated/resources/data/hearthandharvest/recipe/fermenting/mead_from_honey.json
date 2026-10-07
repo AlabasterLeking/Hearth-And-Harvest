@@ -1,0 +1,19 @@
+{
+  "type": "hearthandharvest:fermenting",
+  "experience": 0.35,
+  "ferment_time": 1200,
+  "ingredients": [
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "input_fluid": {
+    "amount": 250,
+    "tag": "c:honey"
+  },
+  "recipe_book_tab": "drinks",
+  "result_fluid": {
+    "amount": 250,
+    "id": "hearthandharvest:mead"
+  }
+}

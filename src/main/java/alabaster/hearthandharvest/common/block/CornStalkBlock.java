@@ -1,11 +1,14 @@
 package alabaster.hearthandharvest.common.block;
 
+import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.common.block.IHarvestable;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import alabaster.hearthandharvest.common.tag.HHCommonTags;
+import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -37,6 +40,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.*;
@@ -52,6 +56,7 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
     public static final BooleanProperty TRIM_SOUTH = BooleanProperty.create("trim_south");
     public static final BooleanProperty TRIM_WEST  = BooleanProperty.create("trim_west");
     public static final BooleanProperty CROW_PROOF = BooleanProperty.create("crow_proof");
+    public static final BooleanProperty PASSABLE = BooleanProperty.create("passable");
 
     private static final int MAX_AGE = 5;
 
@@ -92,7 +97,8 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
                 .setValue(TRIM_EAST, false)
                 .setValue(TRIM_SOUTH, false)
                 .setValue(TRIM_WEST, false)
-                .setValue(CROW_PROOF, false));
+                .setValue(CROW_PROOF, false)
+                .setValue(PASSABLE, false));
     }
 
     @Override
@@ -132,7 +138,7 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(SECTION, AGE, TRIM_NORTH, TRIM_EAST, TRIM_SOUTH, TRIM_WEST, CROW_PROOF);
+        builder.add(SECTION, AGE, TRIM_NORTH, TRIM_EAST, TRIM_SOUTH, TRIM_WEST, CROW_PROOF, PASSABLE);
     }
 
     protected ItemLike getBaseSeedId() {
@@ -304,7 +310,8 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
 
         BlockState newState = this.defaultBlockState()
                 .setValue(SECTION, CornSection.MIDDLE)
-                .setValue(AGE, 0);
+                .setValue(AGE, 0)
+                .setValue(PASSABLE, world.getBlockState(pos).getValue(PASSABLE));
         world.setBlock(above, newState, 3);
     }
 
@@ -315,7 +322,8 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
 
         BlockState newState = this.defaultBlockState()
                 .setValue(SECTION, CornSection.TOP)
-                .setValue(AGE, 0);
+                .setValue(AGE, 0)
+                .setValue(PASSABLE, world.getBlockState(pos).getValue(PASSABLE));
         world.setBlock(above, newState, 3);
     }
 
@@ -362,6 +370,9 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
         if (stack.getItem() == Items.SHEARS && clickedDir != null && state.getValue(AGE) > 2) {
             return handleShears(stack, state, level, pos, player, hand, clickedDir);
         }
+        if (stack.is(HHModTags.CORN_THINNING_TOOLS)) {
+            return togglePassable(stack, state, level, pos, player, hand);
+        }
         return handleHarvestInteraction(state, level, pos, player);
     }
 
@@ -385,6 +396,24 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
         EquipmentSlot slot = (hand == InteractionHand.MAIN_HAND) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
         stack.hurtAndBreak(1, player, slot);
         return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    private ItemInteractionResult togglePassable(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand) {
+        if (level.isClientSide) return ItemInteractionResult.sidedSuccess(true);
+
+        boolean passable = !state.getValue(PASSABLE);
+        BlockPos base = pos;
+        while (level.getBlockState(base.below()).getBlock() instanceof CornStalkBlock) {
+            base = base.below();
+        }
+        for (BlockPos p = base; level.getBlockState(p).getBlock() instanceof CornStalkBlock; p = p.above()) {
+            level.setBlock(p, level.getBlockState(p).setValue(PASSABLE, passable), 3);
+        }
+
+        level.playSound(null, pos, SoundEvents.CROP_BREAK, SoundSource.BLOCKS, 1.0f, passable ? 0.8f : 1.2f);
+        EquipmentSlot slot = (hand == InteractionHand.MAIN_HAND) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+        stack.hurtAndBreak(1, player, slot);
+        return ItemInteractionResult.sidedSuccess(false);
     }
 
     private ItemInteractionResult handleHarvestInteraction(BlockState state, Level level, BlockPos pos, Player player) {
@@ -460,15 +489,12 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        if (state.getValue(AGE) < 3) return Shapes.empty();
+        if (state.getValue(AGE) < 3 || state.getValue(PASSABLE)) return Shapes.empty();
         if (!(context instanceof EntityCollisionContext entityCtx)) return Shapes.empty();
+        if (!cornCollisionEnabled()) return Shapes.empty();
 
         Entity entity = entityCtx.getEntity();
         if (entity == null || entity instanceof ItemEntity) return Shapes.empty();
-
-        if (entity instanceof Player player && player.getY() > pos.getY() + 0.05) {
-            return Shapes.empty();
-        }
 
         double h = getVoxelHeight(state.getValue(SECTION), state.getValue(AGE));
 
@@ -487,11 +513,22 @@ public class CornStalkBlock extends Block implements BonemealableBlock, IHarvest
             }
         }
 
+        if (context.isAbove(stalk, pos, false)) return Shapes.empty();
+
+        AABB box = entity.getBoundingBox().deflate(1.0E-4);
+        for (AABB part : stalk.toAabbs()) {
+            if (part.move(pos).intersects(box)) return Shapes.empty();
+        }
+
         return stalk;
     }
 
     protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
-        return false;
+        return pathComputationType == PathComputationType.LAND && (state.getValue(PASSABLE) || !cornCollisionEnabled());
+    }
+
+    private static boolean cornCollisionEnabled() {
+        return !Config.COMMON_CONFIG.isLoaded() || Config.CORN_COLLISION.get();
     }
 
     @Override

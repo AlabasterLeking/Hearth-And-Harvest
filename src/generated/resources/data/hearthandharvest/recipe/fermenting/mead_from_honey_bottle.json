@@ -1,0 +1,26 @@
+{
+  "type": "hearthandharvest:fermenting",
+  "experience": 0.35,
+  "ferment_time": 1200,
+  "ingredients": [
+    {
+      "item": "minecraft:honey_bottle"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "input_fluid": {
+    "amount": 250,
+    "fluid": "minecraft:water"
+  },
+  "recipe_book_tab": "drinks",
+  "result_fluid": {
+    "amount": 250,
+    "id": "hearthandharvest:mead"
+  },
+  "result_item": {
+    "count": 1,
+    "id": "minecraft:glass_bottle"
+  }
+}

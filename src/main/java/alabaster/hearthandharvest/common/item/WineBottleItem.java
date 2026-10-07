@@ -202,6 +202,11 @@ public class WineBottleItem extends Item implements AgeableItem {
     }
 
     @Override
+    public Component getName(ItemStack stack) {
+        return VintageHelper.vintageName(stack, super.getName(stack));
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag isAdvanced) {
         VintageHelper.appendTooltip(stack, tooltip);
         if (glasses > 1) {

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hops": {
+      "conditions": {
+        "items": [
+          {
+            "items": "hearthandharvest:hops"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:fermenting/beer"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hops"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:fermenting/beer"
+    ]
+  }
+}
