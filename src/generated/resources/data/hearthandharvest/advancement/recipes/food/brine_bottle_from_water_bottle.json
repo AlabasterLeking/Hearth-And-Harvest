@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_honey_bottle": {
+    "has_salt": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:honey_bottle"
+            "items": "hearthandharvest:salt"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "hearthandharvest:fermenting/mead_from_honey"
+        "recipe": "hearthandharvest:brine_bottle_from_water_bottle"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_honey_bottle"
+      "has_salt"
     ]
   ],
   "rewards": {
     "recipes": [
-      "hearthandharvest:fermenting/mead_from_honey"
+      "hearthandharvest:brine_bottle_from_water_bottle"
     ]
   }
 }

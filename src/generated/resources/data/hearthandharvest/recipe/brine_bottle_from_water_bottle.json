@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "type": "neoforge:components",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        }
+      },
+      "items": "minecraft:potion"
+    },
+    {
+      "tag": "c:dusts/salt"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "hearthandharvest:brine_bottle"
+  }
+}

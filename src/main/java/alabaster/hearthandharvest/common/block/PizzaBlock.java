@@ -35,9 +35,9 @@ public class PizzaBlock extends PieBlock {
     private static VoxelShape[][] buildShapes() {
         VoxelShape[] base = {
                 Shapes.or(NORTH_WEST, NORTH_EAST, SOUTH_WEST, SOUTH_EAST),
-                Shapes.or(NORTH_EAST, SOUTH_WEST, SOUTH_EAST),
-                Shapes.or(SOUTH_WEST, SOUTH_EAST),
-                SOUTH_EAST
+                Shapes.or(NORTH_WEST, NORTH_EAST, SOUTH_WEST),
+                Shapes.or(NORTH_WEST, NORTH_EAST),
+                NORTH_EAST
         };
 
         VoxelShape[][] shapes = new VoxelShape[base.length][4];
@@ -60,4 +60,4 @@ public class PizzaBlock extends PieBlock {
         }
         return rotated;
     }
-}
+}

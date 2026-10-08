@@ -208,6 +208,15 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper, KegRecipe> {
         for (int slot = 0; slot < KegBlockEntity.INVENTORY_SIZE; slot++) {
             helper.accountSimpleStack(blockEntity.getInventory().getStackInSlot(slot));
         }
+
+        FluidStack stored = blockEntity.getInputTank().getFluid();
+        int servings = stored.getAmount() / 250;
+        if (servings > 0) {
+            ItemStack container = KegRecipe.containerFor(stored.getFluid());
+            if (!container.isEmpty()) {
+                helper.accountStack(container.copyWithCount(Math.min(servings, container.getMaxStackSize())));
+            }
+        }
     }
 
     @Override

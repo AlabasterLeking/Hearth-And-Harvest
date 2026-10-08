@@ -64,13 +64,6 @@ public class KegRecipes {
                 .unlockedByItems("has_honey_bottle", Items.HONEY_BOTTLE)
                 .build(output, "mead_from_honey_bottle");
 
-        new KegRecipeBuilder(BREW_TIME, BREW_EXP)
-                .inputFluid(Tags.Fluids.HONEY, BOTTLE)
-                .addIngredient(Items.SUGAR)
-                .resultFluid(new FluidStack(HHModFluids.MEAD.source().get(), BOTTLE))
-                .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
-                .unlockedByItems("has_honey_bottle", Items.HONEY_BOTTLE)
-                .build(output, "mead_from_honey");
 
         new KegRecipeBuilder(BREW_TIME, BREW_EXP)
                 .inputFluid(new FluidStack(Fluids.WATER, BOTTLE))

@@ -37,7 +37,7 @@ public class CheeseWheelBlock extends Block {
     public static final IntegerProperty SERVINGS = IntegerProperty.create("servings", 0, 3);
     public static final IntegerProperty VINTAGE = IntegerProperty.create("vintage", 0, VintageHelper.MAX_VINTAGE);
     protected static final VoxelShape[] SHAPES = new VoxelShape[]{
-            Block.box(2.0D, 0.0D, 2.0D, 8.0D, 6.0D, 8.0D),
+            Block.box(8.0D, 0.0D, 2.0D, 14.0D, 6.0D, 8.0D),
             Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 8.0D),
             Shapes.or(Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 8.0D), Block.box(2.0D, 0.0D, 8.0D, 8.0D, 6.0D, 14.0D)),
             Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D),
@@ -112,4 +112,4 @@ public class CheeseWheelBlock extends Block {
     public boolean hasAnalogOutputSignal(BlockState state) {
         return true;
     }
-}
+}

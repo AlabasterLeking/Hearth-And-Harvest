@@ -514,7 +514,8 @@ public class HHItemTags extends ItemTagsProvider {
                 .add(HHModItems.COOKING_OIL.get())
                 .add(HHModItems.SYRUP_BOTTLE.get())
                 .add(HHModItems.CHOCOLATE_MILK_BOTTLE.get())
-                .add(HHModItems.GOAT_MILK_BOTTLE.get());
+                .add(HHModItems.GOAT_MILK_BOTTLE.get())
+                .add(HHModItems.BRINE_BOTTLE.get());
 
         tag(HHModTags.TALL_BOTTLES)
                 .add(HHModItems.BLUEBERRY_WINE.get())

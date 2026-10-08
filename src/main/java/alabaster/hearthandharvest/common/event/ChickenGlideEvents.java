@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -65,7 +66,7 @@ public class ChickenGlideEvents {
         faceWithPlayer(chicken, player);
 
         if (!player.level().isClientSide) {
-            if (!Config.CHICKEN_GLIDING.get() || player.isShiftKeyDown() || player.isPassenger() || player.isSpectator()) {
+            if (!Config.CHICKEN_GLIDING.get() || player.isShiftKeyDown() || player.isPassenger() || player.isSpectator() || player.isInFluidType()) {
                 putDown(chicken, player);
                 return;
             }
@@ -89,10 +90,20 @@ public class ChickenGlideEvents {
 
     @SubscribeEvent
     public static void onChickenHurt(LivingIncomingDamageEvent event) {
-        if (event.getEntity() instanceof Chicken chicken
-                && chicken.getVehicle() instanceof Player
-                && event.getSource().is(DamageTypes.IN_WALL)) {
-            event.setCanceled(true);
+        if (event.getEntity() instanceof Chicken chicken && chicken.getVehicle() instanceof Player player) {
+            if (event.getSource().is(DamageTypes.IN_WALL)) {
+                event.setCanceled(true);
+            } else if (event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
+                putDown(chicken, player);
+            }
+            return;
+        }
+
+        if (event.getEntity() instanceof Player player && event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
+            Chicken chicken = getHeldChicken(player);
+            if (chicken != null) {
+                putDown(chicken, player);
+            }
         }
     }
 

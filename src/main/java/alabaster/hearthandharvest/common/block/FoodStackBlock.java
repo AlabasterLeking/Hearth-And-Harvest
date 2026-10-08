@@ -85,7 +85,8 @@ public class FoodStackBlock extends Block {
 
     @Override
     protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return level.getBlockState(pos.below()).isSolid();
+        BlockState below = level.getBlockState(pos.below());
+        return below.isSolid() && !(below.getBlock() instanceof FoodStackBlock);
     }
 
     @Override
@@ -98,7 +99,7 @@ public class FoodStackBlock extends Block {
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         if (stack.is(this.asItem())) {
-            return ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION;
+            return state.getValue(COUNT) < MAX_STACK ? ItemInteractionResult.SKIP_DEFAULT_BLOCK_INTERACTION : ItemInteractionResult.CONSUME;
         }
 
         if (stack.is(HHModItems.SYRUP_BOTTLE.get())) {
@@ -162,4 +163,4 @@ public class FoodStackBlock extends Block {
             level.removeBlock(pos, false);
         }
     }
-}
+}

@@ -218,6 +218,8 @@ public class HHModItems {
             () -> new Item(basicItem().craftRemainder(Items.GLASS_BOTTLE)));
     public static final Supplier<Item> BRINE_BUCKET = registerWithTab("brine_bucket",
             () -> new BucketItem(HHModFluids.BRINE.source().get(), basicItem().craftRemainder(Items.BUCKET).stacksTo(1)));
+    public static final Supplier<Item> BRINE_BOTTLE = registerWithTab("brine_bottle",
+            () -> new Item(basicItem().craftRemainder(Items.GLASS_BOTTLE).stacksTo(16)));
     public static final Supplier<Item> GOAT_MILK_BUCKET = registerWithTab("goat_milk_bucket",
             () -> new GoatMilkBucketItem(() -> HHModFluids.GOAT_MILK.source().get(), basicItem().craftRemainder(Items.BUCKET).stacksTo(1)));
 
@@ -697,4 +699,4 @@ public class HHModItems {
             () -> new BlockItem(HHModBlocks.POLISHED_MANURE_SLAB.get(), basicItem()));
     public static final Supplier<Item> POLISHED_MANURE_WALL = registerWithBlockTab("polished_manure_wall",
             () -> new BlockItem(HHModBlocks.POLISHED_MANURE_WALL.get(), basicItem()));
-}
+}

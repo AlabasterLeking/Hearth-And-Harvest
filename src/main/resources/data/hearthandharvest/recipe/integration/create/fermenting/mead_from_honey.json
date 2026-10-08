@@ -1,4 +1,10 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
   "type": "hearthandharvest:fermenting",
   "experience": 0.35,
   "ferment_time": 1200,

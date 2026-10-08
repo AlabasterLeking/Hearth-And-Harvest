@@ -73,9 +73,7 @@ public class KegBlock extends BaseEntityBlock {
     }
 
     private static final double[][] CUBE_BOXES = {
-            {2.0D, 2.0D, 0.0D, 30.0D, 30.0D, 32.0D},
-            {4.0D, 0.0D, 2.0D, 6.0D, 2.0D, 30.0D},
-            {26.0D, 0.0D, 2.0D, 28.0D, 2.0D, 30.0D},
+            {0.0D, 0.0D, 0.0D, 32.0D, 32.0D, 32.0D},
             {12.5D, 6.0D, -3.5D, 19.5D, 9.0D, 0.0D}
     };
 

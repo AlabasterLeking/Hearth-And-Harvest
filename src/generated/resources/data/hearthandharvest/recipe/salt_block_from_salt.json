@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "#": {
-      "item": "hearthandharvest:salt"
+      "tag": "c:dusts/salt"
     }
   },
   "pattern": [

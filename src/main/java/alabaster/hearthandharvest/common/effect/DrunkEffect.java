@@ -3,6 +3,7 @@ package alabaster.hearthandharvest.common.effect;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -85,7 +86,7 @@ public class DrunkEffect extends MobEffect {
     }
 
     private void randomHotbarSwitch(LivingEntity entity) {
-        if (!(entity instanceof Player player)) return;
+        if (!(entity instanceof Player player) || player.isUsingItem()) return;
         RandomSource rand = entity.level().getRandom();
 
         // 1-in-5 chance to switch hotbar slot
@@ -96,13 +97,13 @@ public class DrunkEffect extends MobEffect {
     }
 
     private void randomItemDrop(LivingEntity entity) {
-        if (!(entity instanceof Player player)) return;
+        if (!(entity instanceof ServerPlayer player) || player.isUsingItem() || player.getMainHandItem().isEmpty()) return;
         RandomSource rand = entity.level().getRandom();
 
         // 1-in-8 chance to drop held item
         if (rand.nextInt(8) != 0) return;
 
-        player.drop(player.getMainHandItem().split(1), false);
+        player.drop(false);
     }
 
     private void applyStumble(LivingEntity entity) {

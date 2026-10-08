@@ -89,6 +89,7 @@ public class DataMaps extends DataMapProvider
                 .add(NeoForgeMod.MILK.value().builtInRegistryHolder(), ModItems.MILK_BOTTLE.get().asItem(), false)
                 .add(HHModFluids.COOKING_OIL.source().get().builtInRegistryHolder(), HHModItems.COOKING_OIL.get().asItem(), false)
                 .add(HHModFluids.SYRUP.source().get().builtInRegistryHolder(), HHModItems.SYRUP_BOTTLE.get().asItem(), false)
+                .add(HHModFluids.BRINE.source().get().builtInRegistryHolder(), HHModItems.BRINE_BOTTLE.get().asItem(), false)
                 .add(HHModFluids.APPLE_CIDER.source().get().builtInRegistryHolder(), ModItems.APPLE_CIDER.get().asItem(), false)
                 .add(HHModFluids.HARD_CIDER.source().get().builtInRegistryHolder(), HHModItems.HARD_CIDER.get().asItem(), false)
                 .add(HHModFluids.ROOT_BEER.source().get().builtInRegistryHolder(), HHModItems.ROOT_BEER.get().asItem(), false)
@@ -134,4 +135,4 @@ public class DataMaps extends DataMapProvider
             vintage.add(item.get().asItem().builtInRegistryHolder(), cheese, false);
         }
     }
-}
+}

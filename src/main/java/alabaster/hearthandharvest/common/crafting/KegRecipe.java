@@ -12,6 +12,10 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import alabaster.hearthandharvest.common.registry.HHDataMaps;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -180,7 +184,36 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
+        Ingredient container = fluidContainerIngredient();
+        if (container.isEmpty()) return ingredients;
+        NonNullList<Ingredient> withContainer = NonNullList.create();
+        withContainer.addAll(ingredients);
+        withContainer.add(container);
+        return withContainer;
+    }
+
+    public NonNullList<Ingredient> getItemIngredients() {
         return ingredients;
+    }
+
+    private Ingredient fluidContainerIngredient() {
+        if (inputFluid == null) return Ingredient.EMPTY;
+        List<ItemStack> containers = new ArrayList<>();
+        for (FluidStack fluid : inputFluid.getFluids()) {
+            ItemStack container = containerFor(fluid.getFluid());
+            if (!container.isEmpty()) containers.add(container);
+            Item bucket = fluid.getFluid().getBucket();
+            if (bucket != Items.AIR && !container.is(bucket)) containers.add(new ItemStack(bucket));
+        }
+        return containers.isEmpty() ? Ingredient.EMPTY : Ingredient.of(containers.stream());
+    }
+
+    public static ItemStack containerFor(Fluid fluid) {
+        if (fluid.isSame(Fluids.WATER)) return HHFluidHandling.waterBottle();
+        Item bottle = HHDataMaps.getBottleForFluid(fluid);
+        if (bottle != null) return new ItemStack(bottle);
+        Item bucket = fluid.getBucket();
+        return bucket == Items.AIR ? ItemStack.EMPTY : new ItemStack(bucket);
     }
 
     @Override
@@ -215,7 +248,7 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
                                     nnList.addAll(list);
                                     return nnList;
                                 }, nnList -> nnList)
-                                .forGetter(KegRecipe::getIngredients),
+                                .forGetter(KegRecipe::getItemIngredients),
                         INPUT_FLUID_CODEC
                                 .optionalFieldOf("input_fluid")
                                 .forGetter(recipe -> Optional.ofNullable(recipe.getInputFluid())),

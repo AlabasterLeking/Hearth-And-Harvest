@@ -483,7 +483,7 @@ public class CraftingRecipes
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SALT_BLOCK.get(), 1)
                 .pattern("##")
                 .pattern("##")
-                .define('#', HHModItems.SALT.get())
+                .define('#', HHCommonTags.DUSTS_SALT)
                 .unlockedBy("has_salt", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SALT.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "salt_block_from_salt"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, HHModItems.SALT_BLOCK.get(), 1)
@@ -1232,6 +1232,12 @@ public class CraftingRecipes
                 .unlockedBy("has_flour", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.FLOUR.get()))
                 .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "flour_dough_from_egg"));
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, HHModItems.BRINE_BOTTLE.get(), 1)
+                .requires(WATER_BOTTLE)
+                .requires(HHCommonTags.DUSTS_SALT)
+                .unlockedBy("has_salt", InventoryChangeTrigger.TriggerInstance.hasItems(HHModItems.SALT.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "brine_bottle_from_water_bottle"));
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ModItems.WHEAT_DOUGH.get(), 2)
                 .requires(HHModItems.FLOUR.get())
                 .requires(HHModItems.FLOUR.get())
@@ -1303,4 +1309,4 @@ public class CraftingRecipes
     private static String has(ItemLike item) {
         return "has_" + BuiltInRegistries.ITEM.getKey(item.asItem()).getPath();
     }
-}
+}
