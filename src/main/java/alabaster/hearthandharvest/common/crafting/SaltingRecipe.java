@@ -5,6 +5,7 @@ import alabaster.hearthandharvest.common.registry.HHModRecipeSerializers;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -82,6 +83,18 @@ public class SaltingRecipe implements CraftingRecipe {
         result.set(net.minecraft.core.component.DataComponents.FOOD, modified);
         result.set(HHModDataComponents.SALTED.get(), true);
         return result;
+    }
+
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput input) {
+        NonNullList<ItemStack> remaining = NonNullList.withSize(input.size(), ItemStack.EMPTY);
+        for (int i = 0; i < input.size(); i++) {
+            ItemStack stack = input.getItem(i);
+            if (!stack.isEmpty() && saltIngredient.test(stack) && stack.hasCraftingRemainingItem()) {
+                remaining.set(i, stack.getCraftingRemainingItem());
+            }
+        }
+        return remaining;
     }
 
     @Override
