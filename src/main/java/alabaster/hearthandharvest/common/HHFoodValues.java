@@ -83,14 +83,6 @@ public class HHFoodValues {
             .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, BRIEF_DURATION, 0), 1.0F)
             .build();
 
-    public static final FoodProperties BEER = new FoodProperties.Builder()
-            .nutrition(2).saturationModifier(0.3f)
-            .alwaysEdible()
-            .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, SHORT_DURATION, 0), 0.5F)
-            .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, BRIEF_DURATION, 0), 1.0F)
-            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, BRIEF_DURATION, 0), 1.0F)
-            .build();
-
     public static final FoodProperties HARD_CIDER = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
@@ -173,6 +165,14 @@ public class HHFoodValues {
             .build();
 
     // --- Strong Drinks ---
+    public static final FoodProperties BEER = new FoodProperties.Builder()
+            .nutrition(2).saturationModifier(0.3f)
+            .alwaysEdible()
+            .effect(() -> new MobEffectInstance(HHModEffects.DRUNK, MEDIUM_DURATION, 0), 0.75F)
+            .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, SHORT_DURATION, 0), 1.0F)
+            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, SHORT_DURATION, 0), 1.0F)
+            .build();
+
     public static final FoodProperties MOONSHINE = new FoodProperties.Builder()
             .nutrition(1).saturationModifier(0.2f)
             .alwaysEdible()
