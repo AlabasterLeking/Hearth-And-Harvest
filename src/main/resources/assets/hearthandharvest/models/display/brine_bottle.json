@@ -3,9 +3,9 @@
 	"credit": "Made with Blockbench",
 	"render_type": "minecraft:cutout",
 	"textures": {
-		"0": "hearthandharvest:item/3d_brine_bottle",
+		"0": "item/3d_glass_bottle",
 		"1": "hearthandharvest:item/3d_brine_bottle_overlay",
-		"particle": "hearthandharvest:item/3d_brine_bottle"
+		"particle": "item/3d_glass_bottle"
 	},
 	"elements": [
 		{
