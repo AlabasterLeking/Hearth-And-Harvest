@@ -9,6 +9,7 @@ import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import alabaster.hearthandharvest.common.registry.HHModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -78,6 +79,14 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         super(HHModBlockEntities.KEG.get(), pos, state);
         for (Direction direction : Direction.values()) {
             sidedInventory.put(direction, new KegItemHandler(inventory, direction));
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.getChunkSource().getLightEngine().checkBlock(worldPosition);
         }
     }
 
