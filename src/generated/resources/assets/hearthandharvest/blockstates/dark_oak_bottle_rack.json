@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "hearthandharvest:block/dark_oak_bottle_rack",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "hearthandharvest:block/dark_oak_bottle_rack"
+    },
+    "facing=south": {
+      "model": "hearthandharvest:block/dark_oak_bottle_rack",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hearthandharvest:block/dark_oak_bottle_rack",
+      "y": 270
+    }
+  }
+}

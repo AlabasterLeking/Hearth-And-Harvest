@@ -7,13 +7,13 @@
   "experience": 1.0,
   "ingredients": [
     {
-      "item": "hearthandharvest:raspberry"
+      "tag": "forge:fruits/raspberry"
     },
     {
-      "item": "hearthandharvest:raspberry"
+      "tag": "forge:fruits/raspberry"
     },
     {
-      "item": "hearthandharvest:raspberry"
+      "tag": "forge:fruits/raspberry"
     },
     {
       "item": "minecraft:sugar"
@@ -25,7 +25,7 @@
       "item": "minecraft:sugar"
     }
   ],
-  "recipe_book_tab": "misc",
+  "recipe_book_tab": "meals",
   "result": {
     "item": "hearthandharvest:raspberry_jam"
   }

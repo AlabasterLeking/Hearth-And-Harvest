@@ -1,15 +1,16 @@
 package alabaster.hearthandharvest.common.block.entity;
 
+import alabaster.hearthandharvest.common.item.JugBlockItem;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
-public class JugBlockEntity extends BlockEntity {
+public class JugBlockEntity extends HHSyncedBlockEntity {
 
     private final FluidTank fluidTank;
 
@@ -30,18 +31,32 @@ public class JugBlockEntity extends BlockEntity {
         return fluidTank.getCapacity();
     }
 
-    @Override
-    public void load(CompoundTag compound) {
-        super.load(compound);
-        fluidTank.readFromNBT(compound.getCompound("FluidTank"));
+    public FluidTank getFluidTank() {
+        return fluidTank;
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compound) {
+    public void load(CompoundTag compound) {
+        super.load(compound);
+        if (compound.contains("FluidTank")) {
+            fluidTank.readFromNBT(compound.getCompound("FluidTank"));
+        }
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
         CompoundTag tankTag = new CompoundTag();
         fluidTank.writeToNBT(tankTag);
         compound.put("FluidTank", tankTag);
+    }
+
+    private CompoundTag writeUpdateTag(CompoundTag compound) {
+        super.saveAdditional(compound);
+        CompoundTag tankTag = new CompoundTag();
+        fluidTank.writeToNBT(tankTag);
+        compound.put("FluidTank", tankTag);
+        return compound;
     }
 
     public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
@@ -53,19 +68,27 @@ public class JugBlockEntity extends BlockEntity {
     }
 
     private FluidTank createFluidTank() {
-        return new FluidTank(8000) {
+        return new FluidTank(JugBlockItem.JUG_CAPACITY) {
             @Override
-            protected void onContentsChanged() {
+            public void onContentsChanged() {
                 super.onContentsChanged();
                 setChanged();
+                syncToClient();
+                if (level != null && !level.isClientSide) {
+                    level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+                }
             }
         };
     }
 
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag compound = new CompoundTag();
-        saveAdditional(compound);
-        return compound;
+        return writeUpdateTag(new CompoundTag());
+    }
+
+    public void syncToClient() {
+        if (level != null && !level.isClientSide) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        }
     }
 }

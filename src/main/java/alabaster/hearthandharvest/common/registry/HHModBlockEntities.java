@@ -1,38 +1,95 @@
 package alabaster.hearthandharvest.common.registry;
 
+import alabaster.hearthandharvest.common.block.entity.KegBlockEntity;
+import alabaster.hearthandharvest.common.block.entity.NestBlockEntity;
 import alabaster.hearthandharvest.HearthAndHarvest;
-import alabaster.hearthandharvest.common.block.entity.CaskBlockEntity;
-import alabaster.hearthandharvest.common.block.entity.JugBlockEntity;
-import alabaster.hearthandharvest.common.block.entity.WineRackBlockEntity;
+import alabaster.hearthandharvest.common.block.entity.*;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class HHModBlockEntities {
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, HearthAndHarvest.MODID);
 
-    public static final RegistryObject<BlockEntityType<JugBlockEntity>> JUG = BLOCK_ENTITY_TYPES.register("jug_tile",
+    public static final Supplier<BlockEntityType<NestBlockEntity>> NEST = BLOCK_ENTITY_TYPES.register("nest",
+            () -> BlockEntityType.Builder.of(NestBlockEntity::new, HHModBlocks.NEST.get()).build(null));
+
+    public static final Supplier<BlockEntityType<JugBlockEntity>> JUG = BLOCK_ENTITY_TYPES.register("jug_tile",
             () -> BlockEntityType.Builder.of(JugBlockEntity::new, HHModBlocks.JUG.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<CaskBlockEntity>> CASK = BLOCK_ENTITY_TYPES.register("cask_tile",
+    public static final Supplier<BlockEntityType<KegBlockEntity>> KEG = BLOCK_ENTITY_TYPES.register("keg_tile",
+            () -> BlockEntityType.Builder.of(KegBlockEntity::new, HHModBlocks.KEG.get()).build(null));
+
+    public static final Supplier<BlockEntityType<CaskBlockEntity>> CASK = BLOCK_ENTITY_TYPES.register("cask_tile",
             () -> BlockEntityType.Builder.of(CaskBlockEntity::new, HHModBlocks.CASK.get()).build(null));
 
-    public static final Supplier<BlockEntityType<WineRackBlockEntity>> WINE_RACK = BLOCK_ENTITY_TYPES.register("wine_rack",
-            () -> BlockEntityType.Builder.of(WineRackBlockEntity::new,
-                            HHModBlocks.OAK_WINE_RACK.get(),
-                            HHModBlocks.BIRCH_WINE_RACK.get(),
-                            HHModBlocks.SPRUCE_WINE_RACK.get(),
-                            HHModBlocks.JUNGLE_WINE_RACK.get(),
-                            HHModBlocks.ACACIA_WINE_RACK.get(),
-                            HHModBlocks.DARK_OAK_WINE_RACK.get(),
-                            HHModBlocks.MANGROVE_WINE_RACK.get(),
-                            HHModBlocks.BAMBOO_WINE_RACK.get(),
-                            HHModBlocks.CHERRY_WINE_RACK.get(),
-                            HHModBlocks.CRIMSON_WINE_RACK.get(),
-                            HHModBlocks.WARPED_WINE_RACK.get())
-                    .build(null));
+    public static final Supplier<BlockEntityType<BottleRackBlockEntity>> BOTTLE_RACK = BLOCK_ENTITY_TYPES.register("bottle_rack",
+            () -> {
+                List<Block> blocks = new ArrayList<>(List.of(
+                        HHModBlocks.OAK_BOTTLE_RACK.get(),
+                        HHModBlocks.BIRCH_BOTTLE_RACK.get(),
+                        HHModBlocks.SPRUCE_BOTTLE_RACK.get(),
+                        HHModBlocks.JUNGLE_BOTTLE_RACK.get(),
+                        HHModBlocks.ACACIA_BOTTLE_RACK.get(),
+                        HHModBlocks.DARK_OAK_BOTTLE_RACK.get(),
+                        HHModBlocks.MANGROVE_BOTTLE_RACK.get(),
+                        HHModBlocks.BAMBOO_BOTTLE_RACK.get(),
+                        HHModBlocks.CHERRY_BOTTLE_RACK.get(),
+                        HHModBlocks.CRIMSON_BOTTLE_RACK.get(),
+                        HHModBlocks.WARPED_BOTTLE_RACK.get()
+                ));
+                if (ModList.get().isLoaded("crabbersdelight")) {
+                    blocks.add(HHModBlocks.PALM_BOTTLE_RACK.get());
+                }
+                return BlockEntityType.Builder.of(BottleRackBlockEntity::new, blocks.toArray(Block[]::new)).build(null);
+            });
+
+    public static final Supplier<BlockEntityType<JarBlockEntity>> JAR = BLOCK_ENTITY_TYPES.register("jar_tile",
+            () -> BlockEntityType.Builder.of(JarBlockEntity::new, HHModBlocks.EMPTY_JAR_DISPLAY.get()).build(null));
+
+    public static final Supplier<BlockEntityType<CrateBlockEntity>> CRATE = BLOCK_ENTITY_TYPES.register("crate",
+            () -> BlockEntityType.Builder.of(CrateBlockEntity::new, HHModBlocks.CRATE.get()).build(null));
+
+    public static final Supplier<BlockEntityType<StompingBasinBlockEntity>> STOMPING_BASIN = BLOCK_ENTITY_TYPES.register("stomping_basin_tile",
+            () -> BlockEntityType.Builder.of(StompingBasinBlockEntity::new, HHModBlocks.STOMPING_BASIN.get()).build(null));
+
+    public static final Supplier<BlockEntityType<TroughBlockEntity>> TROUGH = BLOCK_ENTITY_TYPES.register("trough_tile",
+            () -> BlockEntityType.Builder.of(TroughBlockEntity::new, HHModBlocks.TROUGH.get()).build(null));
+
+    public static final Supplier<BlockEntityType<TreeTapperBlockEntity>> TREE_TAPPER = BLOCK_ENTITY_TYPES.register("tree_tapper_tile", () ->
+            BlockEntityType.Builder.of(TreeTapperBlockEntity::new, HHModBlocks.TREE_TAPPER.get()).build(null));
+
+    public static final Supplier<BlockEntityType<BasinBlockEntity>> BASIN = BLOCK_ENTITY_TYPES.register("basin_tile", () ->
+            BlockEntityType.Builder.of(BasinBlockEntity::new, HHModBlocks.BASIN.get()).build(null));
+
+    public static final Supplier<BlockEntityType<SprinklerBlockEntity>> SPRINKLER = BLOCK_ENTITY_TYPES.register("sprinkler_tile", () ->
+            BlockEntityType.Builder.of(SprinklerBlockEntity::new, HHModBlocks.SPRINKLER.get()).build(null));
+
+    public static List<Block> extraCabinetBlocks() {
+        List<Block> cabinets = new ArrayList<>(List.of(
+                HHModBlocks.DRAWER.get(),
+                HHModBlocks.OAK_HALF_CABINET.get(),
+                HHModBlocks.BIRCH_HALF_CABINET.get(),
+                HHModBlocks.SPRUCE_HALF_CABINET.get(),
+                HHModBlocks.JUNGLE_HALF_CABINET.get(),
+                HHModBlocks.ACACIA_HALF_CABINET.get(),
+                HHModBlocks.DARK_OAK_HALF_CABINET.get(),
+                HHModBlocks.MANGROVE_HALF_CABINET.get(),
+                HHModBlocks.BAMBOO_HALF_CABINET.get(),
+                HHModBlocks.CHERRY_HALF_CABINET.get(),
+                HHModBlocks.CRIMSON_HALF_CABINET.get(),
+                HHModBlocks.WARPED_HALF_CABINET.get()
+        ));
+        if (ModList.get().isLoaded("crabbersdelight")) {
+            cabinets.add(HHModBlocks.PALM_HALF_CABINET.get());
+        }
+        return cabinets;
+    }
 }

@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "brewinandchewin"
+    }
+  ],
+  "type": "brewinandchewin:fermenting",
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    {
+      "item": "minecraft:glow_berries"
+    },
+    []
+  ],
+  "basefluid": {
+    "count": 500,
+    "fluid": "minecraft:water"
+  },
+  "result": {
+    "count": 500,
+    "fluid": "hearthandharvest:glow_berry_wine"
+  }
+}

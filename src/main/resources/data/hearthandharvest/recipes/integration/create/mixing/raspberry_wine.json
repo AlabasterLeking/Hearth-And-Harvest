@@ -6,26 +6,17 @@
     }
   ],
   "type": "create:mixing",
-  "heatRequirement": "heated",
   "ingredients": [
     {
-      "item": "hearthandharvest:raspberry"
-    },
-    {
-      "item": "hearthandharvest:raspberry"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
+      "fluid": "hearthandharvest:raspberry_juice",
       "amount": 500,
-      "fluid": "minecraft:water"
+      "nbt": {}
     }
   ],
   "results": [
     {
-      "amount": 500,
-      "fluid": "hearthandharvest:raspberry_wine"
+      "fluid": "hearthandharvest:raspberry_wine",
+      "amount": 500
     }
   ]
 }

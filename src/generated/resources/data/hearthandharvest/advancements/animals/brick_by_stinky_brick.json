@@ -1,0 +1,38 @@
+{
+  "parent": "hearthandharvest:animals/number_two",
+  "criteria": {
+    "brick_by_stinky_brick": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:manure_brick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.brick_by_stinky_brick.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:manure_brick"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.brick_by_stinky_brick"
+    }
+  },
+  "requirements": [
+    [
+      "brick_by_stinky_brick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

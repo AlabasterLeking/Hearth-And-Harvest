@@ -1,0 +1,145 @@
+{
+  "values": {
+    "hearthandharvest:blue_mum": {
+      "chance": 0.65
+    },
+    "hearthandharvest:blueberries": {
+      "chance": 0.3
+    },
+    "hearthandharvest:blueberry_pie": {
+      "chance": 1.0
+    },
+    "hearthandharvest:blueberry_pie_slice": {
+      "chance": 0.85
+    },
+    "hearthandharvest:carrot_cake": {
+      "chance": 1.0
+    },
+    "hearthandharvest:carrot_cake_slice": {
+      "chance": 0.85
+    },
+    "hearthandharvest:cherry": {
+      "chance": 0.65
+    },
+    "hearthandharvest:cherry_pie": {
+      "chance": 1.0
+    },
+    "hearthandharvest:cherry_pie_slice": {
+      "chance": 0.85
+    },
+    "hearthandharvest:chicken_pot_pie": {
+      "chance": 1.0
+    },
+    "hearthandharvest:chicken_pot_pie_slice": {
+      "chance": 0.85
+    },
+    "hearthandharvest:chocolate_cake": {
+      "chance": 1.0
+    },
+    "hearthandharvest:chocolate_cake_slice": {
+      "chance": 0.85
+    },
+    "hearthandharvest:corn": {
+      "chance": 0.3
+    },
+    "hearthandharvest:corn_husk": {
+      "chance": 0.3
+    },
+    "hearthandharvest:corn_husk_bundle": {
+      "chance": 0.5
+    },
+    "hearthandharvest:corn_kernels": {
+      "chance": 0.3
+    },
+    "hearthandharvest:cotton": {
+      "chance": 0.65
+    },
+    "hearthandharvest:cotton_bale": {
+      "chance": 0.5
+    },
+    "hearthandharvest:cotton_seeds": {
+      "chance": 0.3
+    },
+    "hearthandharvest:grape_pie": {
+      "chance": 1.0
+    },
+    "hearthandharvest:grape_pie_slice": {
+      "chance": 0.85
+    },
+    "hearthandharvest:green_grapes": {
+      "chance": 0.65
+    },
+    "hearthandharvest:hay_rug": {
+      "chance": 0.3
+    },
+    "hearthandharvest:hops": {
+      "chance": 0.65
+    },
+    "hearthandharvest:light_blue_mum": {
+      "chance": 0.65
+    },
+    "hearthandharvest:orange_mum": {
+      "chance": 0.65
+    },
+    "hearthandharvest:peanut": {
+      "chance": 0.65
+    },
+    "hearthandharvest:peanut_butter_pie": {
+      "chance": 1.0
+    },
+    "hearthandharvest:peanut_butter_pie_slice": {
+      "chance": 0.85
+    },
+    "hearthandharvest:pink_mum": {
+      "chance": 0.65
+    },
+    "hearthandharvest:purple_mum": {
+      "chance": 0.65
+    },
+    "hearthandharvest:raspberry": {
+      "chance": 0.3
+    },
+    "hearthandharvest:raspberry_pie": {
+      "chance": 1.0
+    },
+    "hearthandharvest:raspberry_pie_slice": {
+      "chance": 0.85
+    },
+    "hearthandharvest:red_grapes": {
+      "chance": 0.65
+    },
+    "hearthandharvest:red_mum": {
+      "chance": 0.65
+    },
+    "hearthandharvest:stick_brush": {
+      "chance": 0.5
+    },
+    "hearthandharvest:sugar_cane_bundle": {
+      "chance": 0.5
+    },
+    "hearthandharvest:sunflower_seeds": {
+      "chance": 0.3
+    },
+    "hearthandharvest:white_mum": {
+      "chance": 0.65
+    },
+    "hearthandharvest:wild_cotton": {
+      "chance": 0.65
+    },
+    "hearthandharvest:wild_green_grapes": {
+      "chance": 0.65
+    },
+    "hearthandharvest:wild_hops": {
+      "chance": 0.65
+    },
+    "hearthandharvest:wild_peanuts": {
+      "chance": 0.65
+    },
+    "hearthandharvest:wild_red_grapes": {
+      "chance": 0.65
+    },
+    "hearthandharvest:yellow_mum": {
+      "chance": 0.65
+    }
+  }
+}

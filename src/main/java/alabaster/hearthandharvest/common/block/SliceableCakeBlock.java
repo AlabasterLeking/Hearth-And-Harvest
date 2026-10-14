@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block;
 
+import net.minecraft.world.effect.MobEffectInstance;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -7,8 +8,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
@@ -25,8 +24,8 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.event.ForgeEventFactory;
 import vectorwing.farmersdelight.common.tag.ModTags;
+import vectorwing.farmersdelight.common.utility.ItemUtils;
 
 import java.util.function.Supplier;
 
@@ -43,9 +42,8 @@ public class SliceableCakeBlock extends Block {
         this.registerDefaultState(this.stateDefinition.any().setValue(BITES, 0));
     }
 
-    @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return SHAPE_BY_BITE[state.getValue(BITES)];
+        return SHAPE_BY_BITE[(Integer)state.getValue(BITES)];
     }
 
     public ItemStack getPieSliceItem() {
@@ -61,16 +59,14 @@ public class SliceableCakeBlock extends Block {
         return this.defaultBlockState();
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        ItemStack heldStack = player.getItemInHand(hand);
+    protected InteractionResult hhUseItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (heldStack.is(ModTags.Items.KNIVES)) {
             return cutSlice(level, pos, state, player);
         }
-        return InteractionResult.PASS;
+        return null;
     }
 
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+    protected InteractionResult hhUseWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide) {
             if (consumeBite(level, pos, state, player).consumesAction()) {
                 return InteractionResult.SUCCESS;
@@ -93,11 +89,8 @@ public class SliceableCakeBlock extends Block {
         }
 
         Direction direction = player.getDirection().getOpposite();
-        ItemStack sliceItem = this.getPieSliceItem();
-        ItemEntity sliceEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5, sliceItem,
+        ItemUtils.spawnItemEntity(level, this.getPieSliceItem(), pos.getX() + 0.5, pos.getY() + 0.3, pos.getZ() + 0.5,
                 direction.getStepX() * 0.15, 0.05, direction.getStepZ() * 0.15);
-        level.addFreshEntity(sliceEntity);
-
         return InteractionResult.SUCCESS;
     }
 
@@ -106,16 +99,13 @@ public class SliceableCakeBlock extends Block {
             return InteractionResult.PASS;
         } else {
             ItemStack sliceStack = this.getPieSliceItem();
-            ItemStack sliceCopy = sliceStack.copy();
-            FoodProperties sliceFood = sliceStack.getItem().getFoodProperties();
+            FoodProperties sliceFood = sliceStack.getItem().getFoodProperties(sliceStack, playerIn);
 
-            playerIn.getFoodData().eat(sliceStack.getItem(), sliceStack);
-            // Fire an event for food-tracking mods like Spice of Life, but ignore the result.
-            ForgeEventFactory.onItemUseFinish(playerIn, sliceCopy, 0, ItemStack.EMPTY);
-            if (this.getPieSliceItem().getItem().isEdible() && sliceFood != null) {
-                for (Pair<MobEffectInstance, Float> pair : sliceFood.getEffects()) {
-                    if (!level.isClientSide && pair.getFirst() != null && level.random.nextFloat() < pair.getSecond()) {
-                        playerIn.addEffect(new MobEffectInstance(pair.getFirst()));
+            if (sliceFood != null) {
+                playerIn.getFoodData().eat(sliceFood.getNutrition(), sliceFood.getSaturationModifier());
+                for (Pair<MobEffectInstance, Float> effect : sliceFood.getEffects()) {
+                    if (!level.isClientSide && effect.getFirst() != null && level.random.nextFloat() < effect.getSecond()) {
+                        playerIn.addEffect(new MobEffectInstance(effect.getFirst()));
                     }
                 }
             }
@@ -132,12 +122,12 @@ public class SliceableCakeBlock extends Block {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
-        return facing == Direction.DOWN && !state.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+        return facing == Direction.DOWN && !stateIn.canSurvive(level, currentPos) ? Blocks.AIR.defaultBlockState() : super.updateShape(stateIn, facing, facingState, level, currentPos, facingPos);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BITES);
     }
 
@@ -152,14 +142,13 @@ public class SliceableCakeBlock extends Block {
     }
 
     static {
-        SHAPE_BY_BITE = new VoxelShape[]{
-                Block.box(1.0F, 0.0F, 1.0F, 15.0F, 8.0F, 15.0F),
-                Block.box(3.0F, 0.0F, 1.0F, 15.0F, 8.0F, 15.0F),
-                Block.box(5.0F, 0.0F, 1.0F, 15.0F, 8.0F, 15.0F),
-                Block.box(7.0F, 0.0F, 1.0F, 15.0F, 8.0F, 15.0F),
-                Block.box(9.0F, 0.0F, 1.0F, 15.0F, 8.0F, 15.0F),
-                Block.box(11.0F, 0.0F, 1.0F, 15.0F, 8.0F, 15.0F),
-                Block.box(13.0F, 0.0F, 1.0F, 15.0F, 8.0F, 15.0F)
-        };
+        SHAPE_BY_BITE = new VoxelShape[]{Block.box((double)1.0F, (double)0.0F, (double)1.0F, (double)15.0F, (double)8.0F, (double)15.0F), Block.box((double)3.0F, (double)0.0F, (double)1.0F, (double)15.0F, (double)8.0F, (double)15.0F), Block.box((double)5.0F, (double)0.0F, (double)1.0F, (double)15.0F, (double)8.0F, (double)15.0F), Block.box((double)7.0F, (double)0.0F, (double)1.0F, (double)15.0F, (double)8.0F, (double)15.0F), Block.box((double)9.0F, (double)0.0F, (double)1.0F, (double)15.0F, (double)8.0F, (double)15.0F), Block.box((double)11.0F, (double)0.0F, (double)1.0F, (double)15.0F, (double)8.0F, (double)15.0F), Block.box((double)13.0F, (double)0.0F, (double)1.0F, (double)15.0F, (double)8.0F, (double)15.0F)};
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        InteractionResult itemResult = hhUseItemOn(player.getItemInHand(hand), state, level, pos, player, hand, hit);
+        if (itemResult != null) return itemResult;
+        return hand == InteractionHand.MAIN_HAND ? hhUseWithoutItem(state, level, pos, player, hit) : InteractionResult.PASS;
     }
 }

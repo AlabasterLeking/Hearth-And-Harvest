@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "farmersdelight:straw"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "sss"
+  ],
+  "result": {
+    "item": "hearthandharvest:nest"
+  },
+  "show_notification": true
+}

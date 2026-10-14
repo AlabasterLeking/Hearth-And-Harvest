@@ -3,26 +3,34 @@ package alabaster.hearthandharvest.common.registry;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class HHModCreativeTabs
 {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HearthAndHarvest.MODID);
 
-    public static final RegistryObject<CreativeModeTab> TAB_HEARTH_AND_HARVEST = CREATIVE_TABS.register(HearthAndHarvest.MODID,
+    public static final ResourceKey<CreativeModeTab> BLOCKS_TAB_KEY = ResourceKey.create(
+            Registries.CREATIVE_MODE_TAB,
+            new ResourceLocation(HearthAndHarvest.MODID, HearthAndHarvest.MODID + "_blocks")
+    );
+
+    public static final Supplier<CreativeModeTab> TAB_HEARTH_AND_HARVEST = CREATIVE_TABS.register(HearthAndHarvest.MODID,
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.hearthandharvest"))
-                    .icon(() -> new ItemStack(HHModItems.RASPBERRY.get()))
+                    .icon(() -> new ItemStack(HHModItems.RED_GRAPES.get()))
                     .displayItems((parameters, output) -> HHModItems.CREATIVE_TAB_ITEMS.forEach((item) -> output.accept(item.get())))
                     .build());
 
-    public static final RegistryObject<CreativeModeTab> TAB_HEARTH_AND_HARVEST_BLOCKS = CREATIVE_TABS.register(HearthAndHarvest.MODID + "_blocks",
+    public static final Supplier<CreativeModeTab> TAB_HEARTH_AND_HARVEST_BLOCKS = CREATIVE_TABS.register(HearthAndHarvest.MODID + "_blocks",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.hearthandharvest_blocks"))
-                    .icon(() -> new ItemStack(HHModItems.RASPBERRY_CRATE.get()))
+                    .icon(() -> new ItemStack(HHModItems.RED_GRAPE_CRATE.get()))
                     .displayItems((parameters, output) -> HHModItems.CREATIVE_TAB_BLOCKS.forEach((item) -> output.accept(item.get())))
                     .build());
 }

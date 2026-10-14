@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:main/root",
+  "criteria": {
+    "stomp_the_yard": {
+      "conditions": {},
+      "trigger": "hearthandharvest:stomped_recipe"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.stomp_the_yard.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:stomping_basin"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.stomp_the_yard"
+    }
+  },
+  "requirements": [
+    [
+      "stomp_the_yard"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "#": {
-      "item": "hearthandharvest:cotton"
+      "tag": "forge:crops/cotton"
     }
   },
   "pattern": [

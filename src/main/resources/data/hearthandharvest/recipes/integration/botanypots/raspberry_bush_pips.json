@@ -1,0 +1,54 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "botanypots"
+    }
+  ],
+  "type": "botanypots:crop",
+  "seed": {
+    "item": "hearthandharvest:raspberry_pips"
+  },
+  "categories": [
+    "dirt"
+  ],
+  "growthTicks": 1200,
+  "lightLevel": 14,
+  "display": {
+    "type": "botanypots:transitional",
+    "phases": [
+      {
+        "block": "hearthandharvest:raspberry_bush",
+        "properties": {
+          "age": 0
+        }
+      },
+      {
+        "block": "hearthandharvest:raspberry_bush",
+        "properties": {
+          "age": 1
+        }
+      },
+      {
+        "block": "hearthandharvest:raspberry_bush",
+        "properties": {
+          "age": 2
+        }
+      }
+    ]
+  },
+  "drops": [
+    {
+      "chance": 1.0,
+      "output": {
+        "item": "hearthandharvest:raspberry"
+      }
+    },
+    {
+      "chance": 0.05,
+      "output": {
+        "item": "hearthandharvest:raspberry"
+      }
+    }
+  ]
+}

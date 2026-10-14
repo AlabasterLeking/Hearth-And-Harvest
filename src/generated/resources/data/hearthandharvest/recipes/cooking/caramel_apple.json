@@ -19,7 +19,7 @@
       "item": "minecraft:apple"
     }
   ],
-  "recipe_book_tab": "misc",
+  "recipe_book_tab": "meals",
   "result": {
     "item": "hearthandharvest:caramel_apple"
   }

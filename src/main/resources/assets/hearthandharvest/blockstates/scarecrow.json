@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "hearthandharvest:block/scarecrow" },
+    "facing=south": { "model": "hearthandharvest:block/scarecrow", "y": 180 },
+    "facing=west":  { "model": "hearthandharvest:block/scarecrow", "y": 270 },
+    "facing=east":  { "model": "hearthandharvest:block/scarecrow", "y": 90 }
+  }
+}

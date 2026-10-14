@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:animals/well_shod",
+  "criteria": {
+    "sugar_rush": {
+      "conditions": {},
+      "trigger": "hearthandharvest:fed_sugar_cubes"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.sugar_rush.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:sugar_cubes"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.sugar_rush"
+    }
+  },
+  "requirements": [
+    [
+      "sugar_rush"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

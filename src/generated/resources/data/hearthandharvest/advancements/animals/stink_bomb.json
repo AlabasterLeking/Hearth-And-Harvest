@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:animals/number_two",
+  "criteria": {
+    "stink_bomb": {
+      "conditions": {},
+      "trigger": "hearthandharvest:manure_hit"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.stink_bomb.desc"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "hearthandharvest:manure"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.stink_bomb"
+    }
+  },
+  "requirements": [
+    [
+      "stink_bomb"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

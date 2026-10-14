@@ -3,13 +3,10 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:milk/milk_bottle"
+      "tag": "forge:milk"
     },
     {
-      "item": "minecraft:wheat"
-    },
-    {
-      "item": "minecraft:wheat"
+      "tag": "forge:flours"
     },
     {
       "item": "minecraft:bowl"

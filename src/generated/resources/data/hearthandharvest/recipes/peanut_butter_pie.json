@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "F": {
-      "item": "hearthandharvest:roasted_peanuts"
+      "tag": "forge:crops/peanut"
     },
     "P": {
       "item": "farmersdelight:pie_crust"

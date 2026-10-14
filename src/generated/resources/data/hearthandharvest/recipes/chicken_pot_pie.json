@@ -6,7 +6,7 @@
       "item": "farmersdelight:cooked_chicken_cuts"
     },
     "M": {
-      "tag": "forge:milk/milk_bottle"
+      "tag": "forge:milk"
     },
     "O": {
       "item": "farmersdelight:onion"
@@ -15,7 +15,7 @@
       "item": "farmersdelight:pie_crust"
     },
     "S": {
-      "item": "hearthandharvest:salt"
+      "tag": "forge:dusts/salt"
     },
     "T": {
       "item": "minecraft:potato"

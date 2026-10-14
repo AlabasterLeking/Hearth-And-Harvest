@@ -1,153 +1,101 @@
 package alabaster.hearthandharvest.data.recipe;
 
+import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.client.recipebook.CaskRecipeBookTab;
 import alabaster.hearthandharvest.common.registry.HHModItems;
+import alabaster.hearthandharvest.common.tag.HHCommonTags;
 import alabaster.hearthandharvest.data.builder.CaskRecipeBuilder;
-import net.minecraft.data.recipes.FinishedRecipe;
+import java.util.function.Supplier;
+import java.util.List;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.core.registries.BuiltInRegistries;
+import alabaster.hearthandharvest.common.crafting.VintageIngredient;
+import alabaster.hearthandharvest.common.item.VintageHelper;
+import alabaster.hearthandharvest.data.builder.RecipeOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
-
-import java.util.function.Consumer;
 
 public class AgingRecipes {
     public static final int FAST_AGING = 300;      // 1.25 minutes
     public static final int NORMAL_AGING = 600;    // 2.5 minutes
     public static final int SLOW_AGING = 1200;     // 5 minutes
+    public static final int VERY_SLOW = 2400;      // 10 minutes
 
     public static final float SMALL_EXP = 0.35F;
     public static final float MEDIUM_EXP = 1.0F;
     public static final float LARGE_EXP = 2.0F;
 
-    public static void register(Consumer<FinishedRecipe> consumer) {
-        ageCheese(consumer);
-        ageDrinks(consumer);
-        agePickles(consumer);
-        ageMisc(consumer);
+
+    public static void register(RecipeOutput output) {
+        vintageRecipes(output);
+        ageCheese(output);
+        ageMisc(output);
     }
 
-    private static void ageCheese(Consumer<FinishedRecipe> consumer) {
-        CaskRecipeBuilder.caskRecipe(HHModItems.CHEDDAR_CHEESE_WHEEL.get(), 1, SLOW_AGING, MEDIUM_EXP)
-                .addIngredient(HHModItems.UNRIPE_CHEDDAR_CHEESE_WHEEL.get())
-                .unlockedByAnyIngredient(HHModItems.UNRIPE_CHEDDAR_CHEESE_WHEEL.get())
+    private static void ageCheese(RecipeOutput output) {
+        CaskRecipeBuilder.caskRecipe(HHModItems.CHEESE_WHEEL.get(), 1, SLOW_AGING, MEDIUM_EXP)
+                .addIngredient(HHModItems.UNRIPE_CHEESE_WHEEL.get())
+                .unlockedByAnyIngredient(HHModItems.UNRIPE_CHEESE_WHEEL.get())
                 .setRecipeBookTab(CaskRecipeBookTab.MEALS)
-                .build(consumer);
+                .build(output);
 
         CaskRecipeBuilder.caskRecipe(HHModItems.GOAT_CHEESE_WHEEL.get(), 1, SLOW_AGING, MEDIUM_EXP)
                 .addIngredient(HHModItems.UNRIPE_GOAT_CHEESE_WHEEL.get())
                 .unlockedByAnyIngredient(HHModItems.UNRIPE_GOAT_CHEESE_WHEEL.get())
                 .setRecipeBookTab(CaskRecipeBookTab.MEALS)
-                .build(consumer);
+                .build(output);
     }
 
-    private static void ageDrinks(Consumer<FinishedRecipe> consumer) {
-        CaskRecipeBuilder.caskRecipe(HHModItems.BLUEBERRY_WINE.get(), 1, NORMAL_AGING, SMALL_EXP)
-                .addIngredient(HHModItems.BLUEBERRY_JUICE.get())
-                .addIngredient(Items.SUGAR)
-                .unlockedByAnyIngredient(HHModItems.BLUEBERRIES.get())
-                .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.CHERRY_WINE.get(), 1, NORMAL_AGING, SMALL_EXP)
-                .addIngredient(HHModItems.CHERRY_JUICE.get())
-                .addIngredient(Items.SUGAR)
-                .unlockedByAnyIngredient(HHModItems.CHERRY.get())
-                .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.RASPBERRY_WINE.get(), 1, NORMAL_AGING, SMALL_EXP)
-                .addIngredient(HHModItems.RASPBERRY_JUICE.get())
-                .addIngredient(Items.SUGAR)
-                .unlockedByAnyIngredient(HHModItems.RASPBERRY.get())
-                .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.RED_GRAPE_WINE.get(), 1, NORMAL_AGING, SMALL_EXP)
-                .addIngredient(HHModItems.RED_GRAPE_JUICE.get())
-                .addIngredient(Items.SUGAR)
-                .unlockedByAnyIngredient(HHModItems.RED_GRAPES.get())
-                .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.GREEN_GRAPE_WINE.get(), 1, NORMAL_AGING, SMALL_EXP)
-                .addIngredient(HHModItems.GREEN_GRAPE_JUICE.get())
-                .addIngredient(Items.SUGAR)
-                .unlockedByAnyIngredient(HHModItems.GREEN_GRAPES.get())
-                .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.SWEET_BERRY_WINE.get(), 1, NORMAL_AGING, SMALL_EXP)
-                .addIngredient(Items.SWEET_BERRIES)
-                .addIngredient(Items.SWEET_BERRIES)
-                .addIngredient(Items.SUGAR)
-                .addIngredient(Items.GLASS_BOTTLE)
-                .unlockedByAnyIngredient(Items.SWEET_BERRIES)
-                .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.MEAD.get(), 1, NORMAL_AGING, SMALL_EXP)
-                .addIngredient(Items.HONEY_BOTTLE)
-                .addIngredient(Items.SUGAR)
-                .addIngredient(Items.SUGAR)
-                .unlockedByAnyIngredient(Items.HONEY_BOTTLE)
-                .setRecipeBookTab(CaskRecipeBookTab.DRINKS)
-                .build(consumer);
-    }
-
-    private static void agePickles(Consumer<FinishedRecipe> consumer) {
-        CaskRecipeBuilder.caskRecipe(HHModItems.PICKLED_CARROTS.get(), 1, SLOW_AGING, MEDIUM_EXP)
-                .addIngredient(HHModItems.SALT.get())
-                .addIngredient(Items.CARROT)
-                .addIngredient(Items.CARROT)
-                .addIngredient(HHModItems.JAR.get())
-                .unlockedByAnyIngredient(Items.CARROT)
-                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.PICKLED_POTATOES.get(), 1, SLOW_AGING, MEDIUM_EXP)
-                .addIngredient(HHModItems.SALT.get())
-                .addIngredient(Items.POTATO)
-                .addIngredient(Items.POTATO)
-                .addIngredient(HHModItems.JAR.get())
-                .unlockedByAnyIngredient(Items.POTATO)
-                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.PICKLED_ONIONS.get(), 1, SLOW_AGING, MEDIUM_EXP)
-                .addIngredient(HHModItems.SALT.get())
-                .addIngredient(vectorwing.farmersdelight.common.registry.ModItems.ONION.get())
-                .addIngredient(vectorwing.farmersdelight.common.registry.ModItems.ONION.get())
-                .addIngredient(HHModItems.JAR.get())
-                .unlockedByAnyIngredient(vectorwing.farmersdelight.common.registry.ModItems.ONION.get())
-                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.PICKLED_CABBAGE.get(), 1, SLOW_AGING, MEDIUM_EXP)
-                .addIngredient(HHModItems.SALT.get())
-                .addIngredient(vectorwing.farmersdelight.common.registry.ModItems.CABBAGE.get())
-                .addIngredient(vectorwing.farmersdelight.common.registry.ModItems.CABBAGE.get())
-                .addIngredient(HHModItems.JAR.get())
-                .unlockedByAnyIngredient(vectorwing.farmersdelight.common.registry.ModItems.CABBAGE.get())
-                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
-                .build(consumer);
-
-        CaskRecipeBuilder.caskRecipe(HHModItems.PICKLED_BEETROOTS.get(), 1, SLOW_AGING, MEDIUM_EXP)
-                .addIngredient(HHModItems.SALT.get())
-                .addIngredient(Items.BEETROOT)
-                .addIngredient(Items.BEETROOT)
-                .addIngredient(HHModItems.JAR.get())
-                .unlockedByAnyIngredient(Items.BEETROOT)
-                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
-                .build(consumer);
-    }
-
-
-    private static void ageMisc(Consumer<FinishedRecipe> consumer) {
+    private static void ageMisc(RecipeOutput output) {
         CaskRecipeBuilder.caskRecipe(HHModItems.JERKY.get(), 3, SLOW_AGING, MEDIUM_EXP)
-                .addIngredient(HHModItems.SALT.get())
+                .addIngredient(HHCommonTags.DUSTS_SALT)
                 .addIngredient(Items.ROTTEN_FLESH)
                 .addIngredient(Items.ROTTEN_FLESH)
                 .addIngredient(Items.ROTTEN_FLESH)
                 .unlockedByAnyIngredient(Items.ROTTEN_FLESH)
                 .setRecipeBookTab(CaskRecipeBookTab.MEALS)
-                .build(consumer);
+                .build(output,"jerky_from_rotten_flesh");
+
+        CaskRecipeBuilder.caskRecipe(HHModItems.JERKY.get(), 3, SLOW_AGING, MEDIUM_EXP)
+                .addIngredient(HHCommonTags.DUSTS_SALT)
+                .addIngredient(HHCommonTags.FOODS_RAW_MEAT)
+                .addIngredient(HHCommonTags.FOODS_RAW_MEAT)
+                .addIngredient(HHCommonTags.FOODS_RAW_MEAT)
+                .unlockedByAnyIngredient()
+                .setRecipeBookTab(CaskRecipeBookTab.MEALS)
+                .build(output,"jerky_from_raw_meat");
+    }
+
+    private static final int[] VINTAGE_TIMES = {24000, 48000, 72000};
+
+    private static void vintageRecipes(RecipeOutput output) {
+        vintages(output, CaskRecipeBookTab.DRINKS, List.of(
+                HHModItems.BLUEBERRY_WINE, HHModItems.CHERRY_WINE, HHModItems.GLOW_BERRY_WINE,
+                HHModItems.GREEN_GRAPE_WINE, HHModItems.HARD_CIDER, HHModItems.MEAD,
+                HHModItems.MELON_WINE, HHModItems.RASPBERRY_WINE, HHModItems.RED_GRAPE_WINE,
+                HHModItems.ROOT_BEER, HHModItems.BEER, HHModItems.SWEET_BERRY_WINE));
+        vintages(output, CaskRecipeBookTab.MEALS, List.of(
+                HHModItems.PICKLED_BEETROOTS, HHModItems.PICKLED_CABBAGE, HHModItems.PICKLED_CARROTS,
+                HHModItems.PICKLED_ONIONS, HHModItems.PICKLED_POTATOES,
+                HHModItems.CHEESE_WHEEL, HHModItems.GOAT_CHEESE_WHEEL));
+    }
+
+    private static void vintages(RecipeOutput output, CaskRecipeBookTab tab, List<Supplier<Item>> ageables) {
+        for (Supplier<Item> supplier : ageables) {
+            Item item = supplier.get();
+            String name = BuiltInRegistries.ITEM.getKey(item).getPath();
+
+            for (int vintage = 1; vintage <= VintageHelper.MAX_VINTAGE; vintage++) {
+                ItemStack result = VintageHelper.withVintage(new ItemStack(item), vintage);
+                String stage = VintageHelper.STAGE_NAMES[vintage - 1];
+
+                new CaskRecipeBuilder(result, VINTAGE_TIMES[vintage - 1], MEDIUM_EXP)
+                        .addIngredient(new VintageIngredient(item, vintage - 1).toVanilla())
+                        .unlockedByItems("has_" + name, item)
+                        .setRecipeBookTab(tab)
+                        .save(output, new ResourceLocation(HearthAndHarvest.MODID, name + "_" + stage));
+            }
+        }
     }
 }

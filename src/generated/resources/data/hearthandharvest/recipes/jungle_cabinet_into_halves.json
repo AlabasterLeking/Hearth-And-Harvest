@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farmersdelight:jungle_cabinet"
+    },
+    {
+      "item": "farmersdelight:jungle_cabinet"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "hearthandharvest:jungle_half_cabinet"
+  }
+}

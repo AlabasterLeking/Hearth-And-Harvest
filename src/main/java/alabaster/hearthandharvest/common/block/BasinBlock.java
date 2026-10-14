@@ -1,5 +1,8 @@
 package alabaster.hearthandharvest.common.block;
 
+import net.minecraft.world.InteractionResult;
+import alabaster.hearthandharvest.common.block.entity.BasinBlockEntity;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -7,54 +10,49 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
-import java.util.Random;
-
-public class BasinBlock extends Block {
-
+public class BasinBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final IntegerProperty WATER_LEVEL = IntegerProperty.create("level", 0, 3);
-    private static final VoxelShape INSIDE = box(2.0D, 1.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+
+    private static final VoxelShape INSIDE = box(2, 1, 2, 14, 16, 14);
     protected static final VoxelShape SHAPE;
 
     public BasinBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.NORTH)
-                .setValue(WATER_LEVEL, 0));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, WATER_LEVEL);
-        super.createBlockStateDefinition(builder);
+    public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection());
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
     }
 
     @Override
@@ -63,68 +61,50 @@ public class BasinBlock extends Block {
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
-    }
-
-    @Override
     public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return INSIDE;
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new BasinBlockEntity(pos, state);
+    }
+
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof BasinBlockEntity basin) {
+            return HHFluidHandling.comparatorOutput(basin.tank);
         }
+        return 0;
+    }
 
-        ItemStack held = player.getItemInHand(hand);
-        int currentLevel = state.getValue(WATER_LEVEL);
-        boolean changed = false;
-        ItemStack waterBottle = PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.WATER);
+    protected InteractionResult hhUseItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide()) return InteractionResult.sidedSuccess(true);
+        if (!(level.getBlockEntity(pos) instanceof BasinBlockEntity basin))
+            return null;
 
-        if (held.getItem() == waterBottle.getItem()) {
-            if (currentLevel < 3) {
-                level.setBlock(pos, state.setValue(WATER_LEVEL, Math.min(currentLevel + 1, 3)), 3);
-                if (!player.getAbilities().instabuild) {
-                    held.shrink(1);
-                    level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    player.addItem(new ItemStack(Items.GLASS_BOTTLE));
-                }
-                changed = true;
-            }
-        } else if (held.getItem() == Items.WATER_BUCKET) {
-            if (currentLevel < 3) {
-                level.setBlock(pos, state.setValue(WATER_LEVEL, Math.min(currentLevel + 3, 3)), 3);
-                if (!player.getAbilities().instabuild) {
-                    level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    player.setItemInHand(hand, new ItemStack(Items.BUCKET));
-                }
-                changed = true;
-            }
-        } else if (held.getItem() == Items.GLASS_BOTTLE) {
-            if (currentLevel >= 1) {
-                level.setBlock(pos, state.setValue(WATER_LEVEL, currentLevel - 1), 3);
-                if (!player.getAbilities().instabuild) {
-                    held.shrink(1);
-                    level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    player.addItem(waterBottle);
-                }
-                changed = true;
-            }
-        } else if (held.getItem() == Items.BUCKET) {
-            if (currentLevel >= 3) {
-                level.setBlock(pos, state.setValue(WATER_LEVEL, currentLevel - 3), 3);
-                if (!player.getAbilities().instabuild) {
-                    held.shrink(1);
-                    level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    player.addItem(new ItemStack(Items.WATER_BUCKET));
-                }
-                changed = true;
-            }
-        }
-
-        return changed ? InteractionResult.CONSUME : InteractionResult.PASS;
+        return HHFluidHandling.useOnTank(level, pos, player, hand, basin.tank, null);
     }
 
     @Override
@@ -138,35 +118,38 @@ public class BasinBlock extends Block {
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         if (!level.isClientSide) {
-            boolean powered = level.hasNeighborSignal(pos);
-            boolean scheduled = level.getBlockTicks().hasScheduledTick(pos, this);
-
-            if (!powered && !scheduled && state.getValue(WATER_LEVEL) < 3) {
-                level.scheduleTick(pos, this, 60);
+            boolean isPowered = level.hasNeighborSignal(pos);
+            boolean isScheduled = level.getBlockTicks().hasScheduledTick(pos, this);
+            if (!isPowered && !isScheduled) {
+                if (level.getBlockEntity(pos) instanceof BasinBlockEntity basin && !basin.isFull()) {
+                    level.scheduleTick(pos, this, 60);
+                }
             }
         }
     }
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (level.hasNeighborSignal(pos)) {
-            return;
-        }
+        if (level.hasNeighborSignal(pos)) return;
+        if (!(level.getBlockEntity(pos) instanceof BasinBlockEntity basin)) return;
+        if (basin.isFull()) return;
 
-        int currentLevel = state.getValue(WATER_LEVEL);
-        if (currentLevel < 3) {
-            int newLevel = currentLevel + 1;
-            BlockState newState = state.setValue(WATER_LEVEL, newLevel);
-            level.setBlock(pos, newState, 3);
-            level.playSound(null, pos, SoundEvents.FISH_SWIM, SoundSource.BLOCKS, 1.0F, 1.0F);
+        basin.tank.fill(new FluidStack(Fluids.WATER, BasinBlockEntity.BOTTLE_AMOUNT), IFluidHandler.FluidAction.EXECUTE);
+        level.playSound(null, pos, SoundEvents.FISH_SWIM, SoundSource.BLOCKS, 1f, 1f);
 
-            if (newLevel < 3) {
-                level.scheduleTick(pos, this, 60);
-            }
+        if (!basin.isFull()) {
+            level.scheduleTick(pos, this, 60);
         }
     }
 
     static {
         SHAPE = Shapes.join(Shapes.block(), INSIDE, BooleanOp.ONLY_FIRST);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        InteractionResult itemResult = hhUseItemOn(player.getItemInHand(hand), state, level, pos, player, hand, hit);
+        if (itemResult != null) return itemResult;
+        return super.use(state, level, pos, player, hand, hit);
     }
 }

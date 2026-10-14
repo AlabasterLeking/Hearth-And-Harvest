@@ -1,0 +1,22 @@
+{
+  "type": "hearthandharvest:aging",
+  "cookingtime": 48000,
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "type": "hearthandharvest:vintage",
+      "base": {
+        "item": "hearthandharvest:cheese_wheel"
+      },
+      "vintage": 1
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "components": {
+      "hearthandharvest:vintage": 2
+    },
+    "count": 1,
+    "id": "hearthandharvest:cheese_wheel"
+  }
+}

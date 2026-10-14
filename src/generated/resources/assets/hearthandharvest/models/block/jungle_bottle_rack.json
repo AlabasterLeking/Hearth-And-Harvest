@@ -1,0 +1,8 @@
+{
+  "parent": "hearthandharvest:block/bottle_rack",
+  "textures": {
+    "rack_side": "hearthandharvest:block/jungle_half_cabinet_side",
+    "rack_top": "hearthandharvest:block/jungle_half_cabinet_top",
+    "side": "farmersdelight:block/jungle_cabinet_side"
+  }
+}

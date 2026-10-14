@@ -1,0 +1,27 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "alabaster.hearthandharvest.common.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "AbstractHorseMixin",
+    "WaterBottleMixin",
+    "FarmlandMulchMixin",
+    "AlterGroundMulchMixin",
+    "RichSoilFarmlandMulchMixin",
+    "SheepGrassManureMixin",
+    "HorseHurtMixin",
+    "CabinetBlockEntityTypeMixin",
+    "accessor.StructureProcessorListAccessor",
+    "accessor.PlayerAccessor"
+  ],
+  "client": [
+    "HideBreakProgressMixin",
+    "PlayerModelChickenArmsMixin",
+    "accessor.ChickenModelAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "hearthandharvest.refmap.json"
+}

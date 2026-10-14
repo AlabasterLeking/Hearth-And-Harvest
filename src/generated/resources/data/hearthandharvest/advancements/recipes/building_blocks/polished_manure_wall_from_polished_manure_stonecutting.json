@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_polished_manure": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:polished_manure"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:polished_manure_wall_from_polished_manure_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_polished_manure",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:polished_manure_wall_from_polished_manure_stonecutting"
+    ]
+  },
+  "sends_telemetry_event": false
+}

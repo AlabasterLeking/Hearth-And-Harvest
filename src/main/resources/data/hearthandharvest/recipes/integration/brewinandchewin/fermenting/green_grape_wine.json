@@ -6,10 +6,6 @@
     }
   ],
   "type": "brewinandchewin:fermenting",
-  "basefluid": {
-    "count": 500,
-    "fluid": "minecraft:water"
-  },
   "experience": 1.0,
   "ingredients": [
     {
@@ -19,11 +15,14 @@
       "item": "hearthandharvest:green_grapes"
     },
     {
-      "item": "minecraft:sugar"
+      "item": "hearthandharvest:green_grapes"
     },
     []
   ],
-  "recipe_book_tab": "drinks",
+  "basefluid": {
+    "count": 500,
+    "fluid": "minecraft:water"
+  },
   "result": {
     "count": 500,
     "fluid": "hearthandharvest:green_grape_wine"

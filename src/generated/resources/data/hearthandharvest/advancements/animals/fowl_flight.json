@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:animals/plucky",
+  "criteria": {
+    "fowl_flight": {
+      "conditions": {},
+      "trigger": "hearthandharvest:chicken_glide"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.hearthandharvest.fowl_flight.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:feather"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.fowl_flight"
+    }
+  },
+  "requirements": [
+    [
+      "fowl_flight"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:manure_brick_from_smelting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_wet_manure_brick": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:wet_manure_brick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_wet_manure_brick",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:manure_brick_from_smelting"
+    ]
+  },
+  "sends_telemetry_event": false
+}

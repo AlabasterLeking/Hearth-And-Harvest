@@ -1,0 +1,24 @@
+{
+  "type": "farmersdelight:cooking",
+  "cookingtime": 100,
+  "experience": 0.35,
+  "ingredients": [
+    {
+      "item": "hearthandharvest:corn_kernels"
+    },
+    {
+      "item": "minecraft:orange_dye"
+    },
+    {
+      "item": "hearthandharvest:syrup_bottle"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "count": 4,
+    "item": "hearthandharvest:candy_corn"
+  }
+}

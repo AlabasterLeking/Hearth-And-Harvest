@@ -1,8 +1,0 @@
-{
-  "parent": "block/slab",
-  "textures": {
-    "bottom": "farmersdelight:block/crate_bottom",
-    "top": "hearthandharvest:block/red_grape_wine_crate_top",
-    "side": "hearthandharvest:block/red_grape_wine_crate_side"
-  }
-}

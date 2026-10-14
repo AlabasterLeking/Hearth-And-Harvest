@@ -1,0 +1,25 @@
+{
+  "type": "hearthandharvest:fermenting",
+  "experience": 1.0,
+  "ferment_time": 1200,
+  "ingredients": [
+    {
+      "item": "farmersdelight:cabbage"
+    },
+    {
+      "item": "farmersdelight:cabbage"
+    },
+    {
+      "item": "hearthandharvest:jar"
+    }
+  ],
+  "input_fluid": {
+    "amount": 250,
+    "fluid": "hearthandharvest:brine"
+  },
+  "recipe_book_tab": "meals",
+  "result_item": {
+    "count": 1,
+    "id": "hearthandharvest:pickled_cabbage"
+  }
+}

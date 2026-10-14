@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hearthandharvest:block/sugar_cane_bundle_end",
+    "side": "hearthandharvest:block/sugar_cane_bundle_side"
+  }
+}

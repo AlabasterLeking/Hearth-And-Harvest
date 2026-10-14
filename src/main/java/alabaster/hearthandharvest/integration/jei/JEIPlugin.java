@@ -1,7 +1,13 @@
 package alabaster.hearthandharvest.integration.jei;
 
+import net.minecraftforge.registries.ForgeRegistries;
+import alabaster.hearthandharvest.common.migration.LegacyCrates;
+import mezz.jei.api.runtime.IJeiRuntime;
+import java.util.ArrayList;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.client.gui.CaskGUI;
+import alabaster.hearthandharvest.client.gui.KegGUI;
+import alabaster.hearthandharvest.integration.jei.category.KegRecipeCategory;
 import alabaster.hearthandharvest.common.block.entity.container.CaskMenu;
 import alabaster.hearthandharvest.common.crafting.BottleCrateRecipe;
 import alabaster.hearthandharvest.common.registry.HHModItems;
@@ -9,23 +15,31 @@ import alabaster.hearthandharvest.common.registry.HHModMenuTypes;
 import alabaster.hearthandharvest.common.registry.HHModRecipeTypes;
 import alabaster.hearthandharvest.common.utilities.HHTextUtils;
 import alabaster.hearthandharvest.integration.jei.category.AgingRecipeCategory;
+import alabaster.hearthandharvest.integration.jei.category.StompingRecipeCategory;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.gui.handlers.IGuiContainerHandler;
+import mezz.jei.api.ingredients.ITypedIngredient;
+import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.registration.*;
+import mezz.jei.api.runtime.IClickableIngredient;
+import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Optional;
 
 @JeiPlugin
 @ParametersAreNonnullByDefault
@@ -34,41 +48,116 @@ import java.util.List;
 public class JEIPlugin implements IModPlugin
 {
     private static final ResourceLocation ID = new ResourceLocation(HearthAndHarvest.MODID, "jei_plugin");
-
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
         registry.addRecipeCategories(new AgingRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new StompingRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
+        registry.addRecipeCategories(new KegRecipeCategory(registry.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         HHRecipes modRecipes = new HHRecipes();
         registration.addRecipes(HHRecipeTypes.AGING, modRecipes.getCaskRecipes());
+        registration.addRecipes(HHRecipeTypes.STOMPING, modRecipes.getStompingRecipes());
+        registration.addRecipes(HHRecipeTypes.FERMENTING, modRecipes.getKegRecipes());
 
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level == null) return;
+        RecipeManager recipeManager = level.getRecipeManager();
+        List<BottleCrateRecipe> bottleCrateHolders = recipeManager.getAllRecipesFor(HHModRecipeTypes.BOTTLE_CRATE.get());
+        List<CraftingRecipe> craftingRecipeHolders = new ArrayList<>(bottleCrateHolders);
+        registration.addRecipes(RecipeTypes.CRAFTING, craftingRecipeHolders);
+
+        registration.addIngredientInfo(new ItemStack(HHModItems.SALT.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.salt"));
         registration.addIngredientInfo(new ItemStack(HHModItems.WATERING_CAN.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.watering_can"));
         registration.addIngredientInfo(new ItemStack(HHModItems.TREE_TAPPER.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.tree_tapper"));
         registration.addIngredientInfo(new ItemStack(HHModItems.SAP_BUCKET.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.sap_bucket"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.NEST.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.nest"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.SCARECROW.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.scarecrow"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.TROUGH.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.trough"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.SPRINKLER.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.sprinkler"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.SALT_BLOCK.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.salt_block"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.JUG.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.jug"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.CASK.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.cask"));
+        registration.addIngredientInfo(new ItemStack(HHModItems.KEG.get()), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.keg"));
+        registration.addIngredientInfo(List.of(
+                new ItemStack(HHModItems.RED_GRAPE_WINE.get()),
+                new ItemStack(HHModItems.GREEN_GRAPE_WINE.get()),
+                new ItemStack(HHModItems.BLUEBERRY_WINE.get()),
+                new ItemStack(HHModItems.RASPBERRY_WINE.get()),
+                new ItemStack(HHModItems.CHERRY_WINE.get()),
+                new ItemStack(HHModItems.SWEET_BERRY_WINE.get()),
+                new ItemStack(HHModItems.GLOW_BERRY_WINE.get()),
+                new ItemStack(HHModItems.MELON_WINE.get()),
+                new ItemStack(HHModItems.MEAD.get()),
+                new ItemStack(HHModItems.HARD_CIDER.get()),
+                new ItemStack(HHModItems.ROOT_BEER.get()),
+                new ItemStack(HHModItems.BEER.get()),
+                new ItemStack(HHModItems.PICKLED_BEETROOTS.get()),
+                new ItemStack(HHModItems.PICKLED_CABBAGE.get()),
+                new ItemStack(HHModItems.PICKLED_CARROTS.get()),
+                new ItemStack(HHModItems.PICKLED_ONIONS.get()),
+                new ItemStack(HHModItems.PICKLED_POTATOES.get()),
+                new ItemStack(HHModItems.CHEESE_WHEEL.get()),
+                new ItemStack(HHModItems.GOAT_CHEESE_WHEEL.get())
+        ), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.vintage_aging"));
         registration.addIngredientInfo(new ItemStack(Items.FEATHER), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.pluck_chickens"));
         registration.addIngredientInfo(List.of(new ItemStack(HHModItems.WILD_RED_GRAPES.get()), new ItemStack(HHModItems.RED_GRAPES.get()), new ItemStack(HHModItems.WILD_GREEN_GRAPES.get()), new ItemStack(HHModItems.GREEN_GRAPES.get())), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.wild_grapes"));
+        registration.addIngredientInfo(List.of(new ItemStack(HHModItems.WILD_HOPS.get()), new ItemStack(HHModItems.HOPS.get())), VanillaTypes.ITEM_STACK, HHTextUtils.getTranslation("jei.info.wild_hops"));
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(HHModItems.CASK.get()), HHRecipeTypes.AGING);
+        registration.addRecipeCatalyst(new ItemStack(HHModItems.STOMPING_BASIN.get()), HHRecipeTypes.STOMPING);
+        registration.addRecipeCatalyst(new ItemStack(HHModItems.KEG.get()), HHRecipeTypes.FERMENTING);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(CaskGUI.class, 89, 25, 24, 17, HHRecipeTypes.AGING);
+        registration.addRecipeClickArea(CaskGUI.class, 10, 32, 9, 24, HHRecipeTypes.AGING);
+        registration.addRecipeClickArea(CaskGUI.class, 58, 32, 9, 24, HHRecipeTypes.AGING);
+
+        IIngredientManager ingredientManager = registration.getJeiHelpers().getIngredientManager();
+        registration.addGuiContainerHandler(KegGUI.class, new IGuiContainerHandler<KegGUI>() {
+            @Override
+            public Optional<IClickableIngredient<?>> getClickableIngredientUnderMouse(KegGUI screen, double mouseX, double mouseY) {
+                FluidStack fluid = screen.getHoveredFluid(mouseX, mouseY);
+                if (fluid.isEmpty()) return Optional.empty();
+                Rect2i area = screen.getHoveredTankArea(mouseX, mouseY);
+                return ingredientManager.createTypedIngredient(ForgeTypes.FLUID_STACK, fluid.copy())
+                        .<IClickableIngredient<?>>map(typed -> new IClickableIngredient<FluidStack>() {
+                            @Override
+                            public ITypedIngredient<FluidStack> getTypedIngredient() {
+                                return typed;
+                            }
+
+                            @Override
+                            public Rect2i getArea() {
+                                return area;
+                            }
+                        });
+            }
+        });
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(CaskMenu.class, HHModMenuTypes.CASK.get(), HHRecipeTypes.AGING, 0, 6, 9, 36);
+        registration.addRecipeTransferHandler(CaskMenu.class, HHModMenuTypes.CASK_MENU.get(), HHRecipeTypes.AGING, 0, 6, 9, 36);
     }
 
     @Override
     public ResourceLocation getPluginUid() {
         return ID;
+    }
+
+    @Override
+    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        List<ItemStack> legacy = LegacyCrates.CONTENTS.keySet().stream()
+                .map(name -> new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(HearthAndHarvest.MODID, name))))
+                .filter(stack -> !stack.isEmpty())
+                .toList();
+        jeiRuntime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, legacy);
     }
 }

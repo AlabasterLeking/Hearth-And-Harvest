@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#hearthandharvest:has_crows",
+  "features": "hearthandharvest:nest",
+  "step": "vegetal_decoration"
+}

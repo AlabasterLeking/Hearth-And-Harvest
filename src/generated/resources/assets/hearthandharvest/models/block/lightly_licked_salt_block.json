@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "hearthandharvest:block/lightly_licked_salt_block"
+  }
+}

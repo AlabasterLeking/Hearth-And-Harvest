@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:main/root",
+  "criteria": {
+    "plucky": {
+      "conditions": {},
+      "trigger": "hearthandharvest:plucked_chicken"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.plucky.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:feather"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.plucky"
+    }
+  },
+  "requirements": [
+    [
+      "plucky"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

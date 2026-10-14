@@ -1,0 +1,30 @@
+{
+  "values": [
+    "minecraft:enchanted_book",
+    "minecraft:glowstone",
+    "minecraft:glowstone_dust",
+    "minecraft:ender_pearl",
+    "minecraft:ender_eye",
+    {
+      "id": "#forge:gems",
+      "required": false
+    },
+    {
+      "id": "#forge:ingots",
+      "required": false
+    },
+    {
+      "id": "#forge:nuggets",
+      "required": false
+    },
+    {
+      "id": "#forge:ores",
+      "required": false
+    },
+    {
+      "id": "#forge:armors",
+      "required": false
+    },
+    "#forge:tools"
+  ]
+}

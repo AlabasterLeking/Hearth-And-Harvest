@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.data.loot;
 
+import alabaster.hearthandharvest.common.block.FoodStackBlock;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.HolderLookup;
@@ -7,10 +8,17 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 public class HHBlockLoot extends BlockLootSubProvider {
     private final Set<Block> generatedLootTables = new HashSet<>();
@@ -23,11 +31,20 @@ public class HHBlockLoot extends BlockLootSubProvider {
     protected void generate() {
         dropSelf(HHModBlocks.TREE_TAPPER.get());
         dropSelf(HHModBlocks.CASK.get());
+        dropSelf(HHModBlocks.KEG.get());
+        dropSelf(HHModBlocks.STOMPING_BASIN.get());
         dropSelf(HHModBlocks.JUG.get());
         dropOther(HHModBlocks.SAP_CAULDRON.get(), Items.CAULDRON);
         dropSelf(HHModBlocks.COUNTER.get());
         dropNamedContainer(HHModBlocks.DRAWER.get());
         dropSelf(HHModBlocks.BASIN.get());
+        dropSelf(HHModBlocks.TROUGH.get());
+        dropSelf(HHModBlocks.SPRINKLER.get());
+        dropSelf(HHModBlocks.NEST.get());
+        dropSelf(HHModBlocks.HAY_RUG.get());
+        dropSelf(HHModBlocks.STRAW_RUG.get());
+        dropSelf(HHModBlocks.SCARECROW.get());
+        dropSelf(HHModBlocks.TRELLIS.get());
         dropNamedContainer(HHModBlocks.OAK_HALF_CABINET.get());
         dropNamedContainer(HHModBlocks.SPRUCE_HALF_CABINET.get());
         dropNamedContainer(HHModBlocks.BIRCH_HALF_CABINET.get());
@@ -39,43 +56,88 @@ public class HHBlockLoot extends BlockLootSubProvider {
         dropNamedContainer(HHModBlocks.CHERRY_HALF_CABINET.get());
         dropNamedContainer(HHModBlocks.CRIMSON_HALF_CABINET.get());
         dropNamedContainer(HHModBlocks.WARPED_HALF_CABINET.get());
-        dropSelf(HHModBlocks.OAK_WINE_RACK.get());
-        dropSelf(HHModBlocks.SPRUCE_WINE_RACK.get());
-        dropSelf(HHModBlocks.BIRCH_WINE_RACK.get());
-        dropSelf(HHModBlocks.JUNGLE_WINE_RACK.get());
-        dropSelf(HHModBlocks.ACACIA_WINE_RACK.get());
-        dropSelf(HHModBlocks.DARK_OAK_WINE_RACK.get());
-        dropSelf(HHModBlocks.MANGROVE_WINE_RACK.get());
-        dropSelf(HHModBlocks.BAMBOO_WINE_RACK.get());
-        dropSelf(HHModBlocks.CHERRY_WINE_RACK.get());
-        dropSelf(HHModBlocks.CRIMSON_WINE_RACK.get());
-        dropSelf(HHModBlocks.WARPED_WINE_RACK.get());
+        dropSelf(HHModBlocks.OAK_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.SPRUCE_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.BIRCH_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.JUNGLE_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.ACACIA_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.DARK_OAK_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.MANGROVE_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.BAMBOO_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.CHERRY_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.CRIMSON_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.WARPED_BOTTLE_RACK.get());
+        dropSelf(HHModBlocks.CRATE.get());
         dropSelf(HHModBlocks.RASPBERRY_CRATE.get());
         dropSelf(HHModBlocks.BLUEBERRY_CRATE.get());
         dropSelf(HHModBlocks.RED_GRAPE_CRATE.get());
         dropSelf(HHModBlocks.GREEN_GRAPE_CRATE.get());
         dropSelf(HHModBlocks.CHERRY_CRATE.get());
         dropSelf(HHModBlocks.PEANUT_CRATE.get());
+        dropSelf(HHModBlocks.CORN_CRATE.get());
         dropSelf(HHModBlocks.APPLE_CRATE.get());
         dropSelf(HHModBlocks.GOLDEN_APPLE_CRATE.get());
         dropSelf(HHModBlocks.GOLDEN_CARROT_CRATE.get());
+        dropSelf(HHModBlocks.GLISTERING_MELON_CRATE.get());
         dropSelf(HHModBlocks.POISONOUS_POTATO_CRATE.get());
+        dropSelf(HHModBlocks.ROTTEN_TOMATO_CRATE.get());
         dropSelf(HHModBlocks.GLOW_BERRY_CRATE.get());
         dropSelf(HHModBlocks.SWEET_BERRY_CRATE.get());
         dropSelf(HHModBlocks.SALT_BAG.get());
         dropSelf(HHModBlocks.SUGAR_BAG.get());
         dropSelf(HHModBlocks.COCOA_BEAN_BAG.get());
         dropSelf(HHModBlocks.GUNPOWDER_BAG.get());
+        dropSelf(HHModBlocks.CORN_KERNEL_BAG.get());
+        dropSelf(HHModBlocks.HOPS_BAG.get());
+        dropSelf(HHModBlocks.MANURE_BAG.get());
+        dropSelf(HHModBlocks.FEATHER_BAG.get());
+        dropSelf(HHModBlocks.FLOUR_BAG.get());
+        dropSelf(HHModBlocks.CORN_HUSK_BUNDLE.get());
+        dropSelf(HHModBlocks.SUGAR_CANE_BUNDLE.get());
         dropSelf(HHModBlocks.COTTON_BALE.get());
         dropSelf(HHModBlocks.SPOOL.get());
         dropSelf(HHModBlocks.ROPE_COIL.get());
-        dropOther(HHModBlocks.RED_GRAPE_CROP.get(), HHModItems.RED_GRAPES.get());
-        dropOther(HHModBlocks.GREEN_GRAPE_CROP.get(), HHModItems.GREEN_GRAPES.get());
+        dropSelf(HHModBlocks.CHARCOAL_BLOCK.get());
+        dropSelf(HHModBlocks.STICK_BRUSH.get());
+        dropSelf(HHModBlocks.YELLOW_MUM.get());
+        dropSelf(HHModBlocks.ORANGE_MUM.get());
+        dropSelf(HHModBlocks.RED_MUM.get());
+        dropSelf(HHModBlocks.BLUE_MUM.get());
+        dropSelf(HHModBlocks.LIGHT_BLUE_MUM.get());
+        dropSelf(HHModBlocks.PURPLE_MUM.get());
+        dropSelf(HHModBlocks.PINK_MUM.get());
+        dropSelf(HHModBlocks.WHITE_MUM.get());
+        dropPottedContents(HHModBlocks.POTTED_YELLOW_MUM.get());
+        dropPottedContents(HHModBlocks.POTTED_ORANGE_MUM.get());
+        dropPottedContents(HHModBlocks.POTTED_RED_MUM.get());
+        dropPottedContents(HHModBlocks.POTTED_BLUE_MUM.get());
+        dropPottedContents(HHModBlocks.POTTED_LIGHT_BLUE_MUM.get());
+        dropPottedContents(HHModBlocks.POTTED_PURPLE_MUM.get());
+        dropPottedContents(HHModBlocks.POTTED_PINK_MUM.get());
+        dropPottedContents(HHModBlocks.POTTED_WHITE_MUM.get());
+        foodStackDrops(HHModBlocks.WAFFLE.get());
+        foodStackDrops(HHModBlocks.PANCAKE.get());
+        dropSelf(HHModBlocks.POLISHED_SALT_BLOCK.get());
+        dropSelf(HHModBlocks.SALT_STAIRS.get());
+        dropSelf(HHModBlocks.POLISHED_SALT_STAIRS.get());
+        dropSelf(HHModBlocks.SALT_WALL.get());
+        dropSelf(HHModBlocks.POLISHED_SALT_WALL.get());
+        dropSelf(HHModBlocks.SALT_DRIP.get());
+        dropSelf(HHModBlocks.SALT_LAMP.get());
+        dropSelf(HHModBlocks.MANURE_BLOCK.get());
+        dropSelf(HHModBlocks.MANURE_BRICKS_BLOCK.get());
+        dropSelf(HHModBlocks.POLISHED_MANURE.get());
+        dropSelf(HHModBlocks.MANURE_BRICK_STAIRS.get());
+        dropSelf(HHModBlocks.POLISHED_MANURE_STAIRS.get());
+        dropSelf(HHModBlocks.MANURE_BRICK_WALL.get());
+        dropSelf(HHModBlocks.POLISHED_MANURE_WALL.get());
+        dropSelf(HHModBlocks.MULCH.get());
     }
+
     @Override
     protected void add(Block block, LootTable.Builder builder) {
         this.generatedLootTables.add(block);
-        this.map.put(block.getLootTable(), builder);
+        super.add(block, builder);
     }
 
     protected void dropNamedContainer(Block block) {
@@ -85,5 +147,15 @@ public class HHBlockLoot extends BlockLootSubProvider {
     @Override
     protected Iterable<Block> getKnownBlocks() {
         return generatedLootTables;
+    }
+
+    private void foodStackDrops(Block block) {
+        add(block, LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0F))
+                .add(applyExplosionDecay(block, LootItem.lootTableItem(block)
+                        .apply(IntStream.rangeClosed(2, FoodStackBlock.MAX_STACK).boxed().toList(), count ->
+                                SetItemCountFunction.setCount(ConstantValue.exactly(count))
+                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FoodStackBlock.COUNT, count))))))));
     }
 }

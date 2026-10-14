@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_green_grape": {
+    "has_green_grapes": {
       "conditions": {
         "items": [
           {
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_green_grape",
+      "has_green_grapes",
       "has_the_recipe"
     ]
   ],

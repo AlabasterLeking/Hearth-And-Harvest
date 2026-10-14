@@ -1,22 +1,19 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "minecraft:crafting_shapeless",
   "category": "misc",
-  "key": {
-    "P": {
-      "item": "hearthandharvest:peanut_butter"
-    },
-    "W": {
+  "ingredients": [
+    {
       "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "hearthandharvest:peanut_butter"
     }
-  },
-  "pattern": [
-    "   ",
-    "WPW",
-    "   "
   ],
   "result": {
     "count": 8,
     "item": "hearthandharvest:peanut_butter_cookie"
-  },
-  "show_notification": true
+  }
 }

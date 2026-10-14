@@ -1,0 +1,194 @@
+package alabaster.hearthandharvest.common.tag;
+
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+
+public class HHCommonTags {
+    public static final TagKey<Item> FRUITS_BLUEBERRY = commonItemTag("fruits/blueberry");
+    public static final TagKey<Item> FRUITS_RASPBERRY = commonItemTag("fruits/raspberry");
+    public static final TagKey<Item> FRUITS_CHERRY = commonItemTag("fruits/cherry");
+    public static final TagKey<Item> FRUITS_GRAPE = commonItemTag("fruits/grape");
+    public static final TagKey<Item> CROPS_PEANUT = commonItemTag("crops/peanut");
+    public static final TagKey<Item> CROPS_HOPS = commonItemTag("crops/hops");
+    public static final TagKey<Item> CROPS_COTTON = commonItemTag("crops/cotton");
+    public static final TagKey<Item> VEGETABLES_CORN = commonItemTag("vegetables/corn");
+    public static final TagKey<Item> CROPS_CORN = commonItemTag("crops/corn");
+    public static final TagKey<Item> CROPS_GRAIN = commonItemTag("crops/grain");
+    public static final TagKey<Item> SEEDS_CORN = commonItemTag("seeds/corn");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_APPLE = commonItemTag("storage_blocks/apple");
+    public static final TagKey<Block> STORAGE_BLOCKS_APPLE = commonBlockTag("storage_blocks/apple");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GOLDEN_APPLE = commonItemTag("storage_blocks/golden_apple");
+    public static final TagKey<Block> STORAGE_BLOCKS_GOLDEN_APPLE = commonBlockTag("storage_blocks/golden_apple");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GOLDEN_CARROT = commonItemTag("storage_blocks/golden_carrot");
+    public static final TagKey<Block> STORAGE_BLOCKS_GOLDEN_CARROT = commonBlockTag("storage_blocks/golden_carrot");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GLISTERING_MELON = commonItemTag("storage_blocks/glistering_melon");
+    public static final TagKey<Block> STORAGE_BLOCKS_GLISTERING_MELON = commonBlockTag("storage_blocks/glistering_melon");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_POISONOUS_POTATO = commonItemTag("storage_blocks/poisonous_potato");
+    public static final TagKey<Block> STORAGE_BLOCKS_POISONOUS_POTATO = commonBlockTag("storage_blocks/poisonous_potato");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_ROTTEN_TOMATO = commonItemTag("storage_blocks/rotten_tomato");
+    public static final TagKey<Block> STORAGE_BLOCKS_ROTTEN_TOMATO = commonBlockTag("storage_blocks/rotten_tomato");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GLOW_BERRY = commonItemTag("storage_blocks/glow_berry");
+    public static final TagKey<Block> STORAGE_BLOCKS_GLOW_BERRY = commonBlockTag("storage_blocks/glow_berry");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SWEET_BERRY = commonItemTag("storage_blocks/sweet_berry");
+    public static final TagKey<Block> STORAGE_BLOCKS_SWEET_BERRY = commonBlockTag("storage_blocks/sweet_berry");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SUGAR = commonItemTag("storage_blocks/sugar");
+    public static final TagKey<Block> STORAGE_BLOCKS_SUGAR = commonBlockTag("storage_blocks/sugar");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_COCOA_BEAN = commonItemTag("storage_blocks/cocoa_bean");
+    public static final TagKey<Block> STORAGE_BLOCKS_COCOA_BEAN = commonBlockTag("storage_blocks/cocoa_bean");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GUNPOWDER = commonItemTag("storage_blocks/gunpowder");
+    public static final TagKey<Block> STORAGE_BLOCKS_GUNPOWDER = commonBlockTag("storage_blocks/gunpowder");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_FLOUR = commonItemTag("storage_blocks/flour");
+    public static final TagKey<Block> STORAGE_BLOCKS_FLOUR = commonBlockTag("storage_blocks/flour");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_MANURE = commonItemTag("storage_blocks/manure");
+    public static final TagKey<Block> STORAGE_BLOCKS_MANURE = commonBlockTag("storage_blocks/manure");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_STRING = commonItemTag("storage_blocks/string");
+    public static final TagKey<Block> STORAGE_BLOCKS_STRING = commonBlockTag("storage_blocks/string");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_BROWN_MUSHROOM = commonItemTag("storage_blocks/brown_mushroom");
+    public static final TagKey<Block> STORAGE_BLOCKS_BROWN_MUSHROOM = commonBlockTag("storage_blocks/brown_mushroom");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_RED_MUSHROOM = commonItemTag("storage_blocks/red_mushroom");
+    public static final TagKey<Block> STORAGE_BLOCKS_RED_MUSHROOM = commonBlockTag("storage_blocks/red_mushroom");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_WARPED_FUNGUS = commonItemTag("storage_blocks/warped_fungus");
+    public static final TagKey<Block> STORAGE_BLOCKS_WARPED_FUNGUS = commonBlockTag("storage_blocks/warped_fungus");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CRIMSON_FUNGUS = commonItemTag("storage_blocks/crimson_fungus");
+    public static final TagKey<Block> STORAGE_BLOCKS_CRIMSON_FUNGUS = commonBlockTag("storage_blocks/crimson_fungus");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_BLUEBERRY = commonItemTag("storage_blocks/blueberry");
+    public static final TagKey<Block> STORAGE_BLOCKS_BLUEBERRY = commonBlockTag("storage_blocks/blueberry");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_RASPBERRY = commonItemTag("storage_blocks/raspberry");
+    public static final TagKey<Block> STORAGE_BLOCKS_RASPBERRY = commonBlockTag("storage_blocks/raspberry");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_GRAPE = commonItemTag("storage_blocks/grape");
+    public static final TagKey<Block> STORAGE_BLOCKS_GRAPE = commonBlockTag("storage_blocks/grape");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CHERRY = commonItemTag("storage_blocks/cherry");
+    public static final TagKey<Block> STORAGE_BLOCKS_CHERRY = commonBlockTag("storage_blocks/cherry");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_PEANUT = commonItemTag("storage_blocks/peanut");
+    public static final TagKey<Block> STORAGE_BLOCKS_PEANUT = commonBlockTag("storage_blocks/peanut");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_COTTON = commonItemTag("storage_blocks/cotton");
+    public static final TagKey<Block> STORAGE_BLOCKS_COTTON = commonBlockTag("storage_blocks/cotton");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CORN = commonItemTag("storage_blocks/corn");
+    public static final TagKey<Block> STORAGE_BLOCKS_CORN = commonBlockTag("storage_blocks/corn");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CHARCOAL = commonItemTag("storage_blocks/charcoal");
+    public static final TagKey<Block> STORAGE_BLOCKS_CHARCOAL = commonBlockTag("storage_blocks/charcoal");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_STICK = commonItemTag("storage_blocks/stick");
+    public static final TagKey<Block> STORAGE_BLOCKS_STICK = commonBlockTag("storage_blocks/stick");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SUGAR_CANE = commonItemTag("storage_blocks/sugar_cane");
+    public static final TagKey<Block> STORAGE_BLOCKS_SUGAR_CANE = commonBlockTag("storage_blocks/sugar_cane");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_FEATHER = commonItemTag("storage_blocks/feather");
+    public static final TagKey<Block> STORAGE_BLOCKS_FEATHER = commonBlockTag("storage_blocks/feather");
+
+    public static final TagKey<Item> FIBERS = commonItemTag("fibers");
+    public static final TagKey<Item> MANURE = commonItemTag("manure");
+    public static final TagKey<Item> BUTTER = commonItemTag("butter");
+
+    public static final TagKey<Item> SEEDS_COTTON = commonItemTag("seeds/cotton");
+    public static final TagKey<Item> SEEDS_BLUEBERRY = commonItemTag("seeds/blueberry");
+    public static final TagKey<Item> SEEDS_RASPBERRY = commonItemTag("seeds/raspberry");
+
+    public static final TagKey<Item> BUCKETS_SAP = commonItemTag("buckets/sap");
+
+    public static final TagKey<Item> FOODS_NUT = commonItemTag("foods/nut");
+    public static final TagKey<Item> FOODS_CHEESE = commonItemTag("foods/cheese");
+    public static final TagKey<Item> FOODS_CARAMEL = commonItemTag("foods/caramel");
+    public static final TagKey<Item> FOODS_COTTON_CANDY = commonItemTag("foods/cotton_candy");
+    public static final TagKey<Item> FOODS_CHOCOLATE = commonItemTag("foods/chocolate");
+    public static final TagKey<Item> FOODS_RAISIN = commonItemTag("foods/raisin");
+    public static final TagKey<Item> FOODS_POPCORN = commonItemTag("foods/popcorn");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_SALT = commonItemTag("storage_blocks/salt");
+    public static final TagKey<Block> STORAGE_BLOCKS_SALT = commonBlockTag("storage_blocks/salt");
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_HOPS = commonItemTag("storage_blocks/hops");
+    public static final TagKey<Block> STORAGE_BLOCKS_HOPS = commonBlockTag("storage_blocks/hops");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CORN_KERNEL = commonItemTag("storage_blocks/corn_kernel");
+    public static final TagKey<Block> STORAGE_BLOCKS_CORN_KERNEL = commonBlockTag("storage_blocks/corn_kernel");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_CORN_HUSK = commonItemTag("storage_blocks/corn_husk");
+    public static final TagKey<Block> STORAGE_BLOCKS_CORN_HUSK = commonBlockTag("storage_blocks/corn_husk");
+
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM_ROPE = commonItemTag("storage_blocks/rope");
+    public static final TagKey<Block> STORAGE_BLOCKS_ROPE = commonBlockTag("storage_blocks/rope");
+
+    public static final TagKey<Item> DRINKS_JUICE = commonItemTag("drinks/juice");
+    public static final TagKey<Item> DRINKS_ALCOHOL = commonItemTag("drinks/alcohol");
+
+    public static final TagKey<Item> DUSTS_SALT = commonItemTag("dusts/salt");
+
+    public static final TagKey<Item> FLOURS = commonItemTag("flours");
+    public static final TagKey<Item> FLOURS_WHEAT = commonItemTag("flours/wheat");
+    public static final TagKey<Item> FLOURS_CORN = commonItemTag("flours/corn");
+
+    // Generic common tags
+    public static final TagKey<Item> ANIMAL_FOODS = commonItemTag("animal_foods");
+    public static final TagKey<Item> ARMORS = commonItemTag("armors");
+    public static final TagKey<Item> BRICKS = commonItemTag("bricks");
+    public static final TagKey<Item> BUCKETS = commonItemTag("buckets");
+    public static final TagKey<Item> CROPS = commonItemTag("crops");
+    public static final TagKey<Item> DRINKS = commonItemTag("drinks");
+    public static final TagKey<Item> DRINKS_MILK = commonItemTag("milk");
+    public static final TagKey<Item> FEATHERS = commonItemTag("feathers");
+    public static final TagKey<Item> FOODS = commonItemTag("foods");
+    public static final TagKey<Item> FOODS_BERRY = commonItemTag("foods/berry");
+    public static final TagKey<Item> FOODS_BREAD = commonItemTag("foods/bread");
+    public static final TagKey<Item> FOODS_COOKED_MEAT = commonItemTag("foods/cooked_meat");
+    public static final TagKey<Item> FOODS_COOKIE = commonItemTag("foods/cookie");
+    public static final TagKey<Item> FOODS_EDIBLE_WHEN_PLACED = commonItemTag("foods/edible_when_placed");
+    public static final TagKey<Item> FOODS_FOOD_POISONING = commonItemTag("foods/food_poisoning");
+    public static final TagKey<Item> FOODS_FRUIT = commonItemTag("foods/fruit");
+    public static final TagKey<Item> FOODS_LEAFY_GREEN = commonItemTag("foods/leafy_green");
+    public static final TagKey<Item> FOODS_PIE = commonItemTag("foods/pie");
+    public static final TagKey<Item> FOODS_RAW_MEAT = commonItemTag("foods/raw_meat");
+    public static final TagKey<Item> FOODS_SOUP = commonItemTag("foods/soup");
+    public static final TagKey<Item> GEMS = commonItemTag("gems");
+    public static final TagKey<Item> INGOTS = commonItemTag("ingots");
+    public static final TagKey<Item> NUGGETS = commonItemTag("nuggets");
+    public static final TagKey<Item> ORES = commonItemTag("ores");
+    public static final TagKey<Item> SEEDS = commonItemTag("seeds");
+    public static final TagKey<Item> STORAGE_BLOCKS_ITEM = commonItemTag("storage_blocks");
+    public static final TagKey<Item> TOOLS = commonItemTag("tools");
+    public static final TagKey<Item> TOOLS_KNIVES = commonItemTag("tools/knives");
+    public static final TagKey<Item> CROPS_WHEAT = commonItemTag("crops/wheat");
+    public static final TagKey<Item> EGGS = commonItemTag("eggs");
+    public static final TagKey<Item> FOODS_VEGETABLE = commonItemTag("vegetables");
+    public static final TagKey<Item> INGOTS_IRON = commonItemTag("ingots/iron");
+    public static final TagKey<Item> MUSHROOMS = commonItemTag("mushrooms");
+    public static final TagKey<Block> STORAGE_BLOCKS = commonBlockTag("storage_blocks");
+
+    private static TagKey<Block> commonBlockTag(String path) {
+        return BlockTags.create(new ResourceLocation("forge", path));
+    }
+
+    private static TagKey<Item> commonItemTag(String path) {
+        return ItemTags.create(new ResourceLocation("forge", path));
+    }
+}

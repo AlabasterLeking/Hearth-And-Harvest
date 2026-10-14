@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#hearthandharvest:has_salt_caves",
+  "features": "hearthandharvest:salt_cave",
+  "step": "underground_decoration"
+}

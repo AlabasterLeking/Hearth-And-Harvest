@@ -1,8 +1,8 @@
 {
   "parent": "hearthandharvest:block/half_cabinet",
   "textures": {
-    "back": "hearthandharvest:block/bamboo_cabinet_side",
-    "front": "hearthandharvest:block/bamboo_cabinet_front_open",
+    "back": "farmersdelight:block/bamboo_cabinet_side",
+    "front": "farmersdelight:block/bamboo_cabinet_front_open",
     "side": "hearthandharvest:block/bamboo_half_cabinet_side",
     "top": "hearthandharvest:block/bamboo_half_cabinet_top"
   }

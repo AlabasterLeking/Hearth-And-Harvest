@@ -1,0 +1,7 @@
+{
+  "parent": "hearthandharvest:block/crop_cross",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "cross": "hearthandharvest:block/corn_middle_stage_5"
+  }
+}

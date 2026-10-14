@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:kitchen/salt_of_the_earth",
+  "criteria": {
+    "worth_your_salt": {
+      "conditions": {},
+      "trigger": "hearthandharvest:ate_salted_food"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.worth_your_salt.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:salt"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.worth_your_salt"
+    }
+  },
+  "requirements": [
+    [
+      "worth_your_salt"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

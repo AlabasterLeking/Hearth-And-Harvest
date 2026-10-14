@@ -1,0 +1,195 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "min": 3,
+        "max": 5
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:corn_bread",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:popcorn",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:candy_corn",
+          "weight": 8,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3,
+                "max": 8
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:street_corn",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:corn_stew",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:tamale",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:cider_donut",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:caramel_apple",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pumpkin_pie",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "farmersdelight:rice",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 5
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "farmersdelight:straw",
+          "weight": 6,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "min": 2,
+        "max": 3
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:moonshine",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:hard_cider",
+          "weight": 12
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:corn_crate",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:apple_jam",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:watering_can",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald",
+          "weight": 8,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 6
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_ingot",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 2,
+                "max": 6
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gold_nugget",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3,
+                "max": 8
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "farmersdelight:iron_knife",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:enchanted_book",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:name_tag",
+          "weight": 6
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:saddle",
+          "weight": 5
+        }
+      ]
+    }
+  ]
+}

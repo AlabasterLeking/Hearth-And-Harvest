@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:animals/number_two",
+  "criteria": {
+    "wet_blanket": {
+      "conditions": {},
+      "trigger": "hearthandharvest:pungent_scared"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.wet_blanket.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.wet_blanket"
+    }
+  },
+  "requirements": [
+    [
+      "wet_blanket"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

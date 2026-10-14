@@ -1,0 +1,24 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "type": "hearthandharvest:vintage",
+      "base": {
+        "item": "hearthandharvest:goat_cheese_wheel"
+      },
+      "vintage": 1
+    }
+  ],
+  "result": [
+    {
+      "count": 4,
+      "item": "hearthandharvest:goat_cheese_slice",
+      "nbt": {
+        "hearthandharvest:vintage": 1
+      }
+    }
+  ],
+  "tool": {
+    "tag": "forge:tools/knives"
+  }
+}

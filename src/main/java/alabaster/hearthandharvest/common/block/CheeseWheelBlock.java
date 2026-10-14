@@ -1,14 +1,19 @@
 package alabaster.hearthandharvest.common.block;
 
+import javax.annotation.Nullable;
+import net.minecraft.world.InteractionResult;
+import alabaster.hearthandharvest.common.item.VintageHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -18,20 +23,21 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import vectorwing.farmersdelight.common.tag.ModTags;
 
+import java.util.List;
 import java.util.function.Supplier;
 
-// Copied from Brewin and Chewin so the mechanic can be used without the mod being installed
 public class CheeseWheelBlock extends Block {
     public static final IntegerProperty SERVINGS = IntegerProperty.create("servings", 0, 3);
+    public static final IntegerProperty VINTAGE = IntegerProperty.create("vintage", 0, VintageHelper.MAX_VINTAGE);
     protected static final VoxelShape[] SHAPES = new VoxelShape[]{
-            Block.box(2.0D, 0.0D, 2.0D, 8.0D, 6.0D, 8.0D),
+            Block.box(8.0D, 0.0D, 2.0D, 14.0D, 6.0D, 8.0D),
             Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 8.0D),
             Shapes.or(Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 8.0D), Block.box(2.0D, 0.0D, 8.0D, 8.0D, 6.0D, 14.0D)),
             Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D),
@@ -41,8 +47,24 @@ public class CheeseWheelBlock extends Block {
 
     public CheeseWheelBlock(Supplier<Item> cheeseWedgeType, Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(SERVINGS, 3));
+        this.registerDefaultState(this.stateDefinition.any().setValue(SERVINGS, 3).setValue(VINTAGE, 0));
         this.cheeseWedgeType = cheeseWedgeType;
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(VINTAGE, VintageHelper.getVintage(context.getItemInHand()));
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+        return VintageHelper.withVintage(super.getCloneItemStack(state, target, level, pos, player), state.getValue(VINTAGE));
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter context, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltip, flag);
+        VintageHelper.appendTooltip(stack, tooltip);
     }
 
     @Override
@@ -60,13 +82,11 @@ public class CheeseWheelBlock extends Block {
         return canSupportCenter(level, pos.below(), Direction.UP);
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+    protected InteractionResult hhUseItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
         int servings = state.getValue(SERVINGS);
-        ItemStack heldStack = player.getItemInHand(handIn);
-        if (heldStack.is(ModTags.Items.KNIVES)) {
+        if (stack.is(ModTags.Items.KNIVES)) {
             level.playSound(null, pos, SoundEvents.WOOL_BREAK, SoundSource.PLAYERS, 1.0F, 1.0F);
-            popResource(level, pos, new ItemStack(cheeseWedgeType.get(), 1));
+            popResource(level, pos, VintageHelper.withVintage(new ItemStack(cheeseWedgeType.get(), 1), state.getValue(VINTAGE)));
             if (servings > 0) {
                 level.setBlock(pos, state.setValue(SERVINGS, servings - 1), 3);
             } else if (servings == 0) {
@@ -74,12 +94,12 @@ public class CheeseWheelBlock extends Block {
             }
             return InteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return null;
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(SERVINGS);
+    public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(SERVINGS, VINTAGE);
     }
 
     @Override
@@ -92,8 +112,10 @@ public class CheeseWheelBlock extends Block {
         return true;
     }
 
-    // NeoForge:
-    public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
-        return false;
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        InteractionResult itemResult = hhUseItemOn(player.getItemInHand(hand), state, level, pos, player, hand, hit);
+        if (itemResult != null) return itemResult;
+        return super.use(state, level, pos, player, hand, hit);
     }
 }

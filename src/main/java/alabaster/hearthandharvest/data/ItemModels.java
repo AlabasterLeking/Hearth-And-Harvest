@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.data;
 
+import alabaster.hearthandharvest.common.migration.LegacyCrateItem;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import com.google.common.collect.Sets;
@@ -27,27 +28,44 @@ public class ItemModels extends ItemModelProvider
     @Override
     protected void registerModels() {
         Set<Item> items = BuiltInRegistries.ITEM.stream().filter(i -> HearthAndHarvest.MODID.equals(BuiltInRegistries.ITEM.getKey(i).getNamespace()))
+                .filter(i -> !(i instanceof LegacyCrateItem))
                 .collect(Collectors.toSet());
 
-        // Workstations
+        // Specific Cases
+        items.remove(HHModItems.CROW_SPAWN_EGG.get());
+        items.remove(HHModItems.SCARECROW.get());
+        items.remove(HHModItems.SALT_DRIP.get());
+        items.remove(HHModItems.PITCHFORK.get());
+        items.remove(HHModItems.FARMERS_HAT.get());
+
+        // Workstations / Functional
         blockBasedModel(HHModItems.TREE_TAPPER.get(),"");
         items.remove(HHModItems.TREE_TAPPER.get());
-
         blockBasedModel(HHModItems.CASK.get(),"");
         items.remove(HHModItems.CASK.get());
-
+        blockBasedModel(HHModItems.STOMPING_BASIN.get(),"");
+        items.remove(HHModItems.STOMPING_BASIN.get());
         blockBasedModel(HHModItems.JUG.get(),"");
         items.remove(HHModItems.JUG.get());
-
         blockBasedModel(HHModItems.COUNTER.get(),"");
         items.remove(HHModItems.COUNTER.get());
-
         blockBasedModel(HHModItems.DRAWER.get(),"");
         items.remove(HHModItems.DRAWER.get());
-
         blockBasedModel(HHModItems.BASIN.get(),"");
         items.remove(HHModItems.BASIN.get());
+        blockBasedModel(HHModItems.SPRINKLER.get(),"");
+        items.remove(HHModItems.SPRINKLER.get());
 
+        items.remove(HHModItems.CRATE.get());
+
+        blockBasedModel(HHModItems.NEST.get(),"");
+        items.remove(HHModItems.NEST.get());
+        blockBasedModel(HHModItems.HAY_RUG.get(),"");
+        items.remove(HHModItems.HAY_RUG.get());
+        blockBasedModel(HHModItems.STRAW_RUG.get(),"");
+        items.remove(HHModItems.STRAW_RUG.get());
+
+        // Half Cabinets
         blockBasedModel(HHModItems.OAK_HALF_CABINET.get(),"");
         items.remove(HHModItems.OAK_HALF_CABINET.get());
         blockBasedModel(HHModItems.BIRCH_HALF_CABINET.get(),"");
@@ -71,28 +89,29 @@ public class ItemModels extends ItemModelProvider
         blockBasedModel(HHModItems.WARPED_HALF_CABINET.get(),"");
         items.remove(HHModItems.WARPED_HALF_CABINET.get());
 
-        blockBasedModel(HHModItems.OAK_WINE_RACK.get(),"");
-        items.remove(HHModItems.OAK_WINE_RACK.get());
-        blockBasedModel(HHModItems.BIRCH_WINE_RACK.get(),"");
-        items.remove(HHModItems.BIRCH_WINE_RACK.get());
-        blockBasedModel(HHModItems.SPRUCE_WINE_RACK.get(),"");
-        items.remove(HHModItems.SPRUCE_WINE_RACK.get());
-        blockBasedModel(HHModItems.JUNGLE_WINE_RACK.get(),"");
-        items.remove(HHModItems.JUNGLE_WINE_RACK.get());
-        blockBasedModel(HHModItems.ACACIA_WINE_RACK.get(),"");
-        items.remove(HHModItems.ACACIA_WINE_RACK.get());
-        blockBasedModel(HHModItems.DARK_OAK_WINE_RACK.get(),"");
-        items.remove(HHModItems.DARK_OAK_WINE_RACK.get());
-        blockBasedModel(HHModItems.MANGROVE_WINE_RACK.get(),"");
-        items.remove(HHModItems.MANGROVE_WINE_RACK.get());
-        blockBasedModel(HHModItems.CHERRY_WINE_RACK.get(),"");
-        items.remove(HHModItems.CHERRY_WINE_RACK.get());
-        blockBasedModel(HHModItems.BAMBOO_WINE_RACK.get(),"");
-        items.remove(HHModItems.BAMBOO_WINE_RACK.get());
-        blockBasedModel(HHModItems.CRIMSON_WINE_RACK.get(),"");
-        items.remove(HHModItems.CRIMSON_WINE_RACK.get());
-        blockBasedModel(HHModItems.WARPED_WINE_RACK.get(),"");
-        items.remove(HHModItems.WARPED_WINE_RACK.get());
+        // Bottle Racks
+        blockBasedModel(HHModItems.OAK_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.OAK_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.BIRCH_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.BIRCH_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.SPRUCE_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.SPRUCE_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.JUNGLE_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.JUNGLE_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.ACACIA_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.ACACIA_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.DARK_OAK_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.DARK_OAK_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.MANGROVE_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.MANGROVE_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.CHERRY_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.CHERRY_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.BAMBOO_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.BAMBOO_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.CRIMSON_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.CRIMSON_BOTTLE_RACK.get());
+        blockBasedModel(HHModItems.WARPED_BOTTLE_RACK.get(),"");
+        items.remove(HHModItems.WARPED_BOTTLE_RACK.get());
 
         // Campfire Roastables
         items.remove(HHModItems.MARSHMALLOW_STICK.get());
@@ -106,112 +125,113 @@ public class ItemModels extends ItemModelProvider
         items.remove(HHModItems.GREEN_GRAPE_WINE.get());
         items.remove(HHModItems.RED_GRAPE_WINE.get());
         items.remove(HHModItems.SWEET_BERRY_WINE.get());
+        items.remove(HHModItems.GLOW_BERRY_WINE.get());
+        items.remove(HHModItems.MELON_WINE.get());
         items.remove(HHModItems.MEAD.get());
+        items.remove(HHModItems.HARD_CIDER.get());
+        items.remove(HHModItems.ROOT_BEER.get());
+        items.remove(HHModItems.BEER.get());
 
         // Watering Can
         items.remove(HHModItems.WATERING_CAN.get());
 
         // Slab Crates
-        blockBasedModel(HHModItems.EGG_CRATE.get(), "_bottom");
-        items.remove(HHModItems.EGG_CRATE.get());
-
-        blockBasedModel(HHModItems.TURTLE_EGG_CRATE.get(), "_bottom");
-        items.remove(HHModItems.TURTLE_EGG_CRATE.get());
-
-        blockBasedModel(HHModItems.MILK_CRATE.get(), "_bottom");
-        items.remove(HHModItems.MILK_CRATE.get());
-
-        blockBasedModel(HHModItems.GOAT_MILK_CRATE.get(), "_bottom");
-        items.remove(HHModItems.GOAT_MILK_CRATE.get());
-
-        blockBasedModel(HHModItems.BLUEBERRY_WINE_CRATE.get(), "_bottom");
-        items.remove(HHModItems.BLUEBERRY_WINE_CRATE.get());
-
-        blockBasedModel(HHModItems.CHERRY_WINE_CRATE.get(), "_bottom");
-        items.remove(HHModItems.CHERRY_WINE_CRATE.get());
-
-        blockBasedModel(HHModItems.RASPBERRY_WINE_CRATE.get(), "_bottom");
-        items.remove(HHModItems.RASPBERRY_WINE_CRATE.get());
-
-        blockBasedModel(HHModItems.RED_GRAPE_WINE_CRATE.get(), "_bottom");
-        items.remove(HHModItems.RED_GRAPE_WINE_CRATE.get());
-
-        blockBasedModel(HHModItems.GREEN_GRAPE_WINE_CRATE.get(), "_bottom");
-        items.remove(HHModItems.GREEN_GRAPE_WINE_CRATE.get());
-
-        blockBasedModel(HHModItems.SWEET_BERRY_WINE_CRATE.get(), "_bottom");
-        items.remove(HHModItems.SWEET_BERRY_WINE_CRATE.get());
-
-        blockBasedModel(HHModItems.MEAD_CRATE.get(), "_bottom");
-        items.remove(HHModItems.MEAD_CRATE.get());
-
-        blockBasedModel(HHModItems.WATER_CRATE.get(), "_bottom");
-        items.remove(HHModItems.WATER_CRATE.get());
-
-        blockBasedModel(HHModItems.HONEY_CRATE.get(), "_bottom");
-        items.remove(HHModItems.HONEY_CRATE.get());
-
-        blockBasedModel(HHModItems.SYRUP_CRATE.get(), "_bottom");
-        items.remove(HHModItems.SYRUP_CRATE.get());
-
         blockBasedModel(HHModItems.BROWN_MUSHROOM_CRATE.get(), "_bottom");
         items.remove(HHModItems.BROWN_MUSHROOM_CRATE.get());
-
         blockBasedModel(HHModItems.RED_MUSHROOM_CRATE.get(), "_bottom");
         items.remove(HHModItems.RED_MUSHROOM_CRATE.get());
-
         blockBasedModel(HHModItems.CRIMSON_FUNGUS_CRATE.get(), "_bottom");
         items.remove(HHModItems.CRIMSON_FUNGUS_CRATE.get());
-
         blockBasedModel(HHModItems.WARPED_FUNGUS_CRATE.get(), "_bottom");
         items.remove(HHModItems.WARPED_FUNGUS_CRATE.get());
+        blockBasedModel(HHModItems.SALT_LAMP.get(),"_unlit");
+        items.remove(HHModItems.SALT_LAMP.get());
+
+        // Jars
+        items.remove(HHModItems.JAR.get());
+        items.remove(HHModItems.BLUEBERRY_JAM.get());
+        items.remove(HHModItems.CHERRY_JAM.get());
+        items.remove(HHModItems.GRAPE_JAM.get());
+        items.remove(HHModItems.RASPBERRY_JAM.get());
+        items.remove(HHModItems.APPLE_JAM.get());
+        items.remove(HHModItems.SWEET_BERRY_JAM.get());
+        items.remove(HHModItems.GLOW_BERRY_JAM.get());
+        items.remove(HHModItems.MELON_JAM.get());
+        items.remove(HHModItems.PEANUT_BUTTER.get());
+        items.remove(HHModItems.PICKLED_BEETROOTS.get());
+        items.remove(HHModItems.PICKLED_CABBAGE.get());
+        items.remove(HHModItems.PICKLED_CARROTS.get());
+        items.remove(HHModItems.PICKLED_ONIONS.get());
+        items.remove(HHModItems.PICKLED_POTATOES.get());
+
+        // Walls
+        wallItemModel(HHModItems.SALT_WALL.get(), resourceBlock("salt_block"));
+        items.remove(HHModItems.SALT_WALL.get());
+        wallItemModel(HHModItems.POLISHED_SALT_WALL.get(), resourceBlock("polished_salt_block"));
+        items.remove(HHModItems.POLISHED_SALT_WALL.get());
+        wallItemModel(HHModItems.MANURE_BRICK_WALL.get(), resourceBlock("manure_bricks"));
+        items.remove(HHModItems.MANURE_BRICK_WALL.get());
+        wallItemModel(HHModItems.POLISHED_MANURE_WALL.get(), resourceBlock("polished_manure"));
+        items.remove(HHModItems.POLISHED_MANURE_WALL.get());
 
         // Blocks with special item sprites
         Set<Item> spriteBlockItems = Sets.newHashSet(
-                HHModItems.JAR.get(),
-                HHModItems.BLUEBERRY_JAM.get(),
-                HHModItems.CHERRY_JAM.get(),
-                HHModItems.GRAPE_JAM.get(),
-                HHModItems.RASPBERRY_JAM.get(),
-                HHModItems.APPLE_JAM.get(),
-                HHModItems.SWEET_BERRY_JAM.get(),
-                HHModItems.GLOW_BERRY_JAM.get(),
-                HHModItems.MELON_JAM.get(),
-                HHModItems.PEANUT_BUTTER.get(),
-                HHModItems.PICKLED_BEETROOTS.get(),
-                HHModItems.PICKLED_CABBAGE.get(),
-                HHModItems.PICKLED_CARROTS.get(),
-                HHModItems.PICKLED_ONIONS.get(),
-                HHModItems.PICKLED_POTATOES.get(),
-
+                HHModItems.WAFFLE.get(),
+                HHModItems.PANCAKE.get(),
+                HHModItems.TROUGH.get(),
+                HHModItems.TRELLIS.get(),
+                HHModItems.BAMBOO_TRELLIS.get(),
+                HHModItems.STRIPPED_BAMBOO_TRELLIS.get(),
+                HHModItems.SUNFLOWER_SEEDS.get(),
                 HHModItems.RASPBERRY.get(),
                 HHModItems.BLUEBERRIES.get(),
                 HHModItems.RED_GRAPES.get(),
                 HHModItems.GREEN_GRAPES.get(),
+                HHModItems.HOPS.get(),
                 HHModItems.PEANUT.get(),
                 HHModItems.COTTON_SEEDS.get(),
+                HHModItems.CORN_KERNELS.get(),
                 HHModItems.RASPBERRY_PIE.get(),
                 HHModItems.BLUEBERRY_PIE.get(),
+                HHModItems.CHERRY_PIE.get(),
                 HHModItems.GRAPE_PIE.get(),
                 HHModItems.PEANUT_BUTTER_PIE.get(),
                 HHModItems.CHICKEN_POT_PIE.get(),
-                HHModItems.UNRIPE_CHEDDAR_CHEESE_WHEEL.get(),
-                HHModItems.CHEDDAR_CHEESE_WHEEL.get(),
+                HHModItems.PIZZA.get(),
+                HHModItems.MEAT_PIZZA.get(),
+                HHModItems.VEGGIE_PIZZA.get(),
+                HHModItems.CHEESE_PIZZA.get(),
+                HHModItems.UNRIPE_CHEESE_WHEEL.get(),
+                HHModItems.CHEESE_WHEEL.get(),
                 HHModItems.UNRIPE_GOAT_CHEESE_WHEEL.get(),
                 HHModItems.GOAT_CHEESE_WHEEL.get(),
-                HHModItems.CARROT_CAKE.get()
+                HHModItems.CARROT_CAKE.get(),
+                HHModItems.CHOCOLATE_CAKE.get()
         );
         takeAll(items, spriteBlockItems.toArray(new Item[0])).forEach(item -> withExistingParent(itemName(item), GENERATED).texture("layer0", resourceItem(itemName(item))));
+
+        items.remove(HHModItems.WILD_COTTON.get());
+        withExistingParent(itemName(HHModItems.WILD_COTTON.get()), GENERATED)
+                .texture("layer0", resourceBlock("wild_cotton_grass"))
+                .texture("layer1", resourceBlock("wild_cotton"));
 
         // Blocks with flat block textures for their items
         Set<Item> flatBlockItems = Sets.newHashSet(
                 HHModItems.WILD_RED_GRAPES.get(),
                 HHModItems.WILD_GREEN_GRAPES.get(),
-                HHModItems.WILD_COTTON.get(),
-                HHModItems.WILD_PEANUTS.get()
+                HHModItems.WILD_PEANUTS.get(),
+                HHModItems.WILD_HOPS.get(),
+                HHModItems.YELLOW_MUM.get(),
+                HHModItems.ORANGE_MUM.get(),
+                HHModItems.RED_MUM.get(),
+                HHModItems.BLUE_MUM.get(),
+                HHModItems.LIGHT_BLUE_MUM.get(),
+                HHModItems.PURPLE_MUM.get(),
+                HHModItems.PINK_MUM.get(),
+                HHModItems.WHITE_MUM.get()
         );
-        takeAll(items, flatBlockItems.toArray(new Item[0])).forEach(item -> itemGeneratedModel(item, resourceBlock(itemName(item))));
 
+        takeAll(items, flatBlockItems.toArray(new Item[0])).forEach(item -> itemGeneratedModel(item, resourceBlock(itemName(item))));
         // Blocks whose items look alike
         takeAll(items, i -> i instanceof BlockItem).forEach(item -> blockBasedModel(item, ""));
 
@@ -221,7 +241,11 @@ public class ItemModels extends ItemModelProvider
                 HHModItems.IRON_CLEAVER.get(),
                 HHModItems.DIAMOND_CLEAVER.get(),
                 HHModItems.GOLDEN_CLEAVER.get(),
-                HHModItems.NETHERITE_CLEAVER.get()
+                HHModItems.NETHERITE_CLEAVER.get(),
+                HHModItems.UNCOOKED_CORN_ON_THE_COB.get(),
+                HHModItems.COOKED_CORN_ON_THE_COB.get(),
+                HHModItems.RAW_SKEWERED_SAUSAGE.get(),
+                HHModItems.SKEWERED_SAUSAGE.get()
         );
         takeAll(items, handheldItems.toArray(new Item[0])).forEach(item -> itemHandheldModel(item, resourceItem(itemName(item))));
 
@@ -251,6 +275,11 @@ public class ItemModels extends ItemModelProvider
 
     public ResourceLocation resourceItem(String path) {
         return new ResourceLocation(HearthAndHarvest.MODID, "item/" + path);
+    }
+
+    public void wallItemModel(Item item, ResourceLocation wallTexture) {
+        withExistingParent(itemName(item), "minecraft:block/wall_inventory")
+                .texture("wall", wallTexture);
     }
 
     @SafeVarargs

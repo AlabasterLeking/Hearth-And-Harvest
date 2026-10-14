@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "minecraft:hanging_roots"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "fluidTag": "minecraft:water",
+      "amount": 500
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:root_beer",
+      "amount": 500
+    }
+  ],
+  "heatRequirement": "heated"
+}

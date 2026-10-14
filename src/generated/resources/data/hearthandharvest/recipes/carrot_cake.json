@@ -9,13 +9,13 @@
       "item": "minecraft:egg"
     },
     "M": {
-      "tag": "forge:milk/milk_bottle"
+      "tag": "forge:milk"
     },
     "S": {
       "item": "minecraft:sugar"
     },
     "W": {
-      "item": "minecraft:sugar"
+      "item": "minecraft:wheat"
     }
   },
   "pattern": [

@@ -1,0 +1,22 @@
+{
+  "type": "hearthandharvest:aging",
+  "cookingtime": 72000,
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "type": "hearthandharvest:vintage",
+      "base": {
+        "item": "hearthandharvest:beer"
+      },
+      "vintage": 2
+    }
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "components": {
+      "hearthandharvest:vintage": 3
+    },
+    "count": 1,
+    "id": "hearthandharvest:beer"
+  }
+}

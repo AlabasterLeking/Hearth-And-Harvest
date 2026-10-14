@@ -1,0 +1,36 @@
+{
+  "parent": "hearthandharvest:animals/plucky",
+  "criteria": {
+    "well_shod": {
+      "conditions": {
+        "item": {
+          "items": [
+            "hearthandharvest:horseshoe"
+          ]
+        }
+      },
+      "trigger": "minecraft:player_interacted_with_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.well_shod.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:horseshoe"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.well_shod"
+    }
+  },
+  "requirements": [
+    [
+      "well_shod"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

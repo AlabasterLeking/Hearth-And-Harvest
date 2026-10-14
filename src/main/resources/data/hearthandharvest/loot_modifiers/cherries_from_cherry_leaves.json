@@ -2,6 +2,13 @@
   "type": "farmersdelight:add_item",
   "conditions": [
     {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "tag": "forge:shears",
+        "inverted": true
+      }
+    },
+    {
       "condition": "block_state_property",
       "block": "minecraft:cherry_leaves"
     },

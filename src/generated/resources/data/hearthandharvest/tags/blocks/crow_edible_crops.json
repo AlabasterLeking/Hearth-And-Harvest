@@ -1,0 +1,17 @@
+{
+  "values": [
+    "minecraft:wheat",
+    "minecraft:pumpkin_stem",
+    "minecraft:melon_stem",
+    "minecraft:sweet_berry_bush",
+    "minecraft:cave_vines_plant",
+    "farmersdelight:cabbages",
+    "farmersdelight:tomatoes",
+    "farmersdelight:budding_tomatoes",
+    "hearthandharvest:blueberry_bush",
+    "hearthandharvest:raspberry_bush",
+    "hearthandharvest:crop_trellis",
+    "hearthandharvest:peanuts",
+    "hearthandharvest:corn_stalk"
+  ]
+}

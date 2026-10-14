@@ -1,0 +1,30 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "brewinandchewin"
+    }
+  ],
+  "type": "brewinandchewin:fermenting",
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "item": "minecraft:melon_slice"
+    },
+    {
+      "item": "minecraft:melon_slice"
+    },
+    {
+      "item": "minecraft:melon_slice"
+    },
+    []
+  ],
+  "basefluid": {
+    "count": 500,
+    "fluid": "minecraft:water"
+  },
+  "result": {
+    "count": 500,
+    "fluid": "hearthandharvest:melon_wine"
+  }
+}

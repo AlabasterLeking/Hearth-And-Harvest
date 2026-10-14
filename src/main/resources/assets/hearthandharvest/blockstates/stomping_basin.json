@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north,multiblock_part=none": { "model": "hearthandharvest:block/stomping_basin" },
+    "facing=east,multiblock_part=none": { "model": "hearthandharvest:block/stomping_basin", "y": 90 },
+    "facing=south,multiblock_part=none": { "model": "hearthandharvest:block/stomping_basin", "y": 180 },
+    "facing=west,multiblock_part=none": { "model": "hearthandharvest:block/stomping_basin", "y": 270 },
+    "facing=north,multiblock_part=controller": { "model": "hearthandharvest:block/stomping_basin" },
+    "facing=east,multiblock_part=controller": { "model": "hearthandharvest:block/stomping_basin", "y": 90 },
+    "facing=south,multiblock_part=controller": { "model": "hearthandharvest:block/stomping_basin", "y": 180 },
+    "facing=west,multiblock_part=controller": { "model": "hearthandharvest:block/stomping_basin", "y": 270 },
+    "facing=north,multiblock_part=member": { "model": "hearthandharvest:block/stomping_basin" },
+    "facing=east,multiblock_part=member": { "model": "hearthandharvest:block/stomping_basin", "y": 90 },
+    "facing=south,multiblock_part=member": { "model": "hearthandharvest:block/stomping_basin", "y": 180 },
+    "facing=west,multiblock_part=member": { "model": "hearthandharvest:block/stomping_basin", "y": 270 }
+  }
+}

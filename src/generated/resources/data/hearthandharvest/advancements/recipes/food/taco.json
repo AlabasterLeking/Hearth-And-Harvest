@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:taco"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tortilla": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:tortilla"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_tortilla",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:taco"
+    ]
+  },
+  "sends_telemetry_event": false
+}

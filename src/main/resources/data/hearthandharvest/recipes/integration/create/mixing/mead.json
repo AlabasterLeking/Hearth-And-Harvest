@@ -6,11 +6,7 @@
     }
   ],
   "type": "create:mixing",
-  "heatRequirement": "heated",
   "ingredients": [
-    {
-      "item": "minecraft:honey_bottle"
-    },
     {
       "item": "minecraft:honey_bottle"
     },
@@ -18,14 +14,18 @@
       "item": "minecraft:sugar"
     },
     {
-      "amount": 500,
-      "fluid": "minecraft:water"
+      "fluidTag": "minecraft:water",
+      "amount": 250
     }
   ],
   "results": [
     {
-      "amount": 500,
-      "fluid": "hearthandharvest:mead"
+      "fluid": "hearthandharvest:mead",
+      "amount": 250
+    },
+    {
+      "item": "minecraft:glass_bottle"
     }
-  ]
+  ],
+  "heatRequirement": "heated"
 }

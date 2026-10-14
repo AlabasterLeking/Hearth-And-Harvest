@@ -1,0 +1,113 @@
+{
+  "parent": "hearthandharvest:kitchen/sugaring_off",
+  "criteria": {
+    "blueberry_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:blueberry_pie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cherry_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:cherry_pie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "chicken_pot_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:chicken_pot_pie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "grape_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:grape_pie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "peanut_butter_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:peanut_butter_pie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raspberry_pie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:raspberry_pie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.hearthandharvest.pie_chart.desc"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:blueberry_pie"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.pie_chart"
+    }
+  },
+  "requirements": [
+    [
+      "blueberry_pie"
+    ],
+    [
+      "cherry_pie"
+    ],
+    [
+      "raspberry_pie"
+    ],
+    [
+      "grape_pie"
+    ],
+    [
+      "peanut_butter_pie"
+    ],
+    [
+      "chicken_pot_pie"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

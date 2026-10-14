@@ -1,0 +1,37 @@
+{
+  "parent": "hearthandharvest:kitchen/aged_to_perfection",
+  "criteria": {
+    "first_ferment": {
+      "conditions": {
+        "location": [
+          {
+            "block": "hearthandharvest:keg",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.first_ferment.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:keg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.first_ferment"
+    }
+  },
+  "requirements": [
+    [
+      "first_ferment"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,32 +1,32 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
+import alabaster.hearthandharvest.Config;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.Random;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 
 public class RabbitLitters {
 
     @SubscribeEvent
     public void onRabbitBreed(BabyEntitySpawnEvent event) {
-        if (event.getParentA() instanceof Rabbit && event.getParentB() instanceof Rabbit) {
-            Level world = event.getParentA().level();
+        if (!(event.getParentA() instanceof Rabbit) || !(event.getParentB() instanceof Rabbit)) return;
+        if (Config.DISABLE_RABBIT_LITTERS.get()) return;
+        Level world = event.getParentA().level();
+        RandomSource random = event.getParentA().getRandom();
+        int extraCount = 1 + random.nextInt(3);
+        if (extraCount == 3) HHSimpleTrigger.trigger(HHModTriggers.BIG_RABBIT_LITTER, event.getCausedByPlayer());
 
-            event.setCanceled(true);
-
-            Random random = new Random();
-            int babyCount = 2 + random.nextInt(3); // 2 to 4 babies
-
-            for (int i = 0; i < babyCount; i++) {
-                Rabbit babyRabbit = EntityType.RABBIT.create(world);
-                if (babyRabbit != null) {
-                    babyRabbit.setPos(event.getParentA().getX(), event.getParentA().getY(), event.getParentA().getZ());
-                    babyRabbit.setBaby(true);
-                    world.addFreshEntity(babyRabbit);
-                }
+        for (int i = 0; i < extraCount; i++) {
+            Rabbit babyRabbit = EntityType.RABBIT.create(world);
+            if (babyRabbit != null) {
+                babyRabbit.setPos(event.getParentA().getX(), event.getParentA().getY(), event.getParentA().getZ());
+                babyRabbit.setBaby(true);
+                world.addFreshEntity(babyRabbit);
             }
         }
     }

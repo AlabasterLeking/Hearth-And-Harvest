@@ -1,6 +1,22 @@
 {
   "parent": "minecraft:item/generated",
+  "base": {
+    "parent": "hearthandharvest:block/peanut_butter"
+  },
+  "loader": "forge:separate_transforms",
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_peanut_butter"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_peanut_butter"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/2d_peanut_butter"
+    }
+  },
   "textures": {
-    "layer0": "hearthandharvest:item/peanut_butter"
+    "layer0": "hearthandharvest:item/peanut_butter",
+    "particle": "hearthandharvest:item/peanut_butter"
   }
 }

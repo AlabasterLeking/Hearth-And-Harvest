@@ -1,6 +1,22 @@
 {
   "parent": "minecraft:item/generated",
+  "base": {
+    "parent": "hearthandharvest:block/cherry_jam"
+  },
+  "loader": "forge:separate_transforms",
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_cherry_jam"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_cherry_jam"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/2d_cherry_jam"
+    }
+  },
   "textures": {
-    "layer0": "hearthandharvest:item/cherry_jam"
+    "layer0": "hearthandharvest:item/cherry_jam",
+    "particle": "hearthandharvest:item/cherry_jam"
   }
 }

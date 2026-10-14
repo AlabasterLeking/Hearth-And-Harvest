@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "walls",
+  "key": {
+    "#": {
+      "item": "hearthandharvest:polished_salt_block"
+    }
+  },
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "item": "hearthandharvest:polished_salt_wall"
+  },
+  "show_notification": true
+}

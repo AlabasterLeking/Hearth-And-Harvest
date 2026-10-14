@@ -1,0 +1,263 @@
+package alabaster.hearthandharvest.common.block.entity;
+
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
+import net.minecraft.world.entity.EntitySelector;
+
+import alabaster.hearthandharvest.common.block.IHarvestable;
+import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
+import alabaster.hearthandharvest.common.tag.HHModTags;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import alabaster.hearthandharvest.common.block.entity.inventory.SprinklerItemHandler;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+
+public class SprinklerBlockEntity extends HHSyncedBlockEntity {
+
+    public static final int CAPACITY = 10_000;
+    public static final int HYDRATE_RADIUS = 7;
+
+    private static final int HYDRATE_INTERVAL = 40;
+    private static final int BONEMEAL_INTERVAL = 100;
+    private static final int WATER_PER_CYCLE = 10;
+    private static final int WATER_PER_FIRE = 100;
+    private static final int RAIN_INTERVAL = 20;
+    private static final int RAIN_PER_CYCLE = 20;
+    private static final int DRAW_INTERVAL = 40;
+    private static final int DRAW_PER_CYCLE = 100;
+
+    public final FluidTank tank = new FluidTank(CAPACITY) {
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return stack.getFluid().isSame(Fluids.WATER);
+        }
+
+        @Override
+        public void onContentsChanged() {
+            setChanged();
+            if (level != null && !level.isClientSide) {
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+                level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+            }
+        }
+    };
+
+    private final NonNullList<ItemStack> fertilizerSlot = NonNullList.withSize(1, ItemStack.EMPTY);
+    private final IItemHandler fertilizerHandler = new SprinklerItemHandler(this);
+    private int hydrateTimer;
+    private int bonemealTimer;
+    private int refillTimer;
+
+    public SprinklerBlockEntity(BlockPos pos, BlockState state) {
+        super(HHModBlockEntities.SPRINKLER.get(), pos, state);
+    }
+
+    public static void serverTick(Level level, BlockPos pos, BlockState state, SprinklerBlockEntity be) {
+        be.refill(level, pos);
+
+        if (level.hasNeighborSignal(pos)) {
+            be.hydrateTimer = 0;
+            be.bonemealTimer = 0;
+            return;
+        }
+
+        if (++be.hydrateTimer >= HYDRATE_INTERVAL) {
+            be.hydrateTimer = 0;
+            if (be.tank.getFluidAmount() >= WATER_PER_CYCLE)
+                be.hydrateFarmland((ServerLevel) level, pos);
+            if (be.tank.getFluidAmount() >= WATER_PER_FIRE)
+                be.extinguishFires((ServerLevel) level, pos);
+        }
+        if (++be.bonemealTimer >= BONEMEAL_INTERVAL) {
+            be.bonemealTimer = 0;
+            if (!be.fertilizerSlot.get(0).isEmpty())
+                be.tryApplyFertilizer((ServerLevel) level, pos);
+        }
+    }
+
+    private void refill(Level level, BlockPos pos) {
+        if (tank.getSpace() <= 0) return;
+        if (++refillTimer < RAIN_INTERVAL) return;
+        refillTimer = 0;
+
+        if (level.isRainingAt(pos.above())) {
+            tank.fill(new FluidStack(Fluids.WATER, RAIN_PER_CYCLE), IFluidHandler.FluidAction.EXECUTE);
+            return;
+        }
+
+        if (level.getGameTime() % DRAW_INTERVAL != 0) return;
+
+        for (Direction direction : Direction.values()) {
+            if (direction == Direction.UP) continue;
+
+            BlockState neighbour = level.getBlockState(pos.relative(direction));
+            if (!neighbour.getFluidState().isSource() || !neighbour.getFluidState().is(Fluids.WATER)) continue;
+
+            tank.fill(new FluidStack(Fluids.WATER, DRAW_PER_CYCLE), IFluidHandler.FluidAction.EXECUTE);
+            return;
+        }
+    }
+
+    public IItemHandler getFertilizerHandler() {
+        return fertilizerHandler;
+    }
+
+    public NonNullList<ItemStack> getFertilizerSlot() {
+        return fertilizerSlot;
+    }
+
+    private boolean hasFertilizableCrop(ServerLevel level, BlockPos center) {
+        for (BlockPos scan : BlockPos.betweenClosed(
+                center.offset(-HYDRATE_RADIUS, 0, -HYDRATE_RADIUS),
+                center.offset(HYDRATE_RADIUS, 2, HYDRATE_RADIUS))) {
+            BlockState state = level.getBlockState(scan);
+            if (!isCrop(state) || !(state.getBlock() instanceof BonemealableBlock bonemealable)) continue;
+            if (bonemealable.isValidBonemealTarget(level, scan, state, false)) return true;
+        }
+        return false;
+    }
+
+    private boolean hydrateFarmland(ServerLevel level, BlockPos center) {
+        boolean hydrated = false;
+        List<BlockPos> splashTargets = new ArrayList<>();
+        for (BlockPos scan : BlockPos.betweenClosed(
+                center.offset(-HYDRATE_RADIUS, -1, -HYDRATE_RADIUS),
+                center.offset(HYDRATE_RADIUS, 1, HYDRATE_RADIUS))) {
+            BlockState s = level.getBlockState(scan);
+            if (s.hasProperty(BlockStateProperties.MOISTURE) && s.getValue(BlockStateProperties.MOISTURE) < 7) {
+                level.setBlock(scan, s.setValue(BlockStateProperties.MOISTURE, 7), Block.UPDATE_CLIENTS);
+                hydrated = true;
+                if (splashTargets.size() < 6) splashTargets.add(scan.immutable());
+            }
+        }
+        if (!hydrated) return false;
+        tank.drain(WATER_PER_CYCLE, IFluidHandler.FluidAction.EXECUTE);
+        for (BlockPos wp : splashTargets)
+            level.sendParticles(ParticleTypes.SPLASH,
+                    wp.getX() + 0.5, wp.getY() + 1.0, wp.getZ() + 0.5,
+                    15, 0.4, 0.05, 0.4, 0.1);
+        return true;
+    }
+
+    private void extinguishFires(ServerLevel level, BlockPos center) {
+        boolean extinguished = false;
+        for (BlockPos scan : BlockPos.betweenClosed(
+                center.offset(-HYDRATE_RADIUS, -1, -HYDRATE_RADIUS),
+                center.offset(HYDRATE_RADIUS, 3, HYDRATE_RADIUS))) {
+            if (tank.getFluidAmount() < WATER_PER_FIRE) break;
+            if (!(level.getBlockState(scan).getBlock() instanceof BaseFireBlock)) continue;
+            level.removeBlock(scan, false);
+            level.playSound(null, scan, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
+            tank.drain(WATER_PER_FIRE, IFluidHandler.FluidAction.EXECUTE);
+            extinguished = true;
+        }
+        if (extinguished) {
+            HHSimpleTrigger.trigger(HHModTriggers.SPRINKLER_EXTINGUISHED,
+                    level.getNearestPlayer(center.getX() + 0.5D, center.getY() + 0.5D, center.getZ() + 0.5D, 32.0D, EntitySelector.NO_SPECTATORS));
+        }
+    }
+
+    private void tryApplyFertilizer(ServerLevel level, BlockPos center) {
+        if (!hasFertilizableCrop(level, center)) return;
+
+        int r = HYDRATE_RADIUS;
+        for (int attempt = 0; attempt < 3; attempt++) {
+            int x = center.getX() + level.random.nextInt(r * 2 + 1) - r;
+            int z = center.getZ() + level.random.nextInt(r * 2 + 1) - r;
+            for (int dy = 2; dy >= 0; dy--) {
+                BlockPos candidate = new BlockPos(x, center.getY() + dy, z);
+                BlockState s = level.getBlockState(candidate);
+                if (!isCrop(s)) continue;
+                if (!(s.getBlock() instanceof BonemealableBlock bonemealable)) continue;
+                if (!bonemealable.isValidBonemealTarget(level, candidate, s, false)) continue;
+                if (bonemealable.isBonemealSuccess(level, level.random, candidate, s))
+                    bonemealable.performBonemeal(level, level.random, candidate, s);
+                fertilizerSlot.get(0).shrink(1);
+                setChanged();
+                level.playSound(null, candidate, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.sendParticles(ParticleTypes.HAPPY_VILLAGER,
+                        candidate.getX() + 0.5, candidate.getY() + 0.5, candidate.getZ() + 0.5,
+                        8, 0.4, 0.4, 0.4, 0.0);
+                return;
+            }
+        }
+    }
+
+    private static boolean isCrop(BlockState state) {
+        return state.is(BlockTags.CROPS)
+                || state.getBlock() instanceof CropBlock
+                || state.getBlock() instanceof IHarvestable;
+    }
+
+    public int addFertilizer(ItemStack stack, boolean isCreative) {
+        if (!stack.is(HHModTags.BONEMEAL_SUBSTITUTES)) return 0;
+        ItemStack stored = fertilizerSlot.get(0);
+        if (stored.isEmpty()) {
+            fertilizerSlot.set(0, stack.copyWithCount(1));
+            if (!isCreative) stack.shrink(1);
+            setChanged();
+            return 1;
+        }
+        if (!stored.is(stack.getItem())) return 0;
+        int space = stored.getMaxStackSize() - stored.getCount();
+        if (space <= 0) return 0;
+        int toAdd = Math.min(stack.getCount(), space);
+        stored.grow(toAdd);
+        if (!isCreative) stack.shrink(toAdd);
+        setChanged();
+        return toAdd;
+    }
+
+    public ItemStack getFertilizer() {
+        return fertilizerSlot.get(0);
+    }
+
+    public FluidTank getFluidTank() {
+        return tank;
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("Tank", tank.writeToNBT(new CompoundTag()));
+        ContainerHelper.saveAllItems(tag, fertilizerSlot);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        if (tag.contains("Tank")) tank.readFromNBT(tag.getCompound("Tank"));
+        ContainerHelper.loadAllItems(tag, fertilizerSlot);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        tag.put("Tank", tank.writeToNBT(new CompoundTag()));
+        ContainerHelper.saveAllItems(tag, fertilizerSlot);
+        return tag;
+    }
+
+}

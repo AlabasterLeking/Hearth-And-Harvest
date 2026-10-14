@@ -25,7 +25,7 @@
       "item": "minecraft:sugar"
     }
   ],
-  "recipe_book_tab": "misc",
+  "recipe_book_tab": "meals",
   "result": {
     "item": "hearthandharvest:apple_jam"
   }

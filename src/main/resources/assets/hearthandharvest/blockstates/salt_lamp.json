@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "lit=false,powered=false": { "model": "hearthandharvest:block/salt_lamp_unlit" },
+    "lit=false,powered=true": { "model": "hearthandharvest:block/salt_lamp_unlit" },
+    "lit=true,powered=false": { "model": "hearthandharvest:block/salt_lamp_lit"},
+    "lit=true,powered=true": { "model": "hearthandharvest:block/salt_lamp_lit"}
+  }
+}

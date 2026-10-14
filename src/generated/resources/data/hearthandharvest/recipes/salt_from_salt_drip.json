@@ -1,0 +1,21 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:salt_drip"
+    }
+  ],
+  "result": [
+    {
+      "item": "hearthandharvest:salt"
+    },
+    {
+      "chance": 0.5,
+      "item": "hearthandharvest:salt"
+    }
+  ],
+  "tool": {
+    "type": "farmersdelight:tool_action",
+    "action": "pickaxe_dig"
+  }
+}

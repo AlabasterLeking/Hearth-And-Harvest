@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_any_ingredient",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_any_ingredient"
     ]
   ],
   "rewards": {
@@ -31,5 +31,5 @@
       "hearthandharvest:aging/goat_cheese_wheel"
     ]
   },
-  "sends_telemetry_event": true
+  "sends_telemetry_event": false
 }

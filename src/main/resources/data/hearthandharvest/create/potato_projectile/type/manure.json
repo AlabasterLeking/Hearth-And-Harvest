@@ -1,0 +1,35 @@
+{
+  "items": "hearthandharvest:manure",
+  "damage": 4,
+  "knockback": 1.5,
+  "reload_ticks": 15,
+  "sound_pitch": 1.3,
+  "render_mode": {
+    "type": "create:tumble"
+  },
+  "on_entity_hit": {
+    "type": "create:food_effects",
+    "food_property": {
+      "can_always_eat": true,
+      "nutrition": 0,
+      "saturation_modifier": 0.0,
+      "effects": [
+        {
+          "effect": {
+            "effect": "hearthandharvest:pungent",
+            "duration": 100
+          },
+          "probability": 1.0
+        },
+        {
+          "effect": {
+            "effect": "minecraft:poison",
+            "duration": 100
+          },
+          "probability": 1.0
+        }
+      ]
+    },
+    "recoverable": false
+  }
+}

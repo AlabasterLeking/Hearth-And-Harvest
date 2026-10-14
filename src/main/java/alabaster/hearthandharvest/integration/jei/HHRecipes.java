@@ -1,10 +1,12 @@
 package alabaster.hearthandharvest.integration.jei;
 
+import alabaster.hearthandharvest.common.crafting.KegRecipe;
 import alabaster.hearthandharvest.common.crafting.CaskRecipe;
+import alabaster.hearthandharvest.common.crafting.StompingBasinRecipe;
 import alabaster.hearthandharvest.common.registry.HHModRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.*;
 
 import java.util.List;
 
@@ -24,6 +26,14 @@ public class HHRecipes
     }
 
     public List<CaskRecipe> getCaskRecipes() {
-        return recipeManager.getAllRecipesFor(HHModRecipeTypes.AGING.get()).stream().toList();
+        return recipeManager.getAllRecipesFor(HHModRecipeTypes.AGING.get());
+    }
+
+    public List<StompingBasinRecipe> getStompingRecipes() {
+        return recipeManager.getAllRecipesFor(HHModRecipeTypes.STOMPING.get());
+    }
+
+    public List<KegRecipe> getKegRecipes() {
+        return recipeManager.getAllRecipesFor(HHModRecipeTypes.FERMENTING.get());
     }
 }

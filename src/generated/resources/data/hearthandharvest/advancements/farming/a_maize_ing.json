@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:farming/shucks",
+  "criteria": {
+    "a_maize_ing": {
+      "conditions": {},
+      "trigger": "hearthandharvest:found_corn_maze"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.hearthandharvest.a_maize_ing.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:corn_husk"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.a_maize_ing"
+    }
+  },
+  "requirements": [
+    [
+      "a_maize_ing"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

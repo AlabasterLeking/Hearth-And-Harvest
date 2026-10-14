@@ -1,5 +1,8 @@
 package alabaster.hearthandharvest.common.block;
 
+import net.minecraft.world.InteractionResult;
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.cauldron.CauldronInteraction;
@@ -9,7 +12,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,16 +23,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.fml.common.Mod;
 import vectorwing.farmersdelight.common.registry.ModParticleTypes;
-import vectorwing.farmersdelight.common.tag.CommonTags;
-import vectorwing.farmersdelight.common.tag.ModTags;
 
 public class SapCauldronBlock extends AbstractCauldronBlock {
     public static final IntegerProperty SAP_LEVEL = IntegerProperty.create("sap_level", 0, 3);
@@ -42,39 +42,37 @@ public class SapCauldronBlock extends AbstractCauldronBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(SAP_LEVEL, 3));
     }
 
-    @Override
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        return new ItemStack(Items.CAULDRON);
+    }
+
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
-    @Override
     public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
         return INSIDE;
     }
 
     @Override
-    public boolean isFull(BlockState state) {
+    public boolean isFull(BlockState blockState) {
         return false;
     }
 
-    @Override
     protected double getContentHeight(BlockState state) {
         return 0.0F;
     }
 
-    @Override
     protected boolean isEntityInsideContent(BlockState state, BlockPos pos, Entity entity) {
-        return entity.getY() < pos.getY() + this.getContentHeight(state)
-                && entity.getBoundingBox().maxY > pos.getY() + 0.25F;
+        return entity.getY() < (double)pos.getY() + this.getContentHeight(state) && entity.getBoundingBox().maxY > (double)pos.getY() + (double)0.25F;
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(SAP_LEVEL);
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult hhUseItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         ItemStack heldItem = player.getItemInHand(hand);
         int currentLevel = state.getValue(SAP_LEVEL);
 
@@ -87,11 +85,12 @@ public class SapCauldronBlock extends AbstractCauldronBlock {
                     player.drop(syrupBottle, false);
                 }
                 level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+                HHSimpleTrigger.trigger(HHModTriggers.BOTTLED_SYRUP, player);
             }
             return InteractionResult.SUCCESS;
         }
 
-        return InteractionResult.PASS;
+        return null;
     }
 
     @Override
@@ -105,7 +104,14 @@ public class SapCauldronBlock extends AbstractCauldronBlock {
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int currentLevel = state.getValue(SAP_LEVEL);
-        boolean isLit = level.getBlockState(pos.below()).is(ModTags.Blocks.HEAT_SOURCES);
+        BlockState belowState = level.getBlockState(pos.below());
+
+        boolean isLit = false;
+        if (belowState.hasProperty(BlockStateProperties.LIT)) {
+            isLit = belowState.getValue(BlockStateProperties.LIT);
+        } else if (belowState.is(Blocks.FIRE)) {
+            isLit = true;
+        }
 
         if (currentLevel > 1 && isLit) {
             int newLevel = currentLevel - 1;
@@ -115,7 +121,7 @@ public class SapCauldronBlock extends AbstractCauldronBlock {
                     0.5F, 2.6F + (random.nextFloat() - random.nextFloat()) * 0.8F);
 
             if (newLevel > 1) {
-                level.scheduleTick(pos, this, 480);
+                level.scheduleTick(pos, this, 480); // Schedule the next tick after 1200 ticks (1 minute)
             }
         }
     }
@@ -124,18 +130,24 @@ public class SapCauldronBlock extends AbstractCauldronBlock {
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         int currentLevel = state.getValue(SAP_LEVEL);
         if (currentLevel > 0) {
-            boolean isLit = level.getBlockState(pos.below()).is(ModTags.HEAT_SOURCES);
+            BlockState belowState = level.getBlockState(pos.below());
+            boolean isLit = false;
+            if (belowState.hasProperty(BlockStateProperties.LIT)) {
+                isLit = belowState.getValue(BlockStateProperties.LIT);
+            } else if (belowState.getBlock() == Blocks.FIRE) {
+                isLit = true;
+            }
             if (isLit) {
                 if (random.nextFloat() < 0.2F) {
-                    double x = pos.getX() + 0.5D + (random.nextDouble() * 0.6D - 0.3D);
-                    double y = pos.getY() + 1.0D;
-                    double z = pos.getZ() + 0.5D + (random.nextDouble() * 0.6D - 0.3D);
+                    double x = (double) pos.getX() + 0.5D + (random.nextDouble() * 0.6D - 0.3D);
+                    double y = (double) pos.getY() + 1.0D;
+                    double z = (double) pos.getZ() + 0.5D + (random.nextDouble() * 0.6D - 0.3D);
                     level.addParticle(ParticleTypes.BUBBLE_POP, x, y, z, 0.0D, 0.1D, 0.0D);
                 }
                 if (random.nextFloat() < 0.1F) {
-                    double x = pos.getX() + 0.5D + (random.nextDouble() * 0.4D - 0.2D);
-                    double y = pos.getY() + 0.75D;
-                    double z = pos.getZ() + 0.5D + (random.nextDouble() * 0.4D - 0.2D);
+                    double x = (double) pos.getX() + 0.5D + (random.nextDouble() * 0.4D - 0.2D);
+                    double y = (double) pos.getY() + 0.75D;
+                    double z = (double) pos.getZ() + 0.5D + (random.nextDouble() * 0.4D - 0.2D);
                     double motionY = random.nextBoolean() ? 0.015D : 0.005D;
                     level.addParticle(ModParticleTypes.STEAM.get(), x, y, z, 0.0D, motionY, 0.0D);
                 }
@@ -144,10 +156,13 @@ public class SapCauldronBlock extends AbstractCauldronBlock {
     }
 
     static {
-        SHAPE = Shapes.join(Shapes.block(), Shapes.or(
-                box(0.0F, 0.0F, 4.0F, 16.0F, 3.0F, 12.0F),
-                box(4.0F, 0.0F, 0.0F, 12.0F, 3.0F, 16.0F),
-                box(2.0F, 0.0F, 2.0F, 14.0F, 3.0F, 14.0F),
-                INSIDE), BooleanOp.ONLY_FIRST);
+        SHAPE = Shapes.join(Shapes.block(), Shapes.or(box(0.0F, 0.0F, 4.0F, 16.0F, 3.0F, 12.0F), new VoxelShape[]{box(4.0F, 0.0F, 0.0F, 12.0F, 3.0F, 16.0F), box(2.0F, 0.0F, 2.0F, 14.0F, 3.0F, 14.0F), INSIDE}), BooleanOp.ONLY_FIRST);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        InteractionResult itemResult = hhUseItemOn(player.getItemInHand(hand), state, level, pos, player, hand, hit);
+        if (itemResult != null) return itemResult;
+        return super.use(state, level, pos, player, hand, hit);
     }
 }

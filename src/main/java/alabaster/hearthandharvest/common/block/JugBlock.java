@@ -1,22 +1,22 @@
 package alabaster.hearthandharvest.common.block;
 
+import net.minecraft.world.InteractionResult;
 import alabaster.hearthandharvest.common.block.entity.JugBlockEntity;
+import alabaster.hearthandharvest.common.item.JugBlockItem;
+import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,9 +31,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -47,16 +44,13 @@ public class JugBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
 
     public JugBlock(BlockBehaviour.Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
-                .setValue(FACING, Direction.NORTH)
-                .setValue(WATERLOGGED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
     }
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Level level = context.getLevel();
         FluidState fluid = level.getFluidState(context.getClickedPos());
-
         return this.defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection())
                 .setValue(WATERLOGGED, fluid.getType() == Fluids.WATER);
@@ -70,26 +64,31 @@ public class JugBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     @Override
     public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         if (level.getBlockEntity(pos) instanceof JugBlockEntity jug) {
-            int amount = jug.getFluidAmount();
-            int bucketSize = 1000;
-            int signal = amount / bucketSize;
-            return Math.min(signal, 8);
+            return HHFluidHandling.comparatorOutput(jug.getFluidTank());
         }
         return 0;
     }
 
-    @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState state) {
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+    }
+
+    public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+    public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, WATERLOGGED);
     }
 
@@ -101,69 +100,62 @@ public class JugBlock extends BaseEntityBlock implements SimpleWaterloggedBlock 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         if (builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof JugBlockEntity tile) {
-            return Collections.singletonList(saveTileToItem(tile));
+            ItemStack itemstack = saveTileToItem(tile);
+            return Collections.singletonList(itemstack);
         }
         return super.getDrops(state, builder);
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter blockGetter, BlockPos blockPos, BlockState blockState) {
-        if (blockGetter.getBlockEntity(blockPos) instanceof JugBlockEntity tile) {
+    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+        if (level.getBlockEntity(pos) instanceof JugBlockEntity tile) {
             return saveTileToItem(tile);
         }
-        return super.getCloneItemStack(blockGetter, blockPos, blockState);
+        return super.getCloneItemStack(level, pos, state);
     }
 
     public static ItemStack saveTileToItem(BlockEntity tile) {
         Block block = tile.getBlockState().getBlock();
         ItemStack stack = new ItemStack(block.asItem());
-        tile.saveToItem(stack);
+
+        if (tile instanceof JugBlockEntity jug && !jug.getFluidTank().isEmpty()) {
+            JugBlockItem.setFluid(stack, jug.getFluidTank().getFluid().copy());
+        }
+
         return stack;
     }
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (level.isClientSide) return InteractionResult.SUCCESS;
+    protected InteractionResult hhUseItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof JugBlockEntity jugBlockEntity)) {
+            return null;
+        }
+        if (level.isClientSide()) return InteractionResult.SUCCESS;
 
-        if (!(level.getBlockEntity(pos) instanceof JugBlockEntity jug)) return InteractionResult.SUCCESS;
-
-        ItemStack stack = player.getItemInHand(hand);
-
-        stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).ifPresent(handler -> {
-            boolean didSomething = false;
-
-            // Drain from item to jug
-            FluidStack simulatedDrain = handler.drain(1000, IFluidHandler.FluidAction.SIMULATE);
-            if (!simulatedDrain.isEmpty()) {
-                int filled = jug.fill(simulatedDrain, IFluidHandler.FluidAction.EXECUTE);
-                if (filled > 0) {
-                    handler.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                    level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1f, 1f);
-                    player.setItemInHand(hand, handler.getContainer());
-                    didSomething = true;
-                }
+        if (player.isShiftKeyDown() && stack.isEmpty() && hand == InteractionHand.MAIN_HAND) {
+            ItemStack jugItem = saveTileToItem(jugBlockEntity);
+            level.removeBlock(pos, false);
+            level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2f,
+                    ((level.random.nextFloat() - level.random.nextFloat()) * 0.7f + 1f) * 2f);
+            if (!player.addItem(jugItem)) {
+                level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, jugItem));
             }
+            return InteractionResult.SUCCESS;
+        }
 
-            // Fill item from jug if nothing transferred
-            if (!didSomething) {
-                FluidStack simulatedFill = jug.drain(1000, IFluidHandler.FluidAction.SIMULATE);
-                if (!simulatedFill.isEmpty()) {
-                    int filled = handler.fill(simulatedFill, IFluidHandler.FluidAction.EXECUTE);
-                    if (filled > 0) {
-                        jug.drain(filled, IFluidHandler.FluidAction.EXECUTE);
-                        level.playSound(null, pos, SoundEvents.BOTTLE_FILL, SoundSource.BLOCKS, 1f, 1f);
-                        player.setItemInHand(hand, handler.getContainer());
-                    }
-                }
-            }
-        });
-
-        return InteractionResult.CONSUME;
+        return HHFluidHandling.useOnTank(level, pos, player, hand, jugBlockEntity.getFluidTank(), null);
     }
 
     @Nullable
     @Override
-    public JugBlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return HHModBlockEntities.JUG.get().create(pos, state);
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        InteractionResult itemResult = hhUseItemOn(player.getItemInHand(hand), state, level, pos, player, hand, hit);
+        if (itemResult != null) return itemResult;
+        return super.use(state, level, pos, player, hand, hit);
     }
 }

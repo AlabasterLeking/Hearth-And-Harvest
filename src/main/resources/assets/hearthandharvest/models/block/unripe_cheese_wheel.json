@@ -1,0 +1,9 @@
+{
+  "parent": "hearthandharvest:block/cheese_wheel_template",
+  "textures": {
+    "top": "hearthandharvest:block/unripe_cheese_wheel_top",
+    "side": "hearthandharvest:block/unripe_cheese_wheel_side",
+    "bottom": "hearthandharvest:block/unripe_cheese_wheel_bottom",
+    "particle": "hearthandharvest:block/unripe_cheese_wheel_top"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "minecraft:sunflower"
+    }
+  ],
+  "result": [
+    {
+      "count": 2,
+      "item": "hearthandharvest:sunflower_seeds"
+    },
+    {
+      "chance": 0.5,
+      "count": 2,
+      "item": "hearthandharvest:sunflower_seeds"
+    }
+  ],
+  "tool": {
+    "tag": "forge:tools/knives"
+  }
+}

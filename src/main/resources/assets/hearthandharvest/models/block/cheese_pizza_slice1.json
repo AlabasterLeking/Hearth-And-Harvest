@@ -1,0 +1,9 @@
+{
+	"parent": "hearthandharvest:block/template_pizza_slice1",
+	"textures": {
+		"bottom": "hearthandharvest:block/pizza_bottom",
+		"inner": "hearthandharvest:block/pizza_inner",
+		"side": "hearthandharvest:block/pizza_side",
+		"top": "hearthandharvest:block/cheese_pizza_top"
+	}
+}

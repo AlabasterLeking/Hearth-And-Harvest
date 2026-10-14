@@ -7,13 +7,13 @@
   "experience": 1.0,
   "ingredients": [
     {
-      "item": "hearthandharvest:blueberries"
+      "tag": "forge:fruits/blueberry"
     },
     {
-      "item": "hearthandharvest:blueberries"
+      "tag": "forge:fruits/blueberry"
     },
     {
-      "item": "hearthandharvest:blueberries"
+      "tag": "forge:fruits/blueberry"
     },
     {
       "item": "minecraft:sugar"
@@ -25,7 +25,7 @@
       "item": "minecraft:sugar"
     }
   ],
-  "recipe_book_tab": "misc",
+  "recipe_book_tab": "meals",
   "result": {
     "item": "hearthandharvest:blueberry_jam"
   }

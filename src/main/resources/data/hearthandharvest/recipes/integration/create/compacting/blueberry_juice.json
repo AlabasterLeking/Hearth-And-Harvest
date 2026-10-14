@@ -1,0 +1,29 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:fruits/blueberry"
+    },
+    {
+      "tag": "forge:fruits/blueberry"
+    },
+    {
+      "tag": "forge:fruits/blueberry"
+    },
+    {
+      "tag": "forge:fruits/blueberry"
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:blueberry_juice",
+      "amount": 500
+    }
+  ]
+}

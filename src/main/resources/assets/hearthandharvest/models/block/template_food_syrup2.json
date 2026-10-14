@@ -1,0 +1,45 @@
+{
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"particle": "#syrup_top"
+	},
+	"elements": [
+		{
+			"from": [2, 4.05, 2],
+			"to": [14, 4.05, 14],
+			"faces": {
+				"up": {"uv": [2, 2, 14, 14], "texture": "#syrup_top"}
+			}
+		},
+		{
+			"from": [2, 0, 1.95],
+			"to": [14, 4.05, 1.95],
+			"faces": {
+				"north": {"uv": [0, 0, 12, 4], "texture": "#syrup_side"}
+			}
+		},
+		{
+			"from": [14.05, 0, 2],
+			"to": [14.05, 4.05, 14],
+			"faces": {
+				"east": {"uv": [4, 0, 16, 4], "texture": "#syrup_side"}
+			}
+		},
+		{
+			"from": [2, 0, 14.05],
+			"to": [14, 4.05, 14.05],
+			"faces": {
+				"south": {"uv": [2, 0, 14, 4], "texture": "#syrup_side"}
+			}
+		},
+		{
+			"from": [1.95, 0, 2],
+			"to": [1.95, 4.05, 14],
+			"faces": {
+				"west": {"uv": [1, 0, 13, 4], "texture": "#syrup_side"}
+			}
+		}
+	]
+}

@@ -1,0 +1,27 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "botanypots"
+    }
+  ],
+  "type": "botanypots:crop",
+  "seed": {
+    "item": "hearthandharvest:red_mum"
+  },
+  "categories": [
+    "dirt"
+  ],
+  "growthTicks": 1200,
+  "display": {
+    "block": "hearthandharvest:red_mum"
+  },
+  "drops": [
+    {
+      "chance": 1.0,
+      "output": {
+        "item": "hearthandharvest:red_mum"
+      }
+    }
+  ]
+}

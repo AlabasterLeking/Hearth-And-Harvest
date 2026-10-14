@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "servings=3": {
+      "model": "hearthandharvest:block/cheese_wheel"
+    },
+    "servings=2": {
+      "model": "hearthandharvest:block/cheese_wheel1"
+    },
+    "servings=1": {
+      "model": "hearthandharvest:block/cheese_wheel2"
+    },
+    "servings=0": {
+      "model": "hearthandharvest:block/cheese_wheel3"
+    }
+  }
+}

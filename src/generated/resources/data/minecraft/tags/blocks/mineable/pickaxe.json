@@ -1,10 +1,32 @@
 {
   "values": [
+    "hearthandharvest:salt_lamp",
     "hearthandharvest:jug",
-    "hearthandharvest:jar",
     "hearthandharvest:sap_cauldron",
     "hearthandharvest:counter",
     "hearthandharvest:drawer",
-    "hearthandharvest:basin"
+    "hearthandharvest:basin",
+    "hearthandharvest:trough",
+    "hearthandharvest:charcoal_block",
+    "hearthandharvest:salt_block",
+    "hearthandharvest:lightly_licked_salt_block",
+    "hearthandharvest:well_licked_salt_block",
+    "hearthandharvest:heavily_licked_salt_block",
+    "hearthandharvest:polished_salt_block",
+    "hearthandharvest:salt_stairs",
+    "hearthandharvest:polished_salt_stairs",
+    "hearthandharvest:salt_slab",
+    "hearthandharvest:polished_salt_slab",
+    "hearthandharvest:salt_wall",
+    "hearthandharvest:polished_salt_wall",
+    "hearthandharvest:salt_drip",
+    "hearthandharvest:manure_bricks",
+    "hearthandharvest:polished_manure",
+    "hearthandharvest:manure_brick_stairs",
+    "hearthandharvest:polished_manure_stairs",
+    "hearthandharvest:manure_brick_slab",
+    "hearthandharvest:polished_manure_slab",
+    "hearthandharvest:manure_brick_wall",
+    "hearthandharvest:polished_manure_wall"
   ]
 }

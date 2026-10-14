@@ -1,0 +1,33 @@
+{
+  "variants": {
+    "facing=north,type=bottom,stacked=false": { "model": "hearthandharvest:block/crate_bottom" },
+    "facing=south,type=bottom,stacked=false": { "model": "hearthandharvest:block/crate_bottom", "y": 180 },
+    "facing=west,type=bottom,stacked=false":  { "model": "hearthandharvest:block/crate_bottom", "y": 270 },
+    "facing=east,type=bottom,stacked=false":  { "model": "hearthandharvest:block/crate_bottom", "y": 90 },
+
+    "facing=north,type=bottom,stacked=true": { "model": "hearthandharvest:block/crate_supported" },
+    "facing=south,type=bottom,stacked=true": { "model": "hearthandharvest:block/crate_supported", "y": 180 },
+    "facing=west,type=bottom,stacked=true":  { "model": "hearthandharvest:block/crate_supported", "y": 270 },
+    "facing=east,type=bottom,stacked=true":  { "model": "hearthandharvest:block/crate_supported", "y": 90 },
+
+    "facing=north,type=top,stacked=false": { "model": "hearthandharvest:block/crate_top" },
+    "facing=south,type=top,stacked=false": { "model": "hearthandharvest:block/crate_top", "y": 180 },
+    "facing=west,type=top,stacked=false":  { "model": "hearthandharvest:block/crate_top", "y": 270 },
+    "facing=east,type=top,stacked=false":  { "model": "hearthandharvest:block/crate_top", "y": 90 },
+
+    "facing=north,type=top,stacked=true": { "model": "hearthandharvest:block/crate_top" },
+    "facing=south,type=top,stacked=true": { "model": "hearthandharvest:block/crate_top", "y": 180 },
+    "facing=west,type=top,stacked=true":  { "model": "hearthandharvest:block/crate_top", "y": 270 },
+    "facing=east,type=top,stacked=true":  { "model": "hearthandharvest:block/crate_top", "y": 90 },
+
+    "facing=north,type=double,stacked=false": { "model": "hearthandharvest:block/crate" },
+    "facing=south,type=double,stacked=false": { "model": "hearthandharvest:block/crate", "y": 180 },
+    "facing=west,type=double,stacked=false":  { "model": "hearthandharvest:block/crate", "y": 270 },
+    "facing=east,type=double,stacked=false":  { "model": "hearthandharvest:block/crate", "y": 90 },
+
+    "facing=north,type=double,stacked=true": { "model": "hearthandharvest:block/crate" },
+    "facing=south,type=double,stacked=true": { "model": "hearthandharvest:block/crate", "y": 180 },
+    "facing=west,type=double,stacked=true":  { "model": "hearthandharvest:block/crate", "y": 270 },
+    "facing=east,type=double,stacked=true":  { "model": "hearthandharvest:block/crate", "y": 90 }
+  }
+}

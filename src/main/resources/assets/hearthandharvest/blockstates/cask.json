@@ -1,33 +1,33 @@
 {
   "variants": {
-    "open=false,facing=east": {
-      "model": "hearthandharvest:block/cask",
-      "y": 270
-    },
-    "open=false,facing=north": {
-      "model": "hearthandharvest:block/cask",
-      "y": 180
-    },
-    "open=false,facing=south": {
-      "model": "hearthandharvest:block/cask"
-    },
-    "open=false,facing=west": {
-      "model": "hearthandharvest:block/cask",
-      "y": 90
-    },
-    "open=true,facing=east": {
+    "sealed=false,facing=east": {
       "model": "hearthandharvest:block/cask_open",
       "y": 270
     },
-    "open=true,facing=north": {
+    "sealed=false,facing=north": {
       "model": "hearthandharvest:block/cask_open",
       "y": 180
     },
-    "open=true,facing=south": {
+    "sealed=false,facing=south": {
       "model": "hearthandharvest:block/cask_open"
     },
-    "open=true,facing=west": {
+    "sealed=false,facing=west": {
       "model": "hearthandharvest:block/cask_open",
+      "y": 90
+    },
+    "sealed=true,facing=east": {
+      "model": "hearthandharvest:block/cask",
+      "y": 270
+    },
+    "sealed=true,facing=north": {
+      "model": "hearthandharvest:block/cask",
+      "y": 180
+    },
+    "sealed=true,facing=south": {
+      "model": "hearthandharvest:block/cask"
+    },
+    "sealed=true,facing=west": {
+      "model": "hearthandharvest:block/cask",
       "y": 90
     }
   }

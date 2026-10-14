@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:hot_chocolate_from_smoking"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "hot_chocolate": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:chocolate_milk_bottle"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "hot_chocolate",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:hot_chocolate_from_smoking"
+    ]
+  },
+  "sends_telemetry_event": false
+}

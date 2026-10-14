@@ -16,7 +16,7 @@
       "item": "hearthandharvest:peanut"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "forge:dusts/salt"
     },
     {
       "item": "minecraft:sugar"
@@ -25,7 +25,7 @@
       "item": "minecraft:sugar"
     }
   ],
-  "recipe_book_tab": "misc",
+  "recipe_book_tab": "meals",
   "result": {
     "item": "hearthandharvest:peanut_butter"
   }

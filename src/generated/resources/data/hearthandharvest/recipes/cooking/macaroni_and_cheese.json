@@ -10,13 +10,16 @@
       "item": "farmersdelight:raw_pasta"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "forge:dusts/salt"
     },
     {
-      "tag": "forge:milk/milk_bottle"
+      "tag": "forge:milk"
     },
     {
-      "tag": "hearthandharvest:cheese_slices"
+      "item": "hearthandharvest:butter"
+    },
+    {
+      "tag": "forge:foods/cheese"
     }
   ],
   "recipe_book_tab": "meals",

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "hearthandharvest:block/stick_brush_end",
+    "side": "hearthandharvest:block/stick_brush_side"
+  }
+}

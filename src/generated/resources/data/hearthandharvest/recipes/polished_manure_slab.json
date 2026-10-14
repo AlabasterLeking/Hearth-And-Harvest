@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "slabs",
+  "key": {
+    "#": {
+      "item": "hearthandharvest:polished_manure"
+    }
+  },
+  "pattern": [
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "item": "hearthandharvest:polished_manure_slab"
+  },
+  "show_notification": true
+}

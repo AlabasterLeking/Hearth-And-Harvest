@@ -1,6 +1,22 @@
 {
   "parent": "minecraft:item/generated",
+  "base": {
+    "parent": "hearthandharvest:block/blueberry_jam"
+  },
+  "loader": "forge:separate_transforms",
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_blueberry_jam"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_blueberry_jam"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/2d_blueberry_jam"
+    }
+  },
   "textures": {
-    "layer0": "hearthandharvest:item/blueberry_jam"
+    "layer0": "hearthandharvest:item/blueberry_jam",
+    "particle": "hearthandharvest:item/blueberry_jam"
   }
 }

@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "fluid": "hearthandharvest:sap",
+      "amount": 1000,
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:syrup",
+      "amount": 250
+    }
+  ],
+  "heatRequirement": "heated"
+}

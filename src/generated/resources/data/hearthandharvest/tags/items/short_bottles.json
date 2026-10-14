@@ -1,0 +1,17 @@
+{
+  "values": [
+    "minecraft:glass_bottle",
+    "minecraft:potion",
+    "minecraft:splash_potion",
+    "minecraft:lingering_potion",
+    "minecraft:dragon_breath",
+    "minecraft:experience_bottle",
+    "farmersdelight:milk_bottle",
+    "minecraft:honey_bottle",
+    "hearthandharvest:cooking_oil",
+    "hearthandharvest:syrup_bottle",
+    "hearthandharvest:chocolate_milk_bottle",
+    "hearthandharvest:goat_milk_bottle",
+    "hearthandharvest:brine_bottle"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:straw_rug"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "hearthandharvest:blocks/straw_rug"
+}

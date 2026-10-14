@@ -6,14 +6,17 @@
       "item": "minecraft:sugar"
     },
     "C": {
-      "item": "hearthandharvest:cotton"
+      "tag": "forge:crops/cotton"
     },
     "S": {
       "item": "minecraft:stick"
+    },
+    "W": {
+      "item": "minecraft:feather"
     }
   },
   "pattern": [
-    " # ",
+    " W ",
     "#C#",
     " S "
   ],

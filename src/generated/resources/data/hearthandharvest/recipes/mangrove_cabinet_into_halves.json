@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farmersdelight:mangrove_cabinet"
+    },
+    {
+      "item": "farmersdelight:mangrove_cabinet"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "hearthandharvest:mangrove_half_cabinet"
+  }
+}

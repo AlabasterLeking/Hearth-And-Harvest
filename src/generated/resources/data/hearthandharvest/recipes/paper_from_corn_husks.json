@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:corn_husk"
+    },
+    {
+      "item": "hearthandharvest:corn_husk"
+    },
+    {
+      "item": "hearthandharvest:corn_husk"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "minecraft:paper"
+  }
+}

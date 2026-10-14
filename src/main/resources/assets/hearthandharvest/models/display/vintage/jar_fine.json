@@ -1,0 +1,6 @@
+{
+  "parent": "hearthandharvest:display/vintage/template_jar",
+  "textures": {
+    "overlay": "hearthandharvest:block/vintage/jar_fine"
+  }
+}

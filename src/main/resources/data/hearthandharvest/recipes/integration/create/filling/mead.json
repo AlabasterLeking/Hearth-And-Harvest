@@ -11,8 +11,8 @@
       "item": "minecraft:glass_bottle"
     },
     {
-      "amount": 500,
       "fluid": "hearthandharvest:mead",
+      "amount": 250,
       "nbt": {}
     }
   ],

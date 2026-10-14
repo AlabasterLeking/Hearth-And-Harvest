@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farmersdelight:bamboo_cabinet"
+    },
+    {
+      "item": "farmersdelight:bamboo_cabinet"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "hearthandharvest:bamboo_half_cabinet"
+  }
+}

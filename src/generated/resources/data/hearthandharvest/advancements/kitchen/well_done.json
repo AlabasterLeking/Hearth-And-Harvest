@@ -1,0 +1,38 @@
+{
+  "parent": "hearthandharvest:kitchen/roasting_pro",
+  "criteria": {
+    "well_done": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:charred_marshmallow_stick"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.well_done.desc"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "hearthandharvest:charred_marshmallow_stick"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.well_done"
+    }
+  },
+  "requirements": [
+    [
+      "well_done"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

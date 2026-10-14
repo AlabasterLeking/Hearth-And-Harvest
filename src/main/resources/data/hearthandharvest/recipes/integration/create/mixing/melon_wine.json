@@ -1,0 +1,22 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "fluid": "hearthandharvest:melon_juice",
+      "amount": 500,
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:melon_wine",
+      "amount": 500
+    }
+  ]
+}

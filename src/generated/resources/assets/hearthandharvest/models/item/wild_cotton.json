@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "hearthandharvest:block/wild_cotton"
+    "layer0": "hearthandharvest:block/wild_cotton_grass",
+    "layer1": "hearthandharvest:block/wild_cotton"
   }
 }

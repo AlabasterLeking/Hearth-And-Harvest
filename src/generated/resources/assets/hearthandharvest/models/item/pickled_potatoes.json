@@ -1,6 +1,41 @@
 {
   "parent": "minecraft:item/generated",
+  "base": {
+    "parent": "hearthandharvest:block/pickled_potatoes"
+  },
+  "loader": "forge:separate_transforms",
+  "overrides": [
+    {
+      "model": "hearthandharvest:item/vintage/pickled_potatoes_aged",
+      "predicate": {
+        "hearthandharvest:vintage": 1
+      }
+    },
+    {
+      "model": "hearthandharvest:item/vintage/pickled_potatoes_fine",
+      "predicate": {
+        "hearthandharvest:vintage": 2
+      }
+    },
+    {
+      "model": "hearthandharvest:item/vintage/pickled_potatoes_reserve",
+      "predicate": {
+        "hearthandharvest:vintage": 3
+      }
+    }
+  ],
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_pickled_potatoes"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_pickled_potatoes"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/2d_pickled_potatoes"
+    }
+  },
   "textures": {
-    "layer0": "hearthandharvest:item/pickled_potatoes"
+    "particle": "hearthandharvest:item/pickled_potatoes"
   }
 }

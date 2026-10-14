@@ -1,0 +1,79 @@
+package alabaster.hearthandharvest.common.block.entity;
+
+import alabaster.hearthandharvest.Config;
+import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
+import alabaster.hearthandharvest.common.registry.HHModFluids;
+import alabaster.hearthandharvest.common.tag.HHModTags;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
+
+
+public class TreeTapperBlockEntity extends HHSyncedBlockEntity {
+    public static final int CAPACITY = 1000;
+    private static final int CHECK_INTERVAL = 40;  // ticks between fill attempts (~2 seconds)
+    private static final int FILL_PER_CHECK  = 10; // mB added per successful check (100 steps to fill)
+
+    private int tickCounter;
+
+    public final FluidTank tank = new FluidTank(CAPACITY) {
+        @Override
+        public boolean isFluidValid(FluidStack stack) {
+            return stack.getFluid() == HHModFluids.SAP.source().get();
+        }
+
+        @Override
+        public void onContentsChanged() {
+            setChanged();
+            if (level != null && !level.isClientSide) {
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+                level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+            }
+        }
+    };
+
+    public TreeTapperBlockEntity(BlockPos pos, BlockState state) {
+        super(HHModBlockEntities.TREE_TAPPER.get(), pos, state);
+    }
+
+    public boolean isFull() {
+        return tank.getFluidAmount() >= CAPACITY;
+    }
+
+    public static void serverTick(Level level, BlockPos pos, BlockState state, TreeTapperBlockEntity be) {
+        if (++be.tickCounter < CHECK_INTERVAL) return;
+        be.tickCounter = 0;
+        if (be.isFull()) return;
+        Direction dir = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        if (!level.getBlockState(pos.relative(dir)).is(HHModTags.TAPPABLE)) return;
+        if (level.random.nextFloat() > Config.TREE_TAPPER_BASE_CHANCE.get().floatValue()) return;
+        be.tank.fill(new FluidStack(HHModFluids.SAP.source().get(), FILL_PER_CHECK), IFluidHandler.FluidAction.EXECUTE);
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("Tank", tank.writeToNBT(new CompoundTag()));
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        if (tag.contains("Tank")) tank.readFromNBT(tag.getCompound("Tank"));
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        tag.put("Tank", tank.writeToNBT(new CompoundTag()));
+        return tag;
+    }
+
+}

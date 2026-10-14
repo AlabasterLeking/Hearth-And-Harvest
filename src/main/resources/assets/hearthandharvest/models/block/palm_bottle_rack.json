@@ -1,0 +1,8 @@
+{
+  "parent": "hearthandharvest:block/bottle_rack",
+  "textures": {
+    "rack_side": "hearthandharvest:block/palm_half_cabinet_side",
+    "rack_top": "hearthandharvest:block/palm_half_cabinet_top",
+    "side": "crabbersdelight:block/palm_cabinet_side"
+  }
+}

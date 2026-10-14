@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#hearthandharvest:has_crows",
+  "spawners": [
+    {
+      "type": "hearthandharvest:crow",
+      "weight": 60,
+      "minCount": 3,
+      "maxCount": 5
+    }
+  ]
+}

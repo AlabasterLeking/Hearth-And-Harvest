@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "hearthandharvest:block/polished_manure_slab"
+    },
+    "type=double": {
+      "model": "hearthandharvest:block/polished_manure"
+    },
+    "type=top": {
+      "model": "hearthandharvest:block/polished_manure_slab_top"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:green_grapes"
+    },
+    {
+      "item": "hearthandharvest:green_grapes"
+    },
+    {
+      "item": "hearthandharvest:green_grapes"
+    },
+    {
+      "item": "hearthandharvest:green_grapes"
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:green_grape_juice",
+      "amount": 500
+    }
+  ]
+}

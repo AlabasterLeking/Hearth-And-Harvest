@@ -1,0 +1,22 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "fluid": "hearthandharvest:glow_berry_juice",
+      "amount": 500,
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:glow_berry_wine",
+      "amount": 500
+    }
+  ]
+}

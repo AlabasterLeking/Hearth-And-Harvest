@@ -1,0 +1,23 @@
+{
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "hearthandharvest:display/vintage/template_bottle",
+	"textures": {
+		"particle": "#overlay",
+		"0_overlay": "#overlay"
+	},
+	"elements": [
+		{
+			"name": "label",
+			"from": [4.9, 8, 4.9],
+			"to": [11.1, 9, 11.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 6, 0]},
+			"faces": {
+				"north": {"uv": [5, 11, 11, 12], "texture": "#0_overlay"},
+				"east": {"uv": [5, 11, 11, 12], "texture": "#0_overlay"},
+				"south": {"uv": [5, 11, 11, 12], "texture": "#0_overlay"},
+				"west": {"uv": [5, 11, 11, 12], "texture": "#0_overlay"}
+			}
+		}
+	]
+}

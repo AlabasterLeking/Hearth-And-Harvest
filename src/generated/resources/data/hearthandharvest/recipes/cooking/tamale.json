@@ -1,0 +1,23 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "item": "hearthandharvest:corn_husk"
+  },
+  "cookingtime": 200,
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "tag": "forge:foods/cooked_meat"
+    },
+    {
+      "tag": "forge:vegetables"
+    },
+    {
+      "tag": "forge:foods/cheese"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "item": "hearthandharvest:tamale"
+  }
+}

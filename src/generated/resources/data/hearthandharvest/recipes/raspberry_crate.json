@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "#": {
-      "item": "hearthandharvest:raspberry"
+      "tag": "forge:fruits/raspberry"
     }
   },
   "pattern": [

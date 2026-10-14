@@ -1,0 +1,34 @@
+{
+  "values": [
+    "minecraft:spruce_log",
+    "minecraft:dark_oak_log",
+    {
+      "id": "biomesoplenty:fir_log",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:maple_log",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:pine_log",
+      "required": false
+    },
+    {
+      "id": "autumnity:maple_log",
+      "required": false
+    },
+    {
+      "id": "autumnity:sappy_maple_log",
+      "required": false
+    },
+    {
+      "id": "would:maple_log",
+      "required": false
+    },
+    {
+      "id": "would:maple_log_sappy",
+      "required": false
+    }
+  ]
+}

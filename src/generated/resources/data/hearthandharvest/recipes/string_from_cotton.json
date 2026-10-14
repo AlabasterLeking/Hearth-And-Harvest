@@ -3,13 +3,13 @@
   "category": "misc",
   "ingredients": [
     {
-      "item": "hearthandharvest:cotton"
+      "tag": "forge:crops/cotton"
     },
     {
-      "item": "hearthandharvest:cotton"
+      "tag": "forge:crops/cotton"
     },
     {
-      "item": "hearthandharvest:cotton"
+      "tag": "forge:crops/cotton"
     }
   ],
   "result": {

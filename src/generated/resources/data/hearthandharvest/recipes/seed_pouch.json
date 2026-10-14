@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "farmersdelight:canvas"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "s": {
+      "tag": "forge:seeds"
+    }
+  },
+  "pattern": [
+    " S ",
+    "CsC",
+    " C "
+  ],
+  "result": {
+    "item": "hearthandharvest:seed_pouch"
+  },
+  "show_notification": true
+}

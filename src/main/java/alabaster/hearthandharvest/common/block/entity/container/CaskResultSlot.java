@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.block.entity.container;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.block.entity.CaskBlockEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +30,11 @@ public class CaskResultSlot extends SlotItemHandler
     }
 
     @Override
+    public boolean mayPickup(Player playerIn) {
+        return !this.tileEntity.isSealed() && super.mayPickup(playerIn);
+    }
+
+    @Override
     @Nonnull
     public ItemStack remove(int amount) {
         if (this.hasItem()) {
@@ -44,17 +51,18 @@ public class CaskResultSlot extends SlotItemHandler
     }
 
     @Override
-    protected void onQuickCraft(ItemStack stack, int amount) {
+    public void onQuickCraft(ItemStack stack, int amount) {
         this.removeCount += amount;
         this.checkTakeAchievements(stack);
     }
 
     @Override
-    protected void checkTakeAchievements(ItemStack stack) {
+    public void checkTakeAchievements(ItemStack stack) {
         stack.onCraftedBy(this.player.level(), this.player, this.removeCount);
 
         if (!this.player.level().isClientSide) {
             tileEntity.awardUsedRecipes(this.player, tileEntity.getDroppableInventory());
+            if (!stack.isEmpty()) HHSimpleTrigger.trigger(HHModTriggers.CASK_AGED, this.player);
         }
 
         this.removeCount = 0;

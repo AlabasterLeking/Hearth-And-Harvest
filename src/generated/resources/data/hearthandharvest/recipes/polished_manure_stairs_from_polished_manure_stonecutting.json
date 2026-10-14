@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "hearthandharvest:polished_manure"
+  },
+  "result": "hearthandharvest:polished_manure_stairs"
+}

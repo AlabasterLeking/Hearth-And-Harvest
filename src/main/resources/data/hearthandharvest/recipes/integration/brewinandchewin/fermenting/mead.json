@@ -6,10 +6,6 @@
     }
   ],
   "type": "brewinandchewin:fermenting",
-  "basefluid": {
-    "count": 500,
-    "fluid": "minecraft:water"
-  },
   "experience": 1.0,
   "ingredients": [
     {
@@ -23,7 +19,10 @@
     },
     []
   ],
-  "recipe_book_tab": "drinks",
+  "basefluid": {
+    "count": 500,
+    "fluid": "minecraft:water"
+  },
   "result": {
     "count": 500,
     "fluid": "hearthandharvest:mead"

@@ -1,6 +1,22 @@
 {
   "parent": "minecraft:item/generated",
+  "base": {
+    "parent": "hearthandharvest:block/apple_jam"
+  },
+  "loader": "forge:separate_transforms",
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_apple_jam"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_apple_jam"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/2d_apple_jam"
+    }
+  },
   "textures": {
-    "layer0": "hearthandharvest:item/apple_jam"
+    "layer0": "hearthandharvest:item/apple_jam",
+    "particle": "hearthandharvest:item/apple_jam"
   }
 }

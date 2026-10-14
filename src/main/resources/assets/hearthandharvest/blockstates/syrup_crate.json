@@ -1,7 +1,7 @@
 {
   "variants": {
-    "type=bottom": { "model": "hearthandharvest:block/syrup_crate_bottom" },
-    "type=top": { "model": "hearthandharvest:block/syrup_crate_top" },
-    "type=double": { "model": "hearthandharvest:block/syrup_crate" }
+    "": {
+      "model": "minecraft:block/air"
+    }
   }
 }

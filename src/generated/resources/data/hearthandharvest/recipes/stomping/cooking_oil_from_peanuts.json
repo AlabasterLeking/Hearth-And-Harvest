@@ -1,0 +1,21 @@
+{
+  "type": "hearthandharvest:stomping",
+  "ingredients": [
+    {
+      "tag": "forge:crops/peanut"
+    },
+    {
+      "tag": "forge:crops/peanut"
+    },
+    {
+      "tag": "forge:crops/peanut"
+    },
+    {
+      "tag": "forge:crops/peanut"
+    }
+  ],
+  "result_fluid": {
+    "amount": 500,
+    "id": "hearthandharvest:cooking_oil"
+  }
+}

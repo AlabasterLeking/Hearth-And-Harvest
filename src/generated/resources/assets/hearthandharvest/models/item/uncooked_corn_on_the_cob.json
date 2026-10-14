@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "hearthandharvest:item/uncooked_corn_on_the_cob"
+  }
+}

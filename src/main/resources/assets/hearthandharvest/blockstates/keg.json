@@ -1,0 +1,364 @@
+{
+  "variants": {
+    "multiblock_part=controller,facing=east,cell=0": {
+      "model": "hearthandharvest:block/big_keg_0",
+      "y": 90
+    },
+    "multiblock_part=controller,facing=east,cell=1": {
+      "model": "hearthandharvest:block/big_keg_1",
+      "y": 90
+    },
+    "multiblock_part=controller,facing=east,cell=2": {
+      "model": "hearthandharvest:block/big_keg_2",
+      "y": 90
+    },
+    "multiblock_part=controller,facing=east,cell=3": {
+      "model": "hearthandharvest:block/big_keg_3",
+      "y": 90
+    },
+    "multiblock_part=controller,facing=east,cell=4": {
+      "model": "hearthandharvest:block/big_keg_4",
+      "y": 90
+    },
+    "multiblock_part=controller,facing=east,cell=5": {
+      "model": "hearthandharvest:block/big_keg_5",
+      "y": 90
+    },
+    "multiblock_part=controller,facing=east,cell=6": {
+      "model": "hearthandharvest:block/big_keg_6",
+      "y": 90
+    },
+    "multiblock_part=controller,facing=east,cell=7": {
+      "model": "hearthandharvest:block/big_keg_7",
+      "y": 90
+    },
+    "multiblock_part=controller,facing=north,cell=0": {
+      "model": "hearthandharvest:block/big_keg_0"
+    },
+    "multiblock_part=controller,facing=north,cell=1": {
+      "model": "hearthandharvest:block/big_keg_1"
+    },
+    "multiblock_part=controller,facing=north,cell=2": {
+      "model": "hearthandharvest:block/big_keg_2"
+    },
+    "multiblock_part=controller,facing=north,cell=3": {
+      "model": "hearthandharvest:block/big_keg_3"
+    },
+    "multiblock_part=controller,facing=north,cell=4": {
+      "model": "hearthandharvest:block/big_keg_4"
+    },
+    "multiblock_part=controller,facing=north,cell=5": {
+      "model": "hearthandharvest:block/big_keg_5"
+    },
+    "multiblock_part=controller,facing=north,cell=6": {
+      "model": "hearthandharvest:block/big_keg_6"
+    },
+    "multiblock_part=controller,facing=north,cell=7": {
+      "model": "hearthandharvest:block/big_keg_7"
+    },
+    "multiblock_part=controller,facing=south,cell=0": {
+      "model": "hearthandharvest:block/big_keg_0",
+      "y": 180
+    },
+    "multiblock_part=controller,facing=south,cell=1": {
+      "model": "hearthandharvest:block/big_keg_1",
+      "y": 180
+    },
+    "multiblock_part=controller,facing=south,cell=2": {
+      "model": "hearthandharvest:block/big_keg_2",
+      "y": 180
+    },
+    "multiblock_part=controller,facing=south,cell=3": {
+      "model": "hearthandharvest:block/big_keg_3",
+      "y": 180
+    },
+    "multiblock_part=controller,facing=south,cell=4": {
+      "model": "hearthandharvest:block/big_keg_4",
+      "y": 180
+    },
+    "multiblock_part=controller,facing=south,cell=5": {
+      "model": "hearthandharvest:block/big_keg_5",
+      "y": 180
+    },
+    "multiblock_part=controller,facing=south,cell=6": {
+      "model": "hearthandharvest:block/big_keg_6",
+      "y": 180
+    },
+    "multiblock_part=controller,facing=south,cell=7": {
+      "model": "hearthandharvest:block/big_keg_7",
+      "y": 180
+    },
+    "multiblock_part=controller,facing=west,cell=0": {
+      "model": "hearthandharvest:block/big_keg_0",
+      "y": 270
+    },
+    "multiblock_part=controller,facing=west,cell=1": {
+      "model": "hearthandharvest:block/big_keg_1",
+      "y": 270
+    },
+    "multiblock_part=controller,facing=west,cell=2": {
+      "model": "hearthandharvest:block/big_keg_2",
+      "y": 270
+    },
+    "multiblock_part=controller,facing=west,cell=3": {
+      "model": "hearthandharvest:block/big_keg_3",
+      "y": 270
+    },
+    "multiblock_part=controller,facing=west,cell=4": {
+      "model": "hearthandharvest:block/big_keg_4",
+      "y": 270
+    },
+    "multiblock_part=controller,facing=west,cell=5": {
+      "model": "hearthandharvest:block/big_keg_5",
+      "y": 270
+    },
+    "multiblock_part=controller,facing=west,cell=6": {
+      "model": "hearthandharvest:block/big_keg_6",
+      "y": 270
+    },
+    "multiblock_part=controller,facing=west,cell=7": {
+      "model": "hearthandharvest:block/big_keg_7",
+      "y": 270
+    },
+    "multiblock_part=member,facing=east,cell=0": {
+      "model": "hearthandharvest:block/big_keg_0",
+      "y": 90
+    },
+    "multiblock_part=member,facing=east,cell=1": {
+      "model": "hearthandharvest:block/big_keg_1",
+      "y": 90
+    },
+    "multiblock_part=member,facing=east,cell=2": {
+      "model": "hearthandharvest:block/big_keg_2",
+      "y": 90
+    },
+    "multiblock_part=member,facing=east,cell=3": {
+      "model": "hearthandharvest:block/big_keg_3",
+      "y": 90
+    },
+    "multiblock_part=member,facing=east,cell=4": {
+      "model": "hearthandharvest:block/big_keg_4",
+      "y": 90
+    },
+    "multiblock_part=member,facing=east,cell=5": {
+      "model": "hearthandharvest:block/big_keg_5",
+      "y": 90
+    },
+    "multiblock_part=member,facing=east,cell=6": {
+      "model": "hearthandharvest:block/big_keg_6",
+      "y": 90
+    },
+    "multiblock_part=member,facing=east,cell=7": {
+      "model": "hearthandharvest:block/big_keg_7",
+      "y": 90
+    },
+    "multiblock_part=member,facing=north,cell=0": {
+      "model": "hearthandharvest:block/big_keg_0"
+    },
+    "multiblock_part=member,facing=north,cell=1": {
+      "model": "hearthandharvest:block/big_keg_1"
+    },
+    "multiblock_part=member,facing=north,cell=2": {
+      "model": "hearthandharvest:block/big_keg_2"
+    },
+    "multiblock_part=member,facing=north,cell=3": {
+      "model": "hearthandharvest:block/big_keg_3"
+    },
+    "multiblock_part=member,facing=north,cell=4": {
+      "model": "hearthandharvest:block/big_keg_4"
+    },
+    "multiblock_part=member,facing=north,cell=5": {
+      "model": "hearthandharvest:block/big_keg_5"
+    },
+    "multiblock_part=member,facing=north,cell=6": {
+      "model": "hearthandharvest:block/big_keg_6"
+    },
+    "multiblock_part=member,facing=north,cell=7": {
+      "model": "hearthandharvest:block/big_keg_7"
+    },
+    "multiblock_part=member,facing=south,cell=0": {
+      "model": "hearthandharvest:block/big_keg_0",
+      "y": 180
+    },
+    "multiblock_part=member,facing=south,cell=1": {
+      "model": "hearthandharvest:block/big_keg_1",
+      "y": 180
+    },
+    "multiblock_part=member,facing=south,cell=2": {
+      "model": "hearthandharvest:block/big_keg_2",
+      "y": 180
+    },
+    "multiblock_part=member,facing=south,cell=3": {
+      "model": "hearthandharvest:block/big_keg_3",
+      "y": 180
+    },
+    "multiblock_part=member,facing=south,cell=4": {
+      "model": "hearthandharvest:block/big_keg_4",
+      "y": 180
+    },
+    "multiblock_part=member,facing=south,cell=5": {
+      "model": "hearthandharvest:block/big_keg_5",
+      "y": 180
+    },
+    "multiblock_part=member,facing=south,cell=6": {
+      "model": "hearthandharvest:block/big_keg_6",
+      "y": 180
+    },
+    "multiblock_part=member,facing=south,cell=7": {
+      "model": "hearthandharvest:block/big_keg_7",
+      "y": 180
+    },
+    "multiblock_part=member,facing=west,cell=0": {
+      "model": "hearthandharvest:block/big_keg_0",
+      "y": 270
+    },
+    "multiblock_part=member,facing=west,cell=1": {
+      "model": "hearthandharvest:block/big_keg_1",
+      "y": 270
+    },
+    "multiblock_part=member,facing=west,cell=2": {
+      "model": "hearthandharvest:block/big_keg_2",
+      "y": 270
+    },
+    "multiblock_part=member,facing=west,cell=3": {
+      "model": "hearthandharvest:block/big_keg_3",
+      "y": 270
+    },
+    "multiblock_part=member,facing=west,cell=4": {
+      "model": "hearthandharvest:block/big_keg_4",
+      "y": 270
+    },
+    "multiblock_part=member,facing=west,cell=5": {
+      "model": "hearthandharvest:block/big_keg_5",
+      "y": 270
+    },
+    "multiblock_part=member,facing=west,cell=6": {
+      "model": "hearthandharvest:block/big_keg_6",
+      "y": 270
+    },
+    "multiblock_part=member,facing=west,cell=7": {
+      "model": "hearthandharvest:block/big_keg_7",
+      "y": 270
+    },
+    "multiblock_part=none,facing=east,cell=0": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "multiblock_part=none,facing=east,cell=1": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "multiblock_part=none,facing=east,cell=2": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "multiblock_part=none,facing=east,cell=3": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "multiblock_part=none,facing=east,cell=4": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "multiblock_part=none,facing=east,cell=5": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "multiblock_part=none,facing=east,cell=6": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "multiblock_part=none,facing=east,cell=7": {
+      "model": "hearthandharvest:block/keg",
+      "y": 90
+    },
+    "multiblock_part=none,facing=north,cell=0": {
+      "model": "hearthandharvest:block/keg"
+    },
+    "multiblock_part=none,facing=north,cell=1": {
+      "model": "hearthandharvest:block/keg"
+    },
+    "multiblock_part=none,facing=north,cell=2": {
+      "model": "hearthandharvest:block/keg"
+    },
+    "multiblock_part=none,facing=north,cell=3": {
+      "model": "hearthandharvest:block/keg"
+    },
+    "multiblock_part=none,facing=north,cell=4": {
+      "model": "hearthandharvest:block/keg"
+    },
+    "multiblock_part=none,facing=north,cell=5": {
+      "model": "hearthandharvest:block/keg"
+    },
+    "multiblock_part=none,facing=north,cell=6": {
+      "model": "hearthandharvest:block/keg"
+    },
+    "multiblock_part=none,facing=north,cell=7": {
+      "model": "hearthandharvest:block/keg"
+    },
+    "multiblock_part=none,facing=south,cell=0": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "multiblock_part=none,facing=south,cell=1": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "multiblock_part=none,facing=south,cell=2": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "multiblock_part=none,facing=south,cell=3": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "multiblock_part=none,facing=south,cell=4": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "multiblock_part=none,facing=south,cell=5": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "multiblock_part=none,facing=south,cell=6": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "multiblock_part=none,facing=south,cell=7": {
+      "model": "hearthandharvest:block/keg",
+      "y": 180
+    },
+    "multiblock_part=none,facing=west,cell=0": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    },
+    "multiblock_part=none,facing=west,cell=1": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    },
+    "multiblock_part=none,facing=west,cell=2": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    },
+    "multiblock_part=none,facing=west,cell=3": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    },
+    "multiblock_part=none,facing=west,cell=4": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    },
+    "multiblock_part=none,facing=west,cell=5": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    },
+    "multiblock_part=none,facing=west,cell=6": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    },
+    "multiblock_part=none,facing=west,cell=7": {
+      "model": "hearthandharvest:block/keg",
+      "y": 270
+    }
+  }
+}

@@ -10,6 +10,10 @@
     "hearthandharvest:cherry_half_cabinet",
     "hearthandharvest:bamboo_half_cabinet",
     "hearthandharvest:crimson_half_cabinet",
-    "hearthandharvest:warped_half_cabinet"
+    "hearthandharvest:warped_half_cabinet",
+    {
+      "id": "hearthandharvest:palm_half_cabinet",
+      "required": false
+    }
   ]
 }

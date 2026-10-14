@@ -13,13 +13,13 @@
       "item": "minecraft:potato"
     },
     {
-      "item": "hearthandharvest:salt"
+      "item": "hearthandharvest:butter"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "forge:dusts/salt"
     },
     {
-      "tag": "forge:milk/milk_bottle"
+      "tag": "forge:milk"
     }
   ],
   "recipe_book_tab": "meals",

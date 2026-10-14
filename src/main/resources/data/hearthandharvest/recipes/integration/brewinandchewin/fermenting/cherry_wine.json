@@ -6,24 +6,23 @@
     }
   ],
   "type": "brewinandchewin:fermenting",
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "tag": "forge:fruits/blueberry"
+    },
+    {
+      "tag": "forge:fruits/cherry"
+    },
+    {
+      "tag": "forge:fruits/cherry"
+    },
+    []
+  ],
   "basefluid": {
     "count": 500,
     "fluid": "minecraft:water"
   },
-  "experience": 1.0,
-  "ingredients": [
-    {
-      "item": "hearthandharvest:cherry"
-    },
-    {
-      "item": "hearthandharvest:cherry"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    []
-  ],
-  "recipe_book_tab": "drinks",
   "result": {
     "count": 500,
     "fluid": "hearthandharvest:cherry_wine"

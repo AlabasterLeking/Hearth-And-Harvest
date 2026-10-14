@@ -1,0 +1,22 @@
+{
+  "type": "hearthandharvest:aging",
+  "cookingtime": 48000,
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "type": "hearthandharvest:vintage",
+      "base": {
+        "item": "hearthandharvest:sweet_berry_wine"
+      },
+      "vintage": 1
+    }
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "components": {
+      "hearthandharvest:vintage": 2
+    },
+    "count": 1,
+    "id": "hearthandharvest:sweet_berry_wine"
+  }
+}

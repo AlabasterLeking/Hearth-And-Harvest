@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:animals/plucky",
+  "criteria": {
+    "the_goat": {
+      "conditions": {},
+      "trigger": "hearthandharvest:milked_goat"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.the_goat.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:goat_milk_bottle"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.the_goat"
+    }
+  },
+  "requirements": [
+    [
+      "the_goat"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

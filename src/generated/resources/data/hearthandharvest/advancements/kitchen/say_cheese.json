@@ -1,0 +1,39 @@
+{
+  "parent": "hearthandharvest:kitchen/patience_is_a_virtue",
+  "criteria": {
+    "say_cheese": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:cheese_wheel",
+              "hearthandharvest:goat_cheese_wheel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.say_cheese.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:cheese_wheel"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.say_cheese"
+    }
+  },
+  "requirements": [
+    [
+      "say_cheese"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

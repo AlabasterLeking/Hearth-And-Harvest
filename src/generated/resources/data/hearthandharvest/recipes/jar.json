@@ -2,12 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "C": {
+      "item": "farmersdelight:canvas"
+    },
     "G": {
       "item": "minecraft:glass_pane"
     }
   },
   "pattern": [
-    "G G",
+    " C ",
     "G G",
     "GGG"
   ],

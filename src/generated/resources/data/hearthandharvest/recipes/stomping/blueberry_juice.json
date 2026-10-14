@@ -1,0 +1,21 @@
+{
+  "type": "hearthandharvest:stomping",
+  "ingredients": [
+    {
+      "tag": "forge:fruits/blueberry"
+    },
+    {
+      "tag": "forge:fruits/blueberry"
+    },
+    {
+      "tag": "forge:fruits/blueberry"
+    },
+    {
+      "tag": "forge:fruits/blueberry"
+    }
+  ],
+  "result_fluid": {
+    "amount": 500,
+    "id": "hearthandharvest:blueberry_juice"
+  }
+}

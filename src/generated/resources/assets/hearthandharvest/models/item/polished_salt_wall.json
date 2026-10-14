@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "hearthandharvest:block/polished_salt_block"
+  }
+}

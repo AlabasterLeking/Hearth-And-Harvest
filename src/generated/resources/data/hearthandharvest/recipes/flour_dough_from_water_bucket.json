@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "fd_dough",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:flour"
+    },
+    {
+      "item": "hearthandharvest:flour"
+    },
+    {
+      "tag": "forge:dusts/salt"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "farmersdelight:wheat_dough"
+  }
+}

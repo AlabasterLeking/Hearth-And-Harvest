@@ -1,0 +1,24 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:filling",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "fluid": "hearthandharvest:melon_juice",
+      "amount": 250,
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "item": "farmersdelight:melon_juice"
+    }
+  ]
+}

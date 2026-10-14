@@ -2,8 +2,8 @@
   "parent": "farmersdelight:block/template_pie",
   "textures": {
     "particle": "hearthandharvest:block/chicken_pot_pie_top",
-    "bottom": "farmersdelight:block/pie_bottom",
-    "side": "farmersdelight:block/pie_side",
+    "bottom": "hearthandharvest:block/chicken_pot_pie_bottom",
+    "side": "hearthandharvest:block/chicken_pot_pie_side",
     "top": "hearthandharvest:block/chicken_pot_pie_top"
   }
 }

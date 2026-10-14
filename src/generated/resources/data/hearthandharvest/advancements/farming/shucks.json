@@ -1,0 +1,38 @@
+{
+  "parent": "hearthandharvest:main/root",
+  "criteria": {
+    "shucks": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:corn"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.shucks.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:corn"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.shucks"
+    }
+  },
+  "requirements": [
+    [
+      "shucks"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "F": {
-      "item": "hearthandharvest:raspberry"
+      "tag": "forge:fruits/raspberry"
     },
     "P": {
       "item": "farmersdelight:pie_crust"

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "w": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "pattern": [
+    "sss",
+    "www"
+  ],
+  "result": {
+    "count": 2,
+    "item": "hearthandharvest:crate"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "hearthandharvest:block/trellis/base/trellis_middle_ew",
+  "textures": {
+    "wood": "hearthandharvest:block/bamboo_trellis"
+  }
+}

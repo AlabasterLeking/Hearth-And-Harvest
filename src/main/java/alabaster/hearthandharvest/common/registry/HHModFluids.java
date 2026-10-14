@@ -1,59 +1,121 @@
 package alabaster.hearthandharvest.common.registry;
 
+import java.util.function.Consumer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.minecraft.core.registries.Registries;
+
 import alabaster.hearthandharvest.HearthAndHarvest;
-import alabaster.hearthandharvest.common.fluid.*;
-import net.minecraft.world.level.material.FlowingFluid;
+import alabaster.hearthandharvest.common.fluid.HHFluidType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 public class HHModFluids {
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
             DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, HearthAndHarvest.MODID);
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(ForgeRegistries.FLUIDS, HearthAndHarvest.MODID);
+            DeferredRegister.create(Registries.FLUID, HearthAndHarvest.MODID);
 
-    public static final RegistryObject<FluidType> SAP_FLUID_TYPE = FLUID_TYPES.register("sap", BlueberryWineFluidType::new);
-    public static final RegistryObject<FlowingFluid> SAP = FLUIDS.register("sap", () -> new ForgeFlowingFluid.Source(HHModFluids.SAP_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_SAP = FLUIDS.register("flowing_sap", () -> new ForgeFlowingFluid.Flowing(HHModFluids.SAP_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties SAP_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(SAP_FLUID_TYPE, SAP, FLOWING_SAP);
+    private static FluidType.Properties defaultProps() {
+        return FluidType.Properties.create().viscosity(2000).density(1400);
+    }
 
-    public static final RegistryObject<FluidType> BLUEBERRY_WINE_FLUID_TYPE = FLUID_TYPES.register("blueberry_wine", BlueberryWineFluidType::new);
-    public static final RegistryObject<FlowingFluid> BLUEBERRY_WINE = FLUIDS.register("blueberry_wine", () -> new ForgeFlowingFluid.Source(HHModFluids.BLUEBERRY_WINE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_BLUEBERRY_WINE = FLUIDS.register("flowing_blueberry_wine", () -> new ForgeFlowingFluid.Flowing(HHModFluids.BLUEBERRY_WINE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties BLUEBERRY_WINE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(BLUEBERRY_WINE_FLUID_TYPE, BLUEBERRY_WINE, FLOWING_BLUEBERRY_WINE);
+    private static FluidType.Properties dairyProps() {
+        return FluidType.Properties.create().viscosity(3000).density(1600);
+    }
 
-    public static final RegistryObject<FluidType> CHERRY_WINE_FLUID_TYPE = FLUID_TYPES.register("cherry_wine", CherryWineFluidType::new);
-    public static final RegistryObject<FlowingFluid> CHERRY_WINE = FLUIDS.register("cherry_wine", () -> new ForgeFlowingFluid.Source(HHModFluids.CHERRY_WINE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_CHERRY_WINE = FLUIDS.register("flowing_cherry_wine", () -> new ForgeFlowingFluid.Flowing(HHModFluids.CHERRY_WINE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties CHERRY_WINE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(CHERRY_WINE_FLUID_TYPE, CHERRY_WINE, FLOWING_CHERRY_WINE);
+    private static FluidEntry registerFluid(String name, FluidType.Properties typeProps) {
+        Supplier<FluidType> type = FLUID_TYPES.register(name, () -> new TexturedFluidType(typeProps, name));
+        Supplier<HHFluidType>[] holders = new Supplier[2];
+        holders[0] = FLUIDS.register(name, () ->
+                new HHFluidType(new ForgeFlowingFluid.Properties(type, holders[0], holders[1]),
+                        true));
+        holders[1] = FLUIDS.register("flowing_" + name, () ->
+                new HHFluidType(new ForgeFlowingFluid.Properties(type, holders[0], holders[1]),
+                        false));
+        return new FluidEntry(type, holders[0], holders[1]);
+    }
 
-    public static final RegistryObject<FluidType> GREEN_GRAPE_WINE_FLUID_TYPE = FLUID_TYPES.register("green_grape_wine", GreenGrapeWineFluidType::new);
-    public static final RegistryObject<FlowingFluid> GREEN_GRAPE_WINE = FLUIDS.register("green_grape_wine", () -> new ForgeFlowingFluid.Source(HHModFluids.GREEN_GRAPE_WINE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_GREEN_GRAPE_WINE = FLUIDS.register("flowing_green_grape_wine", () -> new ForgeFlowingFluid.Flowing(HHModFluids.GREEN_GRAPE_WINE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties GREEN_GRAPE_WINE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(GREEN_GRAPE_WINE_FLUID_TYPE, GREEN_GRAPE_WINE, FLOWING_GREEN_GRAPE_WINE);
+    private static FluidEntry registerFluidWithBucket(String name, FluidType.Properties typeProps, Supplier<Item> bucketItem) {
+        Supplier<FluidType> type = FLUID_TYPES.register(name, () -> new TexturedFluidType(typeProps, name));
+        Supplier<HHFluidType>[] holders = new Supplier[2];
+        holders[0] = FLUIDS.register(name, () ->
+                new HHFluidType(
+                        new ForgeFlowingFluid.Properties(type, holders[0], holders[1]).bucket(bucketItem),
+                        true));
+        holders[1] = FLUIDS.register("flowing_" + name, () ->
+                new HHFluidType(
+                        new ForgeFlowingFluid.Properties(type, holders[0], holders[1]),
+                        false));
+        return new FluidEntry(type, holders[0], holders[1]);
+    }
 
-    public static final RegistryObject<FluidType> RASPBERRY_WINE_FLUID_TYPE = FLUID_TYPES.register("raspberry_wine", RaspberryWineFluidType::new);
-    public static final RegistryObject<FlowingFluid> RASPBERRY_WINE = FLUIDS.register("raspberry_wine", () -> new ForgeFlowingFluid.Source(HHModFluids.RASPBERRY_WINE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_RASPBERRY_WINE = FLUIDS.register("flowing_raspberry_wine", () -> new ForgeFlowingFluid.Flowing(HHModFluids.RASPBERRY_WINE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties RASPBERRY_WINE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(RASPBERRY_WINE_FLUID_TYPE, RASPBERRY_WINE, FLOWING_RASPBERRY_WINE);
+    private static FluidEntry registerFluid(String name) {
+        return registerFluid(name, defaultProps());
+    }
 
-    public static final RegistryObject<FluidType> RED_GRAPE_WINE_FLUID_TYPE = FLUID_TYPES.register("red_grape_wine", RedGrapeWineFluidType::new);
-    public static final RegistryObject<FlowingFluid> RED_GRAPE_WINE = FLUIDS.register("red_grape_wine", () -> new ForgeFlowingFluid.Source(HHModFluids.RED_GRAPE_WINE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_RED_GRAPE_WINE = FLUIDS.register("flowing_red_grape_wine", () -> new ForgeFlowingFluid.Flowing(HHModFluids.RED_GRAPE_WINE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties RED_GRAPE_WINE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(RED_GRAPE_WINE_FLUID_TYPE, RED_GRAPE_WINE, FLOWING_RED_GRAPE_WINE);
+    private static class TexturedFluidType extends FluidType {
+        private final String name;
 
-    public static final RegistryObject<FluidType> SWEET_BERRY_WINE_FLUID_TYPE = FLUID_TYPES.register("sweet_berry_wine", SweetBerryWineFluidType::new);
-    public static final RegistryObject<FlowingFluid> SWEET_BERRY_WINE = FLUIDS.register("sweet_berry_wine", () -> new ForgeFlowingFluid.Source(HHModFluids.SWEET_BERRY_WINE_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_SWEET_BERRY_WINE = FLUIDS.register("flowing_sweet_berry_wine", () -> new ForgeFlowingFluid.Flowing(HHModFluids.SWEET_BERRY_WINE_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties SWEET_BERRY_WINE_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(SWEET_BERRY_WINE_FLUID_TYPE, SWEET_BERRY_WINE, FLOWING_SWEET_BERRY_WINE);
+        TexturedFluidType(Properties properties, String name) {
+            super(properties);
+            this.name = name;
+        }
 
-    public static final RegistryObject<FluidType> MEAD_FLUID_TYPE = FLUID_TYPES.register("mead", MeadFluidType::new);
-    public static final RegistryObject<FlowingFluid> MEAD = FLUIDS.register("mead", () -> new ForgeFlowingFluid.Source(HHModFluids.MEAD_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_MEAD = FLUIDS.register("flowing_mead", () -> new ForgeFlowingFluid.Flowing(HHModFluids.MEAD_FLUID_PROPERTIES));
-    public static final ForgeFlowingFluid.Properties MEAD_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(MEAD_FLUID_TYPE, MEAD, FLOWING_MEAD);
+        @Override
+        public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
+            consumer.accept(new IClientFluidTypeExtensions() {
+                @Override
+                public ResourceLocation getStillTexture() {
+                    return new ResourceLocation(HearthAndHarvest.MODID, "block/fluid/" + name + "_still");
+                }
+
+                @Override
+                public ResourceLocation getFlowingTexture() {
+                    return new ResourceLocation(HearthAndHarvest.MODID, "block/fluid/" + name + "_flow");
+                }
+            });
+        }
+    }
+
+    public record FluidEntry(
+            Supplier<FluidType> type,
+            Supplier<HHFluidType> source,
+            Supplier<HHFluidType> flowing
+    ) {}
+
+    public static final FluidEntry GOAT_MILK = registerFluidWithBucket("goat_milk", dairyProps(), HHModItems.GOAT_MILK_BUCKET);
+    public static final FluidEntry COOKING_OIL = registerFluid("cooking_oil");
+    public static final FluidEntry BRINE = registerFluidWithBucket("brine", defaultProps(), HHModItems.BRINE_BUCKET);
+    public static final FluidEntry SAP = registerFluidWithBucket("sap", defaultProps(), HHModItems.SAP_BUCKET);
+    public static final FluidEntry SYRUP = registerFluid("syrup");
+    public static final FluidEntry APPLE_CIDER = registerFluid("apple_cider");
+    public static final FluidEntry HARD_CIDER = registerFluid("hard_cider");
+    public static final FluidEntry ROOT_BEER = registerFluid("root_beer");
+    public static final FluidEntry BEER = registerFluid("beer");
+    public static final FluidEntry MEAD = registerFluid("mead");
+    public static final FluidEntry MOONSHINE = registerFluid("moonshine");
+    public static final FluidEntry BLUEBERRY_JUICE = registerFluid("blueberry_juice");
+    public static final FluidEntry CHERRY_JUICE = registerFluid("cherry_juice");
+    public static final FluidEntry GREEN_GRAPE_JUICE = registerFluid("green_grape_juice");
+    public static final FluidEntry RASPBERRY_JUICE = registerFluid("raspberry_juice");
+    public static final FluidEntry RED_GRAPE_JUICE = registerFluid("red_grape_juice");
+    public static final FluidEntry SWEET_BERRY_JUICE = registerFluid("sweet_berry_juice");
+    public static final FluidEntry MELON_JUICE = registerFluid("melon_juice");
+    public static final FluidEntry GLOW_BERRY_JUICE = registerFluid("glow_berry_juice", defaultProps().lightLevel(8));
+    public static final FluidEntry BLUEBERRY_WINE = registerFluid("blueberry_wine");
+    public static final FluidEntry CHERRY_WINE = registerFluid("cherry_wine");
+    public static final FluidEntry GREEN_GRAPE_WINE = registerFluid("green_grape_wine");
+    public static final FluidEntry RASPBERRY_WINE = registerFluid("raspberry_wine");
+    public static final FluidEntry RED_GRAPE_WINE = registerFluid("red_grape_wine");
+    public static final FluidEntry SWEET_BERRY_WINE = registerFluid("sweet_berry_wine");
+    public static final FluidEntry GLOW_BERRY_WINE = registerFluid("glow_berry_wine");
+    public static final FluidEntry MELON_WINE = registerFluid("melon_wine");
 }

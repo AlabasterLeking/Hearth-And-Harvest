@@ -1,32 +1,32 @@
 package alabaster.hearthandharvest.common.event;
 
+import alabaster.hearthandharvest.common.advancement.HHSimpleTrigger;
+import alabaster.hearthandharvest.common.registry.HHModTriggers;
+import alabaster.hearthandharvest.Config;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import java.util.Random;
+import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 
 public class PigLitters {
 
     @SubscribeEvent
     public void onPigBreed(BabyEntitySpawnEvent event) {
-        if (event.getParentA() instanceof Pig && event.getParentB() instanceof Pig) {
-            Level world = event.getParentA().level();
+        if (!(event.getParentA() instanceof Pig) || !(event.getParentB() instanceof Pig)) return;
+        if (Config.DISABLE_PIG_LITTERS.get()) return;
+        Level world = event.getParentA().level();
+        RandomSource random = event.getParentA().getRandom();
+        int extraCount = 1 + random.nextInt(3);
+        if (extraCount == 3) HHSimpleTrigger.trigger(HHModTriggers.BIG_PIG_LITTER, event.getCausedByPlayer());
 
-            event.setCanceled(true);
-
-            Random random = new Random();
-            int babyCount = 2 + random.nextInt(3); // 2 to 4 babies
-
-            for (int i = 0; i < babyCount; i++) {
-                Pig babyPig = EntityType.PIG.create(world);
-                if (babyPig != null) {
-                    babyPig.setPos(event.getParentA().getX(), event.getParentA().getY(), event.getParentA().getZ());
-                    babyPig.setBaby(true);
-                    world.addFreshEntity(babyPig);
-                }
+        for (int i = 0; i < extraCount; i++) {
+            Pig babyPig = EntityType.PIG.create(world);
+            if (babyPig != null) {
+                babyPig.setPos(event.getParentA().getX(), event.getParentA().getY(), event.getParentA().getZ());
+                babyPig.setBaby(true);
+                world.addFreshEntity(babyPig);
             }
         }
     }

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 400,
+  "experience": 0.5,
+  "ingredient": {
+    "item": "hearthandharvest:wet_manure_brick"
+  },
+  "result": "hearthandharvest:manure_brick"
+}

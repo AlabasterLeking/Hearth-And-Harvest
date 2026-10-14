@@ -1,6 +1,0 @@
-{
-  "parent": "hearthandharvest:block/generic_jar_3",
-  "textures": {
-    "lid": "hearthandharvest:block/pickled_carrots_jar"
-  }
-}

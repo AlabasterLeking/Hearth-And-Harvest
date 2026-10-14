@@ -11,7 +11,7 @@
   },
   "pattern": [
     "SSS",
-    "CCC",
+    "C C",
     "SSS"
   ],
   "result": {

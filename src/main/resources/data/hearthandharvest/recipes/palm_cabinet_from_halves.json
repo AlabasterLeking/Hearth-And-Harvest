@@ -1,0 +1,21 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "crabbersdelight"
+    }
+  ],
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:palm_half_cabinet"
+    },
+    {
+      "item": "hearthandharvest:palm_half_cabinet"
+    }
+  ],
+  "result": {
+    "item": "crabbersdelight:palm_cabinet"
+  }
+}

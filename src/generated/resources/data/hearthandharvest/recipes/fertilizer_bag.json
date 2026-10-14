@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "item": "hearthandharvest:manure"
+    },
+    [
+      {
+        "item": "farmersdelight:tree_bark"
+      },
+      {
+        "item": "hearthandharvest:corn_husk"
+      },
+      {
+        "item": "farmersdelight:straw"
+      }
+    ]
+  ],
+  "result": {
+    "item": "hearthandharvest:fertilizer_bag"
+  }
+}

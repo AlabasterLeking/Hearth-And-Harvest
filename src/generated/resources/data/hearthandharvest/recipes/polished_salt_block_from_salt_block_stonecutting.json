@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "hearthandharvest:salt_block"
+  },
+  "result": "hearthandharvest:polished_salt_block"
+}

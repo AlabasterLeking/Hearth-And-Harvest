@@ -1,0 +1,39 @@
+{
+  "variants": {
+    "thickness=large,vertical_direction=down": {
+      "model": "hearthandharvest:block/salt_drip_large"
+    },
+    "thickness=large,vertical_direction=up": {
+      "model": "hearthandharvest:block/salt_drip_large",
+      "x": 180
+    },
+    "thickness=medium,vertical_direction=down": {
+      "model": "hearthandharvest:block/salt_drip_medium"
+    },
+    "thickness=medium,vertical_direction=up": {
+      "model": "hearthandharvest:block/salt_drip_medium",
+      "x": 180
+    },
+    "thickness=point,vertical_direction=down": {
+      "model": "hearthandharvest:block/salt_drip_point"
+    },
+    "thickness=point,vertical_direction=up": {
+      "model": "hearthandharvest:block/salt_drip_point",
+      "x": 180
+    },
+    "thickness=point_merge,vertical_direction=down": {
+      "model": "hearthandharvest:block/salt_drip_point_merge"
+    },
+    "thickness=point_merge,vertical_direction=up": {
+      "model": "hearthandharvest:block/salt_drip_point_merge",
+      "x": 180
+    },
+    "thickness=small,vertical_direction=down": {
+      "model": "hearthandharvest:block/salt_drip_small"
+    },
+    "thickness=small,vertical_direction=up": {
+      "model": "hearthandharvest:block/salt_drip_small",
+      "x": 180
+    }
+  }
+}

@@ -15,11 +15,27 @@ import java.util.List;
 
 public class CaskRecipeBookComponent extends RecipeBookComponent
 {
-    protected static final ResourceLocation RECIPE_BOOK_BUTTONS = new ResourceLocation(HearthAndHarvest.MODID, "textures/gui/recipe_book_buttons.png");
+    protected static final ResourceLocation RECIPE_BOOK_BUTTONS = new ResourceLocation(HearthAndHarvest.MODID, "textures/gui/cask_recipe_book_buttons.png");
 
     @Override
     protected void initFilterButtonTextures() {
-        this.filterButton.initTextureValues(0, 0, 28, 18, RECIPE_BOOK_BUTTONS);
+        this.filterButton.initTextureValues(0, 0, 26, 16, RECIPE_BOOK_BUTTONS);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (this.filterButton == null) {
+            return super.mouseClicked(mouseX, mouseY, button);
+        }
+
+        boolean stateBefore = this.filterButton.isStateTriggered();
+        boolean clickedFilter = this.filterButton.visible && this.filterButton.isMouseOver(mouseX, mouseY);
+        boolean handled = super.mouseClicked(mouseX, mouseY, button);
+
+        if (clickedFilter && this.filterButton != null && this.filterButton.isStateTriggered() == stateBefore) {
+            this.filterButton.setStateTriggered(!stateBefore);
+        }
+        return handled;
     }
 
     public void hide() {
@@ -40,6 +56,8 @@ public class CaskRecipeBookComponent extends RecipeBookComponent
         if (slots.get(4).getItem().isEmpty()) {
             this.ghostRecipe.addIngredient(Ingredient.of(resultStack), (slots.get(4)).x, (slots.get(4)).y);
         }
+
+
         this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, recipe.getIngredients().iterator(), 0);
     }
 }

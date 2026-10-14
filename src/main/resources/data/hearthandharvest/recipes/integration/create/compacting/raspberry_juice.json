@@ -1,0 +1,29 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:fruits/raspberry"
+    },
+    {
+      "tag": "forge:fruits/raspberry"
+    },
+    {
+      "tag": "forge:fruits/raspberry"
+    },
+    {
+      "tag": "forge:fruits/raspberry"
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:raspberry_juice",
+      "amount": 500
+    }
+  ]
+}

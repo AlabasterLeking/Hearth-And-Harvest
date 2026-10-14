@@ -2,9 +2,9 @@
   "parent": "farmersdelight:block/template_pie_slice3",
   "textures": {
     "particle": "hearthandharvest:block/chicken_pot_pie_top",
-    "bottom": "farmersdelight:block/pie_bottom",
+    "bottom": "hearthandharvest:block/chicken_pot_pie_bottom",
     "inner": "hearthandharvest:block/chicken_pot_pie_inner",
-    "side": "farmersdelight:block/pie_side",
+    "side": "hearthandharvest:block/chicken_pot_pie_side",
     "top": "hearthandharvest:block/chicken_pot_pie_top"
   }
 }

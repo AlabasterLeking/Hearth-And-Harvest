@@ -1,5 +1,10 @@
 package alabaster.hearthandharvest.common.item;
 
+import com.mojang.datafixers.util.Pair;
+import javax.annotation.Nullable;
+import alabaster.hearthandharvest.common.registry.HHModDataComponents;
+import alabaster.hearthandharvest.common.registry.HHModEffects;
+import alabaster.hearthandharvest.common.registry.HHModSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -7,8 +12,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,16 +26,19 @@ import net.minecraft.world.level.material.Fluid;
 import vectorwing.farmersdelight.common.Configuration;
 import vectorwing.farmersdelight.common.utility.TextUtils;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class WineBottleItem extends Item {
+public class WineBottleItem extends Item implements AgeableItem {
+    private static final int DRUNK_DURATION = 2400;
+    private static final int MAX_DRUNK_AMPLIFIER = 4;
+    private static final float DRUNK_REDUCTION_PER_VINTAGE = 0.2F;
+    private static final int BAR_COLOR = 0x9C2A4A;
 
     private final boolean hasFoodEffectTooltip;
     private final boolean hasCustomTooltip;
-
     private final Supplier<Fluid> fluid;
+    private int glasses = 1;
 
     public WineBottleItem(Supplier<Fluid> fluid, Properties properties, boolean hasFoodEffectTooltip, boolean hasCustomTooltip) {
         super(properties);
@@ -39,8 +47,46 @@ public class WineBottleItem extends Item {
         this.hasCustomTooltip = hasCustomTooltip;
     }
 
+    public WineBottleItem glasses(int glasses) {
+        this.glasses = Math.max(1, glasses);
+        return this;
+    }
+
     public Fluid getFluid() {
         return this.fluid.get();
+    }
+
+    public int getMaxGlasses() {
+        return glasses;
+    }
+
+    public int getGlasses(ItemStack stack) {
+        return Mth.clamp(HHModDataComponents.SERVINGS.getOrDefault(stack, glasses), 1, glasses);
+    }
+
+    @Override
+    public boolean canAgeFurther(ItemStack stack) {
+        return !isOpened(stack) && VintageHelper.canAgeFurther(stack);
+    }
+
+    public boolean isOpened(ItemStack stack) {
+        return glasses > 1 && getGlasses(stack) < glasses;
+    }
+
+    private ItemStack withGlasses(ItemStack stack, int remaining) {
+        if (remaining >= glasses) {
+            HHModDataComponents.SERVINGS.remove(stack);
+        } else {
+            HHModDataComponents.SERVINGS.set(stack, remaining);
+        }
+        return stack;
+    }
+
+    private ItemStack leftoverAfterGlass(ItemStack stack) {
+        int remaining = getGlasses(stack) - 1;
+        return remaining > 0
+                ? withGlasses(stack.copyWithCount(1), remaining)
+                : new ItemStack(Items.GLASS_BOTTLE);
     }
 
     @Override
@@ -49,18 +95,18 @@ public class WineBottleItem extends Item {
 
         FoodProperties food = stack.getFoodProperties(player);
         if (food != null) {
-            if (player.canEat(food != null && food.canAlwaysEat())) {
+            if (player.canEat(food.canAlwaysEat())) {
                 player.startUsingItem(hand);
                 return InteractionResultHolder.consume(stack);
-            } else {
-                return InteractionResultHolder.fail(stack);
             }
+            return InteractionResultHolder.fail(stack);
         }
 
         return ItemUtils.startUsingInstantly(level, player, hand);
     }
 
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
+    @Override
+    public int getUseDuration(ItemStack stack) {
         return 32;
     }
 
@@ -71,23 +117,17 @@ public class WineBottleItem extends Item {
 
     @Override
     public SoundEvent getEatingSound() {
-        return SoundEvents.BREWING_STAND_BREW;
+        return HHModSounds.WINE_DRINK.get();
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity consumer) {
-        if (!level.isClientSide) {
-            this.affectConsumer(stack, level, consumer);
-        }
+        FoodProperties food = stack.getFoodProperties(consumer);
+        Player player = consumer instanceof Player p ? p : null;
 
-        ItemStack containerStack = stack.getCraftingRemainingItem();
-
-        if (stack.isEdible()) {
-            super.finishUsingItem(stack, level, consumer);
-        } else {
-            Player player = consumer instanceof Player ? (Player) consumer : null;
-            if (player instanceof ServerPlayer) {
-                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
+        if (food == null) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
             }
             if (player != null) {
                 player.awardStat(Stats.ITEM_USED.get(this));
@@ -95,32 +135,92 @@ public class WineBottleItem extends Item {
                     stack.shrink(1);
                 }
             }
+            return giveBack(stack, new ItemStack(Items.GLASS_BOTTLE), player);
         }
 
-        if (stack.isEmpty()) {
-            return containerStack;
-        } else {
-            if (consumer instanceof Player player && !((Player) consumer).getAbilities().instabuild) {
-                if (!player.getInventory().add(containerStack)) {
-                    player.drop(containerStack, false);
-                }
-            }
+        int vintage = VintageHelper.getVintage(stack);
+        if (!level.isClientSide) {
+            applyDrunk(food, vintage, level, consumer);
+        }
+        VintageHelper.applyFood(consumer, level, stack, VintageHelper.scale(food, vintage, 0.0F, HHModEffects.DRUNK.get()));
+
+        if (player != null && player.getAbilities().instabuild) {
             return stack;
         }
+
+        ItemStack leftover = leftoverAfterGlass(stack);
+        stack.shrink(1);
+        return giveBack(stack, leftover, player);
     }
 
-    public void affectConsumer(ItemStack stack, Level level, LivingEntity consumer) {
+    private static ItemStack giveBack(ItemStack stack, ItemStack leftover, Player player) {
+        if (stack.isEmpty()) {
+            return leftover;
+        }
+        if (player != null && !player.getAbilities().instabuild && !player.getInventory().add(leftover)) {
+            player.drop(leftover, false);
+        }
+        return stack;
+    }
+
+    private static void applyDrunk(FoodProperties food, int vintage, Level level, LivingEntity consumer) {
+        float drunkProbability = 0.0F;
+        int baseAmplifier = 0;
+        for (Pair<MobEffectInstance, Float> possible : food.getEffects()) {
+            MobEffectInstance effect = possible.getFirst();
+            if (effect != null && effect.getEffect() == HHModEffects.DRUNK.get()) {
+                drunkProbability = possible.getSecond();
+                baseAmplifier = effect.getAmplifier();
+                break;
+            }
+        }
+        drunkProbability *= Math.max(0.0F, 1.0F - DRUNK_REDUCTION_PER_VINTAGE * vintage);
+        if (drunkProbability <= 0.0F || level.random.nextFloat() >= drunkProbability) return;
+
+        MobEffectInstance existing = consumer.getEffect(HHModEffects.DRUNK.get());
+        int escalated = (existing != null ? existing.getAmplifier() : -1) + 1;
+        int amplifier = Math.min(Math.max(escalated, baseAmplifier), MAX_DRUNK_AMPLIFIER);
+        consumer.addEffect(new MobEffectInstance(HHModEffects.DRUNK.get(), DRUNK_DURATION, amplifier, false, true));
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag isAdvanced) {
+    public ItemStack getCraftingRemainingItem(ItemStack stack) {
+        return glasses > 1 ? leftoverAfterGlass(stack) : super.getCraftingRemainingItem(stack);
+    }
+
+    @Override
+    public boolean isBarVisible(ItemStack stack) {
+        return isOpened(stack);
+    }
+
+    @Override
+    public int getBarWidth(ItemStack stack) {
+        return Math.round(13.0F * getGlasses(stack) / glasses);
+    }
+
+    @Override
+    public int getBarColor(ItemStack stack) {
+        return BAR_COLOR;
+    }
+
+    @Override
+    public Component getName(ItemStack stack) {
+        return VintageHelper.vintageName(stack, super.getName(stack));
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level context, List<Component> tooltip, TooltipFlag isAdvanced) {
+        VintageHelper.appendTooltip(stack, tooltip);
+        if (glasses > 1) {
+            tooltip.add(Component.translatable("tooltip.hearthandharvest.glasses", getGlasses(stack), glasses).withStyle(ChatFormatting.GRAY));
+        }
         if (Configuration.ENABLE_FOOD_EFFECT_TOOLTIP.get()) {
             if (this.hasCustomTooltip) {
-                MutableComponent textEmpty = TextUtils.getTranslation("tooltip." + this);
+                MutableComponent textEmpty = TextUtils.getTranslation("tooltip." + BuiltInRegistries.ITEM.getKey(this).getPath());
                 tooltip.add(textEmpty.withStyle(ChatFormatting.BLUE));
             }
             if (this.hasFoodEffectTooltip) {
-                TextUtils.addFoodEffectTooltip(stack, tooltip, 1.0F);
+                TextUtils.addFoodEffectTooltip(stack, tooltip, VintageHelper.durationFactor(stack));
             }
         }
     }

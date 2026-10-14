@@ -1,8 +1,0 @@
-{
-  "parent": "hearthandharvest:block/wine_rack",
-  "textures": {
-    "rack_side": "hearthandharvest:block/jungle_wine_rack_side",
-    "rack_top": "hearthandharvest:block/jungle_wine_rack_top",
-    "side": "hearthandharvest:block/jungle_cabinet_side"
-  }
-}

@@ -1,0 +1,17 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:chocolate_cake"
+    }
+  ],
+  "result": [
+    {
+      "count": 7,
+      "item": "hearthandharvest:chocolate_cake_slice"
+    }
+  ],
+  "tool": {
+    "tag": "forge:tools/knives"
+  }
+}

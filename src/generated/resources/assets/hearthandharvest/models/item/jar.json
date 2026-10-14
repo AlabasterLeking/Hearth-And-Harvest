@@ -1,6 +1,22 @@
 {
   "parent": "minecraft:item/generated",
+  "base": {
+    "parent": "hearthandharvest:block/jar"
+  },
+  "loader": "forge:separate_transforms",
+  "perspectives": {
+    "fixed": {
+      "parent": "hearthandharvest:item/2d_jar"
+    },
+    "ground": {
+      "parent": "hearthandharvest:item/2d_jar"
+    },
+    "gui": {
+      "parent": "hearthandharvest:item/2d_jar"
+    }
+  },
   "textures": {
-    "layer0": "hearthandharvest:item/jar"
+    "layer0": "hearthandharvest:item/jar",
+    "particle": "hearthandharvest:item/jar"
   }
 }

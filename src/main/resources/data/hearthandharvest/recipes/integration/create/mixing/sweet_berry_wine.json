@@ -6,26 +6,17 @@
     }
   ],
   "type": "create:mixing",
-  "heatRequirement": "heated",
   "ingredients": [
     {
-      "item": "minecraft:sweet_berries"
-    },
-    {
-      "item": "minecraft:sweet_berries"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
+      "fluid": "hearthandharvest:sweet_berry_juice",
       "amount": 500,
-      "fluid": "minecraft:water"
+      "nbt": {}
     }
   ],
   "results": [
     {
-      "amount": 500,
-      "fluid": "hearthandharvest:sweet_berry_wine"
+      "fluid": "hearthandharvest:sweet_berry_wine",
+      "amount": 500
     }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "type": "hearthandharvest:fermenting",
+  "experience": 0.35,
+  "ferment_time": 1200,
+  "ingredients": [],
+  "input_fluid": {
+    "amount": 250,
+    "fluid": "hearthandharvest:glow_berry_juice"
+  },
+  "recipe_book_tab": "drinks",
+  "result_fluid": {
+    "amount": 250,
+    "id": "hearthandharvest:glow_berry_wine"
+  }
+}

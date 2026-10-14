@@ -1,0 +1,15 @@
+{
+  "processors": [
+    {
+      "processor_type": "hearthandharvest:jar_rotation"
+    },
+    {
+      "processor_type": "hearthandharvest:preserve_from_air",
+      "preserved": "#minecraft:leaves"
+    },
+    {
+      "processor_type": "hearthandharvest:preserve_from_air",
+      "preserved": "#minecraft:logs"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "hearthandharvest:white_mum"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "hearthandharvest:blocks/white_mum"
+}

@@ -1,0 +1,14 @@
+{
+  "values": [
+    "hearthandharvest:syrup_bottle",
+    "hearthandharvest:corn_stew",
+    "hearthandharvest:macaroni_and_cheese",
+    "hearthandharvest:mashed_potatoes",
+    "hearthandharvest:biscuits_and_gravy",
+    "hearthandharvest:glazed_carrots",
+    "#hearthandharvest:bottles",
+    "#hearthandharvest:jelly",
+    "#forge:drinks/juice",
+    "#forge:drinks/alcohol"
+  ]
+}

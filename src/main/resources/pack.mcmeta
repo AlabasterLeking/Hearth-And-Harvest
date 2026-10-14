@@ -1,6 +1,7 @@
 {
   "pack": {
-    "description": "Hearth and Harvest Resources",
-    "pack_format": 15
+    "description": "${mod_id} resources",
+    "pack_format": 15,
+    "forge:server_data_pack_format": 15
   }
 }

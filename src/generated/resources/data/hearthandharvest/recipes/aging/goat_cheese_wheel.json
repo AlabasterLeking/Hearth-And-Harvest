@@ -9,6 +9,7 @@
   ],
   "recipe_book_tab": "meals",
   "result": {
-    "item": "hearthandharvest:goat_cheese_wheel"
+    "count": 1,
+    "id": "hearthandharvest:goat_cheese_wheel"
   }
 }

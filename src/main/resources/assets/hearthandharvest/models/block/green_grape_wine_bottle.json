@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"4": "hearthandharvest:block/green_grape_wine_bottle",
-		"particle": "hearthandharvest:block/mead_bottle"
+		"particle": "hearthandharvest:block/green_grape_wine_bottle"
 	},
 	"elements": [
 		{

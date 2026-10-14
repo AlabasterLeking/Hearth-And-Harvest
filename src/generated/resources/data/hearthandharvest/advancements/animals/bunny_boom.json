@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:animals/plucky",
+  "criteria": {
+    "bunny_boom": {
+      "conditions": {},
+      "trigger": "hearthandharvest:big_rabbit_litter"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.hearthandharvest.bunny_boom.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:rabbit_foot"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.bunny_boom"
+    }
+  },
+  "requirements": [
+    [
+      "bunny_boom"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

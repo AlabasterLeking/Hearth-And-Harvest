@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "brewinandchewin"
+    }
+  ],
+  "type": "brewinandchewin:keg_pouring",
+  "amount": 500,
+  "container": {
+    "item": "minecraft:glass_bottle"
+  },
+  "filling": true,
+  "fluid": "hearthandharvest:glow_berry_wine",
+  "output": {
+    "item": "hearthandharvest:glow_berry_wine"
+  },
+  "strict": false
+}

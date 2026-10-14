@@ -3,6 +3,8 @@ package alabaster.hearthandharvest.common.item;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import alabaster.hearthandharvest.common.registry.HHModDataComponents;
+import alabaster.hearthandharvest.common.tag.HHModTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -17,12 +19,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.nbt.CompoundTag;
 
 public class WateringCanItem extends Item {
 
@@ -30,12 +31,7 @@ public class WateringCanItem extends Item {
     private static final int MAX_WATER = 16;
     private static final int MAX_BONEMEAL = 16;
 
-    // NBT keys for storing charges
-    private static final String WATER_NBT = "WaterLevel";
-    private static final String BONEMEAL_NBT = "BoneMealLevel";
-
     public WateringCanItem(Properties properties) {
-        // Remove component initializers – use NBT instead.
         super(properties.stacksTo(1));
     }
 
@@ -62,22 +58,35 @@ public class WateringCanItem extends Item {
         if (hand == InteractionHand.MAIN_HAND) {
             ItemStack offhandStack = player.getOffhandItem();
 
-            if (offhandStack.is(Items.BONE_MEAL)) {
+            if (offhandStack.is(HHModTags.BONEMEAL_SUBSTITUTES)) {
+                Item offhandItem = offhandStack.getItem();
                 int currentBonemeal = getBoneMealCharge(canStack);
+                Item loadedItem = getFertilizerItem(canStack);
+                // Once charged, the can only accepts more of the same item until it empties out.
+                boolean typeMatches = currentBonemeal == 0 || loadedItem == offhandItem;
+
                 if (currentBonemeal < MAX_BONEMEAL) {
-                    if (!level.isClientSide()) {
-                        offhandStack.shrink(1);
-                        setBoneMealCharge(canStack, currentBonemeal + 1);
-                        level.playSound(null, player.blockPosition(), SoundEvents.BONE_MEAL_USE, SoundSource.PLAYERS, 0.8F, 1.0F);
-                        if (level instanceof ServerLevel) {
-                            ServerLevel serverLevel = (ServerLevel) level;
-                            double x = player.getX();
-                            double y = player.getY() + 0.8;
-                            double z = player.getZ();
-                            serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 10, 0.5, 0.4, 0.5, 0.05);
+                    if (typeMatches) {
+                        if (!level.isClientSide()) {
+                            offhandStack.shrink(1);
+                            setBoneMealCharge(canStack, currentBonemeal + 1);
+                            setFertilizerItem(canStack, offhandItem);
+                            level.playSound(null, player.blockPosition(), SoundEvents.BONE_MEAL_USE, SoundSource.PLAYERS, 0.8F, 1.0F);
+                            if (level instanceof ServerLevel serverLevel) {
+                                double x = player.getX();
+                                double y = player.getY() + 0.8;
+                                double z = player.getZ();
+                                serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 10, 0.5, 0.4, 0.5, 0.05);
+                            }
                         }
+                        return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
+                    } else if (!level.isClientSide()) {
+                        player.displayClientMessage(
+                                Component.translatable("tooltip.hearthandharvest.watering_can.wrong_fertilizer",
+                                        loadedItem.getDefaultInstance().getHoverName()),
+                                true
+                        );
                     }
-                    return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
                 }
             }
 
@@ -88,8 +97,8 @@ public class WateringCanItem extends Item {
 
                 if (targetState.getBlock() == Blocks.WATER) {
                     if (getWaterCharge(canStack) < MAX_WATER) {
-                        setWaterCharge(canStack, MAX_WATER);
                         if (!level.isClientSide()) {
+                            setWaterCharge(canStack, MAX_WATER);
                             level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
                         }
                         return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
@@ -99,21 +108,15 @@ public class WateringCanItem extends Item {
                 // Extinguish fire or any LIT block
                 if (isExtinguishable(targetState)) {
                     if (getWaterCharge(canStack) > 0) {
-                        // Extinguish the fire by setting the block to AIR (for fire blocks)
-                        if (targetState.getBlock() == Blocks.FIRE) {
-                            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-                        }
-                        // Extinguish the campfire or any other LIT block by toggling LIT to false
-                        else {
-                            level.setBlock(pos, targetState.setValue(CampfireBlock.LIT, false), 3);
-                        }
-
-                        if (level.isClientSide()) {
+                        if (!level.isClientSide()) {
+                            if (targetState.getBlock() == Blocks.FIRE) {
+                                level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                            } else {
+                                level.setBlock(pos, targetState.setValue(CampfireBlock.LIT, false), 3);
+                            }
                             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 1.0F);
+                            consumeWater(canStack);
                         }
-
-                        // Consume one water charge
-                        consumeWater(canStack);
                         return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
                     }
                 }
@@ -123,15 +126,17 @@ public class WateringCanItem extends Item {
                     int water = getWaterCharge(canStack);
                     int bonemeal = getBoneMealCharge(canStack);
                     if (water > 0 && bonemeal > 0) {
+                        if (level.isClientSide()) {
+                            return InteractionResultHolder.sidedSuccess(canStack, true);
+                        }
                         boolean applied = applyBonemeal(level, pos, targetState, player);
                         if (applied) {
                             consumeBoth(canStack);
                             level.playSound(null, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                            if (level instanceof ServerLevel) {
-                                ServerLevel serverLevel = (ServerLevel) level;
+                            if (level instanceof ServerLevel serverLevel) {
                                 serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, 0.25, 0.3, 0.25, 0.05);
                             }
-                            return InteractionResultHolder.sidedSuccess(canStack, level.isClientSide());
+                            return InteractionResultHolder.sidedSuccess(canStack, false);
                         }
                     }
                 }
@@ -143,10 +148,10 @@ public class WateringCanItem extends Item {
     private boolean isExtinguishable(BlockState state) {
         // Check for blocks with the LIT property
         if (state.hasProperty(CampfireBlock.LIT) && state.getValue(CampfireBlock.LIT)) {
-            return true;
+            return true; // Campfires or any block with LIT property
         }
         if (state.getBlock() == Blocks.FIRE) {
-            return true;
+            return true; // Fire block
         }
         return false;
     }
@@ -168,10 +173,10 @@ public class WateringCanItem extends Item {
                     if (applied) {
                         consumeBoth(canStack);
                         level.playSound(null, pos, SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        if (level instanceof ServerLevel) {
-                            ServerLevel serverLevel = (ServerLevel) level;
+                        if (level instanceof ServerLevel serverLevel) {
                             serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 8, 0.25, 0.3, 0.25, 0.05);
                         }
+
                         return InteractionResult.SUCCESS;
                     }
                 }
@@ -182,42 +187,48 @@ public class WateringCanItem extends Item {
     }
 
     private void consumeWater(ItemStack stack) {
-        int water = getWaterCharge(stack);
-        setWaterCharge(stack, water - 1);
+        int water = HHModDataComponents.WATER_LEVEL.getOrDefault(stack, 0);
+        HHModDataComponents.WATER_LEVEL.update(stack, 0, oldValue -> water - 1);
     }
 
     private void consumeBoth(ItemStack stack) {
-        int water = getWaterCharge(stack);
-        int boneMeal = getBoneMealCharge(stack);
-        setWaterCharge(stack, water - 1);
-        setBoneMealCharge(stack, boneMeal - 1);
+        int water = HHModDataComponents.WATER_LEVEL.getOrDefault(stack, 0);
+        int boneMeal = HHModDataComponents.BONEMEAL_LEVEL.getOrDefault(stack, 0);
+        int newBoneMeal = boneMeal - 1;
+        HHModDataComponents.WATER_LEVEL.update(stack, 0, oldValue -> water - 1);
+        HHModDataComponents.BONEMEAL_LEVEL.update(stack, 0, oldValue -> newBoneMeal);
+        if (newBoneMeal <= 0) {
+            HHModDataComponents.FERTILIZER_ITEM.set(stack, Items.AIR);
+        }
     }
 
     private int getWaterCharge(ItemStack stack) {
-        CompoundTag tag = stack.getOrCreateTag();
-        return tag.getInt(WATER_NBT);
+        return HHModDataComponents.WATER_LEVEL.getOrDefault(stack, 0);
     }
 
     private void setWaterCharge(ItemStack stack, int value) {
-        CompoundTag tag = stack.getOrCreateTag();
-        tag.putInt(WATER_NBT, value);
+        HHModDataComponents.WATER_LEVEL.set(stack, value);
     }
 
     private int getBoneMealCharge(ItemStack stack) {
-        CompoundTag tag = stack.getOrCreateTag();
-        return tag.getInt(BONEMEAL_NBT);
+        return HHModDataComponents.BONEMEAL_LEVEL.getOrDefault(stack, 0);
     }
 
     private void setBoneMealCharge(ItemStack stack, int value) {
-        CompoundTag tag = stack.getOrCreateTag();
-        tag.putInt(BONEMEAL_NBT, value);
+        HHModDataComponents.BONEMEAL_LEVEL.set(stack, value);
+    }
+
+    private Item getFertilizerItem(ItemStack stack) {
+        return HHModDataComponents.FERTILIZER_ITEM.getOrDefault(stack, Items.AIR);
+    }
+
+    private void setFertilizerItem(ItemStack stack, Item item) {
+        HHModDataComponents.FERTILIZER_ITEM.set(stack, item);
     }
 
     private boolean applyBonemeal(Level level, BlockPos centerPos, BlockState state, @Nullable Player player) {
-        if (!(level instanceof ServerLevel)) {
-            return false;
-        }
-        ServerLevel serverLevel = (ServerLevel) level;
+        if (!(level instanceof ServerLevel serverLevel)) return false;
+
         boolean appliedAny = false;
         int radius = 1; // 3x3 area around center
 
@@ -229,11 +240,10 @@ public class WateringCanItem extends Item {
                 BlockState targetState = level.getBlockState(mutablePos);
                 Block block = targetState.getBlock();
 
-                if (block instanceof BonemealableBlock) {
-                    BonemealableBlock growable = (BonemealableBlock) block;
+                if (block instanceof BonemealableBlock growable) {
                     if (growable.isValidBonemealTarget(level, mutablePos, targetState, false)) {
-                        if (growable.isBonemealSuccess(serverLevel, level.getRandom(), mutablePos, targetState)) {
-                            growable.performBonemeal(serverLevel, level.getRandom(), mutablePos, targetState);
+                        if (growable.isBonemealSuccess(serverLevel, level.random, mutablePos, targetState)) {
+                            growable.performBonemeal(serverLevel, level.random, mutablePos, targetState);
                             serverLevel.levelEvent(2005, mutablePos, 0);
                             appliedAny = true;
                         }
@@ -246,15 +256,27 @@ public class WateringCanItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable Level context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         int waterLevel = getWaterCharge(stack);
         int boneMealLevel = getBoneMealCharge(stack);
+        Item fertilizerItem = getFertilizerItem(stack);
 
-        tooltip.add(Component.literal("Water Level: " + waterLevel + " / " + MAX_WATER)
-                .withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC));
-        tooltip.add(Component.literal("Bone Meal Level: " + boneMealLevel + " / " + MAX_BONEMEAL)
-                .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        Component fertilizerLabel = fertilizerItem == Items.AIR
+                ? Component.translatable("tooltip.hearthandharvest.watering_can.bone_meal")
+                : Component.translatable("tooltip.hearthandharvest.watering_can.fertilizer",
+                fertilizerItem.getDefaultInstance().getHoverName());
 
-        super.appendHoverText(stack, level, tooltip, flag);
+        tooltipComponents.add(
+                Component.translatable("tooltip.hearthandharvest.watering_can.water")
+                        .append(Component.literal(": " + waterLevel + " / " + MAX_WATER))
+                        .withStyle(ChatFormatting.AQUA, ChatFormatting.ITALIC)
+        );
+        tooltipComponents.add(
+                fertilizerLabel.copy()
+                        .append(Component.literal(": " + boneMealLevel + " / " + MAX_BONEMEAL))
+                        .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
+        );
+
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }

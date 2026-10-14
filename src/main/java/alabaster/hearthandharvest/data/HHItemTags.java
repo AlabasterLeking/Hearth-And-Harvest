@@ -1,0 +1,834 @@
+package alabaster.hearthandharvest.data;
+
+import alabaster.hearthandharvest.common.tag.HHVanillaTags;
+import alabaster.hearthandharvest.HearthAndHarvest;
+import alabaster.hearthandharvest.common.registry.HHModItems;
+import alabaster.hearthandharvest.common.tag.HHCommonTags;
+import alabaster.hearthandharvest.common.tag.HHCompatibilityTags;
+import alabaster.hearthandharvest.common.tag.HHModTags;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
+import vectorwing.farmersdelight.common.registry.ModItems;
+import vectorwing.farmersdelight.common.tag.CompatibilityTags;
+import vectorwing.farmersdelight.common.tag.ModTags;
+
+import javax.annotation.Nullable;
+import java.util.concurrent.CompletableFuture;
+
+public class HHItemTags extends ItemTagsProvider {
+
+    public HHItemTags(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, CompletableFuture<TagsProvider.TagLookup<Block>> blockTagProvider, @Nullable ExistingFileHelper existingFileHelper) {
+        super(output, provider, blockTagProvider, HearthAndHarvest.MODID, existingFileHelper);
+    }
+
+    @Override
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
+        this.registerToolTags();
+        this.registerBuildingTags();
+        this.registerStorageTags();
+        this.registerFarmingTags();
+        this.registerAnimalTags();
+        this.registerDrinkTags();
+        this.registerFoodTags();
+        this.registerCompatibilityTags();
+        this.registerVanillaFallbackTags();
+    }
+
+    // Tools & enchantability
+    private void registerToolTags() {
+
+        tag(HHModTags.CLEAVERS)
+                .add(HHModItems.FLINT_CLEAVER.get())
+                .add(HHModItems.IRON_CLEAVER.get())
+                .add(HHModItems.DIAMOND_CLEAVER.get())
+                .add(HHModItems.GOLDEN_CLEAVER.get())
+                .add(HHModItems.NETHERITE_CLEAVER.get());
+
+        tag(HHCompatibilityTags.FARMERS_DELIGHT_ITEM_KNIVES)
+                .addTag(HHModTags.CLEAVERS);
+
+        tag(HHCommonTags.TOOLS_KNIVES)
+                .addTag(HHModTags.CLEAVERS);
+
+        tag(HHCommonTags.TOOLS)
+                .add(HHModItems.PITCHFORK.get())
+                .add(HHModItems.WATERING_CAN.get())
+                .add(HHModItems.SEED_POUCH.get())
+                .addTag(HHModTags.CLEAVERS);
+
+        tag(ItemTags.PIGLIN_LOVED)
+                .add(HHModItems.GOLDEN_CLEAVER.get());
+
+    }
+
+    // Building blocks & furniture
+    private void registerBuildingTags() {
+
+        tag(HHModTags.BOTTLE_RACK_ITEMS)
+                .add(HHModItems.OAK_BOTTLE_RACK.get())
+                .add(HHModItems.BIRCH_BOTTLE_RACK.get())
+                .add(HHModItems.SPRUCE_BOTTLE_RACK.get())
+                .add(HHModItems.JUNGLE_BOTTLE_RACK.get())
+                .add(HHModItems.ACACIA_BOTTLE_RACK.get())
+                .add(HHModItems.DARK_OAK_BOTTLE_RACK.get())
+                .add(HHModItems.MANGROVE_BOTTLE_RACK.get())
+                .add(HHModItems.CHERRY_BOTTLE_RACK.get())
+                .add(HHModItems.BAMBOO_BOTTLE_RACK.get())
+                .add(HHModItems.CRIMSON_BOTTLE_RACK.get())
+                .add(HHModItems.WARPED_BOTTLE_RACK.get())
+                .addOptional(new ResourceLocation("hearthandharvest", "palm_bottle_rack"));
+
+        tag(HHModTags.TRELLIS_ITEMS)
+                .add(HHModItems.TRELLIS.get())
+                .add(HHModItems.BAMBOO_TRELLIS.get())
+                .add(HHModItems.STRIPPED_BAMBOO_TRELLIS.get());
+
+        tag(ItemTags.STAIRS)
+                .add(HHModItems.SALT_STAIRS.get())
+                .add(HHModItems.POLISHED_SALT_STAIRS.get())
+                .add(HHModItems.MANURE_BRICK_STAIRS.get())
+                .add(HHModItems.POLISHED_MANURE_STAIRS.get());
+
+        tag(ItemTags.SLABS)
+                .add(HHModItems.SALT_SLAB.get())
+                .add(HHModItems.POLISHED_SALT_SLAB.get())
+                .add(HHModItems.MANURE_BRICK_SLAB.get())
+                .add(HHModItems.POLISHED_MANURE_SLAB.get());
+
+        tag(ItemTags.WALLS)
+                .add(HHModItems.SALT_WALL.get())
+                .add(HHModItems.POLISHED_SALT_WALL.get())
+                .add(HHModItems.MANURE_BRICK_WALL.get())
+                .add(HHModItems.POLISHED_MANURE_WALL.get());
+
+        tag(HHCompatibilityTags.FARMERS_DELIGHT_ITEM_CABINETS_WOODEN)
+                .add(HHModItems.OAK_HALF_CABINET.get())
+                .add(HHModItems.SPRUCE_HALF_CABINET.get())
+                .add(HHModItems.BIRCH_HALF_CABINET.get())
+                .add(HHModItems.JUNGLE_HALF_CABINET.get())
+                .add(HHModItems.ACACIA_HALF_CABINET.get())
+                .add(HHModItems.DARK_OAK_HALF_CABINET.get())
+                .add(HHModItems.MANGROVE_HALF_CABINET.get())
+                .add(HHModItems.CHERRY_HALF_CABINET.get())
+                .add(HHModItems.BAMBOO_HALF_CABINET.get())
+                .add(HHModItems.CRIMSON_HALF_CABINET.get())
+                .add(HHModItems.WARPED_HALF_CABINET.get())
+                .addOptional(new ResourceLocation("hearthandharvest", "palm_half_cabinet"));
+
+    }
+
+    // Crates, bags & storage blocks
+    private void registerStorageTags() {
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM)
+                .add(HHModItems.ROTTEN_TOMATO_CRATE.get())
+                .add(HHModItems.RASPBERRY_CRATE.get())
+                .add(HHModItems.BLUEBERRY_CRATE.get())
+                .add(HHModItems.RED_GRAPE_CRATE.get())
+                .add(HHModItems.GREEN_GRAPE_CRATE.get())
+                .add(HHModItems.CHERRY_CRATE.get())
+                .add(HHModItems.PEANUT_CRATE.get())
+                .add(HHModItems.CORN_CRATE.get())
+                .add(HHModItems.APPLE_CRATE.get())
+                .add(HHModItems.GOLDEN_APPLE_CRATE.get())
+                .add(HHModItems.GOLDEN_CARROT_CRATE.get())
+                .add(HHModItems.GLISTERING_MELON_CRATE.get())
+                .add(HHModItems.POISONOUS_POTATO_CRATE.get())
+                .add(HHModItems.GLOW_BERRY_CRATE.get())
+                .add(HHModItems.SWEET_BERRY_CRATE.get())
+                .add(HHModItems.BROWN_MUSHROOM_CRATE.get())
+                .add(HHModItems.RED_MUSHROOM_CRATE.get())
+                .add(HHModItems.WARPED_FUNGUS_CRATE.get())
+                .add(HHModItems.CRIMSON_FUNGUS_CRATE.get())
+                .add(HHModItems.GUNPOWDER_BAG.get())
+                .add(HHModItems.FLOUR_BAG.get())
+                .add(HHModItems.MANURE_BAG.get())
+                .add(HHModItems.FEATHER_BAG.get())
+                .add(HHModItems.SALT_BAG.get())
+                .add(HHModItems.SUGAR_BAG.get())
+                .add(HHModItems.COCOA_BEAN_BAG.get())
+                .add(HHModItems.COTTON_BALE.get())
+                .add(HHModItems.SPOOL.get())
+                .add(HHModItems.ROPE_COIL.get())
+                .add(HHModItems.CORN_HUSK_BUNDLE.get())
+                .add(HHModItems.CORN_KERNEL_BAG.get())
+                .add(HHModItems.HOPS_BAG.get())
+                .add(HHModItems.CHARCOAL_BLOCK.get())
+                .add(HHModItems.STICK_BRUSH.get())
+                .add(HHModItems.SUGAR_CANE_BUNDLE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_SALT)
+                .add(HHModItems.SALT_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CORN_KERNEL)
+                .add(HHModItems.CORN_KERNEL_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_HOPS)
+                .add(HHModItems.HOPS_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CORN_HUSK)
+                .add(HHModItems.CORN_HUSK_BUNDLE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_ROPE)
+                .add(HHModItems.ROPE_COIL.get());
+
+        tag(HHModTags.CRATEABLE_ITEMS)
+                .add(Items.EGG)
+                .add(Items.TURTLE_EGG);
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_APPLE)
+                .add(HHModItems.APPLE_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_GOLDEN_APPLE)
+                .add(HHModItems.GOLDEN_APPLE_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_GOLDEN_CARROT)
+                .add(HHModItems.GOLDEN_CARROT_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_GLISTERING_MELON)
+                .add(HHModItems.GLISTERING_MELON_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_POISONOUS_POTATO)
+                .add(HHModItems.POISONOUS_POTATO_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_ROTTEN_TOMATO)
+                .add(HHModItems.ROTTEN_TOMATO_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_GLOW_BERRY)
+                .add(HHModItems.GLOW_BERRY_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_SWEET_BERRY)
+                .add(HHModItems.SWEET_BERRY_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_SUGAR)
+                .add(HHModItems.SUGAR_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_COCOA_BEAN)
+                .add(HHModItems.COCOA_BEAN_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_GUNPOWDER)
+                .add(HHModItems.GUNPOWDER_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_FLOUR)
+                .add(HHModItems.FLOUR_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_MANURE)
+                .add(HHModItems.MANURE_BAG.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_STRING)
+                .add(HHModItems.SPOOL.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_BROWN_MUSHROOM)
+                .add(HHModItems.BROWN_MUSHROOM_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_RED_MUSHROOM)
+                .add(HHModItems.RED_MUSHROOM_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CRIMSON_FUNGUS)
+                .add(HHModItems.CRIMSON_FUNGUS_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_WARPED_FUNGUS)
+                .add(HHModItems.WARPED_FUNGUS_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_BLUEBERRY)
+                .add(HHModItems.BLUEBERRY_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_RASPBERRY)
+                .add(HHModItems.RASPBERRY_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_GRAPE)
+                .add(HHModItems.GREEN_GRAPE_CRATE.get())
+                .add(HHModItems.RED_GRAPE_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CHERRY)
+                .add(HHModItems.CHERRY_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_PEANUT)
+                .add(HHModItems.PEANUT_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_COTTON)
+                .add(HHModItems.COTTON_BALE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CORN)
+                .add(HHModItems.CORN_CRATE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_CHARCOAL)
+                .add(HHModItems.CHARCOAL_BLOCK.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_STICK)
+                .add(HHModItems.STICK_BRUSH.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_SUGAR_CANE)
+                .add(HHModItems.SUGAR_CANE_BUNDLE.get());
+
+        tag(HHCommonTags.STORAGE_BLOCKS_ITEM_FEATHER)
+                .add(HHModItems.FEATHER_BAG.get());
+
+    }
+
+    // Crops, seeds & farming inputs
+    private void registerFarmingTags() {
+
+        tag(HHCommonTags.SEEDS_COTTON)
+                .add(HHModItems.COTTON_SEEDS.get());
+
+        tag(HHCompatibilityTags.FARMERS_DELIGHT_ITEM_WILD_CROPS)
+                .add(HHModItems.WILD_COTTON.get())
+                .add(HHModItems.WILD_PEANUTS.get())
+                .add(HHModItems.WILD_GREEN_GRAPES.get())
+                .add(HHModItems.WILD_RED_GRAPES.get())
+                .add(HHModItems.WILD_HOPS.get());
+
+        tag(HHCommonTags.FIBERS)
+                .add(HHModItems.CORN_HUSK.get());
+
+        tag(HHCommonTags.SEEDS)
+                .add(HHModItems.COTTON_SEEDS.get())
+                .add(HHModItems.SUNFLOWER_SEEDS.get())
+                .add(HHModItems.CORN_KERNELS.get())
+                .addOptional(new ResourceLocation("hearthandharvest", "blueberry_pips"))
+                .addOptional(new ResourceLocation("hearthandharvest", "raspberry_pips"));
+
+        tag(HHCommonTags.SEEDS_BLUEBERRY)
+                .addOptional(new ResourceLocation("hearthandharvest","blueberry_pips"));
+
+        tag(HHCommonTags.SEEDS_RASPBERRY)
+                .addOptional(new ResourceLocation("hearthandharvest","raspberry_pips"));
+
+        tag(HHCommonTags.MANURE)
+                .add(HHModItems.MANURE.get());
+
+        tag(HHCommonTags.BRICKS)
+                .add(HHModItems.MANURE_BRICK.get());
+
+        tag(HHModTags.BONEMEAL_SUBSTITUTES)
+                .add(Items.BONE_MEAL)
+                .add(HHModItems.MANURE.get());
+
+        tag(HHCommonTags.DUSTS_SALT)
+                .add(HHModItems.SALT.get());
+
+        tag(HHCommonTags.FLOURS)
+                .add(HHModItems.FLOUR.get())
+                .add(HHModItems.CORN_MEAL.get());
+
+        tag(HHCommonTags.FLOURS_WHEAT)
+                .add(HHModItems.FLOUR.get());
+
+        tag(HHCommonTags.FLOURS_CORN)
+                .add(HHModItems.CORN_MEAL.get());
+
+        tag(ItemTags.VILLAGER_PLANTABLE_SEEDS)
+                .add(HHModItems.COTTON_SEEDS.get())
+                .add(HHModItems.SUNFLOWER_SEEDS.get())
+                .add(HHModItems.CORN_KERNELS.get())
+                .add(HHModItems.PEANUT.get())
+                .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.RED_GRAPES.get());
+
+        tag(HHCommonTags.CROPS)
+                .add(HHModItems.BLUEBERRIES.get())
+                .add(HHModItems.CHERRY.get())
+                .add(HHModItems.RASPBERRY.get())
+                .add(HHModItems.RED_GRAPES.get())
+                .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.HOPS.get())
+                .add(HHModItems.PEANUT.get())
+                .add(HHModItems.COTTON.get())
+                .add(HHModItems.CORN.get());
+
+        tag(HHModTags.CORN_THINNING_TOOLS)
+                .add(HHModItems.PITCHFORK.get());
+
+        tag(HHModTags.TRELLIS_PLANTABLE)
+                .add(Items.ROSE_BUSH)
+                .add(Items.VINE)
+                .add(HHModItems.RED_GRAPES.get())
+                .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.HOPS.get());
+
+        tag(ItemTags.SMALL_FLOWERS)
+                .add(HHModItems.WILD_PEANUTS.get())
+                .add(HHModItems.WILD_COTTON.get())
+                .add(HHModItems.WILD_GREEN_GRAPES.get())
+                .add(HHModItems.WILD_RED_GRAPES.get())
+                .add(HHModItems.WILD_HOPS.get())
+                .add(HHModItems.YELLOW_MUM.get())
+                .add(HHModItems.ORANGE_MUM.get())
+                .add(HHModItems.RED_MUM.get())
+                .add(HHModItems.BLUE_MUM.get())
+                .add(HHModItems.LIGHT_BLUE_MUM.get())
+                .add(HHModItems.PURPLE_MUM.get())
+                .add(HHModItems.PINK_MUM.get())
+                .add(HHModItems.WHITE_MUM.get());
+
+        tag(HHCommonTags.FRUITS_BLUEBERRY)
+                .add(HHModItems.BLUEBERRIES.get());
+
+        tag(HHCommonTags.FRUITS_RASPBERRY)
+                .add(HHModItems.RASPBERRY.get());
+
+        tag(HHCommonTags.FRUITS_GRAPE)
+                .add(HHModItems.RED_GRAPES.get())
+                .add(HHModItems.GREEN_GRAPES.get());
+
+        tag(HHCommonTags.FRUITS_CHERRY)
+                .add(HHModItems.CHERRY.get());
+
+        tag(HHCommonTags.VEGETABLES_CORN)
+                .add(HHModItems.CORN.get());
+
+        tag(HHCommonTags.CROPS_PEANUT)
+                .add(HHModItems.PEANUT.get());
+
+        tag(HHCommonTags.CROPS_HOPS)
+                .add(HHModItems.HOPS.get());
+
+        tag(HHCommonTags.FOODS_LEAFY_GREEN)
+                .add(HHModItems.HOPS.get());
+
+        tag(HHCommonTags.CROPS_COTTON)
+                .add(HHModItems.COTTON.get());
+
+        tag(HHCommonTags.CROPS_CORN)
+                .add(HHModItems.CORN.get());
+
+        tag(HHCommonTags.CROPS_GRAIN)
+                .add(HHModItems.CORN.get());
+
+        tag(HHCommonTags.SEEDS_CORN)
+                .add(HHModItems.CORN_KERNELS.get());
+
+    }
+
+    // Animal foods, tempt items & crows
+    private void registerAnimalTags() {
+
+        tag(HHVanillaTags.HORSE_TEMPT_ITEMS)
+                .add(HHModItems.SUGAR_CUBES.get())
+                .add(HHModItems.UNIVERSAL_FEED.get());
+
+        tag(HHVanillaTags.LLAMA_TEMPT_ITEMS)
+                .add(HHModItems.UNIVERSAL_FEED.get());
+
+        tag(HHCommonTags.ANIMAL_FOODS)
+                .add(HHModItems.UNIVERSAL_FEED.get())
+                .add(HHModItems.CORN.get())
+                .add(HHModItems.CORN_KERNELS.get());
+
+        tag(HHVanillaTags.COW_FOOD)
+                .add(HHModItems.CORN.get())
+                .add(HHModItems.HOPS.get());
+
+        tag(HHVanillaTags.GOAT_FOOD)
+                .add(HHModItems.CORN.get())
+                .add(HHModItems.HOPS.get());
+
+        tag(HHVanillaTags.HORSE_FOOD)
+                .add(HHModItems.CORN.get())
+                .add(HHModItems.HOPS.get());
+
+        tag(HHVanillaTags.LLAMA_FOOD)
+                .add(HHModItems.CORN.get());
+
+        tag(HHVanillaTags.SHEEP_FOOD)
+                .add(HHModItems.CORN.get());
+
+        tag(HHVanillaTags.PIG_FOOD)
+                .add(HHModItems.CORN.get());
+
+        tag(HHVanillaTags.CHICKEN_FOOD)
+                .add(HHModItems.CORN_KERNELS.get());
+
+        tag(HHVanillaTags.PARROT_FOOD)
+                .add(HHModItems.CORN_KERNELS.get());
+
+        tag(HHVanillaTags.FOX_FOOD)
+                .add(HHModItems.BLUEBERRIES.get())
+                .add(HHModItems.RASPBERRY.get());
+
+        tag(HHModTags.CROW_FOOD)
+                .add(HHModItems.CORN_KERNELS.get());
+
+        tag(HHModTags.CROW_TEMPT_ITEMS)
+                .add(HHModItems.CORN_KERNELS.get());
+
+        tag(HHModTags.CROW_SHINY_ITEMS)
+                .add(Items.ENCHANTED_BOOK)
+                .add(Items.GLOWSTONE)
+                .add(Items.GLOWSTONE_DUST)
+                .add(Items.ENDER_PEARL)
+                .add(Items.ENDER_EYE)
+                .addOptionalTag(HHCommonTags.GEMS.location())
+                .addOptionalTag(HHCommonTags.INGOTS.location())
+                .addOptionalTag(HHCommonTags.NUGGETS.location())
+                .addOptionalTag(HHCommonTags.ORES.location())
+                .addOptionalTag(HHCommonTags.ARMORS.location())
+                .addTag(HHCommonTags.TOOLS);
+
+    }
+
+    // Bottles & drinks
+    private void registerDrinkTags() {
+
+        tag(HHModTags.SHORT_BOTTLES)
+                .add(Items.GLASS_BOTTLE)
+                .add(Items.POTION)
+                .add(Items.SPLASH_POTION)
+                .add(Items.LINGERING_POTION)
+                .add(Items.DRAGON_BREATH)
+                .add(Items.EXPERIENCE_BOTTLE)
+                .add(ModItems.MILK_BOTTLE.get())
+                .add(Items.HONEY_BOTTLE)
+                .add(HHModItems.COOKING_OIL.get())
+                .add(HHModItems.SYRUP_BOTTLE.get())
+                .add(HHModItems.CHOCOLATE_MILK_BOTTLE.get())
+                .add(HHModItems.GOAT_MILK_BOTTLE.get())
+                .add(HHModItems.BRINE_BOTTLE.get());
+
+        tag(HHModTags.TALL_BOTTLES)
+                .add(HHModItems.BLUEBERRY_WINE.get())
+                .add(HHModItems.CHERRY_WINE.get())
+                .add(HHModItems.GREEN_GRAPE_WINE.get())
+                .add(HHModItems.MEAD.get())
+                .add(HHModItems.ROOT_BEER.get())
+                .add(HHModItems.BEER.get())
+                .add(HHModItems.HARD_CIDER.get())
+                .add(HHModItems.RASPBERRY_WINE.get())
+                .add(HHModItems.RED_GRAPE_WINE.get())
+                .add(HHModItems.SWEET_BERRY_WINE.get())
+                .add(HHModItems.GLOW_BERRY_WINE.get())
+                .add(HHModItems.MELON_WINE.get());
+
+        tag(HHModTags.BOTTLES)
+                .addTags(HHModTags.SHORT_BOTTLES)
+                .addTags(HHModTags.TALL_BOTTLES);
+
+        tag(HHCommonTags.DRINKS_MILK)
+                .add(HHModItems.GOAT_MILK_BOTTLE.get());
+
+        tag(HHCommonTags.DRINKS)
+                .add(HHModItems.CHOCOLATE_MILK_BOTTLE.get())
+                .addTags(HHCommonTags.DRINKS_ALCOHOL);
+
+        tag(HHCommonTags.DRINKS_JUICE)
+                .add(ModItems.MELON_JUICE.get())
+                .add(HHModItems.BLUEBERRY_JUICE.get())
+                .add(HHModItems.RASPBERRY_JUICE.get())
+                .add(HHModItems.GREEN_GRAPE_JUICE.get())
+                .add(HHModItems.RED_GRAPE_JUICE.get())
+                .add(HHModItems.CHERRY_JUICE.get())
+                .add(HHModItems.GLOW_BERRY_JUICE.get())
+                .add(HHModItems.SWEET_BERRY_JUICE.get());
+
+        tag(HHCommonTags.DRINKS_ALCOHOL)
+                .add(HHModItems.BLUEBERRY_WINE.get())
+                .add(HHModItems.RASPBERRY_WINE.get())
+                .add(HHModItems.GREEN_GRAPE_WINE.get())
+                .add(HHModItems.RED_GRAPE_WINE.get())
+                .add(HHModItems.CHERRY_WINE.get())
+                .add(HHModItems.SWEET_BERRY_WINE.get())
+                .add(HHModItems.GLOW_BERRY_WINE.get())
+                .add(HHModItems.MELON_WINE.get())
+                .add(HHModItems.MEAD.get())
+                .add(HHModItems.ROOT_BEER.get())
+                .add(HHModItems.BEER.get())
+                .add(HHModItems.HARD_CIDER.get())
+                .add(HHModItems.MOONSHINE.get());
+
+    }
+
+    // Foods, jams & cheese
+    private void registerFoodTags() {
+
+        tag(HHCommonTags.BUTTER)
+                .add(HHModItems.BUTTER.get());
+
+        tag(HHCommonTags.FOODS_CARAMEL)
+                .add(HHModItems.CARAMEL.get());
+
+        tag(HHCommonTags.FOODS_COTTON_CANDY)
+                .add(HHModItems.COTTON_CANDY.get());
+
+        tag(HHCommonTags.FOODS_CHOCOLATE)
+                .add(HHModItems.CHOCOLATE_BAR.get());
+
+        tag(HHCommonTags.FOODS_RAISIN)
+                .add(HHModItems.RAISINS.get());
+
+        tag(HHCommonTags.FOODS_POPCORN)
+                .add(HHModItems.POPCORN.get());
+
+        tag(HHCommonTags.FOODS_COOKIE)
+                .add(HHModItems.MAPLE_COOKIE.get())
+                .add(HHModItems.RAISIN_COOKIE.get())
+                .add(HHModItems.PEANUT_BUTTER_COOKIE.get());
+
+        tag(HHCommonTags.FOODS_BREAD)
+                .add(HHModItems.CORN_BREAD.get())
+                .add(HHModItems.TORTILLA.get());
+
+        tag(HHCommonTags.FOODS_FOOD_POISONING)
+                .add(HHModItems.CHARRED_MARSHMALLOW_STICK.get());
+
+        tag(HHCommonTags.FOODS_NUT)
+                .add(HHModItems.PEANUT.get());
+
+        tag(HHCommonTags.FOODS_RAW_MEAT)
+                .add(HHModItems.RAW_SAUSAGE.get())
+                .add(HHModItems.RAW_SKEWERED_SAUSAGE.get());
+
+        tag(HHCommonTags.FOODS_COOKED_MEAT)
+                .add(HHModItems.COOKED_SAUSAGE.get())
+                .add(HHModItems.SKEWERED_SAUSAGE.get())
+                .add(HHModItems.JERKY.get());
+
+        tag(HHVanillaTags.MEAT)
+                .add(HHModItems.RAW_SAUSAGE.get())
+                .add(HHModItems.RAW_SKEWERED_SAUSAGE.get())
+                .add(HHModItems.COOKED_SAUSAGE.get())
+                .add(HHModItems.SKEWERED_SAUSAGE.get())
+                .add(HHModItems.JERKY.get());
+
+        tag(HHCommonTags.BUCKETS)
+                .add(HHModItems.SAP_BUCKET.get())
+                .add(HHModItems.BRINE_BUCKET.get());
+
+        tag(HHCommonTags.BUCKETS_SAP)
+                .add(HHModItems.SAP_BUCKET.get());
+
+        tag(HHCompatibilityTags.FARMERS_DELIGHT_ITEM_PIES)
+                .add(HHModItems.BLUEBERRY_PIE.get())
+                .add(HHModItems.CHERRY_PIE.get())
+                .add(HHModItems.RASPBERRY_PIE.get())
+                .add(HHModItems.GRAPE_PIE.get())
+                .add(HHModItems.PEANUT_BUTTER_PIE.get())
+                .add(HHModItems.CHICKEN_POT_PIE.get());
+
+        tag(HHModTags.JAMS)
+                .add(HHModItems.GRAPE_JAM.get())
+                .add(HHModItems.CHERRY_JAM.get())
+                .add(HHModItems.RASPBERRY_JAM.get())
+                .add(HHModItems.BLUEBERRY_JAM.get())
+                .add(HHModItems.APPLE_JAM.get())
+                .add(HHModItems.GLOW_BERRY_JAM.get())
+                .add(HHModItems.SWEET_BERRY_JAM.get())
+                .add(HHModItems.MELON_JAM.get());
+
+        tag(HHModTags.CHEESE_SLICES)
+                .add(HHModItems.CHEESE_SLICE.get())
+                .add(HHModItems.GOAT_CHEESE_SLICE.get());
+
+        tag(HHCommonTags.FOODS_CHEESE)
+                .add(HHModItems.CHEESE_SLICE.get())
+                .add(HHModItems.GOAT_CHEESE_SLICE.get());
+
+        tag(HHCommonTags.FOODS_BERRY)
+                .add(HHModItems.BLUEBERRIES.get())
+                .add(HHModItems.CHERRY.get())
+                .add(HHModItems.RASPBERRY.get())
+                .add(HHModItems.RED_GRAPES.get())
+                .add(HHModItems.GREEN_GRAPES.get());
+
+        tag(HHCommonTags.FOODS_FRUIT)
+                .add(HHModItems.BLUEBERRIES.get())
+                .add(HHModItems.RASPBERRY.get())
+                .add(HHModItems.CHERRY.get())
+                .add(HHModItems.RED_GRAPES.get())
+                .add(HHModItems.GREEN_GRAPES.get());
+
+        tag(HHCommonTags.FEATHERS)
+                .add(HHModItems.CROW_FEATHER.get());
+
+        tag(HHCommonTags.FOODS_SOUP)
+                .add(HHModItems.CORN_STEW.get());
+
+        tag(HHCommonTags.FOODS_EDIBLE_WHEN_PLACED)
+                .add(HHModItems.WAFFLE.get())
+                .add(HHModItems.PANCAKE.get())
+                .add(HHModItems.BLUEBERRY_PIE.get())
+                .add(HHModItems.CHERRY_PIE.get())
+                .add(HHModItems.RASPBERRY_PIE.get())
+                .add(HHModItems.GRAPE_PIE.get())
+                .add(HHModItems.PEANUT_BUTTER_PIE.get())
+                .add(HHModItems.CHICKEN_POT_PIE.get())
+                .add(HHModItems.CARROT_CAKE.get())
+                .add(HHModItems.CHOCOLATE_CAKE.get())
+                .add(HHModItems.PIZZA.get())
+                .add(HHModItems.MEAT_PIZZA.get())
+                .add(HHModItems.VEGGIE_PIZZA.get())
+                .add(HHModItems.CHEESE_PIZZA.get());
+
+        tag(HHCommonTags.FOODS_PIE)
+                .add(HHModItems.BLUEBERRY_PIE.get())
+                .add(HHModItems.CHERRY_PIE.get())
+                .add(HHModItems.RASPBERRY_PIE.get())
+                .add(HHModItems.GRAPE_PIE.get())
+                .add(HHModItems.PEANUT_BUTTER_PIE.get())
+                .add(HHModItems.CHICKEN_POT_PIE.get());
+
+        tag(HHCommonTags.FOODS)
+                .add(HHModItems.BLUEBERRIES.get())
+                .add(HHModItems.CHERRY.get())
+                .add(HHModItems.RASPBERRY.get())
+                .add(HHModItems.RED_GRAPES.get())
+                .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.PEANUT.get())
+                .add(HHModItems.CORN.get())
+                .add(HHModItems.BLUEBERRY_JAM.get())
+                .add(HHModItems.CHERRY_JAM.get())
+                .add(HHModItems.GRAPE_JAM.get())
+                .add(HHModItems.APPLE_JAM.get())
+                .add(HHModItems.SWEET_BERRY_JAM.get())
+                .add(HHModItems.GLOW_BERRY_JAM.get())
+                .add(HHModItems.MELON_JAM.get())
+                .add(HHModItems.PEANUT_BUTTER.get())
+                .add(HHModItems.PICKLED_BEETROOTS.get())
+                .add(HHModItems.PICKLED_CABBAGE.get())
+                .add(HHModItems.PICKLED_CARROTS.get())
+                .add(HHModItems.PICKLED_ONIONS.get())
+                .add(HHModItems.PICKLED_POTATOES.get())
+                .add(HHModItems.CARAMEL.get())
+                .add(HHModItems.CARAMEL_APPLE.get())
+                .add(HHModItems.CHOCOLATE_BAR.get())
+                .add(HHModItems.COTTON_CANDY.get())
+                .add(HHModItems.BLUEBERRY_MUFFIN.get())
+                .add(HHModItems.PEANUT_BUTTER_COOKIE.get())
+                .add(HHModItems.TRAIL_MIX.get())
+                .add(HHModItems.ROASTED_PEANUTS.get())
+                .add(HHModItems.MARSHMALLOW_STICK.get())
+                .add(HHModItems.ROASTED_MARSHMALLOW_STICK.get())
+                .add(HHModItems.CHARRED_MARSHMALLOW_STICK.get())
+                .add(HHModItems.SMORE.get())
+                .add(HHModItems.BLUEBERRY_PIE.get())
+                .add(HHModItems.BLUEBERRY_PIE_SLICE.get())
+                .add(HHModItems.CHERRY_PIE.get())
+                .add(HHModItems.CHERRY_PIE_SLICE.get())
+                .add(HHModItems.RASPBERRY_PIE.get())
+                .add(HHModItems.RASPBERRY_PIE_SLICE.get())
+                .add(HHModItems.GRAPE_PIE.get())
+                .add(HHModItems.GRAPE_PIE_SLICE.get())
+                .add(HHModItems.PEANUT_BUTTER_PIE.get())
+                .add(HHModItems.PEANUT_BUTTER_PIE_SLICE.get())
+                .add(HHModItems.CHICKEN_POT_PIE.get())
+                .add(HHModItems.CHICKEN_POT_PIE_SLICE.get())
+                .add(HHModItems.CARROT_CAKE.get())
+                .add(HHModItems.CARROT_CAKE_SLICE.get())
+                .add(HHModItems.CHOCOLATE_CAKE.get())
+                .add(HHModItems.CHOCOLATE_CAKE_SLICE.get())
+                .add(HHModItems.PIZZA.get())
+                .add(HHModItems.PIZZA_SLICE.get())
+                .add(HHModItems.MEAT_PIZZA.get())
+                .add(HHModItems.MEAT_PIZZA_SLICE.get())
+                .add(HHModItems.VEGGIE_PIZZA.get())
+                .add(HHModItems.VEGGIE_PIZZA_SLICE.get())
+                .add(HHModItems.CHEESE_PIZZA.get())
+                .add(HHModItems.CHEESE_PIZZA_SLICE.get())
+                .add(HHModItems.CHEESE_SLICE.get())
+                .add(HHModItems.GOAT_CHEESE_SLICE.get())
+                .add(HHModItems.RAW_SAUSAGE.get())
+                .add(HHModItems.COOKED_SAUSAGE.get())
+                .add(HHModItems.RAW_SKEWERED_SAUSAGE.get())
+                .add(HHModItems.SKEWERED_SAUSAGE.get())
+                .add(HHModItems.HOT_DOG.get())
+                .add(HHModItems.JERKY.get())
+                .add(HHModItems.RAISINS.get())
+                .add(HHModItems.SUNFLOWER_SEEDS.get())
+                .add(HHModItems.POPCORN.get())
+                .add(HHModItems.UNCOOKED_CORN_ON_THE_COB.get())
+                .add(HHModItems.COOKED_CORN_ON_THE_COB.get())
+                .add(HHModItems.TORTILLA.get())
+                .add(HHModItems.TACO.get())
+                .add(HHModItems.CIDER_DONUT.get())
+                .add(HHModItems.CANDY_CORN.get())
+                .add(HHModItems.CORN_BREAD.get())
+                .add(HHModItems.CORN_STEW.get())
+                .add(HHModItems.TAMALE.get())
+                .add(HHModItems.STREET_CORN.get())
+                .add(HHModItems.MACARONI_AND_CHEESE.get())
+                .add(HHModItems.MASHED_POTATOES.get())
+                .add(HHModItems.PEANUT_BUTTER_AND_JELLY_SANDWICH.get())
+                .add(HHModItems.WAFFLE.get())
+                .add(HHModItems.PANCAKE.get())
+                .add(HHModItems.BISCUITS_AND_GRAVY.get())
+                .add(HHModItems.GLAZED_CARROTS.get())
+                .add(HHModItems.RASPBERRY_SCONE.get())
+                .add(HHModItems.MAPLE_COOKIE.get())
+                .add(HHModItems.BAKED_APPLE.get());
+
+    }
+
+    // Cross-mod compatibility
+    private void registerCompatibilityTags() {
+
+        tag(HHCompatibilityTags.SUPPLEMENTARIES_JAR_COOKIES)
+                .add(HHModItems.CARAMEL_APPLE.get())
+                .add(HHModItems.CIDER_DONUT.get())
+                .add(HHModItems.CANDY_CORN.get());
+
+        tag(HHCompatibilityTags.CREATE_UPRIGHT_ON_BELT)
+                .add(HHModItems.SYRUP_BOTTLE.get())
+                .add(HHModItems.CORN_STEW.get())
+                .add(HHModItems.MACARONI_AND_CHEESE.get())
+                .add(HHModItems.MASHED_POTATOES.get())
+                .add(HHModItems.BISCUITS_AND_GRAVY.get())
+                .add(HHModItems.GLAZED_CARROTS.get())
+                .addTags(
+                        HHModTags.BOTTLES,
+                        HHModTags.JAMS,
+                        HHCommonTags.DRINKS_JUICE,
+                        HHCommonTags.DRINKS_ALCOHOL
+                );
+
+        tag(CompatibilityTags.SERENE_SEASONS_SPRING_CROPS)
+                .add(HHModItems.BLUEBERRIES.get())
+                .add(HHModItems.RASPBERRY.get())
+                .add(HHModItems.PEANUT.get());
+
+        tag(CompatibilityTags.SERENE_SEASONS_SUMMER_CROPS)
+                .add(HHModItems.BLUEBERRIES.get())
+                .add(HHModItems.RASPBERRY.get())
+                .add(HHModItems.RED_GRAPES.get())
+                .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.HOPS.get())
+                .add(HHModItems.COTTON_SEEDS.get())
+                .add(HHModItems.PEANUT.get())
+                .add(HHModItems.CORN_KERNELS.get());
+
+        tag(CompatibilityTags.SERENE_SEASONS_AUTUMN_CROPS)
+                .add(HHModItems.RED_GRAPES.get())
+                .add(HHModItems.GREEN_GRAPES.get())
+                .add(HHModItems.HOPS.get())
+                .add(HHModItems.COTTON_SEEDS.get())
+                .add(HHModItems.CORN_KERNELS.get());
+
+    }
+
+    private void registerVanillaFallbackTags() {
+        tag(HHVanillaTags.MEAT).add(Items.BEEF, Items.CHICKEN, Items.COOKED_BEEF, Items.COOKED_CHICKEN, Items.COOKED_MUTTON,
+                Items.COOKED_PORKCHOP, Items.COOKED_RABBIT, Items.MUTTON, Items.PORKCHOP, Items.RABBIT, Items.ROTTEN_FLESH);
+        tag(HHVanillaTags.CHICKEN_FOOD).add(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS,
+                Items.TORCHFLOWER_SEEDS, Items.PITCHER_POD);
+        tag(HHVanillaTags.COW_FOOD).add(Items.WHEAT);
+        tag(HHVanillaTags.GOAT_FOOD).add(Items.WHEAT);
+        tag(HHVanillaTags.SHEEP_FOOD).add(Items.WHEAT);
+        tag(HHVanillaTags.PIG_FOOD).add(Items.CARROT, Items.POTATO, Items.BEETROOT);
+        tag(HHVanillaTags.WOLF_FOOD)
+                .add(Items.COD, Items.COOKED_COD, Items.SALMON,
+                Items.COOKED_SALMON, Items.TROPICAL_FISH, Items.PUFFERFISH, Items.RABBIT_STEW)
+                .addTag(HHVanillaTags.MEAT);
+        tag(HHVanillaTags.CAT_FOOD).add(Items.COD, Items.SALMON);
+        tag(HHVanillaTags.HORSE_FOOD).add(Items.WHEAT, Items.SUGAR, Items.HAY_BLOCK, Items.APPLE, Items.GOLDEN_CARROT,
+                Items.GOLDEN_APPLE, Items.ENCHANTED_GOLDEN_APPLE);
+        tag(HHVanillaTags.CAMEL_FOOD).add(Items.CACTUS);
+        tag(HHVanillaTags.PARROT_POISONOUS_FOOD).add(Items.COOKIE);
+    }
+}

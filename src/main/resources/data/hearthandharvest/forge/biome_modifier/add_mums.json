@@ -1,0 +1,40 @@
+{
+  "type": "forge:add_features",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:forest",
+    "minecraft:flower_forest",
+    "minecraft:meadow"
+  ],
+  "features": [
+    "hearthandharvest:yellow_orange_mums_placed",
+    "hearthandharvest:yellow_red_mums_placed",
+    "hearthandharvest:yellow_blue_mums_placed",
+    "hearthandharvest:yellow_light_blue_mums_placed",
+    "hearthandharvest:yellow_purple_mums_placed",
+    "hearthandharvest:yellow_pink_mums_placed",
+    "hearthandharvest:yellow_white_mums_placed",
+    "hearthandharvest:orange_red_mums_placed",
+    "hearthandharvest:orange_blue_mums_placed",
+    "hearthandharvest:orange_light_blue_mums_placed",
+    "hearthandharvest:orange_purple_mums_placed",
+    "hearthandharvest:orange_pink_mums_placed",
+    "hearthandharvest:orange_white_mums_placed",
+    "hearthandharvest:red_blue_mums_placed",
+    "hearthandharvest:red_light_blue_mums_placed",
+    "hearthandharvest:red_purple_mums_placed",
+    "hearthandharvest:red_pink_mums_placed",
+    "hearthandharvest:red_white_mums_placed",
+    "hearthandharvest:blue_light_blue_mums_placed",
+    "hearthandharvest:blue_purple_mums_placed",
+    "hearthandharvest:blue_pink_mums_placed",
+    "hearthandharvest:blue_white_mums_placed",
+    "hearthandharvest:light_blue_purple_mums_placed",
+    "hearthandharvest:light_blue_pink_mums_placed",
+    "hearthandharvest:light_blue_white_mums_placed",
+    "hearthandharvest:purple_pink_mums_placed",
+    "hearthandharvest:purple_white_mums_placed",
+    "hearthandharvest:pink_white_mums_placed"
+  ],
+  "step": "vegetal_decoration"
+}

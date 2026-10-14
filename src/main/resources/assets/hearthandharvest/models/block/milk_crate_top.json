@@ -1,8 +1,0 @@
-{
-  "parent": "block/slab_top",
-  "textures": {
-    "bottom": "farmersdelight:block/crate_bottom",
-    "top": "hearthandharvest:block/milk_crate_top",
-    "side": "hearthandharvest:block/milk_crate_side"
-  }
-}

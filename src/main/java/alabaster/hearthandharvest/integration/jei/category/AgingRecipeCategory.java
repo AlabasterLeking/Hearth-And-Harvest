@@ -73,8 +73,8 @@ public class AgingRecipeCategory implements IRecipeCategory<CaskRecipe>
         return this.icon;
     }
 
-    @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, CaskRecipe recipe, IFocusGroup focusGroup) {
+    public void setRecipe(IRecipeLayoutBuilder builder, CaskRecipe holder, IFocusGroup focusGroup) {
+        CaskRecipe recipe = holder;
         NonNullList<Ingredient> recipeIngredients = recipe.getIngredients();
         ItemStack resultStack = RecipeUtils.getResultItem(recipe);
 
@@ -92,17 +92,16 @@ public class AgingRecipeCategory implements IRecipeCategory<CaskRecipe>
         builder.addSlot(RecipeIngredientRole.OUTPUT, 91, 12).addItemStack(resultStack);
     }
 
-    @Override
-    public void draw(CaskRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(CaskRecipe holder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         arrow.draw(guiGraphics, 51, 12);
         timeIcon.draw(guiGraphics, 54, 5);
-        if (recipe.getExperience() > 0) {
+        if (holder.getExperience() > 0) {
             expIcon.draw(guiGraphics, 53, 24);
         }
     }
 
-    @Override
-    public List<Component> getTooltipStrings(CaskRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public List<Component> getTooltipStrings(CaskRecipe holder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        CaskRecipe recipe = holder;
         if (ClientRenderUtils.isCursorInsideBounds(47, 4, 22, 28, mouseX, mouseY)) {
             List<Component> tooltipStrings = new ArrayList<>();
 

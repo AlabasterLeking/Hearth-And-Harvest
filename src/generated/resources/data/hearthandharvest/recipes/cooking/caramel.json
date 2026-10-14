@@ -10,10 +10,10 @@
       "item": "minecraft:sugar"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "forge:dusts/salt"
     }
   ],
-  "recipe_book_tab": "misc",
+  "recipe_book_tab": "meals",
   "result": {
     "item": "hearthandharvest:caramel"
   }

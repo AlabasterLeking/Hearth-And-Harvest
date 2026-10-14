@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "B": {
-      "item": "hearthandharvest:blueberries"
+      "tag": "forge:fruits/blueberry"
     },
     "S": {
       "item": "minecraft:sugar"
     },
     "W": {
-      "item": "minecraft:wheat"
+      "item": "hearthandharvest:batter"
     }
   },
   "pattern": [

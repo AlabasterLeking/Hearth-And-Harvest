@@ -1,0 +1,6 @@
+{
+  "parent": "hearthandharvest:block/trellis/base/vine_overlay_flat",
+  "textures": {
+    "vine": "hearthandharvest:block/green_grape_vine_stage1"
+  }
+}

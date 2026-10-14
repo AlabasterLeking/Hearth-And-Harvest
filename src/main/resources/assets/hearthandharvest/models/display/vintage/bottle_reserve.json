@@ -1,0 +1,6 @@
+{
+  "parent": "hearthandharvest:display/vintage/template_bottle",
+  "textures": {
+    "overlay": "hearthandharvest:block/vintage/bottle_reserve"
+  }
+}

@@ -8,6 +8,7 @@
   "type": "brewinandchewin:fermenting",
   "category": "meals",
   "experience": 1.0,
+  "temperature": 5,
   "ingredients": [
     {
       "item": "hearthandharvest:goat_milk_bottle"
@@ -16,13 +17,12 @@
       "item": "hearthandharvest:goat_milk_bottle"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "forge:dusts/salt"
     },
     []
   ],
   "result": {
-    "count": 1,
-    "item": "hearthandharvest:unripe_goat_cheese_wheel"
-  },
-  "temperature": 5
+    "item": "hearthandharvest:unripe_goat_cheese_wheel",
+    "count": 1
+  }
 }

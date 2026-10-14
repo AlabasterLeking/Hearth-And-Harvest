@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "hearthandharvest:warped_cabinet_into_halves"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_warped_cabinet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "farmersdelight:warped_cabinet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_warped_cabinet",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "hearthandharvest:warped_cabinet_into_halves"
+    ]
+  },
+  "sends_telemetry_event": false
+}

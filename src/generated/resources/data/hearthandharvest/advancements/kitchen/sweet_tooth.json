@@ -1,0 +1,203 @@
+{
+  "parent": "hearthandharvest:kitchen/sugaring_off",
+  "criteria": {
+    "blueberry_muffin": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:blueberry_muffin"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "candy_corn": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:candy_corn"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "caramel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:caramel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "caramel_apple": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:caramel_apple"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "carrot_cake_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:carrot_cake_slice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "chocolate_bar": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:chocolate_bar"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "chocolate_cake_slice": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:chocolate_cake_slice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cotton_candy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:cotton_candy"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "maple_cookie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:maple_cookie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "peanut_butter_cookie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:peanut_butter_cookie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raisin_cookie": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:raisin_cookie"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "raspberry_scone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:raspberry_scone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.hearthandharvest.sweet_tooth.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:cotton_candy"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.sweet_tooth"
+    }
+  },
+  "requirements": [
+    [
+      "maple_cookie"
+    ],
+    [
+      "peanut_butter_cookie"
+    ],
+    [
+      "raisin_cookie"
+    ],
+    [
+      "chocolate_bar"
+    ],
+    [
+      "blueberry_muffin"
+    ],
+    [
+      "raspberry_scone"
+    ],
+    [
+      "caramel"
+    ],
+    [
+      "cotton_candy"
+    ],
+    [
+      "candy_corn"
+    ],
+    [
+      "caramel_apple"
+    ],
+    [
+      "carrot_cake_slice"
+    ],
+    [
+      "chocolate_cake_slice"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

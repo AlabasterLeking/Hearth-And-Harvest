@@ -1,8 +1,0 @@
-{
-  "parent": "block/cube_bottom_top",
-  "textures": {
-    "bottom": "farmersdelight:block/crate_bottom",
-    "top": "hearthandharvest:block/blueberry_wine_crate_top",
-    "side": "hearthandharvest:block/blueberry_wine_crate_side"
-  }
-}

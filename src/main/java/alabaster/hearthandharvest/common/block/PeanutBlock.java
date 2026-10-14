@@ -1,6 +1,5 @@
 package alabaster.hearthandharvest.common.block;
 
-import alabaster.hearthandharvest.common.registry.HHModBlocks;
 import alabaster.hearthandharvest.common.registry.HHModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -30,12 +29,7 @@ public class PeanutBlock extends CropBlock
     }
 
     @Override
-    public BlockState getPlant(BlockGetter world, BlockPos pos) {
-        return HHModBlocks.PEANUT_CROP.get().defaultBlockState();
-    }
-
-    @Override
-    protected ItemLike getBaseSeedId() {
+    public ItemLike getBaseSeedId() {
         return HHModItems.PEANUT.get();
     }
 

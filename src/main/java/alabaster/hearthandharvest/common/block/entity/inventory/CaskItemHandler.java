@@ -1,27 +1,26 @@
 package alabaster.hearthandharvest.common.block.entity.inventory;
 
+import alabaster.hearthandharvest.common.block.entity.CaskBlockEntity;
+
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.BooleanSupplier;
 
-public class CaskItemHandler implements IItemHandler
-{
-    private static final int SLOTS_INPUT = 4;
-    private static final int SLOT_MEAL_OUTPUT = 5;
+public class CaskItemHandler implements IItemHandler {
+    private static final int SLOT_OUTPUT = CaskBlockEntity.FIRST_OUTPUT_SLOT;
+    private static final int SLOTS_INPUT = CaskBlockEntity.INPUT_SLOTS;
     private final IItemHandler itemHandler;
     private final Direction side;
+    private final BooleanSupplier sealed;
 
-    public CaskItemHandler(IItemHandler itemHandler, @Nullable Direction side) {
+    public CaskItemHandler(IItemHandler itemHandler, @Nullable Direction side, BooleanSupplier sealed) {
         this.itemHandler = itemHandler;
         this.side = side;
-    }
-
-    @Override
-    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-        return itemHandler.isItemValid(slot, stack);
+        this.sealed = sealed;
     }
 
     @Override
@@ -29,30 +28,52 @@ public class CaskItemHandler implements IItemHandler
         return itemHandler.getSlots();
     }
 
-    @Override
     @Nonnull
+    @Override
     public ItemStack getStackInSlot(int slot) {
         return itemHandler.getStackInSlot(slot);
     }
 
-    @Override
     @Nonnull
+    @Override
     public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        return slot < SLOTS_INPUT ? itemHandler.insertItem(slot, stack, simulate) : stack;
+        if (!canInsert(slot)) {
+            return stack;
+        }
+        return itemHandler.insertItem(slot, stack, simulate);
     }
 
     @Override
     @Nonnull
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (side == null || side.equals(Direction.UP)) {
-            return slot < SLOTS_INPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            return slot < SLOTS_INPUT && !sealed.getAsBoolean() ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         } else {
-            return slot == SLOT_MEAL_OUTPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
+            return slot >= SLOT_OUTPUT ? itemHandler.extractItem(slot, amount, simulate) : ItemStack.EMPTY;
         }
     }
 
     @Override
     public int getSlotLimit(int slot) {
         return itemHandler.getSlotLimit(slot);
+    }
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return canInsert(slot);
+    }
+
+    private boolean canInsert(int slot) {
+        if (sealed.getAsBoolean()) return false;
+        if (side == null) return slot < SLOT_OUTPUT;
+
+        return switch (side) {
+            case UP -> slot < SLOT_OUTPUT;
+            case NORTH -> slot == 0;
+            case EAST -> slot == 1;
+            case SOUTH -> slot == 2;
+            case WEST -> slot == 3;
+            default -> false;
+        };
     }
 }

@@ -1,0 +1,30 @@
+{
+  "parent": "hearthandharvest:farming/scare_tactics",
+  "criteria": {
+    "murder_scene": {
+      "conditions": {},
+      "trigger": "hearthandharvest:crow_flock_alarm"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.murder_scene.desc"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "hearthandharvest:crow_feather"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.murder_scene"
+    }
+  },
+  "requirements": [
+    [
+      "murder_scene"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

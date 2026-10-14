@@ -10,13 +10,13 @@
       "item": "hearthandharvest:cooked_sausage"
     },
     {
-      "item": "hearthandharvest:salt"
+      "tag": "forge:dusts/salt"
     },
     {
-      "tag": "forge:milk/milk_bottle"
+      "tag": "forge:milk"
     },
     {
-      "item": "minecraft:bread"
+      "tag": "forge:flours"
     }
   ],
   "recipe_book_tab": "meals",

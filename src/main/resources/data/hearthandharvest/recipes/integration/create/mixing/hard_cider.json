@@ -1,0 +1,22 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "fluid": "hearthandharvest:apple_cider",
+      "amount": 500,
+      "nbt": {}
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:hard_cider",
+      "amount": 500
+    }
+  ]
+}

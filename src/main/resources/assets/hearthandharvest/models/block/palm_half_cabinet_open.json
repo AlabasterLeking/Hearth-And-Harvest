@@ -1,0 +1,9 @@
+{
+  "parent": "hearthandharvest:block/half_cabinet",
+  "textures": {
+    "back": "crabbersdelight:block/palm_cabinet_side",
+    "front": "crabbersdelight:block/palm_cabinet_front_open",
+    "side": "hearthandharvest:block/palm_half_cabinet_side",
+    "top": "hearthandharvest:block/palm_half_cabinet_top"
+  }
+}

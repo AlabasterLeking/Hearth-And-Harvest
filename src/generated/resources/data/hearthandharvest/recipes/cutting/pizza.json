@@ -1,0 +1,17 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "hearthandharvest:pizza"
+    }
+  ],
+  "result": [
+    {
+      "count": 4,
+      "item": "hearthandharvest:pizza_slice"
+    }
+  ],
+  "tool": {
+    "tag": "forge:tools/knives"
+  }
+}

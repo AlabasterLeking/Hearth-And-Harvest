@@ -1,0 +1,12 @@
+{
+  "type": "hearthandharvest:stomping",
+  "ingredients": [
+    {
+      "item": "minecraft:beetroot"
+    }
+  ],
+  "result_item": {
+    "count": 1,
+    "id": "minecraft:sugar"
+  }
+}

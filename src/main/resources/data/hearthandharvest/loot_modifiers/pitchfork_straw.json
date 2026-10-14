@@ -1,0 +1,13 @@
+{
+  "type": "hearthandharvest:pitchfork_straw",
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "items": [
+          "hearthandharvest:pitchfork"
+        ]
+      }
+    }
+  ]
+}

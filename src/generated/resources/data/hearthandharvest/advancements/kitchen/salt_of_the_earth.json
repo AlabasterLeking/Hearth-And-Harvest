@@ -1,0 +1,38 @@
+{
+  "parent": "hearthandharvest:main/root",
+  "criteria": {
+    "salt_of_the_earth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "hearthandharvest:salt"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancement.hearthandharvest.salt_of_the_earth.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "hearthandharvest:salt"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.hearthandharvest.salt_of_the_earth"
+    }
+  },
+  "requirements": [
+    [
+      "salt_of_the_earth"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
