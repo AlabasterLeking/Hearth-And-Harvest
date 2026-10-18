@@ -2,6 +2,7 @@ package alabaster.hearthandharvest.common.registry;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.data.VintageStyle;
+import alabaster.hearthandharvest.common.item.WineBottleItem;
 import alabaster.hearthandharvest.common.network.HHModNetworking;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,6 +16,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.material.FlowingFluid;
@@ -35,6 +37,19 @@ public class HHDataMaps extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().create();
 
     public static final int BOTTLE_VOLUME = 250;
+
+    public static int getBottleVolume(Item item) {
+        return item instanceof WineBottleItem wine ? wine.getMaxGlasses() * BOTTLE_VOLUME : BOTTLE_VOLUME;
+    }
+
+    public static int getBottleVolume(ItemStack stack) {
+        return stack.getItem() instanceof WineBottleItem wine ? wine.getGlasses(stack) * BOTTLE_VOLUME : BOTTLE_VOLUME;
+    }
+
+    public static int getBottleVolumeForFluid(Fluid fluid) {
+        Item bottle = getBottleForFluid(fluid);
+        return bottle == null ? BOTTLE_VOLUME : getBottleVolume(bottle);
+    }
 
     private static final String FLUID_BOTTLE = "fluid/fluid_bottle";
     private static final String VINTAGE_STYLE = "item/vintage_style";

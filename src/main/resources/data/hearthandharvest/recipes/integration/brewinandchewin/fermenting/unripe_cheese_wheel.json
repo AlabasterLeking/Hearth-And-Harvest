@@ -6,23 +6,21 @@
     }
   ],
   "type": "brewinandchewin:fermenting",
-  "category": "meals",
+  "basefluid": {
+    "count": 1000,
+    "fluid": "minecraft:milk"
+  },
   "experience": 1.0,
-  "temperature": 5,
+  "fermentingtime": 9600,
   "ingredients": [
     {
-      "item": "farmersdelight:milk_bottle"
-    },
-    {
-      "item": "farmersdelight:milk_bottle"
-    },
-    {
       "tag": "forge:dusts/salt"
-    },
-    []
+    }
   ],
+  "recipe_book_tab": "meals",
   "result": {
     "item": "hearthandharvest:unripe_cheese_wheel",
     "count": 1
-  }
+  },
+  "temperature": 4
 }

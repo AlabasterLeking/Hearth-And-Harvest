@@ -7,6 +7,7 @@
   ],
   "type": "brewinandchewin:fermenting",
   "experience": 1.0,
+  "fermentingtime": 9600,
   "ingredients": [
     {
       "item": "minecraft:sweet_berries"
@@ -20,11 +21,11 @@
     []
   ],
   "basefluid": {
-    "count": 500,
+    "count": 1000,
     "fluid": "minecraft:water"
   },
   "result": {
-    "count": 500,
+    "count": 1000,
     "fluid": "hearthandharvest:sweet_berry_wine"
   }
 }

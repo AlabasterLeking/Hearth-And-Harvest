@@ -18,13 +18,13 @@
     },
     {
       "fluidTag": "minecraft:water",
-      "amount": 500
+      "amount": 250
     }
   ],
   "results": [
     {
       "fluid": "hearthandharvest:moonshine",
-      "amount": 500
+      "amount": 250
     }
   ],
   "heatRequirement": "heated"

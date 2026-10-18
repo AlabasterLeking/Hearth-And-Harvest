@@ -30,6 +30,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import alabaster.hearthandharvest.common.crafting.KegRecipe;
+import alabaster.hearthandharvest.common.registry.HHDataMaps;
 
 import java.util.List;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -211,7 +212,7 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper> {
         }
 
         FluidStack stored = blockEntity.getInputTank().getFluid();
-        int servings = stored.getAmount() / 250;
+        int servings = stored.isEmpty() ? 0 : stored.getAmount() / HHDataMaps.getBottleVolumeForFluid(stored.getFluid());
         if (servings > 0) {
             ItemStack container = KegRecipe.containerFor(stored.getFluid());
             if (!container.isEmpty()) {

@@ -8,10 +8,10 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "item": "minecraft:wheat"
+      "tag": "forge:crops/wheat"
     },
     {
-      "item": "minecraft:wheat"
+      "tag": "forge:crops/wheat"
     },
     {
       "tag": "forge:crops/hops"

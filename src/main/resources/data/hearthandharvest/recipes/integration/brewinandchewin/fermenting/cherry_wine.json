@@ -7,9 +7,10 @@
   ],
   "type": "brewinandchewin:fermenting",
   "experience": 1.0,
+  "fermentingtime": 9600,
   "ingredients": [
     {
-      "tag": "forge:fruits/blueberry"
+      "tag": "forge:fruits/cherry"
     },
     {
       "tag": "forge:fruits/cherry"
@@ -20,11 +21,11 @@
     []
   ],
   "basefluid": {
-    "count": 500,
+    "count": 1000,
     "fluid": "minecraft:water"
   },
   "result": {
-    "count": 500,
+    "count": 1000,
     "fluid": "hearthandharvest:cherry_wine"
   }
 }

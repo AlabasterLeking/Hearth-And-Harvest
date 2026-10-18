@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "brewinandchewin"
+    }
+  ],
+  "type": "brewinandchewin:keg_pouring",
+  "amount": 250,
+  "container": {
+    "item": "minecraft:glass_bottle"
+  },
+  "filling": true,
+  "fluid": "hearthandharvest:apple_cider",
+  "output": {
+    "item": "farmersdelight:apple_cider"
+  },
+  "strict": false
+}

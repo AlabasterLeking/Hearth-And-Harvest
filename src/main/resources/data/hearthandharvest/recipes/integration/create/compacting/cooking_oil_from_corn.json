@@ -1,0 +1,29 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "type": "create:compacting",
+  "ingredients": [
+    {
+      "tag": "forge:vegetables/corn"
+    },
+    {
+      "tag": "forge:vegetables/corn"
+    },
+    {
+      "tag": "forge:vegetables/corn"
+    },
+    {
+      "tag": "forge:vegetables/corn"
+    }
+  ],
+  "results": [
+    {
+      "fluid": "hearthandharvest:cooking_oil",
+      "amount": 1000
+    }
+  ]
+}

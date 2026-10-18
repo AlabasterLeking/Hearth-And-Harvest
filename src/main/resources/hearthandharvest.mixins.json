@@ -18,7 +18,8 @@
   "client": [
     "HideBreakProgressMixin",
     "PlayerModelChickenArmsMixin",
-    "accessor.ChickenModelAccessor"
+    "accessor.ChickenModelAccessor",
+    "accessor.ModelPartAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

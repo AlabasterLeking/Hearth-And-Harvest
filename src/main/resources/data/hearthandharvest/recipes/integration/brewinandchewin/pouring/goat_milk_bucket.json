@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "brewinandchewin"
+    }
+  ],
+  "type": "brewinandchewin:keg_pouring",
+  "amount": 1000,
+  "container": {
+    "item": "minecraft:bucket"
+  },
+  "filling": true,
+  "fluid": "hearthandharvest:goat_milk",
+  "output": {
+    "item": "hearthandharvest:goat_milk_bucket"
+  },
+  "strict": false
+}

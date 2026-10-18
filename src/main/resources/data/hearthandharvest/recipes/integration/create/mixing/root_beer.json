@@ -11,20 +11,20 @@
       "item": "minecraft:hanging_roots"
     },
     {
-      "item": "minecraft:sugar"
+      "item": "minecraft:hanging_roots"
     },
     {
       "item": "minecraft:sugar"
     },
     {
       "fluidTag": "minecraft:water",
-      "amount": 500
+      "amount": 250
     }
   ],
   "results": [
     {
       "fluid": "hearthandharvest:root_beer",
-      "amount": 500
+      "amount": 250
     }
   ],
   "heatRequirement": "heated"

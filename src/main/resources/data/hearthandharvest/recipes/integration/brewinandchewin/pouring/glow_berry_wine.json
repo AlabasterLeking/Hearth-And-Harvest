@@ -6,7 +6,7 @@
     }
   ],
   "type": "brewinandchewin:keg_pouring",
-  "amount": 500,
+  "amount": 1000,
   "container": {
     "item": "minecraft:glass_bottle"
   },
