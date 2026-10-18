@@ -170,7 +170,7 @@ public class CapabilityRegistration {
 
         @Override
         public int fill(FluidStack resource, IFluidHandler.FluidAction action) {
-            if (container.getCount() != 1 || resource.getAmount() < HHDataMaps.BOTTLE_VOLUME) return 0;
+            if (container.getCount() != 1) return 0;
 
             ItemStack filled;
             if (resource.getFluid().isSame(Fluids.WATER)) {
@@ -181,10 +181,13 @@ public class CapabilityRegistration {
                 filled = new ItemStack(bottle);
             }
 
+            int volume = HHDataMaps.getBottleVolume(filled);
+            if (resource.getAmount() < volume) return 0;
+
             if (action.execute()) {
                 container = filled;
             }
-            return HHDataMaps.BOTTLE_VOLUME;
+            return volume;
         }
 
         @Override
@@ -214,10 +217,9 @@ public class CapabilityRegistration {
             this.container = stack;
         }
 
-        private boolean isFullBottle() {
+        private boolean hasContents() {
             return container.getCount() == 1
                     && container.getItem() == bottleItem
-                    && !container.has(HHModDataComponents.SERVINGS.get())
                     && (bottleItem != Items.POTION || HHFluidHandling.isWaterBottle(container));
         }
 
@@ -228,13 +230,13 @@ public class CapabilityRegistration {
 
         @Override
         public FluidStack getFluidInTank(int tank) {
-            if (!isFullBottle()) return FluidStack.EMPTY;
-            return new FluidStack(containedFluid, HHDataMaps.BOTTLE_VOLUME);
+            if (!hasContents()) return FluidStack.EMPTY;
+            return new FluidStack(containedFluid, HHDataMaps.getBottleVolume(container));
         }
 
         @Override
         public int getTankCapacity(int tank) {
-            return HHDataMaps.BOTTLE_VOLUME;
+            return HHDataMaps.getBottleVolume(bottleItem);
         }
 
         @Override
@@ -255,12 +257,13 @@ public class CapabilityRegistration {
 
         @Override
         public FluidStack drain(int maxDrain, IFluidHandler.FluidAction action) {
-            if (!isFullBottle()) return FluidStack.EMPTY;
-            if (maxDrain < HHDataMaps.BOTTLE_VOLUME) return FluidStack.EMPTY;
+            if (!hasContents()) return FluidStack.EMPTY;
+            int volume = HHDataMaps.getBottleVolume(container);
+            if (maxDrain < volume) return FluidStack.EMPTY;
             if (action.execute()) {
                 container = new ItemStack(Items.GLASS_BOTTLE);
             }
-            return new FluidStack(containedFluid, HHDataMaps.BOTTLE_VOLUME);
+            return new FluidStack(containedFluid, volume);
         }
 
         @Override

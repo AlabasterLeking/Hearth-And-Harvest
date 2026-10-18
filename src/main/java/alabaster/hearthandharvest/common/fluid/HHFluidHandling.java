@@ -78,8 +78,9 @@ public final class HHFluidHandling {
 
         Fluid bottled = HHDataMaps.getFluidForBottle(input.getItem());
         if (bottled != null) {
-            FluidStack contents = new FluidStack(bottled, HHDataMaps.BOTTLE_VOLUME);
-            if (tank.fill(contents, IFluidHandler.FluidAction.SIMULATE) == HHDataMaps.BOTTLE_VOLUME) {
+            int volume = HHDataMaps.getBottleVolume(input);
+            FluidStack contents = new FluidStack(bottled, volume);
+            if (tank.fill(contents, IFluidHandler.FluidAction.SIMULATE) == volume) {
                 return Pair.of(contents, new ItemStack(Items.GLASS_BOTTLE));
             }
             return NO_EMPTYING;
@@ -106,8 +107,8 @@ public final class HHFluidHandling {
                 return Pair.of(MB_BOTTLE, waterBottle());
             }
             Item bottle = HHDataMaps.getBottleForFluid(tankFluid.getFluid());
-            if (bottle != null && tankFluid.getAmount() >= HHDataMaps.BOTTLE_VOLUME) {
-                return Pair.of(HHDataMaps.BOTTLE_VOLUME, new ItemStack(bottle));
+            if (bottle != null && tankFluid.getAmount() >= HHDataMaps.getBottleVolume(bottle)) {
+                return Pair.of(HHDataMaps.getBottleVolume(bottle), new ItemStack(bottle));
             }
             return NO_FILLING;
         }

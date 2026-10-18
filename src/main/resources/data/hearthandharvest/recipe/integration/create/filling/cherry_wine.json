@@ -11,8 +11,8 @@
       "item": "minecraft:glass_bottle"
     },
     {
-      "type": "fluid_stack",
-      "amount": 250,
+      "type": "neoforge:single",
+      "amount": 1000,
       "fluid": "hearthandharvest:cherry_wine"
     }
   ],

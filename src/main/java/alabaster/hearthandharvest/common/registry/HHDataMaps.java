@@ -1,6 +1,7 @@
 package alabaster.hearthandharvest.common.registry;
 
 import alabaster.hearthandharvest.common.data.VintageStyle;
+import alabaster.hearthandharvest.common.item.WineBottleItem;
 
 import alabaster.hearthandharvest.HearthAndHarvest;
 import net.minecraft.core.Holder;
@@ -8,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
@@ -25,6 +27,19 @@ import java.util.Map;
 public class HHDataMaps {
 
     public static final int BOTTLE_VOLUME = 250;
+
+    public static int getBottleVolume(Item item) {
+        return item instanceof WineBottleItem wine ? wine.getMaxGlasses() * BOTTLE_VOLUME : BOTTLE_VOLUME;
+    }
+
+    public static int getBottleVolume(ItemStack stack) {
+        return stack.getItem() instanceof WineBottleItem wine ? wine.getGlasses(stack) * BOTTLE_VOLUME : BOTTLE_VOLUME;
+    }
+
+    public static int getBottleVolumeForFluid(Fluid fluid) {
+        Item bottle = getBottleForFluid(fluid);
+        return bottle == null ? BOTTLE_VOLUME : getBottleVolume(bottle);
+    }
 
     public static final DataMapType<Fluid, Item> FLUID_BOTTLE = DataMapType.builder(
             ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, "fluid_bottle"),

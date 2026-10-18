@@ -11,9 +11,9 @@
       "tag": "c:dusts/salt"
     },
     {
-      "type": "fluid_tag",
+      "type": "neoforge:tag",
       "amount": 1000,
-      "fluid_tag": "c:water"
+      "tag": "c:water"
     }
   ],
   "results": [

@@ -7,7 +7,7 @@
   ],
   "type": "brewinandchewin:fermenting",
   "base_fluid": {
-    "amount": 500,
+    "amount": 1000,
     "ingredient": {
       "tag": "#c:water"
     },
@@ -19,7 +19,7 @@
       "item": "minecraft:hanging_roots"
     },
     {
-      "item": "minecraft:sugar"
+      "item": "minecraft:hanging_roots"
     },
     {
       "item": "minecraft:sugar"
@@ -27,7 +27,7 @@
     []
   ],
   "result": {
-    "amount": 500,
+    "amount": 1000,
     "id": "hearthandharvest:root_beer"
   },
   "unit": "millibuckets"

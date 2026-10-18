@@ -18,14 +18,14 @@
       "item": "minecraft:sugar"
     },
     {
-      "type": "fluid_tag",
-      "amount": 500,
-      "fluid_tag": "c:water"
+      "type": "neoforge:tag",
+      "amount": 250,
+      "tag": "c:water"
     }
   ],
   "results": [
     {
-      "amount": 500,
+      "amount": 250,
       "id": "hearthandharvest:moonshine"
     }
   ]

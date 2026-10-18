@@ -6,8 +6,12 @@
     }
   ],
   "type": "brewinandchewin:keg_pouring",
+  "container": {
+    "count": 1,
+    "id": "minecraft:glass_bottle"
+  },
   "fluid": {
-    "amount": 500,
+    "amount": 1000,
     "id": "hearthandharvest:melon_wine"
   },
   "output": {

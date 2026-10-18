@@ -7,7 +7,7 @@
   ],
   "type": "brewinandchewin:fermenting",
   "base_fluid": {
-    "amount": 500,
+    "amount": 1000,
     "ingredient": {
       "tag": "#c:water"
     },
@@ -16,18 +16,18 @@
   "experience": 1.0,
   "ingredients": [
     {
-      "item": "minecraft:wheat"
+      "tag": "c:crops/wheat"
+    },
+    {
+      "tag": "c:crops/wheat"
     },
     {
       "tag": "c:crops/hops"
     },
-    {
-      "item": "hearthandharvest:hops"
-    },
     []
   ],
   "result": {
-    "amount": 500,
+    "amount": 1000,
     "id": "hearthandharvest:beer"
   },
   "unit": "millibuckets"

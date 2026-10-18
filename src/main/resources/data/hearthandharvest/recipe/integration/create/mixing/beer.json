@@ -9,18 +9,18 @@
   "heat_requirement": "heated",
   "ingredients": [
     {
-      "item": "minecraft:wheat"
+      "tag": "c:crops/wheat"
     },
     {
-      "item": "minecraft:wheat"
+      "tag": "c:crops/wheat"
     },
     {
       "tag": "c:crops/hops"
     },
     {
-      "type": "fluid_tag",
+      "type": "neoforge:tag",
       "amount": 250,
-      "fluid_tag": "c:water"
+      "tag": "c:water"
     }
   ],
   "results": [

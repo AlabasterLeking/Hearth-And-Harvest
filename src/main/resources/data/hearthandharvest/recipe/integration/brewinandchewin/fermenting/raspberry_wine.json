@@ -8,7 +8,7 @@
   "type": "brewinandchewin:fermenting",
   "experience": 1.0,
   "base_fluid": {
-    "amount": 500,
+    "amount": 1000,
     "ingredient": {
       "tag": "#c:water"
     },
@@ -27,7 +27,7 @@
     []
   ],
   "result": {
-    "amount": 500,
+    "amount": 1000,
     "id": "hearthandharvest:raspberry_wine"
   },
   "unit": "millibuckets"

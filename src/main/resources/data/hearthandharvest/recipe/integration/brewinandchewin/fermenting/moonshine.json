@@ -7,7 +7,7 @@
   ],
   "type": "brewinandchewin:fermenting",
   "base_fluid": {
-    "amount": 500,
+    "amount": 1000,
     "ingredient": {
       "tag": "#c:water"
     },
@@ -27,7 +27,7 @@
     []
   ],
   "result": {
-    "amount": 500,
+    "amount": 1000,
     "id": "hearthandharvest:moonshine"
   },
   "unit": "millibuckets"
