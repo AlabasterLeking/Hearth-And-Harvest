@@ -79,7 +79,7 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
         for (Ingredient ingredient : ingredients) {
             int index = -1;
             for (int i = 0; i < grouped.size(); i++) {
-                if (grouped.get(i).ingredient().equals(ingredient)) {
+                if (sameIngredient(grouped.get(i).ingredient(), ingredient)) {
                     index = i;
                     break;
                 }
@@ -91,6 +91,10 @@ public class KegRecipe implements Recipe<RecipeWrapper> {
             }
         }
         return grouped;
+    }
+
+    private static boolean sameIngredient(Ingredient a, Ingredient b) {
+        return a == b || a.toJson().equals(b.toJson());
     }
 
     public FluidStack getResultFluid() {
