@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest;
 
+import alabaster.hearthandharvest.common.HHRecipeBookTypes;
 import alabaster.hearthandharvest.common.block.SaltBlock;
 import alabaster.hearthandharvest.common.block.StompingBasinBlock;
 import alabaster.hearthandharvest.common.entity.crow.CrowEntity;
@@ -54,6 +55,7 @@ public class HearthAndHarvest {
         MinecraftForge.EVENT_BUS.register(this);
 
         ForgeMod.enableMilkFluid();
+        HHRecipeBookTypes.init();
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::flowerSetup);
