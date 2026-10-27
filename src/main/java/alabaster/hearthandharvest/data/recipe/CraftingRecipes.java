@@ -1,5 +1,16 @@
 package alabaster.hearthandharvest.data.recipe;
 
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.AdvancementHolder;
+import java.util.Map;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.ItemStack;
+import alabaster.hearthandharvest.common.item.VintageHelper;
+import alabaster.hearthandharvest.common.crafting.VintageIngredient;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
 import alabaster.hearthandharvest.common.registry.HHModItems;
@@ -36,6 +47,25 @@ public class CraftingRecipes
         recipesTools(output);
         recipesMaterials(output);
         recipesFoodstuffs(output);
+        cheeseWheelFromSlices(output, HHModItems.CHEESE_SLICE.get(), HHModItems.CHEESE_WHEEL.get());
+        cheeseWheelFromSlices(output, HHModItems.GOAT_CHEESE_SLICE.get(), HHModItems.GOAT_CHEESE_WHEEL.get());
+    }
+
+    private static void cheeseWheelFromSlices(RecipeOutput output, Item slice, Item wheel) {
+        String name = BuiltInRegistries.ITEM.getKey(wheel).getPath();
+        for (int vintage = 0; vintage <= VintageHelper.MAX_VINTAGE; vintage++) {
+            String path = (vintage == 0 ? name : name + "_" + VintageHelper.STAGE_NAMES[vintage - 1]) + "_from_slices";
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HearthAndHarvest.MODID, path);
+            ShapedRecipePattern pattern = ShapedRecipePattern.of(Map.of('#', new VintageIngredient(slice, vintage).toVanilla()), "##", "##");
+            ShapedRecipe recipe = new ShapedRecipe("", CraftingBookCategory.MISC, pattern, VintageHelper.withVintage(new ItemStack(wheel), vintage));
+            AdvancementHolder advancement = output.advancement()
+                    .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
+                    .addCriterion("has_slice", InventoryChangeTrigger.TriggerInstance.hasItems(slice))
+                    .rewards(AdvancementRewards.Builder.recipe(id))
+                    .requirements(AdvancementRequirements.Strategy.OR)
+                    .build(id.withPrefix("recipes/food/"));
+            output.accept(id, recipe, advancement);
+        }
     }
 
     private static void recipesBlocks(RecipeOutput output) {

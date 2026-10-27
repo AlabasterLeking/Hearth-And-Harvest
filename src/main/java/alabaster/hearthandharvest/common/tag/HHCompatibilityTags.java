@@ -22,6 +22,10 @@ public class HHCompatibilityTags {
     public static final String SUPPLEMENTARIES = "supplementaries";
     public static final TagKey<Item> SUPPLEMENTARIES_JAR_COOKIES = externalItemTag(SUPPLEMENTARIES, "jar_cookies");
 
+    // Carry On
+    public static final String CARRYON = "carryon";
+    public static final TagKey<Block> CARRYON_BLOCK_BLACKLIST = externalBlockTag(CARRYON, "block_blacklist");
+
     private static TagKey<Item> externalItemTag(String modId, String path) {
         return ItemTags.create(ResourceLocation.fromNamespaceAndPath(modId, path));
     }

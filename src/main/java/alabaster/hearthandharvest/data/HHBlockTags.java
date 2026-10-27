@@ -364,6 +364,7 @@ public class HHBlockTags extends BlockTagsProvider {
                 HHModBlocks.CARROT_CAKE.get(),
                 HHModBlocks.CHOCOLATE_CAKE.get()
         );
+        tag(HHCompatibilityTags.CARRYON_BLOCK_BLACKLIST).add(HHModBlocks.CRATE.get());
         tag(HHCompatibilityTags.CREATE_BRITTLE).add(
                 HHModBlocks.BLUEBERRY_PIE.get(),
                 HHModBlocks.CHERRY_PIE.get(),

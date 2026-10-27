@@ -2,10 +2,10 @@
   "type": "farmersdelight:add_item",
   "conditions": [
     {
-      "condition": "minecraft:match_tool",
-      "predicate": {
-        "tag": "minecraft:shears",
-        "inverted": true
+      "condition": "minecraft:inverted",
+      "term": {
+        "condition": "neoforge:can_item_perform_ability",
+        "ability": "shears_dig"
       }
     },
     {
