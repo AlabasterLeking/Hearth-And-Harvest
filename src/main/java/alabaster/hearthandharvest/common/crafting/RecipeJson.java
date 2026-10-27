@@ -43,11 +43,7 @@ public final class RecipeJson {
         String id = json.has("id") ? GsonHelper.getAsString(json, "id") : GsonHelper.getAsString(json, "item");
         ItemStack stack = new ItemStack(item(id), GsonHelper.getAsInt(json, "count", 1));
         if (json.has("components")) {
-            CompoundTag tag = stack.getOrCreateTag();
-            for (var entry : GsonHelper.getAsJsonObject(json, "components").entrySet()) {
-                Tag converted = JsonOps.INSTANCE.convertTo(NbtOps.INSTANCE, entry.getValue());
-                tag.put(entry.getKey(), converted);
-            }
+            stack.getOrCreateTag().merge(CraftingHelper.getNBT(GsonHelper.getAsJsonObject(json, "components")));
         }
         if (json.has("nbt")) {
             stack.getOrCreateTag().merge(CraftingHelper.getNBT(json.get("nbt")));

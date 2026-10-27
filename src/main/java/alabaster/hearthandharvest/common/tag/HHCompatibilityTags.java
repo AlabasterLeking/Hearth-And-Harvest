@@ -22,6 +22,10 @@ public class HHCompatibilityTags {
     public static final String SUPPLEMENTARIES = "supplementaries";
     public static final TagKey<Item> SUPPLEMENTARIES_JAR_COOKIES = externalItemTag(SUPPLEMENTARIES, "jar_cookies");
 
+    // Carry On
+    public static final String CARRYON = "carryon";
+    public static final TagKey<Block> CARRYON_BLOCK_BLACKLIST = externalBlockTag(CARRYON, "block_blacklist");
+
     // Farmer's Delight
     public static final String FARMERS_DELIGHT = "farmersdelight";
     public static final TagKey<Item> FARMERS_DELIGHT_ITEM_CABINETS_WOODEN = externalItemTag(FARMERS_DELIGHT, "cabinets/wooden");

@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.registry;
 
+import javax.annotation.Nullable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -29,6 +30,19 @@ public class HHModAttachments {
     // Empty stack = no horseshoe equipped.
     public static final ItemStackData HORSESHOE_ITEM = new ItemStackData("horseshoe_item");
 
+    @Nullable
+    private static CompoundTag peek(Entity entity) {
+        CompoundTag persistent = entity.getPersistentData();
+        return persistent.contains(ROOT, CompoundTag.TAG_COMPOUND) ? persistent.getCompound(ROOT) : null;
+    }
+
+    private static void clear(Entity entity, String key) {
+        CompoundTag tag = peek(entity);
+        if (tag == null) return;
+        tag.remove(key);
+        if (tag.isEmpty()) entity.getPersistentData().remove(ROOT);
+    }
+
     private static CompoundTag data(Entity entity) {
         CompoundTag persistent = entity.getPersistentData();
         if (!persistent.contains(ROOT, CompoundTag.TAG_COMPOUND)) persistent.put(ROOT, new CompoundTag());
@@ -37,19 +51,20 @@ public class HHModAttachments {
 
     public record IntData(String key, int fallback) {
         public int get(Entity entity) {
-            CompoundTag tag = data(entity);
-            return tag.contains(key) ? tag.getInt(key) : fallback;
+            CompoundTag tag = peek(entity);
+            return tag != null && tag.contains(key) ? tag.getInt(key) : fallback;
         }
 
         public void set(Entity entity, int value) {
-            data(entity).putInt(key, value);
+            if (value == fallback) clear(entity, key);
+            else data(entity).putInt(key, value);
         }
     }
 
     public record LongData(String key, long fallback) {
         public long get(Entity entity) {
-            CompoundTag tag = data(entity);
-            return tag.contains(key) ? tag.getLong(key) : fallback;
+            CompoundTag tag = peek(entity);
+            return tag != null && tag.contains(key) ? tag.getLong(key) : fallback;
         }
 
         public void set(Entity entity, long value) {
@@ -76,14 +91,13 @@ public class HHModAttachments {
 
     public record ItemStackData(String key) {
         public ItemStack get(Entity entity) {
-            CompoundTag tag = data(entity);
-            return tag.contains(key, CompoundTag.TAG_COMPOUND) ? ItemStack.of(tag.getCompound(key)) : ItemStack.EMPTY;
+            CompoundTag tag = peek(entity);
+            return tag != null && tag.contains(key, CompoundTag.TAG_COMPOUND) ? ItemStack.of(tag.getCompound(key)) : ItemStack.EMPTY;
         }
 
         public void set(Entity entity, ItemStack stack) {
-            CompoundTag tag = data(entity);
-            if (stack.isEmpty()) tag.remove(key);
-            else tag.put(key, stack.save(new CompoundTag()));
+            if (stack.isEmpty()) clear(entity, key);
+            else data(entity).put(key, stack.save(new CompoundTag()));
         }
     }
 }

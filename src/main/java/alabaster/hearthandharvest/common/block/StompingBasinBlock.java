@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.block;
 
+import net.minecraft.util.RandomSource;
+import net.minecraft.server.level.ServerLevel;
 import alabaster.hearthandharvest.common.block.entity.StompingBasinBlockEntity;
 import alabaster.hearthandharvest.common.fluid.HHFluidHandling;
 import alabaster.hearthandharvest.common.registry.HHModBlockEntities;
@@ -199,9 +201,24 @@ public class StompingBasinBlock extends BaseEntityBlock {
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
-        if (!level.isClientSide && state.getValue(MULTIBLOCK_PART) == MultiblockPart.NONE) {
+        if (level.isClientSide) return;
+        if (state.getValue(MULTIBLOCK_PART) == MultiblockPart.NONE) {
             tryFormMultiblock(level, pos);
+        } else if (!oldState.is(this)) {
+            level.scheduleTick(pos, this, 1);
         }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        MultiblockPart part = state.getValue(MULTIBLOCK_PART);
+        if (part == MultiblockPart.NONE) return;
+        StompingBasinBlockEntity be = getBE(level, pos);
+        if (be != null) {
+            if (part == MultiblockPart.CONTROLLER) be.dissolve(List.of());
+            else be.dissolveAsMember();
+        }
+        level.setBlock(pos, state.setValue(MULTIBLOCK_PART, MultiblockPart.NONE), 3);
     }
 
     private void tryFormMultiblock(Level level, BlockPos pos) {
@@ -272,8 +289,7 @@ public class StompingBasinBlock extends BaseEntityBlock {
             controllerPos = brokenPos;
         } else {
             StompingBasinBlockEntity memberBE = getBE(level, brokenPos);
-            if (memberBE == null) return;
-            controllerPos = memberBE.getControllerPos();
+            controllerPos = memberBE != null ? memberBE.getControllerPos() : findControllerByState(level, brokenPos);
             if (controllerPos == null) return;
         }
 
@@ -301,6 +317,18 @@ public class StompingBasinBlock extends BaseEntityBlock {
                 if (be != null) be.dissolveAsMember();
             }
         }
+    }
+
+    @Nullable
+    private BlockPos findControllerByState(Level level, BlockPos memberPos) {
+        for (int dx = 0; dx >= -1; dx--) {
+            for (int dz = 0; dz >= -1; dz--) {
+                BlockPos p = memberPos.offset(dx, 0, dz);
+                BlockState bs = level.getBlockState(p);
+                if (bs.is(this) && bs.getValue(MULTIBLOCK_PART) == MultiblockPart.CONTROLLER) return p;
+            }
+        }
+        return null;
     }
 
     @Nullable

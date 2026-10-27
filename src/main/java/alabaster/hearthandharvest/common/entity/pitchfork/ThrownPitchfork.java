@@ -5,6 +5,7 @@ import alabaster.hearthandharvest.common.registry.HHModTriggers;
 import alabaster.hearthandharvest.common.registry.HHModEffects;
 import alabaster.hearthandharvest.common.registry.HHModEntities;
 import alabaster.hearthandharvest.common.registry.HHModSounds;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -35,6 +36,7 @@ public class ThrownPitchfork extends AbstractArrow {
 
     private boolean dealtDamage;
     private boolean creativeThrown;
+    private IntOpenHashSet piercedEntityIds;
 
     public ThrownPitchfork(EntityType<? extends ThrownPitchfork> type, Level level) {
         super(type, level);
@@ -88,6 +90,12 @@ public class ThrownPitchfork extends AbstractArrow {
     public void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         this.dealtDamage = true;
+        this.piercedEntityIds = null;
+    }
+
+    @Override
+    protected boolean canHitEntity(Entity target) {
+        return super.canHitEntity(target) && (piercedEntityIds == null || !piercedEntityIds.contains(target.getId()));
     }
 
     @Override
@@ -98,6 +106,8 @@ public class ThrownPitchfork extends AbstractArrow {
             return;
         }
         Entity entity = result.getEntity();
+        if (piercedEntityIds == null) piercedEntityIds = new IntOpenHashSet(5);
+        piercedEntityIds.add(entity.getId());
         Entity owner = this.getOwner();
         DamageSource source;
         if (owner instanceof Player player) source = this.damageSources().playerAttack(player);

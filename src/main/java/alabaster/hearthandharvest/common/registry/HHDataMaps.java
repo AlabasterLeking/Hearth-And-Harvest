@@ -1,5 +1,9 @@
 package alabaster.hearthandharvest.common.registry;
 
+import java.util.List;
+import java.io.Reader;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.server.packs.resources.Resource;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.data.VintageStyle;
 import alabaster.hearthandharvest.common.item.WineBottleItem;
@@ -60,8 +64,42 @@ public class HHDataMaps extends SimpleJsonResourceReloadListener {
     private static volatile Map<Item, VintageStyle> VINTAGE_STYLES = Map.of();
     private static volatile Map<ResourceLocation, String> SYNCED = Map.of();
 
+    private static final String DIRECTORY = "data_maps";
+
     public HHDataMaps() {
-        super(GSON, "data_maps");
+        super(GSON, DIRECTORY);
+    }
+
+    @Override
+    protected Map<ResourceLocation, JsonElement> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
+        Map<ResourceLocation, JsonElement> merged = new HashMap<>();
+        for (Map.Entry<ResourceLocation, List<Resource>> entry : resourceManager.listResourceStacks(DIRECTORY, file -> file.getPath().endsWith(".json")).entrySet()) {
+            ResourceLocation file = entry.getKey();
+            String path = file.getPath();
+            ResourceLocation id = new ResourceLocation(file.getNamespace(), path.substring(DIRECTORY.length() + 1, path.length() - 5));
+            JsonObject values = new JsonObject();
+            for (Resource resource : entry.getValue()) {
+                try (Reader reader = resource.openAsReader()) {
+                    JsonObject json = GsonHelper.fromJson(GSON, reader, JsonObject.class);
+                    if (json == null) continue;
+                    if (GsonHelper.getAsBoolean(json, "replace", false)) values = new JsonObject();
+                    for (Map.Entry<String, JsonElement> value : GsonHelper.getAsJsonObject(json, "values", new JsonObject()).entrySet())
+                        values.add(value.getKey(), value.getValue());
+                    if (json.has("remove")) {
+                        for (JsonElement removed : json.getAsJsonArray("remove")) {
+                            String key = removed.isJsonObject() ? GsonHelper.getAsString(removed.getAsJsonObject(), "key") : removed.getAsString();
+                            values.remove(key);
+                        }
+                    }
+                } catch (Exception e) {
+                    HearthAndHarvest.LOGGER.error("Failed to load data map {} from pack {}", id, resource.sourcePackId(), e);
+                }
+            }
+            JsonObject result = new JsonObject();
+            result.add("values", values);
+            merged.put(id, result);
+        }
+        return merged;
     }
 
     @SubscribeEvent

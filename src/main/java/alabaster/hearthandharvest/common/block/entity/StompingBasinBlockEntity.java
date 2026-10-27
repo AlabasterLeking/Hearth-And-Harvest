@@ -323,6 +323,7 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
 
         setChanged();
         syncToClient();
+        refreshCapabilities();
     }
 
     public void formAsMember(BlockPos controllerPos) {
@@ -330,6 +331,7 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
         this.controllerPos = controllerPos;
         setChanged();
         syncToClient();
+        refreshCapabilities();
     }
 
     public void dissolve(List<StompingBasinBlockEntity> survivors) {
@@ -375,6 +377,12 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
 
         setChanged();
         syncToClient();
+        refreshCapabilities();
+    }
+
+    private void refreshCapabilities() {
+        invalidateCaps();
+        reviveCaps();
     }
 
     public void dissolveAsMember() {
@@ -382,6 +390,7 @@ public class StompingBasinBlockEntity extends HHSyncedBlockEntity  {
         this.controllerPos = null;
         setChanged();
         syncToClient();
+        refreshCapabilities();
     }
 
     public void dropContents() {

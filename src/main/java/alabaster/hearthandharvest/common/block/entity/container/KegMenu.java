@@ -1,10 +1,10 @@
 package alabaster.hearthandharvest.common.block.entity.container;
 
+import net.minecraft.world.inventory.InventoryMenu;
 import alabaster.hearthandharvest.common.HHRecipeBookTypes;
 import net.minecraft.util.Mth;
 import alabaster.hearthandharvest.common.block.entity.KegBlockEntity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import com.mojang.datafixers.util.Pair;
 import alabaster.hearthandharvest.HearthAndHarvest;
 import alabaster.hearthandharvest.common.registry.HHModBlocks;
@@ -59,7 +59,7 @@ public class KegMenu extends RecipeBookMenu<RecipeWrapper> {
         this.addSlot(new SlotItemHandler(blockEntity.getInventory(), KegBlockEntity.CONTAINER_INPUT_SLOT, 69, 23) {
             @Override
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                return Pair.of(TextureAtlas.LOCATION_BLOCKS, BOTTLE_SLOT_ICON);
+                return Pair.of(InventoryMenu.BLOCK_ATLAS, BOTTLE_SLOT_ICON);
             }
         });
         this.addSlot(new KegResultSlot(blockEntity, KegBlockEntity.CONTAINER_OUTPUT_SLOT, 91, 23));

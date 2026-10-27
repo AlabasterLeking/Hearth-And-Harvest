@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block.entity;
 
+import alabaster.hearthandharvest.common.event.AnimalFoodEvents;
 import alabaster.hearthandharvest.common.tag.HHVanillaTags;
 import alabaster.hearthandharvest.Config;
 import alabaster.hearthandharvest.common.entity.ManureDropHelper;
@@ -113,7 +114,7 @@ public class TroughBlockEntity extends HHSyncedBlockEntity {
             if (nearbyCount < cap) {
                 ItemStack finalFood = food;
                 List<Animal> breedable = level.getEntitiesOfClass(Animal.class, effectArea,
-                        a -> a.getAge() == 0 && a.canFallInLove() && a.isFood(finalFood));
+                        a -> a.getAge() == 0 && a.canFallInLove() && AnimalFoodEvents.isFood(a, finalFood));
 
                 for (Animal animal : breedable) {
                     food = be.itemHandler.getStackInSlot(0);

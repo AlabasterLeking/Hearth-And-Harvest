@@ -1,5 +1,15 @@
 package alabaster.hearthandharvest.data.recipe;
 
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.nbt.NbtOps;
+import com.mojang.serialization.JsonOps;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import alabaster.hearthandharvest.data.builder.HHFinishedRecipe;
+import java.util.Map;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import alabaster.hearthandharvest.common.item.VintageHelper;
+import alabaster.hearthandharvest.common.crafting.VintageIngredient;
 import alabaster.hearthandharvest.data.builder.RecipeOutput;
 import net.minecraft.world.item.ItemStack;
 import alabaster.hearthandharvest.HearthAndHarvest;
@@ -35,6 +45,31 @@ public class CraftingRecipes
         recipesTools(output);
         recipesMaterials(output);
         recipesFoodstuffs(output);
+        cheeseWheelFromSlices(output, HHModItems.CHEESE_SLICE.get(), HHModItems.CHEESE_WHEEL.get());
+        cheeseWheelFromSlices(output, HHModItems.GOAT_CHEESE_SLICE.get(), HHModItems.GOAT_CHEESE_WHEEL.get());
+    }
+
+    private static void cheeseWheelFromSlices(RecipeOutput output, Item slice, Item wheel) {
+        String name = BuiltInRegistries.ITEM.getKey(wheel).getPath();
+        for (int vintage = 0; vintage <= VintageHelper.MAX_VINTAGE; vintage++) {
+            String path = (vintage == 0 ? name : name + "_" + VintageHelper.STAGE_NAMES[vintage - 1]) + "_from_slices";
+            Ingredient input = new VintageIngredient(slice, vintage);
+            ItemStack result = VintageHelper.withVintage(new ItemStack(wheel), vintage);
+            output.accept(HHFinishedRecipe.of(new ResourceLocation(HearthAndHarvest.MODID, path), RecipeSerializer.SHAPED_RECIPE, json -> {
+                json.addProperty("category", CraftingBookCategory.MISC.getSerializedName());
+                JsonArray pattern = new JsonArray();
+                pattern.add("##");
+                pattern.add("##");
+                json.add("pattern", pattern);
+                JsonObject key = new JsonObject();
+                key.add("#", input.toJson());
+                json.add("key", key);
+                JsonObject out = new JsonObject();
+                out.addProperty("item", BuiltInRegistries.ITEM.getKey(wheel).toString());
+                if (result.hasTag()) out.add("nbt", NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, result.getTag()));
+                json.add("result", out);
+            }, Map.of("has_slice", InventoryChangeTrigger.TriggerInstance.hasItems(slice))));
+        }
     }
 
     private static void recipesBlocks(RecipeOutput output) {

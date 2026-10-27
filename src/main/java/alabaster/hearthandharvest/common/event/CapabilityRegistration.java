@@ -1,5 +1,7 @@
 package alabaster.hearthandharvest.common.event;
 
+import java.util.Map;
+import java.util.IdentityHashMap;
 import alabaster.hearthandharvest.common.block.entity.*;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -40,60 +42,70 @@ public class CapabilityRegistration {
     @SubscribeEvent
     public static void attachBlockEntityCapabilities(AttachCapabilitiesEvent<BlockEntity> event) {
         BlockEntity blockEntity = event.getObject();
+        BiFunction<Capability<?>, Direction, Object> lookup = lookupFor(blockEntity);
+        if (lookup == null) return;
+        CachingProvider provider = new CachingProvider(lookup);
+        event.addCapability(KEY, provider);
+        event.addListener(provider::invalidate);
+    }
+
+    @Nullable
+    private static BiFunction<Capability<?>, Direction, Object> lookupFor(BlockEntity blockEntity) {
 
         // Nest Block
         if (blockEntity instanceof NestBlockEntity be) {
-            attach(event, (cap, side) -> cap == ForgeCapabilities.ITEM_HANDLER ? be.getInventory() : null);
+            return (cap, side) -> cap == ForgeCapabilities.ITEM_HANDLER ? be.getInventory() : null;
         }
 
         // Stomping Basin
         else if (blockEntity instanceof StompingBasinBlockEntity be) {
-            attach(event, (cap, side) -> {
+            return (cap, side) -> {
                 if (cap == ForgeCapabilities.ITEM_HANDLER) {
                     StompingBasinBlockEntity controller = be.getControllerBE();
                     return controller != null ? controller.getItemHandler() : be.getItemHandler();
                 }
                 if (cap == ForgeCapabilities.FLUID_HANDLER) return be.getFluidHandlerForCapability();
                 return null;
-            });
+            };
         }
 
         // Trough block entity
         else if (blockEntity instanceof TroughBlockEntity be) {
-            attach(event, (cap, side) -> cap == ForgeCapabilities.FLUID_HANDLER ? be.getFluidTank() : null);
+            return (cap, side) -> cap == ForgeCapabilities.FLUID_HANDLER ? be.getFluidTank() : null;
         }
 
         // Tree tapper block entity
         else if (blockEntity instanceof TreeTapperBlockEntity be) {
-            attach(event, (cap, side) -> cap == ForgeCapabilities.FLUID_HANDLER ? be.tank : null);
+            return (cap, side) -> cap == ForgeCapabilities.FLUID_HANDLER ? be.tank : null;
         }
 
         // Sink block entity
         else if (blockEntity instanceof BasinBlockEntity be) {
-            attach(event, (cap, side) -> cap == ForgeCapabilities.FLUID_HANDLER ? be.tank : null);
+            return (cap, side) -> cap == ForgeCapabilities.FLUID_HANDLER ? be.tank : null;
         }
 
         // Sprinkler block entity
         else if (blockEntity instanceof SprinklerBlockEntity be) {
-            attach(event, (cap, side) -> {
+            return (cap, side) -> {
                 if (cap == ForgeCapabilities.FLUID_HANDLER) return be.tank;
                 if (cap == ForgeCapabilities.ITEM_HANDLER) return be.getFertilizerHandler();
                 return null;
-            });
+            };
         }
 
         // Jug block entity
         else if (blockEntity instanceof JugBlockEntity be) {
-            attach(event, (cap, side) -> cap == ForgeCapabilities.FLUID_HANDLER ? be.getFluidTank() : null);
+            return (cap, side) -> cap == ForgeCapabilities.FLUID_HANDLER ? be.getFluidTank() : null;
         }
 
         else if (blockEntity instanceof KegBlockEntity be) {
-            attach(event, be::getHandler);
+            return be::getHandler;
         }
 
         else if (blockEntity instanceof CaskBlockEntity be) {
-            attach(event, be::getHandler);
+            return be::getHandler;
         }
+        return null;
     }
 
     @SubscribeEvent
@@ -120,12 +132,48 @@ public class CapabilityRegistration {
         }
 
         // Bottles into fluid handlers
-        if (item != Items.AIR) {
+        if (HHDataMaps.getFluidForBottle(item) != null) {
             attach(event, (cap, side) -> {
                 if (cap != ForgeCapabilities.FLUID_HANDLER_ITEM) return null;
                 Fluid fluid = HHDataMaps.getFluidForBottle(stack.getItem());
                 return fluid == null ? null : new BottleFluidHandler(stack, fluid);
             });
+        }
+    }
+
+    private static class CachingProvider implements ICapabilityProvider {
+        private final BiFunction<Capability<?>, Direction, Object> lookup;
+        private final Map<Capability<?>, Entry[]> cache = new IdentityHashMap<>();
+
+        CachingProvider(BiFunction<Capability<?>, Direction, Object> lookup) {
+            this.lookup = lookup;
+        }
+
+        @Override
+        public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+            Object handler = lookup.apply(cap, side);
+            if (handler == null) return LazyOptional.empty();
+            Entry[] bySide = cache.computeIfAbsent(cap, c -> new Entry[7]);
+            int index = side == null ? 6 : side.ordinal();
+            Entry entry = bySide[index];
+            if (entry == null || entry.handler() != handler) {
+                if (entry != null) entry.optional().invalidate();
+                entry = new Entry(handler, LazyOptional.of(() -> handler));
+                bySide[index] = entry;
+            }
+            return entry.optional().cast();
+        }
+
+        void invalidate() {
+            for (Entry[] bySide : cache.values()) {
+                for (Entry entry : bySide) {
+                    if (entry != null) entry.optional().invalidate();
+                }
+            }
+            cache.clear();
+        }
+
+        private record Entry(Object handler, LazyOptional<Object> optional) {
         }
     }
 

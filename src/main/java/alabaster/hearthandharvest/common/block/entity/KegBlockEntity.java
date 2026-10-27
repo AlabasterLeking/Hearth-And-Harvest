@@ -148,6 +148,12 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         }
 
         inventoryChanged();
+        refreshCapabilities();
+    }
+
+    private void refreshCapabilities() {
+        invalidateCaps();
+        reviveCaps();
     }
 
     public void formAsMember(BlockPos controllerPos) {
@@ -156,6 +162,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         this.fermentTime = 0;
         this.fermenting = false;
         inventoryChanged();
+        refreshCapabilities();
     }
 
     public void dissolve() {
@@ -167,6 +174,7 @@ public class KegBlockEntity extends SyncedBlockEntity implements MenuProvider {
         trimTank(inputTank);
         trimTank(outputTank);
         inventoryChanged();
+        refreshCapabilities();
     }
 
     private void trimTank(ResizableFluidTank tank) {

@@ -1,5 +1,6 @@
 package alabaster.hearthandharvest.common.block;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraft.world.InteractionResult;
@@ -161,9 +162,19 @@ public class KegBlock extends BaseEntityBlock {
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         super.onPlace(state, level, pos, oldState, movedByPiston);
-        if (!level.isClientSide && state.getValue(MULTIBLOCK_PART) == MultiblockPart.NONE) {
+        if (level.isClientSide) return;
+        if (state.getValue(MULTIBLOCK_PART) == MultiblockPart.NONE) {
             tryFormMultiblock(level, pos);
+        } else if (!oldState.is(this)) {
+            level.scheduleTick(pos, this, 1);
         }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (state.getValue(MULTIBLOCK_PART) == MultiblockPart.NONE) return;
+        if (level.getBlockEntity(pos) instanceof KegBlockEntity keg) keg.dissolve();
+        level.setBlock(pos, state.setValue(MULTIBLOCK_PART, MultiblockPart.NONE).setValue(CELL, 0), Block.UPDATE_ALL);
     }
 
     private void tryFormMultiblock(Level level, BlockPos pos) {
@@ -245,9 +256,18 @@ public class KegBlock extends BaseEntityBlock {
 
     @Nullable
     private BlockPos findController(Level level, BlockPos memberPos) {
-        return level.getBlockEntity(memberPos) instanceof KegBlockEntity keg && keg.controller() != null
-                ? keg.controller().getBlockPos()
-                : null;
+        if (level.getBlockEntity(memberPos) instanceof KegBlockEntity keg && keg.controller() != null)
+            return keg.controller().getBlockPos();
+        for (int dx = 0; dx >= -1; dx--) {
+            for (int dy = 0; dy >= -1; dy--) {
+                for (int dz = 0; dz >= -1; dz--) {
+                    BlockPos corner = memberPos.offset(dx, dy, dz);
+                    BlockState bs = level.getBlockState(corner);
+                    if (bs.is(this) && bs.getValue(MULTIBLOCK_PART) == MultiblockPart.CONTROLLER) return corner;
+                }
+            }
+        }
+        return null;
     }
 
     @Nullable

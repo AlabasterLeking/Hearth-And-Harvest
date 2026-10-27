@@ -27,7 +27,7 @@ public class ManureEvents {
         if (!(event.getTarget() instanceof Animal animal)) return;
         Player player = event.getEntity();
         ItemStack item = player.getItemInHand(event.getHand());
-        if (!animal.isInLove() && animal.isFood(item)) {
+        if (!animal.isInLove() && AnimalFoodEvents.isFood(animal, item)) {
             ManureDropHelper.schedulePoop(animal);
         }
     }

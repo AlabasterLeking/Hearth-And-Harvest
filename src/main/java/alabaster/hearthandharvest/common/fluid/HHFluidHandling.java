@@ -1,5 +1,8 @@
 package alabaster.hearthandharvest.common.fluid;
 
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import alabaster.hearthandharvest.common.registry.HHDataMaps;
@@ -90,7 +93,12 @@ public final class HHFluidHandling {
         if (transfer.isEmpty()) return NO_EMPTYING;
 
         handler.drain(transfer, IFluidHandler.FluidAction.EXECUTE);
-        return Pair.of(transfer, handler.getContainer());
+        ItemStack emptied = handler.getContainer();
+        if (isGenericBucket(input, handler)) {
+            ItemStack remainder = input.getCraftingRemainingItem();
+            if (remainder.getItem() instanceof BucketItem) emptied = remainder;
+        }
+        return Pair.of(transfer, emptied);
     }
 
     public static Pair<Integer, ItemStack> testFilling(ItemStack input, IFluidHandler tank) {
@@ -117,7 +125,26 @@ public final class HHFluidHandling {
         if (transfer.isEmpty()) return NO_FILLING;
 
         handler.fill(transfer, IFluidHandler.FluidAction.EXECUTE);
-        return Pair.of(transfer.getAmount(), handler.getContainer());
+        ItemStack filled = handler.getContainer();
+        if (isGenericBucket(input, handler)) {
+            Item variant = filledBucketVariant(input.getItem(), transfer.getFluid());
+            if (variant == null) return NO_FILLING;
+            filled = new ItemStack(variant);
+        }
+        return Pair.of(transfer.getAmount(), filled);
+    }
+
+    private static boolean isGenericBucket(ItemStack input, IFluidHandlerItem handler) {
+        return handler.getClass() == FluidBucketWrapper.class && !BuiltInRegistries.ITEM.getKey(input.getItem()).getNamespace().equals("minecraft");
+    }
+
+    @Nullable
+    private static Item filledBucketVariant(Item empty, Fluid fluid) {
+        for (Item item : BuiltInRegistries.ITEM) {
+            if (item instanceof BucketItem bucket && bucket.getFluid().isSame(fluid) && new ItemStack(item).getCraftingRemainingItem().is(empty))
+                return item;
+        }
+        return null;
     }
 
     public static void giveResult(Player player, InteractionHand hand, ItemStack held, ItemStack result) {
